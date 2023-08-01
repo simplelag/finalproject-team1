@@ -1,6 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
 import {useEffect, useState} from "react";
+import axios from "axios";
 
 function App() {
   const [message, setMessage] = useState("");
@@ -13,15 +14,17 @@ function App() {
         });
   },[])
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-       <h1 className="App-title">{message}</h1>
-      </header>
-      <p>
-        To get started, edit <code>src/App.js</code> and save to reload
-      </p>
-    </div>
+      <div>
+          <button type={'button'}onClick={() =>{
+              axios.get('http://localhost:8080/hello')
+                  .then(res =>{
+                      alert(`통신성공\n${res.data}`);
+                  })
+                  .catch(err =>{
+                      alert('통신 실패');
+                  })
+          }}>확인</button>
+      </div>
   );
 }
 
