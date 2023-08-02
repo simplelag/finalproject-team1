@@ -10,8 +10,8 @@ public class TestController {
         return "Hello World!";
     }
 
-//    @RequestMapping(value = "/mainHome", method = RequestMethod.GET)
-//    public String mainHome() throws Exception {
-//        return "test";
-//    }
+    @RequestMapping(value = "/mainHome", method = RequestMethod.GET)
+    public String mainHome() throws Exception {
+        return "test";
+    }
 }

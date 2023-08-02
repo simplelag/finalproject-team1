@@ -1,6 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
 import axios from "axios";
+import MainHome from "./MainHome";
 
 function App() {
   return (
@@ -14,6 +15,8 @@ function App() {
                   alert('통신 실패');
               })
       }}>확인</button>
+
+        <MainHome />
     </div>
   );
 }
