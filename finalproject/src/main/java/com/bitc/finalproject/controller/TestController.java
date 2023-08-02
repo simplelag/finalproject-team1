@@ -9,4 +9,9 @@ public class TestController {
     public String hello() throws Exception{
         return "Hello World!";
     }
+
+//    @RequestMapping(value = "/mainHome", method = RequestMethod.GET)
+//    public String mainHome() throws Exception {
+//        return "test";
+//    }
 }
