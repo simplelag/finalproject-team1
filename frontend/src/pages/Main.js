@@ -3,10 +3,9 @@ import axios from "axios";
 
 function Main(props) {
     const apiTest = () => {
-        axios.get('/api/main',{ withCredentials: true })
+        axios.get('http://localhost:8080/main.api')
             .then(res => {
-                sessionStorage.setItem("id",res.data.id);
-                alert(`수신된 데이터 : ${res.data.content}, id : ${res.data.id}`);
+                alert(`수신된 데이터 : ${res.data}`);
             })
             .catch(err => {
                     alert(err);
@@ -17,7 +16,7 @@ function Main(props) {
     return (
         <div>
             <p>mainPage</p>
-            <button type={"button"} className={'btn btn-outline-primary me-3'} onClick={apiTest}>main.api</button>
+            <button type={"button"} className={'btn btn-primary me-3'} onClick={apiTest}>main.api</button>
         </div>
     );
 }
