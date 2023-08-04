@@ -4,12 +4,17 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.css'
+import SellerPage from "./pages/SellerPage";
+import ShoppingBasket from "./pages/ShoppingBasket";
+import BookDetailPage from "./pages/BookDetailPage";
+import OldBookList from "./pages/OldBookList";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
+    <React.StrictMode>
+        <BookDetailPage/>
+        <OldBookList/>
+    </React.StrictMode>
 );
 
 // If you want to start measuring performance in your app, pass a function
