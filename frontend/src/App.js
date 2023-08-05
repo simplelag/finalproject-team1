@@ -4,17 +4,20 @@ import ViewMain from "./pages/ViewMain";
 import BoardMain from "./pages/BoardMain";
 import BoardWrite from "./pages/BoardWrite";
 import BoardDetail from "./pages/BoardDetail";
+import {BrowserRouter, Route, Routes} from "react-router-dom";
 
 
 function App() {
     return (
-        <div className={'container my-4'}>
-            {/*<Main />*/}
-            {/*<ViewMain />*/}
-            {/*<BoardMain />*/}
-            {/*<BoardWrite />*/}
-            <BoardDetail />
-        </div>
+        <BrowserRouter>
+            <Routes>
+                <Route path={"/main"} element={<Main />} />
+                <Route path={"/main/board"} element={<BoardMain />} />
+                <Route path={"/main/board/write"} element={<BoardWrite />} />
+                <Route path={"/main/board/{boardPk}"} element={<BoardDetail />} />
+
+            </Routes>
+        </BrowserRouter>
     );
 }
 

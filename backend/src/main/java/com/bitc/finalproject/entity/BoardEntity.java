@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.sql.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "board")
@@ -33,7 +35,7 @@ public class BoardEntity {
     private String boardContent;
 
     @Column(nullable = false)
-    private Date boardDatetime;
+    private LocalDateTime boardDatetime =  LocalDateTime.now();
 
     private int boardLike;
 

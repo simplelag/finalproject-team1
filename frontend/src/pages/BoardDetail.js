@@ -1,8 +1,10 @@
-import React from "react";
+import React, {useEffect} from "react";
 import Header from "./Header";
 import Footer from "./Footer";
 
 function BoardDetail(props) {
+
+
 
     return (
         <div>

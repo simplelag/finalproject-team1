@@ -7,8 +7,12 @@ import {useNavigate} from "react-router-dom";
 function BoardWrite(props) {
 
     const [title, setTitle] = useState('');
+    const [name, setName] = useState('testUserName')
+    const [id, setId] = useState('testUserId')
     const [content, setContent] = useState('');
     const [category, setCategory] = useState('일반');
+
+    const navi = useNavigate();
 
     const onClickCategory = (e) => {
         setCategory(e.target.value);
@@ -27,11 +31,13 @@ function BoardWrite(props) {
             params: {
                 boardCategory: category,
                 boardTitle: title,
+                boardWriterId: id ,
+                boardWriterName: name,
                 boardContent: content,
             }
         })
             .then(() => {
-
+                navi("/main/board");
             })
             .catch(() => {
 
@@ -52,6 +58,8 @@ function BoardWrite(props) {
                         </div>
                         <div className={'my-3'}>
                             <input type={'text'} className={'form-control'} value={title} onChange={onChangeTitle} placeholder={'글 제목을 입력하세요'}/>
+                            <input type={'hidden'} className={'form-control'} value={name}/>
+                            <input type={'hidden'} className={'form-control'} value={id}/>
                         </div>
                         <div className={'my-3'}>
                             <textarea className={'form-control'} rows={10} value={content} onChange={onChangeContent} placeholder={'글 내용을 입력하세요'}></textarea>

@@ -18,7 +18,7 @@ function Navbar(props) {
                             <a className="nav-link" href="#">이벤트</a>
                         </li>
                         <li className="nav-item mx-3">
-                            <a className="nav-link" href="#">커뮤니티</a>
+                            <a className="nav-link" href="/main/board">커뮤니티</a>
                         </li>
                     </ul>
                 </div>

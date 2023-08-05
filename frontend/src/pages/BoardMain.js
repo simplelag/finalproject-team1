@@ -55,7 +55,7 @@ function BoardMain(props) {
                     </tbody>
                 </table>
                 <div className={'my-3 d-flex justify-content-end'}>
-                    <a href={'#'} className={'btn'}>글작성</a>
+                    <a href={'/main/board/write'} className={'btn'}>글작성</a>
                 </div>
             </div>
             <Footer />
