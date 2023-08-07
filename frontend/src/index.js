@@ -8,12 +8,14 @@ import SellerPage from "./pages/SellerPage";
 import ShoppingBasket from "./pages/ShoppingBasket";
 import BookDetailPage from "./pages/BookDetailPage";
 import OldBookList from "./pages/OldBookList";
+import Main from "./pages/Main";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <React.StrictMode>
-        <BookDetailPage/>
-        <OldBookList/>
+        <Main/>
+        {/*<BookDetailPage/>*/}
+        {/*<OldBookList/>*/}
     </React.StrictMode>
 );
 
