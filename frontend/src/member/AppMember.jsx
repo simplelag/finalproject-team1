@@ -1,7 +1,7 @@
 import React from 'react';
 import {BrowserRouter, Route, Routes} from "react-router-dom";
-import JoinMember from "./joinMember";
-import Join from "./join";
+import JoinMember from "./JoinMember";
+import Join from "./Join";
 
 function AppMember(props) {
 
