@@ -1,29 +1,55 @@
-import React, {useState} from 'react' ;
+import React, {useEffect, useState} from 'react' ;
+import axios from "axios";
 
 
 function SellerPage() {
     const [inputValue, setInputValue] = useState('');
-
+    const [searchResult, setSearchResults] = useState([]);
     const handleinputChange = (event) => {
         setInputValue(event.target.value);
     }
     const handleSubmit = (event) => {
         event.preventDefault();
     }
+    const search = () => {
+        // { withCredentials:true }
 
+        axios.get("/SellerPage2")
+            .then((response) => {
+                setSearchResults(response.data);
+            })
+            .catch((error) => {
+                console.error('API 연결 중 문제 발생', error);
+            });
+    }
     return (
         <main className={"container"}>
             <div>
                 <form onSubmit={handleSubmit}>
                     <label className={"form-label"}>
                         <h4>도서 검색</h4>
-                        <input type="text" className={"form-control"} value={inputValue} onChange={handleinputChange}/>
+                        <input type="text" className={"form-control"} value={inputValue}
+                               onChange={handleinputChange}/>
                     </label>
-                    <button type={"submit"} className={"ms-3 btn btn-primary"}>검색</button>
+                    <button type={"submit"} className={"ms-3 btn btn-primary"} onClick={search}>검색</button>
                 </form>
             </div>
             <div className={"mt-4"}>
                 <h4>상품 기본 정보</h4>
+
+                <ul>
+                    {searchResult.map((item) => (
+                        <li key={item.itemId}>
+                            <h2>{item.title}</h2>
+                            <p>{item.description}</p>
+                            <p>저자 : {item.author}</p>
+                            <p>출판사 : {item.publisher}</p>
+                            <p>가격 : {item.priceSales}원</p>
+                            <img src={item.cover} alt={item.title} style={{maxWidth:'300px'}}/>
+                        </li>
+                    ))}
+                </ul>
+
                 <div className={"card mb-3 mt-3"}>
                     <div className={"row g-0"}>
                         <div className={"col-md-8"}>
@@ -35,9 +61,11 @@ function SellerPage() {
                             <p className={"card-text"}>출간일</p>
                             <p className={"card-text"}>페이지 수</p>
                         </div>
+
                         <div className={"col-md-4"}>
                             <img src="..." alt="사진 출력될 자리" className={"img-fluid rounded-start"}/>
                         </div>
+
                     </div>
                 </div>
             </div>
@@ -79,11 +107,11 @@ function SellerPage() {
                 </form>
             </div>
             <div className={"text-center"}>
-                <button type={"submit"} className={"btn btn-dark"}><p className={"text-white mt-2"}>등록하기</p></button>
+                <button type={"submit"} className={"btn btn-dark"}><p className={"text-white mt-2"}>등록하기</p>
+                </button>
             </div>
         </main>
 
     );
 }
-
 export default SellerPage;

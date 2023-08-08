@@ -19,6 +19,7 @@ function Main(props) {
 
     return (
         <div>
+
             <Header />
             <MainEventCarousel/>
             <MainCardCarousel title={'베스트도서'} />
