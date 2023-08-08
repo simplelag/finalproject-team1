@@ -4,11 +4,12 @@ import Footer from "../Footer";
 import axios from "axios";
 
 function Admin(props) {
-    const id = props.id;
-    axios.get("/")
+    // const id = props.id;
+    // axios.get("/")
+    alert("admin");
     return (
         <div>
-            <Header />
+            {/*<Header />*/}
             <div className={"container"}>
                 <div className={"adminInfo"}>
                     <h3>관리자 정보</h3>
@@ -17,7 +18,7 @@ function Admin(props) {
                     <p>등급 </p>
                 </div>
             </div>
-            <Footer />
+            {/*<Footer />*/}
         </div>
     );
 }
