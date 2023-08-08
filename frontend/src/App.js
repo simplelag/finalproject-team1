@@ -8,8 +8,6 @@ import {BrowserRouter, Route, Routes} from "react-router-dom";
 
 
 function App() {
-    const id = sessionStorage.getItem("id");
-    console.log(`App에서 가져온 session id: ${id}`);
     return (
         <BrowserRouter>
             <Routes>

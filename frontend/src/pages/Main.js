@@ -3,8 +3,19 @@ import MainEventCarousel from "./MainEventCarouel";
 import Header from "./Header";
 import MainCardCarousel from "./MainCardCarousel";
 import Footer from "./Footer";
+import axios from "axios";
 
 function Main(props) {
+    const apiTest = () => {
+        axios.get('http://localhost:8080/main.api')
+            .then(res => {
+                alert(`수신된 데이터 : ${res.data}`);
+            })
+            .catch(err => {
+                    alert(err);
+                }
+            )
+    }
 
     return (
         <div>
