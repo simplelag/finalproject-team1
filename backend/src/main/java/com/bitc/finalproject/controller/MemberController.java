@@ -15,10 +15,9 @@ public class MemberController {
     private final MemberService memberService;
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public Object showLogin(@RequestParam("id") String userId, @RequestParam("pw") String userPw) throws Exception{
-        Map<String, Object> result = new HashMap<>();
-//        int correctId = memberService.
-        return null;
+    public Object showLogin(@RequestParam("userId") String userId, @RequestParam("password") String password) throws Exception{
+        int correctId = memberService.countMember(userId, password);
+        return correctId;
     }
 
 //    회원가입
@@ -29,7 +28,7 @@ public class MemberController {
     }
 
 //    회원가입 버튼 클릭
-    @RequestMapping(value = "/sign/signup", method = RequestMethod.PUT)
+    @RequestMapping(value = "/sign/signup", method = RequestMethod.POST)
     public void showSingUp(
             @RequestParam("userId") String userId,
             @RequestParam("password") String password,
@@ -38,13 +37,7 @@ public class MemberController {
             @RequestParam("phone") String phone,
             @RequestParam("address") String address
     ) throws Exception{
-//        MemberEntity memberEntity = null;
-//        memberEntity.setMemberId(userId);
-//        memberEntity.setMemberName(name);
-//        memberEntity.setMemberPassword(password);
-//        memberEntity.setMemberEmail(email);
-//        memberEntity.setMemberPhone(phone);
-//        memberEntity.setMemberAddress(address);
-        memberService.saveAllMember(userId, password, name, email, phone, address);
+        MemberEntity memberEntity = new MemberEntity(userId, password, name, email, phone, address);
+        memberService.saveMember(memberEntity);
     }
 }

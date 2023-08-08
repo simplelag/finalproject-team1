@@ -12,12 +12,16 @@ public class MemberServiceImpl implements MemberService{
     private final MemberRepository memberRepository;
 
     @Override
-    public boolean checkId(String userId) throws Exception {
-        return memberRepository.existsByMemberId(userId);
+    public int countMember(String userId, String password) throws Exception {
+        return memberRepository.countByMemberIdAndMemberPassword(userId, password);
     }
 
     @Override
-    public void saveAllMember(String userId, String password, String name, String email, String phone, String address) {
-        memberRepository.saveAll(userId, password, name, email, phone, address);
+    public boolean checkId(String userId) throws Exception {
+        return memberRepository.existsByMemberId(userId);
+    }
+    @Override
+    public void saveMember(MemberEntity memberEntity) throws Exception {
+        memberRepository.save(memberEntity);
     }
 }

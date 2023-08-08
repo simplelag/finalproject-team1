@@ -1,10 +1,13 @@
 import React, {useEffect, useState} from 'react';
+import axios from "axios";
 import { useCookies } from 'react-cookie';
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 
 function Join(props) {
 
+    const navi = useNavigate();
     const [userId, setUserId] = useState('');
+    const [password, setPassword] = useState('');
 
     const [cookies, setCookies, removeCookies] = useCookies(['rememberUserId']);
 
@@ -18,6 +21,7 @@ function Join(props) {
     }, [cookies]);
 
     const handleId = (e) => { setUserId(e.target.value)}
+    const handlePassword = (e) => { setPassword(e.target.value)}
 
     // 아이디 저장 체크박스가 바뀔 때 작동하는거라서 id만 바꾸고 로그인을 시도하면 저장되지 않음
     // 이벤트를 제대로 작동할 위치를 찾지 못함
@@ -26,27 +30,40 @@ function Join(props) {
         setIsRemember(e.target.checked);
     }
 
-    const buttonOnClick = (e) => {
-        // 나중에 로그인 성공했을 때만 하도록 저장하도록 하기
-        if(isRemember){
-            setCookies('rememberUserId', userId);
-        } else if (!isRemember) {
-            removeCookies("rememberUserId");
-        }
+    const buttonOnClick = () => {
+        axios.post("http://localhost:8080/login", 'null',{
+            params:{
+                userId : userId,
+                password : password
+            }
+        })
+            .then(res => {
+                console.log(res);
+                if(isRemember && res.data > 0){
+                    setCookies('rememberUserId', userId);
+                } else if (!isRemember) {
+                    removeCookies("rememberUserId");
+                }
+                alert("로그인 성공");
+                // navi('/');
+            })
+            .catch(err => {
+                console.log(err);
+            })
     }
 
     return (
         <div className={'container my-3'}>
             <div className={'row'}>
                 <div className="col-sm-4 mx-auto">
-                    <form action="/login" method="post">
+                    {/*<form action="/login" method="post">*/}
                         <div className="my-3">
                             <label htmlFor="userId" className="form-label">ID : </label>
                             <input type="text" className="form-control" id="userId" name="userId" value={userId} placeholder="아이디를 입력하세요" onChange={handleId}/>
                         </div>
                         <div className="my-3">
                             <label htmlFor="user-password" className="form-label">Password : </label>
-                            <input type="password" className="form-control" id="user-password" name="password" placeholder="비밀번호를 입력하세요" />
+                            <input type="password" className="form-control" id="user-password" name="password" value={password} onChange={handlePassword} placeholder="비밀번호를 입력하세요" />
                         </div>
                         <div>
                         <input type="checkbox" className="saveId" id="saveId" name="saveId"
@@ -57,7 +74,7 @@ function Join(props) {
                             <Link to={'/sign'} className={'btn btn-warning'}>회원가입</Link>
                             {/*<input type="hidden" th:name="${_csrf?.parameterName}" th:value="${_csrf?.token}">*/}
                         </div>
-                    </form>
+                    {/*</form>*/}
                 </div>
             </div>
         </div>

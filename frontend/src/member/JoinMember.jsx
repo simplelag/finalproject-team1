@@ -7,10 +7,12 @@ import axios from "axios";
 function JoinMember(props) {
 
     const navi = useNavigate();
-    const [inputs, setInputs] = useState('');
+    const [nullValueCheck, setNullValueCheck] = useState(0);
 
     // 아이디
     const [userId, setUserId] = useState('');
+    // 중복 확인 버튼에서 사용 가능한 id가 나온 경우를 체크
+    const [userIdCheck, setUserIdCheck] = useState('');
 
     // 비밀번호
     const[ password, setPassword] = useState('');
@@ -44,14 +46,8 @@ function JoinMember(props) {
 
     // 이메일 합치기
     // 나중에 회원가입 누를 때 param으로 나중에 더하면 됨
-    const handleEmailFirst= (e)=>{
-        setEmailFirst(e.target.value);
-        setEmail(emailFirst + emailLast);
-    }
-    const handleEmailLast = (e) => {
-        setEmailLast(e.target.value);
-        setEmail(emailFirst + emailLast);
-    }
+    const handleEmailFirst= (e)=>{setEmailFirst(e.target.value);}
+    const handleEmailLast = (e) => {setEmailLast(e.target.value);}
     
     // 휴대폰 합치기
     // 이메일이랑 똑같이 param으로 나중에 추가하면 됨
@@ -74,8 +70,10 @@ function JoinMember(props) {
             .then(res => {
                 if(res.data == true){
                     alert("사용불가 id 입니다.")
+                    setUserId('');
                 }else{
                     alert("사용가능한 Id 입니다.")
+                    setUserIdCheck(userId);
                 }
             })
             .catch(err => {
@@ -134,31 +132,40 @@ function JoinMember(props) {
     }
 
     // 특수문자 입력 금지
-    // 미작동
-    const onChange = (e) => {
-        const { value } = e.target;
-        // value의 값이 숫자가 아닐경우 빈문자열로 replace 해버림.
-        const onlyNumber = value.replace(/[^0-9]/g, '');
-        setInputs(onlyNumber);
-    }
     
     // 특수문자, 문자 금지(숫자만 사용)
 
-
     // 회원가입 버튼 클릭 시
     const btnJoinMember = (e) => {
-        // p태그로는 표시만 해주는 거기 때문에 정확한 확인을 못하므로 확인을 정확히 하는 것임
+        if(userId === ''){
+            alert("아이디를 입력하세요");
+        }else if(password === '' || passwordRe === ''){
+            alert("비밀번호를 입력하세요");
+        } else if(name === ''){
+            alert("이름을 입력하세요");
+        } else if(emailFirst ==='' && emailLast === ''){
+            alert("이메일을 입력하세요");
+        }else if(phoneMiddleNumber === '' || phoneLastNumber === ''){
+            alert("휴대전화 번호를 입력하세요");
+        }else if(zoneCode === ''){
+            alert("우편 번호 찾기를 누르세요");
+        }else if(roadAddressDetail === ''){
+            alert("상세주소를 입력하세요");
+        } else if(!isAgree) {
+            alert("약관에 동의해주세요");
+        }
+
+        if(userIdCheck === '' || userId !== userIdCheck){
+            alert("아이디 중복 확인을 해주세요");
+        }
         if(password === passwordRe){
             setPasswordCheck(password);
         }
-        if(!isAgree){
-            alert("약관에 동의해주세요");
-        }
-        if(passwordCheck !== null && isAgree === true) {
-            axios.put("http://localhost:8080/sign/singup", "null", {
+        if(userId === userIdCheck && passwordCheck !== ''){
+            axios.post("http://localhost:8080/sign/signup", null, {
                 params: {
                     userId: userId,
-                    password: passwordCheck,
+                    password: password,
                     name : name,
                     email: emailFirst + emailLast,
                     phone: phoneFirstNumber + '-' + phoneMiddleNumber + '-' + phoneLastNumber,
@@ -167,10 +174,11 @@ function JoinMember(props) {
             })
                 .then(res => {
                     console.log(res);
-                    // navi('/login');
+                    navi('/');
                 })
                 .catch(err => {
                     console.log("통신 실패");
+                    console.log(err);
                 })
         }
     }
