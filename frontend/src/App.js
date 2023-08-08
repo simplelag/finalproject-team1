@@ -14,7 +14,7 @@ function App() {
                 <Route path={"/main"} element={<Main />} />
                 <Route path={"/main/board"} element={<BoardMain />} />
                 <Route path={"/main/board/write"} element={<BoardWrite />} />
-                <Route path={"/main/board/{boardPk}"} element={<BoardDetail />} />
+                <Route path={"/main/board/:boardPk"} element={<BoardDetail />} />
 
             </Routes>
         </BrowserRouter>

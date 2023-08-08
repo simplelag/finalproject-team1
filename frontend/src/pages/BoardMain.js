@@ -42,7 +42,7 @@ function BoardMain(props) {
                                 <tr key={item.boardPk}><td>{item.boardPk}</td>
                                     <td>{item.boardCategory}</td>
                                     <td>
-                                        <a href={'#'} className={'btn'}>{item.boardTitle}</a>
+                                        <a href={'/main/board/' + item.boardPk} className={'btn'}>{item.boardTitle}</a>
                                     </td>
                                     <td>{item.boardWriterName}</td>
                                     <td>{item.boardVisitCount}</td>
