@@ -1,11 +1,12 @@
 import React, {useState} from 'react';
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import DaumPostcode, {useDaumPostcodePopup} from 'react-daum-postcode';
 import axios from "axios";
 
 
 function JoinMember(props) {
 
+    const navi = useNavigate();
     const [inputs, setInputs] = useState('');
 
     // 아이디
@@ -17,18 +18,21 @@ function JoinMember(props) {
     // 비밀번호와 비밀번호 확인이 같을때만 넣을 것
     const[ passwordCheck, setPasswordCheck ] = useState('');
 
-    // 폰 번호
-    const [phoneFirstNumber, setPhoneFirstNumber] = useState('010');
-    const [phoneMiddleNumber, setPhoneMiddleNumber] = useState('');
-    const [phoneLastNumber, setPhoneLastNumber] = useState('');
-    // param으로 합치기 떄문에 나중에 지울거임
-    const [phoneNumber, setPhoneNumber] = useState('');
+    // 이름
+    const[name, setName] = useState('');
 
     // 이메일
     const [emailFirst, setEmailFirst] = useState('');
     const [emailLast, setEmailLast] = useState('');
     // param으로 합치기 떄문에 나중에 지울거임
     const [email, setEmail] = useState('');
+
+    // 폰 번호
+    const [phoneFirstNumber, setPhoneFirstNumber] = useState('010');
+    const [phoneMiddleNumber, setPhoneMiddleNumber] = useState('');
+    const [phoneLastNumber, setPhoneLastNumber] = useState('');
+    // param으로 합치기 떄문에 나중에 지울거임
+    const [phoneNumber, setPhoneNumber] = useState('');
 
     // 우편번호 및 주소
     const [zoneCode, setZoneCode] = useState('');
@@ -58,8 +62,25 @@ function JoinMember(props) {
     // 아이디 중복 체크
     const handleUserId = (e) => {setUserId(e.target.value);}
 
-    const btnDoubleCheck = (e) => {
+    // 이름
+    const handleName = (e) => {setName(e.target.value);}
 
+    const btnDoubleCheck = (e) => {
+        axios.get("http://localhost:8080/sign/idCheck", {
+            params:{
+                userId : userId
+            }
+        })
+            .then(res => {
+                if(res.data == true){
+                    alert("사용불가 id 입니다.")
+                }else{
+                    alert("사용가능한 Id 입니다.")
+                }
+            })
+            .catch(err => {
+                console.log("통신 실패");
+            })
     }
 
     
@@ -133,7 +154,25 @@ function JoinMember(props) {
         if(!isAgree){
             alert("약관에 동의해주세요");
         }
-        // axios.get('')
+        if(passwordCheck !== null && isAgree === true) {
+            axios.put("http://localhost:8080/sign/singup", "null", {
+                params: {
+                    userId: userId,
+                    password: passwordCheck,
+                    name : name,
+                    email: emailFirst + emailLast,
+                    phone: phoneFirstNumber + '-' + phoneMiddleNumber + '-' + phoneLastNumber,
+                    address: roadAddress + roadAddressDetail
+                }
+            })
+                .then(res => {
+                    console.log(res);
+                    // navi('/login');
+                })
+                .catch(err => {
+                    console.log("통신 실패");
+                })
+        }
     }
 
     return (
@@ -166,6 +205,14 @@ function JoinMember(props) {
                         <div className={'col-sm-5'}>
                             <input type={'password'} className={'form-control'} id={'passwordRe'} value={passwordRe} onChange={handlePasswordRe}/>
                             {password !== passwordRe ? <p className={'mt-1 text-danger'}>비밀번호가 같지 않습니다.</p> : null}
+                        </div>
+                    </div>
+                    <div className={'form-group d-flex mt-3'}>
+                        <div className={'col-sm-2 d-flex justify-content-center'}>
+                            <label htmlFor={'name'} className={'form-label align-self-top mt-1'}>이름</label>
+                        </div>
+                        <div className={'col-sm-5'}>
+                            <input type={'name'} className={'form-control'} id={'name'} value={name} onChange={handleName}/>
                         </div>
                     </div>
                     <div className={'form-group d-flex mt-3'}>
