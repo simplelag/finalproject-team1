@@ -5,20 +5,12 @@ import BoardMain from "./pages/BoardMain";
 import BoardWrite from "./pages/BoardWrite";
 import BoardDetail from "./pages/BoardDetail";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
-import Admin from "./pages/admin/Admin";
-import {useEffect, useState} from "react";
 
 
 function App() {
-    const [id, setId] = useState("");
-    useEffect(() => {
-        setId("admin");
-        }, []);
-
     return (
         <BrowserRouter>
             <Routes>
-                <Route path={"/admin"} element={<Admin id={id}/>} />
                 <Route path={"/main"} element={<Main />} />
                 <Route path={"/main/board"} element={<BoardMain />} />
                 <Route path={"/main/board/write"} element={<BoardWrite />} />
