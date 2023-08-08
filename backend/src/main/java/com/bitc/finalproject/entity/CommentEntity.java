@@ -16,6 +16,7 @@ import java.time.LocalDateTime;
 @Setter
 public class CommentEntity {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int commentPk;
 
     @Column(nullable = false)

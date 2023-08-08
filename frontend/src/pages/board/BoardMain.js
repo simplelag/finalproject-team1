@@ -17,8 +17,8 @@ function BoardMain(props) {
             })
             .catch(err => {
                 alert("BoardList Connect Err")
-            },[]);
-    })
+            });
+    },[])
 
     return (
         <div>

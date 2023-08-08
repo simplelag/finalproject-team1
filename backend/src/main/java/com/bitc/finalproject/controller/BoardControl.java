@@ -36,8 +36,6 @@ public class BoardControl {
     public Object boardInsert(BoardEntity boardEntity) throws Exception {
         boardService.writeBoard(boardEntity);
 
-        System.out.println(boardEntity);
-
         return "redirect:/board";
     }
 

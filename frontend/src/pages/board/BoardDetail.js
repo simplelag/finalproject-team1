@@ -3,6 +3,7 @@ import Header from "../mainPages/Header";
 import Footer from "../mainPages/Footer";
 import {useNavigate, useParams} from "react-router-dom";
 import axios from "axios";
+import BoardComment from "./BoardComment";
 
 function BoardDetail(props) {
 
@@ -68,18 +69,18 @@ function BoardDetail(props) {
                     <div className={'row'}>
                         <div className={'col-sm-10 mx-auto'}>
                             <table className={'table'}>
+                                <tbody>
                                 <tr>
                                     <td className={'col-sm-1'}>{category}</td>
-                                    <td>{title}</td>
+                                    <td className={''}>{title}</td>
                                 </tr>
                                 <tr>
                                     <td>{name}</td>
-                                    <div className={'d-flex justify-content-end'}>
-                                        <td>댓글수</td>
-                                        <td>{like}</td>
-                                        <td>{visit}</td>
-                                    </div>
+                                    <td className={'text-end'}>댓글: </td>
+                                    <td className={'text-end'}>추천: {like}</td>
+                                    <td className={'text-end'}>조회수: {visit}</td>
                                 </tr>
+                                </tbody>
                             </table>
                             <textarea rows={10} className={'form-control'} value={content} onChange={onChangeContent}></textarea>
                             <div className={'d-flex justify-content-center my-3'}>
@@ -90,6 +91,7 @@ function BoardDetail(props) {
                         </div>
                     </div>
                 </div>
+            <BoardComment boardPk={boardPk} />
             <Footer />
         </div>
     )
