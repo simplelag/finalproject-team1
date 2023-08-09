@@ -14,15 +14,10 @@ import java.util.List;
 public class SellerController {
 
     private final SellerService sellerService;
-
-    @RequestMapping(value = "/SellerPage", method = RequestMethod.GET)
-    public Object SellerPageView() throws Exception{
-        return null;
-    }
     @ResponseBody
-    @RequestMapping(value ="/SellerPage/{id}", method = RequestMethod.GET)
+    @RequestMapping(value ="/SellerPage/{text}", method = RequestMethod.GET)
     public Object SellerPage(@PathVariable("inputValue") String inputValue) throws Exception{
-        String url = "https://www.aladin.co.kr/ttb/api/ItemSearch.aspx?ttbkey=ttbpol03261000001&Query="+inputValue+"&QueryType=Title&MaxResults=10&start=1&SearchTarget=Book&output=js&Version=20070901";
+        String url = "https://www.aladin.co.kr/ttb/api/ItemSearch.aspx?ttbkey=ttbpol03261000001&Query="+inputValue;
         System.out.println(url);
         List<BookEntity> bookEntityList = sellerService.SearchApi(url);
         System.out.println(bookEntityList);

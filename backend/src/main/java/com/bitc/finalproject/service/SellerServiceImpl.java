@@ -2,6 +2,7 @@ package com.bitc.finalproject.service;
 
 import com.bitc.finalproject.dto.Bookdto;
 import com.bitc.finalproject.entity.BookEntity;
+import com.bitc.finalproject.repository.BookRepository;
 import com.google.gson.Gson;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -14,6 +15,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @Service
 public class SellerServiceImpl implements  SellerService{
+    private final BookRepository bookRepository;
 
     @Override
     public List<BookEntity> SearchApi(String Url) throws Exception {
@@ -34,8 +36,7 @@ public class SellerServiceImpl implements  SellerService{
                 sb.append(line);
             }
             Gson gson = new Gson();
-            Bookdto bookdto = gson.fromJson(sb.toString(),Bookdto.class);
-            itemList = bookdto.getBookEntityList();
+            itemList = (List<BookEntity>) bookRepository;
         } catch (Exception e){
             e.printStackTrace();
         }finally {
