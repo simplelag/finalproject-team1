@@ -4,6 +4,7 @@ import JoinMember from "./JoinMember";
 import Join from "./Join";
 import CheckLogin from "./CheckLogin";
 import MyLogin from "./MyLogin";
+import MyLoginUpdate from "./MyLoginUpdate";
 
 function AppMember(props) {
 
@@ -16,6 +17,7 @@ function AppMember(props) {
                         <Route path={'/sign'} element={<JoinMember />} />
                         <Route path={'/main'} element={<CheckLogin />} />
                         <Route path={'/myLogin'} element={<MyLogin />} />
+                        <Route path={'/myLoginUpdate'} element={<MyLoginUpdate />} />
                     </Route>
                 </Routes>
             </BrowserRouter>

@@ -29,6 +29,7 @@ public class MemberController {
         List<MemberEntity> memberEntities = memberService.allMemberData(userId);
         result.put("login", correctId);
         result.put("name", memberEntities.get(0).getMemberName());
+        result.put("grade", memberEntities.get(0).getMemberAuthority());
         return result;
     }
 

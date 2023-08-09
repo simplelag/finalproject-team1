@@ -8,6 +8,7 @@ function CheckLogin(props) {
     const handleLogout = () => {
         sessionStorage.removeItem("id");
         sessionStorage.removeItem("name");
+        sessionStorage.removeItem("grade");
         // 일단은 로그인 페이지로 이동
         navi("/");
     }
