@@ -36,14 +36,15 @@ public class BoardControl {
     public Object boardInsert(BoardEntity boardEntity) throws Exception {
         boardService.writeBoard(boardEntity);
 
-        System.out.println(boardEntity);
-
         return "redirect:/board";
     }
 
     @RequestMapping(value = "/board/{boardPk}", method = RequestMethod.DELETE)
-    public Object boardDelete(@PathVariable("boardPk") int boardPk) throws Exception {
-        boardService.deleteBoard(boardPk);
+    public Object boardDelete(@PathVariable("boardPk") int boardPk, @RequestParam("boardWriterId") String boardWriterId) throws Exception {
+
+        if (boardWriterId.equals("testUserId")) {
+            boardService.deleteBoard(boardPk);
+        }
 
         return "redirect:/board";
     }

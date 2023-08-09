@@ -1,9 +1,9 @@
 import './App.css';
-import Main from "./pages/Main";
+import Main from "./pages/mainPages/Main";
 import ViewMain from "./pages/ViewMain";
-import BoardMain from "./pages/BoardMain";
-import BoardWrite from "./pages/BoardWrite";
-import BoardDetail from "./pages/BoardDetail";
+import BoardMain from "./pages/board/BoardMain";
+import BoardWrite from "./pages/board/BoardWrite";
+import BoardDetail from "./pages/board/BoardDetail";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import Admin from "./pages/admin/Admin";
 import QuestionDetail from "./pages/admin/QuestionDetail";
@@ -19,7 +19,6 @@ function App() {
                 <Route path={"/main/board"} element={<BoardMain />} />
                 <Route path={"/main/board/write"} element={<BoardWrite />} />
                 <Route path={"/main/board/:boardPk"} element={<BoardDetail />} />
-
             </Routes>
         </BrowserRouter>
     );
