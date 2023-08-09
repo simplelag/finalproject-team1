@@ -11,7 +11,4 @@ public interface MemberRepository extends JpaRepository<MemberEntity, String> {
     boolean existsByMemberId(@Param("userId") String userId) throws Exception;
     int countByMemberIdAndMemberPassword(String userId, String password) throws Exception;
     List<MemberEntity> findAllByMemberId(String userId) throws Exception;
-    
-//    회원 탈퇴
-//    void deleteAllByMemberIdAndMemberPassword(@Param("id") String userId, @Param("password") String password) throws Exception;
 }

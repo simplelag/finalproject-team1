@@ -67,6 +67,7 @@ public class MemberController {
             @RequestParam("password") String password
     ) throws Exception{
         MemberEntity memberEntity = new MemberEntity(userId, password);
+//        현재 delete가 그냥 삭제됨, password확인하고 삭제되는것이 아님
         memberService.memberWithDraw(memberEntity);
     }
 }
