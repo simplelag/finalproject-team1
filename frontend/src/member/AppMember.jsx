@@ -2,6 +2,7 @@ import React from 'react';
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import JoinMember from "./JoinMember";
 import Join from "./Join";
+import CheckLogin from "./CheckLogin";
 
 function AppMember(props) {
 
@@ -12,6 +13,7 @@ function AppMember(props) {
                     <Route>
                         <Route index element={<Join />}></Route>
                         <Route path={'/sign'} element={<JoinMember />} />
+                        <Route path={'/main'} element={<CheckLogin />} />
                     </Route>
                 </Routes>
             </BrowserRouter>

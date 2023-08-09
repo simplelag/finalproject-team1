@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import axios from "axios";
 import { useCookies } from 'react-cookie';
 import {Link, useNavigate} from "react-router-dom";
+import Session from 'react-session-api';
 
 function Join(props) {
 
@@ -39,13 +40,15 @@ function Join(props) {
         })
             .then(res => {
                 console.log(res);
-                if(isRemember && res.data > 0){
-                    setCookies('rememberUserId', userId);
-                } else if (!isRemember) {
-                    removeCookies("rememberUserId");
+                if(res.data > 0){
+                    alert("로그인 성공");
+                    if(isRemember){
+                        setCookies('rememberUserId', userId);
+                    } else if (!isRemember) {
+                        removeCookies("rememberUserId");
+                    }
+                    navi('/main');
                 }
-                alert("로그인 성공");
-                // navi('/');
             })
             .catch(err => {
                 console.log(err);

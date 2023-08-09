@@ -18,7 +18,7 @@ function JoinMember(props) {
     const[ password, setPassword] = useState('');
     const[ passwordRe, setPasswordRe] = useState('');
     // 비밀번호와 비밀번호 확인이 같을때만 넣을 것
-    const[ passwordCheck, setPasswordCheck ] = useState('');
+    // const[ passwordCheck, setPasswordCheck ] = useState('');
 
     // 이름
     const[name, setName] = useState('');
@@ -153,15 +153,9 @@ function JoinMember(props) {
             alert("상세주소를 입력하세요");
         } else if(!isAgree) {
             alert("약관에 동의해주세요");
-        }
-
-        if(userIdCheck === '' || userId !== userIdCheck){
+        }else if(userIdCheck === '' || userId !== userIdCheck){
             alert("아이디 중복 확인을 해주세요");
-        }
-        if(password === passwordRe){
-            setPasswordCheck(password);
-        }
-        if(userId === userIdCheck && passwordCheck !== ''){
+        }else if(userId === userIdCheck && password === passwordRe){
             axios.post("http://localhost:8080/sign/signup", null, {
                 params: {
                     userId: userId,
@@ -173,7 +167,6 @@ function JoinMember(props) {
                 }
             })
                 .then(res => {
-                    console.log(res);
                     navi('/');
                 })
                 .catch(err => {

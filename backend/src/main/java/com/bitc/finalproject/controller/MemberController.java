@@ -2,7 +2,10 @@ package com.bitc.finalproject.controller;
 
 import com.bitc.finalproject.data.entity.MemberEntity;
 import com.bitc.finalproject.service.MemberService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.Session;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -15,8 +18,16 @@ public class MemberController {
     private final MemberService memberService;
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public Object showLogin(@RequestParam("userId") String userId, @RequestParam("password") String password) throws Exception{
+    public Object showLogin(
+            @RequestParam("userId") String userId,
+            @RequestParam("password") String password,
+            HttpServletRequest req
+    ) throws Exception{
         int correctId = memberService.countMember(userId, password);
+        if(correctId > 0){
+            HttpSession session = req.getSession();
+            session.setAttribute("id", userId);
+        }
         return correctId;
     }
 
