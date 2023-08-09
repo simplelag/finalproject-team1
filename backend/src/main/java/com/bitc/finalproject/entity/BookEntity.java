@@ -24,9 +24,13 @@ public class BookEntity {
 
     private int bookstandardPrice;
 
-    private String bookCategory;
+    private String bookIsbn;
 
     private String bookcoverUrl;
+
+    private String saledateTime;
+
+    private String salepostPrice;
 
 
 }

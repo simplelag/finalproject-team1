@@ -1,7 +1,15 @@
-import React from 'react';
+import React, {useState} from 'react';
+import axios from "axios";
 
 function OldBookList() {
+    const [bookname,setBookname] = useState('');
+    const [generatedHtml,setGeneratedHtml] = useState('');
 
+    axios.get(`https://dapi.kakao.com/v3/search/book?sort=accuracy&size=1&query=${bookname}`,{headers:{Authorization:"KakaoAK b8e55ccaf5d6a1f95fcd8d593bbade59"}})
+        .then((res) =>{
+            const itemList = res.data.documents
+            let tag = ""
+        })
     return (
         <div className={"container"}>
         <div className={"row"}>

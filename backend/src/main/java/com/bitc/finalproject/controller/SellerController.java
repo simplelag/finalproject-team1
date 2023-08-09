@@ -14,14 +14,15 @@ import java.util.List;
 public class SellerController {
 
     private final SellerService sellerService;
-    @ResponseBody
-    @RequestMapping(value ="/SellerPage/{text}", method = RequestMethod.GET)
-    public Object SellerPage(@PathVariable("inputValue") String inputValue) throws Exception{
-        String url = "https://www.aladin.co.kr/ttb/api/ItemSearch.aspx?ttbkey=ttbpol03261000001&Query="+inputValue;
-        System.out.println(url);
-        List<BookEntity> bookEntityList = sellerService.SearchApi(url);
-        System.out.println(bookEntityList);
-        return bookEntityList;
 
+    @RequestMapping(value ="/bookInfo", method = RequestMethod.GET)
+    public Object SellerPage(@PathVariable("inputValue") String inputValue) throws Exception{
+        return null;
+    }
+    @RequestMapping(value = "bookInfo",method = RequestMethod.POST)
+    public Object sellBook(BookEntity bookEntity) throws Exception {
+        sellerService.updateBook(bookEntity);
+
+        return "redirect:/main";
     }
 }

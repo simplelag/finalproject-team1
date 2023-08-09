@@ -6,5 +6,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 @Service
 public interface SellerService {
-    List<BookEntity> SearchApi(String Url) throws Exception;
+//    List<BookEntity> SearchApi(String Url) throws Exception;
+
+    void updateBook(BookEntity bookEntity)throws  Exception;
 }
