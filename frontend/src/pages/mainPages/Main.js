@@ -7,13 +7,17 @@ import axios from "axios";
 
 function Main(props) {
     return (
+<<<<<<< HEAD
         <div>
 
+=======
+        <div className={'container'}>
+>>>>>>> main
             <Header />
-            <MainEventCarousel/>
-            <MainCardCarousel title={'베스트도서'} />
-            <MainCardCarousel title={'새로 등록된 도서'} />
-            <MainCardCarousel title={'추천 도서'} />
+            <MainEventCarousel />
+            <MainCardCarousel title={'베스트도서'} type={'Bestseller'} />
+            <MainCardCarousel title={'새로 등록된 도서'} type={'ItemNewAll'} />
+            <MainCardCarousel title={'추천 도서'} type={'ItemNewSpecial'} />
             <Footer />
         </div>
     );

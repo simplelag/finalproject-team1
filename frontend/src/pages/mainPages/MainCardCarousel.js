@@ -1,4 +1,6 @@
 import React, {useEffect, useState} from "react";
+import axios from "axios";
+import collapse from "bootstrap/js/src/collapse";
 
 const swiperSlide = {
     slide: {
@@ -18,6 +20,8 @@ const swiperSlide = {
 
 function MainCardCarousel(props) {
 
+    const [bookList, setBookList] = useState([]);
+
     // 스크립트 생성
     useEffect(() => {
         if (document.querySelector(
@@ -31,18 +35,30 @@ function MainCardCarousel(props) {
         document.body.appendChild(script);
     }, []);
 
+    useEffect(() => {
+        axios.get('http://localhost:8080/api', {
+            params: {
+                Type: props.type
+            }
+        })
+            .then(res => {
+                setBookList(res.data);
+            })
+    }, [])
+
+
+
     return (
         <div className={'my-3'}>
             <h1 className={'ms-5'}>{props.title}</h1>
             <swiper-container className="mySwiper" slides-per-view="4" space-between="30" navigation="true" loop="true">
-                <swiper-slide style={swiperSlide.slide}><img src="/image/1.png" style={swiperSlide.img} />책제목값 불러올 영역</swiper-slide>
-                <swiper-slide style={swiperSlide.slide}><img src="/image/1.png" style={swiperSlide.img} />책제목값 불러올 영역</swiper-slide>
-                <swiper-slide style={swiperSlide.slide}><img src="/image/1.png" style={swiperSlide.img} />책제목값 불러올 영역</swiper-slide>
-                <swiper-slide style={swiperSlide.slide}><img src="/image/1.png" style={swiperSlide.img} />책제목값 불러올 영역</swiper-slide>
-                <swiper-slide style={swiperSlide.slide}><img src="/image/1.png" style={swiperSlide.img} />책제목값 불러올 영역</swiper-slide>
-                <swiper-slide style={swiperSlide.slide}><img src="/image/1.png" style={swiperSlide.img} />책제목값 불러올 영역</swiper-slide>
-                <swiper-slide style={swiperSlide.slide}><img src="/image/1.png" style={swiperSlide.img} />책제목값 불러올 영역</swiper-slide>
-                <swiper-slide style={swiperSlide.slide}><img src="/image/1.png" style={swiperSlide.img} />책제목값 불러올 영역</swiper-slide>
+                {
+                    bookList.map(item => {
+                        return (
+                            <swiper-slide style={swiperSlide.slide}><img src={item.cover} style={swiperSlide.img} />{item.title}</swiper-slide>
+                        )
+                    })
+                }
             </swiper-container>
         </div>
     )

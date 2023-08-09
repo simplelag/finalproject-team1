@@ -39,6 +39,10 @@ dependencies {
 //	testImplementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter-test:3.0.2'
 //	testImplementation 'org.springframework.security:spring-security-test'
 
+<<<<<<< HEAD
+=======
+	implementation 'com.google.code.gson:gson:2.10.1'
+>>>>>>> main
 }
 tasks.named('test') {
 	useJUnitPlatform()
