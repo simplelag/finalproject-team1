@@ -1,19 +1,26 @@
 import React, {useState} from 'react';
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
-import ModalEx from "./ModalEx";
+import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
+import axios from "axios";
 
 
 function MyLogin(props) {
+    const navi = useNavigate();
 
     // 등급
     const [grade, setGrade] = useState(sessionStorage.getItem("grade"));
-    // 회원 탈퇴 시 비밀번호 입력
+    
+    // modal 창 사용
     const [show, setShow] = useState(false);
-
-    const handleClose = () => setShow(false);
+    const handleClose = () => {
+        setPassword('');
+        setShow(false)
+    }
     const handleShow = () => setShow(true);
+    // 회원 탈퇴 시 비밀번호 입력
     const [password, setPassword] = useState('');
 
     // 회원등급을 영어로 해서 한글로 설정하기
@@ -23,9 +30,22 @@ function MyLogin(props) {
             setGrade("일반 사용자");
     }
 
-    // 회원 탈퇴 클릭 시
+    const handlePW = (e) => {setPassword(e.target.value);}
+
     const handleWD = () => {
-        // <ModalEx />
+        axios.delete("http://localhost:8080/login/myLogin/withdraw",{
+            params:{
+                id : sessionStorage.getItem("id"),
+                password: password
+            }
+        })
+            .then(res => {
+                alert("회원을 탈퇴했습니다.")
+                navi('/login')
+            })
+            .catch(err => {
+                console.log(err);
+            })
     }
 
     return (
@@ -98,8 +118,29 @@ function MyLogin(props) {
                     </Tab>
                 </Tabs>
             </div>
+            <Modal
+                show={show}
+                onHide={handleClose}
+                backdrop="static"
+                keyboard={false}
+            >
+                <Modal.Header closeButton>
+                    <Modal.Title>회원 탈퇴</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    정말 탈퇴하겠습니까?<br />
+                    <div className={'d-flex'}>
+                    <label htmlFor={'password'} className={'form-label'}  style={{width : '30%'}}>비밀번호 입력</label>
+                    <input type={'password'} className={'form-control'} id={'password'} value={password} onChange={handlePW} />
+                    </div>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button type={'button'} variant="primary" onClick={handleWD}>회원탈퇴</Button>
+                    <Button variant="secondary" onClick={handleClose}>닫기</Button>
+                </Modal.Footer>
+            </Modal>
             <div className={'d-flex justify-content-end'}>
-                <button type={'button'} className={'btn btn-success'} onClick={handleWD}>회원 탈퇴</button>
+                <Button variant="primary" className={'btn btn-success'} onClick={handleShow}>회원 탈퇴</Button>
             </div>
         </div>
     )

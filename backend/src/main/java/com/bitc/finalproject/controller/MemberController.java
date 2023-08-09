@@ -19,17 +19,23 @@ import java.util.Map;
 public class MemberController {
     private final MemberService memberService;
 
+//    로그인 시
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public Object showLogin(
             @RequestParam("userId") String userId,
-            @RequestParam("password") String password
+            @RequestParam("password") String password,
+            HttpServletRequest req
     ) throws Exception{
+        HttpSession session = req.getSession();
         Map<Object, Object> result = new HashMap<>();
         int correctId = memberService.countMember(userId, password);
-        List<MemberEntity> memberEntities = memberService.allMemberData(userId);
+        if(correctId > 0){
+            List<MemberEntity> memberEntities = memberService.allMemberData(userId);
+            session.setAttribute("id", userId);
+            result.put("name", memberEntities.get(0).getMemberName());
+            result.put("grade", memberEntities.get(0).getMemberAuthority());
+        }
         result.put("login", correctId);
-        result.put("name", memberEntities.get(0).getMemberName());
-        result.put("grade", memberEntities.get(0).getMemberAuthority());
         return result;
     }
 
@@ -53,4 +59,40 @@ public class MemberController {
         MemberEntity memberEntity = new MemberEntity(userId, password, name, email, phone, address);
         memberService.saveMember(memberEntity);
     }
+
+//    회원정보 수정 - 회원 탈퇴
+    @RequestMapping(value = "/login/myLogin/withdraw", method = RequestMethod.DELETE)
+    public void showWithDraw(
+            @RequestParam("id") String userId,
+            @RequestParam("password") String password
+    ) throws Exception{
+        MemberEntity memberEntity = new MemberEntity(userId, password);
+        memberService.memberWithDraw(memberEntity);
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

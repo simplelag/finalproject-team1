@@ -31,4 +31,9 @@ public class MemberServiceImpl implements MemberService{
     public void saveMember(MemberEntity memberEntity) throws Exception {
         memberRepository.save(memberEntity);
     }
+
+    @Override
+    public void memberWithDraw(MemberEntity memberEntity) throws Exception {
+        memberRepository.delete(memberEntity);
+    }
 }

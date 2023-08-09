@@ -41,6 +41,11 @@ public class MemberEntity {
     private LocalDateTime memberDatetime = LocalDateTime.now();
 
     @Builder
+    public MemberEntity(String memberId, String memberPassword){
+        this.memberId = memberId;
+        this.memberPassword = memberPassword;
+    }
+    @Builder
     public MemberEntity(String memberId, String memberPassword, String memberName, String memberEmail, String memberPhone, String memberAddress){
         this.memberId = memberId;
         this.memberPassword = memberPassword;

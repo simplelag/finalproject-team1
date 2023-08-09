@@ -11,4 +11,7 @@ public interface MemberService{
 
     boolean checkId(String userId) throws Exception;
     void saveMember(MemberEntity memberEntity) throws Exception;
+
+//    회원 탈퇴
+    void memberWithDraw(MemberEntity memberEntity) throws Exception;
 }
