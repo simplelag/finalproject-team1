@@ -30,13 +30,15 @@ function MainEventCarousel(props) {
 
 
     return (
-        <swiper-container className="mySwiper" pagination="true" pagination-dynamic-bullets="true">
-            <swiper-slide style={swiperSlide.slide}><img src="/image/1.png" style={swiperSlide.img}/></swiper-slide>
-            <swiper-slide style={swiperSlide.slide}><img src="/image/1.png" style={swiperSlide.img}/></swiper-slide>
-            <swiper-slide style={swiperSlide.slide}><img src="/image/1.png" style={swiperSlide.img}/></swiper-slide>
-            <swiper-slide style={swiperSlide.slide}><img src="/image/1.png" style={swiperSlide.img}/></swiper-slide>
-            <swiper-slide style={swiperSlide.slide}><img src="/image/1.png" style={swiperSlide.img}/></swiper-slide>
-        </swiper-container>
+        <div className={'my-3'}>
+            <swiper-container className="mySwiper" pagination="true" pagination-dynamic-bullets="true">
+                <swiper-slide style={swiperSlide.slide}><img src="/image/1.png" style={swiperSlide.img}/></swiper-slide>
+                <swiper-slide style={swiperSlide.slide}><img src="/image/1.png" style={swiperSlide.img}/></swiper-slide>
+                <swiper-slide style={swiperSlide.slide}><img src="/image/1.png" style={swiperSlide.img}/></swiper-slide>
+                <swiper-slide style={swiperSlide.slide}><img src="/image/1.png" style={swiperSlide.img}/></swiper-slide>
+                <swiper-slide style={swiperSlide.slide}><img src="/image/1.png" style={swiperSlide.img}/></swiper-slide>
+            </swiper-container>
+        </div>
     );
 }
 
