@@ -14,7 +14,7 @@ function SellerPage() {
     const search = () => {
         // { withCredentials:true }
 
-        axios.get("/SellerPage2")
+        axios.get("http://localhost:8080/SellerPage")
             .then((response) => {
                 setSearchResults(response.data);
             })

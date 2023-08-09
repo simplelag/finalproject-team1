@@ -15,13 +15,13 @@ public class SellerController {
 
     private final SellerService sellerService;
 
-    @RequestMapping(value = "/SellerPage2", method = RequestMethod.GET)
+    @RequestMapping(value = "/SellerPage", method = RequestMethod.GET)
     public Object SellerPageView() throws Exception{
         return null;
     }
     @ResponseBody
-    @RequestMapping(value ="/SellerPage2", method = RequestMethod.GET)
-    public Object SellerPage(@RequestParam("inputValue") String inputValue) throws Exception{
+    @RequestMapping(value ="/SellerPage/{id}", method = RequestMethod.GET)
+    public Object SellerPage(@PathVariable("inputValue") String inputValue) throws Exception{
         String url = "https://www.aladin.co.kr/ttb/api/ItemSearch.aspx?ttbkey=ttbpol03261000001&Query="+inputValue+"&QueryType=Title&MaxResults=10&start=1&SearchTarget=Book&output=js&Version=20070901";
         System.out.println(url);
         List<BookEntity> bookEntityList = sellerService.SearchApi(url);
