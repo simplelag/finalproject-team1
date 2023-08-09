@@ -72,6 +72,7 @@ function BoardWrite(props) {
                             <button type={'button'} className={'btn'} onClick={onClickList}>목록</button>
                             <button type={'button'} className={'btn'} onClick={save}>글등록</button>
                         </div>
+
                     </div>
                 </div>
             </div>

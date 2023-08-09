@@ -23,7 +23,18 @@ public class CommentControl {
 
     @RequestMapping(value = "/board/comment/write", method = RequestMethod.POST)
     public Object commentInsert(CommentEntity commentEntity) throws Exception {
+
         commentService.writeComment(commentEntity);
+
+        return null;
+    }
+
+    @RequestMapping(value = "/board/comment/delete/{commentPk}", method = RequestMethod.DELETE)
+    public Object commentDelete(@PathVariable("commentPk") int commentPk, @RequestParam("commentWriterId") String commentWriterId) throws Exception {
+
+        if (commentWriterId.equals("testUserId")) {
+            commentService.deleteComment(commentPk);
+        }
 
         return null;
     }

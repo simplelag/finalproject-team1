@@ -11,8 +11,8 @@ function BoardDetail(props) {
 
     const [boardPk] = useState(board.boardPk);
     const [title, setTitle] = useState('');
-    const [name, setName] = useState('')
-    const [id, setId] = useState('')
+    const [name, setName] = useState('testUserName')
+    const [id, setId] = useState('testUserId')
     const [content, setContent] = useState('');
     const [category, setCategory] = useState('');
     const [visit, setVisit] = useState('');
@@ -45,8 +45,12 @@ function BoardDetail(props) {
     }
 
     // 삭제
-    const Delete = () => {
-        axios.delete(`http://localhost:8080/board/${boardPk}`)
+    const onClickDelete = () => {
+        axios.delete(`http://localhost:8080/board/${boardPk}`, {
+            params: {
+                boardWriterId: id,
+            }
+        })
             .then(res => {
                 navi('/main/board')
             })
@@ -58,7 +62,7 @@ function BoardDetail(props) {
             boardPk: boardPk,
         })
             .then(res => {
-                navi('/main/board}')
+                navi('/main/board')
             })
     }
 
@@ -87,6 +91,8 @@ function BoardDetail(props) {
                                 <button type={'button'} className={'btn'}>추천</button>
                             </div>
                             <a href={'/main/board/'} className={'btn'}>목록</a>
+                            <button type={"button"} className={'btn'}>수정</button>
+                            <button type={"button"} className={'btn'} onClick={onClickDelete}>삭제</button>
                             <a href={'/main/board/write'} className={'btn'}>글작성</a>
                         </div>
                     </div>

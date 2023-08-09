@@ -39,19 +39,21 @@ function BoardMain(props) {
                     <tbody>
                     {
                         boardList.map(item => {
-                            return (
-                                <tr key={item.boardPk}>
-                                    <td className={'text-center col-sm-1'}>{item.boardPk}</td>
-                                    <td className={'text-center col-sm-1'}>{item.boardCategory}</td>
-                                    <td>
-                                        <a href={'/main/board/' + item.boardPk} className={'btn'}>{item.boardTitle}</a>
-                                    </td>
-                                    <td className={'text-center col-sm-1'}>{item.boardWriterName}</td>
-                                    <td className={'text-center col-sm-1'}>{item.boardVisitCount}</td>
-                                    <td className={'text-center col-sm-1'}>{item.boardLike}</td>
-                                    <td className={'text-center col-sm-2'}>{item.boardDatetime}</td>
-                                </tr>
-                            )
+                            if (item.boardCategory != "관리자문의") {
+                                return (
+                                    <tr key={item.boardPk}>
+                                        <td className={'text-center col-sm-1'}>{item.boardPk}</td>
+                                        <td className={'text-center col-sm-1'}>{item.boardCategory}</td>
+                                        <td>
+                                            <a href={'/main/board/' + item.boardPk} className={'btn'}>{item.boardTitle}</a>
+                                        </td>
+                                        <td className={'text-center col-sm-1'}>{item.boardWriterName}</td>
+                                        <td className={'text-center col-sm-1'}>{item.boardVisitCount}</td>
+                                        <td className={'text-center col-sm-1'}>{item.boardLike}</td>
+                                        <td className={'text-center col-sm-2'}>{item.boardDatetime}</td>
+                                    </tr>
+                                )
+                            }
                         })
                     }
                     </tbody>

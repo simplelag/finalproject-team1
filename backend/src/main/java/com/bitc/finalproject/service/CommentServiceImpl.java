@@ -15,7 +15,7 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public List<CommentEntity> selectCommentList(int boardPk) throws Exception {
-        return commentRepository.findAllByCommentPk(boardPk);
+        return commentRepository.findAllByCommentBoardPkOrderByCommentDatetimeDesc(boardPk);
     }
 
     @Override
