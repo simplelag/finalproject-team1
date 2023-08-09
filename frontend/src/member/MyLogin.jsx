@@ -18,7 +18,7 @@ function MyLogin(props) {
                 <div className={'row'}>
                     <div className={'col-sm-5 ms-4'}>
                         <div className={'row my-4'}>
-                            <p className={'ms-3'}>회원 정보 <Link to={'myLoginUpdate'} className={'btn btn-success ms-2'}>회원정보 수정</Link></p>
+                            <p className={'ms-3'}>회원 정보 <Link to={'/login/myLoginUpdate'} className={'btn btn-success ms-2'}>회원정보 수정</Link></p>
                             <div className={'col-sm-4 text-center'}>
                                 <p>아이디</p>
                                 <p>닉네임</p>
@@ -31,11 +31,11 @@ function MyLogin(props) {
                             </div>
                         </div>
                     </div>
-                    <div className={'col-sm-6 my-4 d-grid text-center'}>
+                    <div className={'col-sm-6 my-4 ms-5 d-grid text-center'}>
                         <button type={"button"} className={'btn btn-warning'} style={{width : '75%'}}>장바구니</button>
-                        <button type={"button"} className={'btn btn-primary'}>장바구니</button>
-                        <button type={"button"} className={'btn btn-warning'}>장바구니</button>
-                        <button type={"button"} className={'btn btn-danger'}>장바구니</button>
+                        <button type={"button"} className={'btn btn-primary'} style={{width : '75%'}}>장바구니</button>
+                        <button type={"button"} className={'btn btn-warning'} style={{width : '75%'}}>장바구니</button>
+                        <button type={"button"} className={'btn btn-danger'} style={{width : '75%'}}>장바구니</button>
                     </div>
                 </div>
             </div>

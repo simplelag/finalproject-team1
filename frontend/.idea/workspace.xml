@@ -5,11 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4f6c38ee-0d61-4c77-8dfe-d013435be2cb" name="변경" comment="">
-      <change beforePath="$PROJECT_DIR$/../backend/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/.gradle/file-system.probe" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/member/AppMember.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/member/AppMember.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/member/CheckLogin.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/member/CheckLogin.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/member/Join.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/member/Join.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/member/JoinMember.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/member/JoinMember.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/member/MyLogin.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/member/MyLogin.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -89,7 +90,7 @@
       <workItem from="1691453312465" duration="907000" />
       <workItem from="1691539592970" duration="9363000" />
       <workItem from="1691553061280" duration="714000" />
-      <workItem from="1691556888887" duration="327000" />
+      <workItem from="1691556888887" duration="911000" />
     </task>
     <servers />
   </component>

@@ -49,7 +49,7 @@ function Join(props) {
                     sessionStorage.setItem("id", userId)
                     sessionStorage.setItem("name", res.data.name)
                     sessionStorage.setItem("grade",res.data.grade)
-                    navi('/main');
+                    navi('/login/main');
                 }else if(res.data.login === 0){
                     alert("로그인에 실패하셨습니다.")
                 }
@@ -78,7 +78,7 @@ function Join(props) {
                         </div>
                         <div className="my-3 d-grid gap-3">
                             <button type={'submit'} className={'btn btn-primary'} onClick={buttonOnClick}>로그인</button>
-                            <Link to={'/sign'} className={'btn btn-warning'}>회원가입</Link>
+                            <Link to={'/login/sign'} className={'btn btn-warning'}>회원가입</Link>
                             {/*<input type="hidden" th:name="${_csrf?.parameterName}" th:value="${_csrf?.token}">*/}
                         </div>
                     {/*</form>*/}

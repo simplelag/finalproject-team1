@@ -10,14 +10,14 @@ function CheckLogin(props) {
         sessionStorage.removeItem("name");
         sessionStorage.removeItem("grade");
         // 일단은 로그인 페이지로 이동
-        navi("/");
+        navi("/login");
     }
 
     return (
         <div>
             <p><span>{sessionStorage.getItem("name")}</span>님 반갑습니다.</p>
             <button type={"button"} className={"btn btn-primary"} onClick={handleLogout} >로그아웃</button>
-            <Link to={'/myLogin'} className={'btn btn-success ms-2'}>내 정보</Link>
+            <Link to={'/login/myLogin'} className={'btn btn-success ms-2'}>내 정보</Link>
         </div>
     )
 }

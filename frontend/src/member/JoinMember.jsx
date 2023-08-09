@@ -167,7 +167,7 @@ function JoinMember(props) {
                 }
             })
                 .then(res => {
-                    navi('/');
+                    navi('/login');
                 })
                 .catch(err => {
                     console.log("통신 실패");
@@ -286,7 +286,7 @@ function JoinMember(props) {
                     </div>
                     <div className={'col-sm-5 mx-auto d-grid gap-3'}>
                         <button type={'button'} className={'btn btn-primary'} onClick={btnJoinMember}>회원가입</button>
-                        <Link to={'/'} className={'btn btn-warning'}>로그인 하러가기</Link>
+                        <Link to={'/login'} className={'btn btn-warning'}>로그인 하러가기</Link>
                     </div>
                 </div>
             </div>

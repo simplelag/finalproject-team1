@@ -13,11 +13,11 @@ function AppMember(props) {
             <BrowserRouter>
                 <Routes>
                     <Route>
-                        <Route index element={<Join />}></Route>
-                        <Route path={'/sign'} element={<JoinMember />} />
-                        <Route path={'/main'} element={<CheckLogin />} />
-                        <Route path={'/myLogin'} element={<MyLogin />} />
-                        <Route path={'/myLoginUpdate'} element={<MyLoginUpdate />} />
+                        <Route path={'/login'} element={<Join />}></Route>
+                        <Route path={'/login/sign'} element={<JoinMember />} />
+                        <Route path={'/login/main'} element={<CheckLogin />} />
+                        <Route path={'/login/myLogin'} element={<MyLogin />} />
+                        <Route path={'/login/myLoginUpdate'} element={<MyLoginUpdate />} />
                     </Route>
                 </Routes>
             </BrowserRouter>
