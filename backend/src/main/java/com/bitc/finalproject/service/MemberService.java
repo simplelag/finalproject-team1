@@ -14,4 +14,5 @@ public interface MemberService{
 
 //    회원 탈퇴
     void memberWithDraw(MemberEntity memberEntity) throws Exception;
+//    int memberWithDraw(String userId, String password) throws Exception;
 }

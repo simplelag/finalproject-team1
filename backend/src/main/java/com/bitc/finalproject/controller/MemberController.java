@@ -62,13 +62,16 @@ public class MemberController {
 
 //    회원정보 수정 - 회원 탈퇴
     @RequestMapping(value = "/login/myLogin/withdraw", method = RequestMethod.DELETE)
-    public void showWithDraw(
+    public int showWithDraw(
             @RequestParam("id") String userId,
             @RequestParam("password") String password
     ) throws Exception{
         MemberEntity memberEntity = new MemberEntity(userId, password);
-//        현재 delete가 그냥 삭제됨, password확인하고 삭제되는것이 아님
-        memberService.memberWithDraw(memberEntity);
+        int correctId = memberService.countMember(userId, password);
+        if(correctId > 0){
+            memberService.memberWithDraw(memberEntity);
+        }
+        return correctId;
     }
 }
 

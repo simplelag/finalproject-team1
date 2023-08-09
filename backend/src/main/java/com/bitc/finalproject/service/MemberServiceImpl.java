@@ -32,6 +32,11 @@ public class MemberServiceImpl implements MemberService{
         memberRepository.save(memberEntity);
     }
 
+//    @Override
+//    public int memberWithDraw(String userId, String password) throws Exception {
+//        return memberRepository.removeByMemberIdAndMemberPassword(userId, password);
+//    }
+
     @Override
     public void memberWithDraw(MemberEntity memberEntity) throws Exception {
         memberRepository.delete(memberEntity);

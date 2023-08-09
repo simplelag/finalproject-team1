@@ -40,8 +40,12 @@ function MyLogin(props) {
             }
         })
             .then(res => {
-                alert("회원을 탈퇴했습니다.")
-                navi('/login')
+                if(res.data > 0){
+                    alert("회원을 탈퇴했습니다.")
+                    navi('/login')
+                }else if(res.data === 0){
+                    alert("비밀번호가 틀렸습니다.");
+                }
             })
             .catch(err => {
                 console.log(err);
