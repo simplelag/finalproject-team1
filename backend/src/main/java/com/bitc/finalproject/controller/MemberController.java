@@ -8,7 +8,9 @@ import lombok.RequiredArgsConstructor;
 import org.hibernate.Session;
 import org.springframework.web.bind.annotation.*;
 
+import javax.naming.Name;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RequiredArgsConstructor
@@ -20,15 +22,14 @@ public class MemberController {
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public Object showLogin(
             @RequestParam("userId") String userId,
-            @RequestParam("password") String password,
-            HttpServletRequest req
+            @RequestParam("password") String password
     ) throws Exception{
+        Map<Object, Object> result = new HashMap<>();
         int correctId = memberService.countMember(userId, password);
-        if(correctId > 0){
-            HttpSession session = req.getSession();
-            session.setAttribute("id", userId);
-        }
-        return correctId;
+        List<MemberEntity> memberEntities = memberService.allMemberData(userId);
+        result.put("login", correctId);
+        result.put("name", memberEntities.get(0).getMemberName());
+        return result;
     }
 
 //    회원가입

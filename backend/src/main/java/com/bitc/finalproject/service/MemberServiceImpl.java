@@ -5,6 +5,8 @@ import com.bitc.finalproject.data.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @Service
 public class MemberServiceImpl implements MemberService{
@@ -14,6 +16,11 @@ public class MemberServiceImpl implements MemberService{
     @Override
     public int countMember(String userId, String password) throws Exception {
         return memberRepository.countByMemberIdAndMemberPassword(userId, password);
+    }
+
+    @Override
+    public List<MemberEntity> allMemberData(String userId) throws Exception {
+        return memberRepository.findAllByMemberId(userId);
     }
 
     @Override
