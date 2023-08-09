@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.swing.*;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -24,8 +25,10 @@ public class BoardEntity {
     @Column(nullable = false)
     private String boardTitle;
 
+    @Column(nullable = false)
     private String boardWriterId;
 
+    @Column(nullable = false)
     private String boardWriterName;
 
     @Column(nullable = false)

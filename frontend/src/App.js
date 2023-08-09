@@ -6,6 +6,7 @@ import BoardWrite from "./pages/BoardWrite";
 import BoardDetail from "./pages/BoardDetail";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import Admin from "./pages/admin/Admin";
+import QuestionDetail from "./pages/admin/QuestionDetail";
 
 
 function App() {
@@ -13,7 +14,8 @@ function App() {
         <BrowserRouter>
             <Routes>
                 <Route path={"/admin"} element={<Admin id={"admin"}/>} />
-                <Route path={"/main"} element={<Main />} />
+                <Route path={"/admin/question/:boardPk"} element={<QuestionDetail />} />
+                <Route path={"/"} element={<Main />} />
                 <Route path={"/main/board"} element={<BoardMain />} />
                 <Route path={"/main/board/write"} element={<BoardWrite />} />
                 <Route path={"/main/board/:boardPk"} element={<BoardDetail />} />
