@@ -2,8 +2,9 @@ import React, {useEffect, useState} from "react";
 
 import {useNavigate, useParams} from "react-router-dom";
 import axios from "axios";
-import Header from "../Header";
-import Footer from "../Footer";
+import Header from "../mainPages/Header";
+import Footer from "../mainPages/Footer";
+
 
 function QuestionDetail(props) {
 

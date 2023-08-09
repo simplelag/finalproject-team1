@@ -1,10 +1,12 @@
 import React, {useState, useEffect} from 'react';
-import Header from "../Header";
-import Footer from "../Footer";
+
 import axios from "axios";
 import MemberView from "./MemberView";
 import QuestionView from "./QuestionView";
 import ItemView from "./ItemView";
+import Footer from "../mainPages/Footer";
+import Header from "../mainPages/Header";
+
 
 function Admin(props) {
     const pid = props.id;
@@ -29,7 +31,7 @@ function Admin(props) {
             })
     }, [])
 
-    return (
+    let div = <>
         <div>
             <Header/>
             <div className={"container"}>
@@ -63,7 +65,8 @@ function Admin(props) {
                                         setMemberView(false);
                                         setQuestionView(false);
                                         setItemView(true)
-                                }}>상품관리</button>
+                                    }}>상품관리
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -77,7 +80,8 @@ function Admin(props) {
             </div>
             <Footer/>
         </div>
-    );
+    </>;
+    return div;
 }
 
 export default Admin;
