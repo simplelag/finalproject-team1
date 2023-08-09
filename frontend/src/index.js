@@ -4,18 +4,11 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.css'
-import SellerPage from "./pages/SellerPage";
-import ShoppingBasket from "./pages/ShoppingBasket";
-import BookDetailPage from "./pages/BookDetailPage";
-import OldBookList from "./pages/OldBookList";
-import Main from "./pages/Main";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <React.StrictMode>
-        <Main/>
-        {/*<BookDetailPage/>*/}
-        {/*<OldBookList/>*/}
+        <App />
     </React.StrictMode>
 );
 

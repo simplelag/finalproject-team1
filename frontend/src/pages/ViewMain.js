@@ -1,6 +1,6 @@
 import React from "react";
-import Header from "./Header";
-import Footer from "./Footer";
+import Header from "./mainPages/Header";
+import Footer from "./mainPages/Footer";
 import ViewMainList from "./ViewMainList";
 
 function ViewMain(props) {
