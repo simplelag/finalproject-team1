@@ -13,7 +13,7 @@ function App() {
     return (
         <BrowserRouter>
             <Routes>
-                <Route path={"/admin"} element={<Admin id={"admin"}/>} />
+                <Route path={"/admin"} element={<Admin />} />
                 <Route path={"/admin/question/:boardPk"} element={<QuestionDetail />} />
                 <Route path={"/"} element={<Main />} />
                 <Route path={"/main/board"} element={<BoardMain />} />

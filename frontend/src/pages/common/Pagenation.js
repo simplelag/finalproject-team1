@@ -87,17 +87,23 @@ function Pagenation(props) {
     }
 
     return (
-        btns.map(item => {
-            return (
-                <button
-                    key={item}
-                    onClick={() => {
-                        setPageNowState(item)
-                    }}
-                    className={"btn" + (item == pageNow ? " active" : "")}
-                >{item}</button>
-            )
-        })
+        <div className={"d-flex justify-content-between"}>
+            <div></div>
+            <div>{
+                btns.map(item => {
+                    return (
+                        <button
+                            key={item}
+                            onClick={() => {
+                                setPageNowState(item)
+                            }}
+                            className={"btn" + (item == pageNow ? " active" : "")}
+                        >{item}</button>
+                    )
+                })
+            }</div>
+            <div></div>
+        </div>
     )
 }
 

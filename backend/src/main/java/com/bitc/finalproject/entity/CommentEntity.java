@@ -35,4 +35,5 @@ public class CommentEntity {
     private LocalDateTime commentDatetime = LocalDateTime.now();
 
     private int commentNum;
+
 }

@@ -9,7 +9,11 @@ import Header from "../mainPages/Header";
 
 
 function Admin(props) {
-    const pid = props.id;
+    const pid = sessionStorage.getItem("id");
+    const pgrade = sessionStorage.getItem("grade");
+    if(pgrade != "admin"){
+        window.location.href = "/";
+    }
     const [id, setId] = useState(pid);
     const [name, setName] = useState("");
     const [grade, setGrade] = useState("");
