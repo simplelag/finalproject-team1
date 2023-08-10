@@ -8,15 +8,27 @@ import axios from "axios";
 //     numberUrl={"/api/admin/getQuestionNumber"} // 보여줄 게시글 리스트의 총 개수를 반환해주는 컨트롤러 주소
 //     howManyContentsInAPage={qNum} // 한 페이지당 보여줄 게시글 갯수
 //     howManyPagesInABlock={size} // 한 번에 표시할 페이지 버튼 개수
+//     searchType={["제목","내용","제목+내용","작성자"]} // 검색종류, 빈 배열이면 select 태그를 표시하지 않으며 검색내용은 content 라는 파라미터에 저장되어 서버 전달됨
 // />
 
 function Pagenation(props) {
-
 
     const url = props.url;
     const numberUrl = props.numberUrl;
     const howManyContentsInAPage = props.howManyContentsInAPage;
     const howManyPagesInABlock = props.howManyPagesInABlock;
+    const searchType = props.searchType;
+    let searchSelect = false;
+    if(searchType.length != 0){searchSelect = true;}
+
+    const [title, setTitle] = useState("");
+    const [name, setName] = useState("");
+    const [content, setContent] = useState("");
+    const [text, setText] = useState("");
+    const [searchTypeNow, setSearchTypeNow] = useState(searchSelect? searchType[0] : "내용");
+    // let searchTypeNow = searchSelect? searchType[0] : "내용";
+
+
     const [pageNow, setPageNow] = useState(1);
     const [howManyTotalContents, setHowManyTotalContents] = useState(0);
     let lastPage = Math.ceil(howManyTotalContents / howManyContentsInAPage)
@@ -29,7 +41,13 @@ function Pagenation(props) {
 
     const howMany = () => {
         let result = 1;
-        axios.get(numberUrl)
+        axios.get(numberUrl,{
+            params:{
+                title: title,
+                name: name,
+                content: content
+            }
+        })
             .then(res => {
                 result = res.data;
                 setHowManyTotalContents(result);
@@ -42,7 +60,16 @@ function Pagenation(props) {
         let page = pageNow;
 
         axios.get(url,
-            {params: {page: page - 1, size: howManyContentsInAPage, sort: "boardPk,DESC"}})
+            {
+                params: {
+                    page: page - 1,
+                    size: howManyContentsInAPage,
+                    sort: "boardPk,DESC",
+                    title: title,
+                    name: name,
+                    content: content
+                }
+            })
             .then(res => {
                 setBoardList(res.data);
             })
@@ -73,8 +100,12 @@ function Pagenation(props) {
         firstPageAtThisBlock = Math.floor((pageNow - 1) / (howManyPagesInABlock)) * howManyPagesInABlock + 1;
         getQuestions();
         pageBtnArrSet();
-
-    }, [pageNow, howManyTotalContents]);
+        console.log("============== search ===============");
+        console.log(`searchTypeNow : ${searchTypeNow}`);
+        console.log(`title : ${title}`);
+        console.log(`content : ${content}`);
+        console.log(`name : ${name}`);
+    }, [pageNow, howManyTotalContents, title, name, content]);
 
     const setPageNowState = (item) => {
         if (item === "<") {
@@ -85,6 +116,27 @@ function Pagenation(props) {
             setPageNow(item)
         }
     }
+
+    const handleTextChange = e => {
+        setText(e.target.value);
+    }
+
+    const handleSearchTypeChange = e => {
+        // searchTypeNow = e.target.value;
+        setSearchTypeNow(e.target.value);
+
+    }
+
+    const doSearch = () => {
+
+        switch (searchTypeNow) {
+            case "제목": setTitle(text);setName("");setContent("");break;
+            case "내용": setTitle("");setName("");setContent(text);break;
+            case "제목+내용": setTitle(text);setName("");setContent(text);break;
+            case "작성자": setTitle("");setName(text);setContent("");break;
+        }
+    }
+
 
     return (
         <div className={"d-flex justify-content-between"}>
@@ -102,8 +154,26 @@ function Pagenation(props) {
                     )
                 })
             }</div>
-            <div></div>
+            <div>
+                {searchSelect && <SearchSelect handleSearchTypeChange={handleSearchTypeChange} searchType={searchType}/>}
+                <input type="text" value={text} onChange={handleTextChange}/>
+                <button type={"button"} onClick={doSearch}>검색</button>
+            </div>
         </div>
+    )
+}
+
+function SearchSelect(props) {
+    const handleSearchTypeChange = props.handleSearchTypeChange;
+    const searchType = props.searchType;
+    return (
+        <select name="searchTypeSelect" id="searchTypeSelect" onChange={handleSearchTypeChange}>
+            {
+                searchType.map(item => {
+                    return <option key={item} value={item}>{item}</option>
+                })
+            }
+        </select>
     )
 }
 

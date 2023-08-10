@@ -36,11 +36,12 @@ function QuestionView(props) {
                 </tbody>
             </table>
             <Pagenation
-                setList={setBoardList} // 보여줄 게시글 리스트를 설정하는 setList에 원하는 useState를 넘겨줌
-                url={"/api/admin/getQuestions"} // 보여줄 게시글 리스트를 반환해주는 컨트롤러 주소(한번에 한페이지만 불러옴)
-                numberUrl={"/api/admin/getQuestionNumber"} // 보여줄 게시글 리스트의 총 개수를 반환해주는 컨트롤러 주소
-                howManyContentsInAPage={qNum} // 한 페이지당 보여줄 게시글 갯수
-                howManyPagesInABlock={size} // 한 번에 표시할 페이지 버튼 개수
+                setList={setBoardList}
+                url={"/api/admin/getQuestions"}
+                numberUrl={"/api/admin/getQuestionNumber"}
+                howManyContentsInAPage={qNum}
+                howManyPagesInABlock={size}
+                searchType={["제목","내용","제목+내용","작성자"]}
             />
         </div>
     );

@@ -7,6 +7,6 @@ import org.springframework.data.domain.Pageable;
 import java.util.List;
 
 public interface AdminService {
-    int getQuestionNum() throws Exception;
-    List<BoardDto> findBoardList(Pageable pageable) throws Exception;
+    int getQuestionNum(String boardTitle, String boardWriterName, String boardContent) throws Exception;
+    List<BoardDto> findBoardList(String boardTitle, String boardWriterName, String boardContent, Pageable pageable) throws Exception;
 }
