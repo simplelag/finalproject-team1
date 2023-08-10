@@ -1,14 +1,45 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
+import axios from "axios";
 
 function BookDetailPage() {
+    const [BookIsbn,setBookIsbn] = useState('해리 포터');
+    const [BookInfo,setBookInfo] = useState([]);
+    const [Booktitle,setBooktitle] = useState('');
+    const [Booksubtitle,setBooksubtitle] = useState('');
+    const [autohr,setauthor] = useState('');
+    const [Bookpublisher,setBookpublisher] = useState('');
+    const [pubdate,setpubdate] = useState('');
+    const [pricestandard,setpricestandard] = useState('');
+    const [cover,setcover] = useState('');
 
+
+    useEffect(() =>{
+        axios.get('http://localhost:8080/searchNoType',{
+            params:{
+                SearchType: BookIsbn
+            }
+        })
+            .then(res => {
+                setBookInfo(res.data);
+                console.log(BookInfo)
+                setcover(BookInfo.cover);
+                setauthor(BookInfo.author);
+                setpubdate(BookInfo.pubDate);
+                setBookpublisher(BookInfo.publisher)
+                setBooktitle(BookInfo.title)
+
+            })
+            .catch(error => {
+                console.log('Error fetching book data',error)
+            })
+    },[]);
     return (
         <div className={"container"}>
             <div className={"left mt-5"}>
                 <ul style={{listStyleType: "none"}}>
                     <li>
                         <div>
-                            <a href="#" className={"text-decoration-none ms-2"} style={{color: "black"}}>책 제목</a>
+                            <a href="#" className={"text-decoration-none ms-2"} style={{color: "black"}}>책 제목:</a>
                             "-"
                             <span className={"text-decoration-none"} style={{color: "black"}}>책 부제목</span>
                         </div>

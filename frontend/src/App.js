@@ -7,7 +7,8 @@ import BoardDetail from "./pages/board/BoardDetail";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import Admin from "./pages/admin/Admin";
 import QuestionDetail from "./pages/admin/QuestionDetail";
-import SellerPage from "./pages/SellerPage";
+import SellerPage from "./pages/seller/SellerPage";
+import BookDetailPage from "./pages/seller/BookDetailPage";
 
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
                 <Route path={"/SellerPage"} element={<SellerPage />} />
                 <Route path={"/main/board/write"} element={<BoardWrite />} />
                 <Route path={"/main/board/:boardPk"} element={<BoardDetail />} />
+                <Route path={"/BookDetailPage"} element={<BookDetailPage/>}/>
             </Routes>
         </BrowserRouter>
     );

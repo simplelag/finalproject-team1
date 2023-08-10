@@ -28,18 +28,26 @@ public class APIControl {
     // 검색 api
     @RequestMapping(value = "/search", method = RequestMethod.GET)
     public Object BookSearchApi(@RequestParam("SearchType") String searchType) throws Exception {
-        String url = "https://www.aladin.co.kr/ttb/api/ItemSearch.aspx?ttbkey=ttbjhyoon4250959001&Query=aladdin&QueryType="+ searchType +"&MaxResults=10&start=1&SearchTarget=Book&output=js&Version=20131101&Cover=Big";
+        String url = "https://www.aladin.co.kr/ttb/api/ItemSearch.aspx?ttbkey=ttbjhyoon4250959001&Query="+ searchType +"&MaxResults=10&start=1&SearchTarget=Book&output=js&Version=20131101&Cover=Big";
 
         List<ProductItem> itemList = bookService.getItemList(url);
 
         return itemList;
     }
 
+    @RequestMapping(value = "/searchNoType", method = RequestMethod.GET)
+    public Object BookSearchnoType(@RequestParam("SearchType") String searchType) throws Exception {
+        String url = "https://www.aladin.co.kr/ttb/api/ItemSearch.aspx?ttbkey=ttbjhyoon4250959001&Query="+ searchType +"&MaxResults=1&start=1&SearchTarget=Book&output=js&Version=20131101&Cover=Big";
+
+        List<ProductItem> itemList = bookService.getItemList(url);
+
+        return itemList;
+    }
     // 상품(1개)조회 api
-    @RequestMapping(value = "", method = RequestMethod.GET)
+    @RequestMapping(value = "/searchIsbn", method = RequestMethod.GET)
     public Object BookApi(@RequestParam("ISBN") int isbn) throws Exception {
         String url = "https://www.aladin.co.kr/ttb/api/ItemLookUp.aspx?ttbkey=ttbjhyoon4250959001&itemIdType=ISBN&ItemId="+ isbn +"&output=js&Version=20131101&Cover=Big";
-
-        return null;
+        List<ProductItem> itemList = bookService.getItemList(url);
+        return  itemList;
     }
 }

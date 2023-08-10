@@ -6,8 +6,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 @Entity
-@Table(name = "book")
+@Table(name = "sale")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -17,20 +19,35 @@ public class BookEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private  int bookPk;
     @Column(nullable = false)
-
     private String bookTitle;
-
-    private String bookAuthor;
-
+    @Column(nullable = false)
+    private String bookCover;
+    @Column(nullable = false)
+    private String sellerId;
+    @Column(nullable = false)
+    private String sellerName;
+//    @Column(nullable = false)
+//    private String bookAuthor;
+    @Column(nullable = false)
+    private int bookPrice;
+    @Column(nullable = false)
+    private LocalDateTime dateTime =  LocalDateTime.now();;
+    private int bookPieces;
+    @Column(nullable = false)
     private int bookstandardPrice;
-
-    private String bookIsbn;
-
-    private String bookcoverUrl;
-
-    private String saledateTime;
-
+    @Column(nullable = false)
+    private int bookIsbn;
+    @Column(nullable = false)
     private String salepostPrice;
+
+    @Column(nullable = false)
+    private int bookGrade;
+
+    private String disabled;
+
+    private String bookdiscription;
+
+
 
 
 }

@@ -25,4 +25,5 @@ public class ProductItem {
     private boolean adult;
     private boolean fixedPrice;
     private int customerReviewRank;
+    private int itempage;
 }
