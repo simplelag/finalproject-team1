@@ -5,11 +5,7 @@ import Pagenation from "../common/Pagenation";
 function QuestionView(props) {
     const [boardList, setBoardList] = useState([]);
     const [qNum, setQNum] = useState(3);
-
     const [size, setSize] = useState(5);
-
-
-
     return (
         <div>
             <table className={'table'}>
@@ -28,7 +24,8 @@ function QuestionView(props) {
                             <tr key={item.boardPk}>
                                 <td>{item.boardPk}</td>
                                 <td>
-                                    <a href={'/admin/question/' + item.boardPk} className={'btn'}>{item.boardTitle}</a>
+                                    <a href={'/admin/question/' + item.boardPk} className={'btn'}>{item.boardTitle}
+                                        {item.commentNumber==0 ? "" : ` (${item.commentNumber})`}</a>
                                 </td>
                                 <td>{item.boardWriterName}</td>
                                 <td>{item.boardDatetime}</td>

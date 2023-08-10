@@ -1,7 +1,14 @@
 import React, {useState, useEffect} from 'react';
 import button from "bootstrap/js/src/button";
 import axios from "axios";
-import collapse from "bootstrap/js/src/collapse";
+
+// <Pagenation
+//     setList={setBoardList} // 보여줄 게시글 리스트를 설정하는 setList에 원하는 useState를 넘겨줌
+//     url={"/api/admin/getQuestions"} // 보여줄 게시글 리스트를 반환해주는 컨트롤러 주소(한번에 한페이지만 불러옴)
+//     numberUrl={"/api/admin/getQuestionNumber"} // 보여줄 게시글 리스트의 총 개수를 반환해주는 컨트롤러 주소
+//     howManyContentsInAPage={qNum} // 한 페이지당 보여줄 게시글 갯수
+//     howManyPagesInABlock={size} // 한 번에 표시할 페이지 버튼 개수
+// />
 
 function Pagenation(props) {
 
@@ -66,6 +73,7 @@ function Pagenation(props) {
         firstPageAtThisBlock = Math.floor((pageNow - 1) / (howManyPagesInABlock)) * howManyPagesInABlock + 1;
         getQuestions();
         pageBtnArrSet();
+
     }, [pageNow, howManyTotalContents]);
 
     const setPageNowState = (item) => {
@@ -79,17 +87,23 @@ function Pagenation(props) {
     }
 
     return (
-        btns.map(item => {
-            return (
-                <button
-                    key={item}
-                    onClick={() => {
-                        setPageNowState(item)
-                    }}
-                    className={"btn" + (item == pageNow ? " active" : "")}
-                >{item}</button>
-            )
-        })
+        <div className={"d-flex justify-content-between"}>
+            <div></div>
+            <div>{
+                btns.map(item => {
+                    return (
+                        <button
+                            key={item}
+                            onClick={() => {
+                                setPageNowState(item)
+                            }}
+                            className={"btn" + (item == pageNow ? " active" : "")}
+                        >{item}</button>
+                    )
+                })
+            }</div>
+            <div></div>
+        </div>
     )
 }
 
