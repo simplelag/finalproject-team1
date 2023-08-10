@@ -38,7 +38,6 @@ function BoardWrite(props) {
                 boardWriterId: id ,
                 boardWriterName: name,
                 boardContent: content,
-
             }
         })
             .then(() => {

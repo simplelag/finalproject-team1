@@ -7,12 +7,7 @@ import axios from "axios";
 
 function Main(props) {
     return (
-<<<<<<< HEAD
-        <div>
-
-=======
         <div className={'container'}>
->>>>>>> main
             <Header />
             <MainEventCarousel />
             <MainCardCarousel title={'베스트도서'} type={'Bestseller'} />

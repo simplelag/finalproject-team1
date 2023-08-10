@@ -6,15 +6,10 @@ import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.css'
 import AppMember from "./member/AppMember";
 
-
-import SellerPage from "./pages/SellerPage";
-
-
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <React.StrictMode>
-
-        <App/>
+        <App />
         <AppMember />
     </React.StrictMode>
 );

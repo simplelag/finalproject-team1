@@ -34,15 +34,10 @@ dependencies {
 	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	implementation 'com.google.code.gson:gson:2.10.1'
-	implementation 'jakarta.activation:jakarta.activation-api:2.1.2'
 //	testImplementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter-test:3.0.2'
 //	testImplementation 'org.springframework.security:spring-security-test'
 
-<<<<<<< HEAD
-=======
 	implementation 'com.google.code.gson:gson:2.10.1'
->>>>>>> main
 }
 tasks.named('test') {
 	useJUnitPlatform()

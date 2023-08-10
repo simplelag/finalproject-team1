@@ -5,12 +5,9 @@ import BoardMain from "./pages/board/BoardMain";
 import BoardWrite from "./pages/board/BoardWrite";
 import BoardDetail from "./pages/board/BoardDetail";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
-import SellerPage from "./pages/SellerPage";
-import OldBookList from "./pages/OldBookList";
-import BookDetailPage from "./pages/BookDetailPage";
 import Admin from "./pages/admin/Admin";
 import QuestionDetail from "./pages/admin/QuestionDetail";
-
+import SellerPage from "./pages/SellerPage";
 
 
 function App() {
@@ -21,11 +18,9 @@ function App() {
                 <Route path={"/admin/question/:boardPk"} element={<QuestionDetail />} />
                 <Route path={"/"} element={<Main />} />
                 <Route path={"/main/board"} element={<BoardMain />} />
+                <Route path={"/SellerPage"} element={<SellerPage />} />
                 <Route path={"/main/board/write"} element={<BoardWrite />} />
                 <Route path={"/main/board/:boardPk"} element={<BoardDetail />} />
-                <Route path={"/SellerPage"} element={<SellerPage />}/>
-                <Route path={"/OldBookList"} element={<OldBookList />}/>
-                <Route path={"/BookDetailPage"} element={<BookDetailPage />}/>
             </Routes>
         </BrowserRouter>
     );
