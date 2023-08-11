@@ -8,19 +8,15 @@ import ViewMainList from "./pages/searchResult/ViewMainList";
 import ViewBestList from "./pages/searchResult/ViewBestList";
 import Admin from "./pages/admin/Admin";
 import QuestionDetail from "./pages/admin/QuestionDetail";
-import Join from "./pages/member/Join";
-import JoinMember from "./pages/member/JoinMember";
-import CheckLogin from "./pages/member/CheckLogin";
-import MyLogin from "./pages/member/MyLogin";
-import MyLoginUpdate from "./pages/member/MyLoginUpdate";
-import React from "react";
-
-
+import SellerPage from "./pages/seller/SellerPage";
+import BookDetailPage from "./pages/seller/BookDetailPage";
 
 function App() {
     return (
         <BrowserRouter>
             <Routes>
+                <Route path={"/sellerPage"} element={<SellerPage />} />
+                <Route path={"/bookDetailPage"} element={<BookDetailPage />}/>
                 <Route path={"/"} element={<Main />} />
                 <Route path={"/board"} element={<BoardMain />} />
                 <Route path={"/board/write"} element={<BoardWrite />} />
@@ -29,11 +25,6 @@ function App() {
                 <Route path={"/best"} element={<ViewBestList />} />
                 <Route path={"/admin"} element={<Admin id={"admin"}/>} />
                 <Route path={"/admin/question/:boardPk"} element={<QuestionDetail />} />
-                <Route path={'/login'} element={<Join />}></Route>
-                <Route path={'/login/sign'} element={<JoinMember />} />
-                <Route path={'/login/main'} element={<CheckLogin />} />
-                <Route path={'/login/myLogin'} element={<MyLogin />} />
-                <Route path={`/login/myLogin/myUserUpdate`} element={<MyLoginUpdate />} />
             </Routes>
         </BrowserRouter>
     );

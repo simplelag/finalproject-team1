@@ -3,11 +3,11 @@ package com.bitc.finalproject.dto;
 import lombok.Data;
 
 @Data
-public class ProductItem {
+public class SearchItemDto {
     private String title;
     private String link;
     private String author;
-    private String pubDate;
+    private String pubData;
     private String description;
     private String isbn;
     private String isbn13;
