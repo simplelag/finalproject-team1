@@ -88,12 +88,6 @@ function MyLoginUpdate(props) {
                 setZoneCode(zonecode)
                 setRoadAddress(address)
                 setRoadAddressDetail(addDetail)
-
-                console.log(res)
-            })
-            .catch(err => {
-                console.log("통신 실패")
-                console.log(err)
             })
     }, [])
 
@@ -298,10 +292,6 @@ function MyLoginUpdate(props) {
             })
                 .then(res => {
                     navi('/login');
-                })
-                .catch(err => {
-                    console.log("통신 실패");
-                    console.log(err);
                 })
         }
     }

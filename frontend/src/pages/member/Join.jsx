@@ -38,9 +38,7 @@ function Join(props) {
             }
         })
             .then(res => {
-                console.log(res);
                 if(res.data.login > 0){
-                    alert("로그인 성공");
                     if(isRemember){
                         setCookies('rememberUserId', userId);
                     } else if (!isRemember) {
@@ -53,9 +51,6 @@ function Join(props) {
                 }else if(res.data.login === 0){
                     alert("로그인에 실패하셨습니다.")
                 }
-            })
-            .catch(err => {
-                console.log(err);
             })
     }
 

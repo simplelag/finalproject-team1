@@ -5,7 +5,7 @@ import Tabs from 'react-bootstrap/Tabs';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import axios from "axios";
-import {useCookies} from "react-cookie";
+import {Cookies} from "react-cookie";
 
 
 function MyLogin(props) {
@@ -17,7 +17,7 @@ function MyLogin(props) {
     const [grade, setGrade] = useState(sessionStorage.getItem("grade"));
 
     // 회원 탈퇴 시 쿠키 삭제
-    const [cookies, setCookies, removeCookies] = useCookies(['rememberUserId']);
+    const cookie = new Cookies()
     
     // modal 창 사용
     const [show, setShow] = useState(false);
@@ -48,14 +48,11 @@ function MyLogin(props) {
             .then(res => {
                 if(res.data > 0){
                     alert("회원을 탈퇴했습니다.")
-                    removeCookies("rememberUserId");
+                    cookie.remove('rememberUserId',{path: '/'})
                     navi('/login')
                 }else if(res.data === 0){
                     alert("비밀번호가 틀렸습니다.");
                 }
-            })
-            .catch(err => {
-                console.log(err);
             })
     }
 

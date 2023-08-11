@@ -104,9 +104,6 @@ function JoinMember(props) {
                     setUserIdCheck(userId);
                 }
             })
-            .catch(err => {
-                console.log("통신 실패");
-            })
     }
 
     // 비밀번호랑 비밀번호 확인이랑 같은지 확인
@@ -210,7 +207,6 @@ function JoinMember(props) {
     // 클릭 시 팝업창(검색창)
     const handleComplete = (data) => {
         let roadAddress = data.address;
-        let jibunAddress = data.jibunAddress;
         let extraAddress = '';
 
         if (data.addressType === 'R') {
@@ -287,10 +283,6 @@ function JoinMember(props) {
             })
                 .then(res => {
                     navi('/login');
-                })
-                .catch(err => {
-                    console.log("통신 실패");
-                    console.log(err);
                 })
         }
     }
