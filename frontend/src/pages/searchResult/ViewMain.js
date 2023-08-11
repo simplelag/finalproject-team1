@@ -1,9 +1,11 @@
 import React from "react";
-import Header from "./mainPages/Header";
-import Footer from "./mainPages/Footer";
+import Header from "../mainPages/Header";
+import Footer from "../mainPages/Footer";
 import ViewMainList from "./ViewMainList";
 
 function ViewMain(props) {
+
+    
 
     return (
         <div>
