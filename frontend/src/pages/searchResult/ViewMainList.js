@@ -10,9 +10,6 @@ function ViewMainList(props) {
 
     const location = useLocation();
 
-    console.log(location.state.total)
-
-
     return (
         <div className={'container'}>
             <Header />

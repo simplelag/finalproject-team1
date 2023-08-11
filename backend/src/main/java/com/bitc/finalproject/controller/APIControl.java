@@ -1,10 +1,8 @@
 package com.bitc.finalproject.controller;
 
-import com.bitc.finalproject.dto.ProductItem;
 import com.bitc.finalproject.dto.ProductObject;
 import com.bitc.finalproject.service.BookService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Struct;
