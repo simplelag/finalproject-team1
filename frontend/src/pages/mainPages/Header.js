@@ -8,7 +8,7 @@ function Header(props) {
         <header>
             <div className={'container'}>
                 <div className="d-flex">
-                    <h2><a href={"/main"}>HOME</a></h2>
+                    <h2><a href={"/"}>HOME</a></h2>
                     <input type={'search'} className={'form-control justify-content-center'}/>
                     <button type={'submit'} className={'btn justify-content-center'}>검색</button>
                     <button type={'button'} className={'btn justify-content-end'}><BsCart2 /></button>

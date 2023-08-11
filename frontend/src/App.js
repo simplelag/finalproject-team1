@@ -18,6 +18,7 @@ function App() {
         <BrowserRouter>
             <Routes>
                 <Route path={"/SellerPage"} element={<SellerPage />} />
+                <Route path={"/BookDetailPage"} element={<BookDetailPage />}/>
                 <Route path={"/BookDetailPage"} element={<BookDetailPage/>}/>
                 <Route path={"/"} element={<Main />} />
                 <Route path={"/board"} element={<BoardMain />} />
