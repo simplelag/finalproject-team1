@@ -15,7 +15,6 @@ function App() {
     return (
         <BrowserRouter>
             <Routes>
-
                 <Route path={"/"} element={<Main />} />
                 <Route path={"/board"} element={<BoardMain />} />
                 <Route path={"/board/write"} element={<BoardWrite />} />
