@@ -20,7 +20,7 @@ public class BookServiceImpl implements BookService {
 
         List<ProductItem> itemList = null;
         URL urlContainer = null;
-        HttpURLConnection urlConnection = null;
+        HttpURLConnection urlConnection = null;Wz
         BufferedReader reader = null;
 
         try {
@@ -28,7 +28,7 @@ public class BookServiceImpl implements BookService {
             urlConnection = (HttpURLConnection) urlContainer.openConnection();
             urlConnection.setRequestMethod("GET");
 
-            reader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
+            reader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream(), "UTF-8"));
 
             StringBuilder stringBuilder = new StringBuilder();
             String item;

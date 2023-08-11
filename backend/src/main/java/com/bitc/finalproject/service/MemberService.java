@@ -1,6 +1,6 @@
 package com.bitc.finalproject.service;
 
-import com.bitc.finalproject.data.entity.MemberEntity;
+import com.bitc.finalproject.entity.MemberEntity;
 
 import java.util.List;
 

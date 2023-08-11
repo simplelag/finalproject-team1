@@ -1,7 +1,7 @@
 package com.bitc.finalproject.service;
 
-import com.bitc.finalproject.data.entity.MemberEntity;
-import com.bitc.finalproject.data.repository.MemberRepository;
+import com.bitc.finalproject.entity.MemberEntity;
+import com.bitc.finalproject.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

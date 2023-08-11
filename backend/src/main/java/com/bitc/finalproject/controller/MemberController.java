@@ -1,14 +1,12 @@
 package com.bitc.finalproject.controller;
 
-import com.bitc.finalproject.data.entity.MemberEntity;
+import com.bitc.finalproject.entity.MemberEntity;
 import com.bitc.finalproject.service.MemberService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.Session;
 import org.springframework.web.bind.annotation.*;
 
-import javax.naming.Name;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

@@ -1,4 +1,4 @@
-package com.bitc.finalproject.data.entity;
+package com.bitc.finalproject.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
