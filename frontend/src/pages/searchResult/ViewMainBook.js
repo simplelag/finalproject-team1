@@ -17,18 +17,16 @@ function ViewMainBook(props) {
         <div>
             <div className={'row'}>
                 <div className={'col-sm-auto m-3'} style={style.box}>
-                    <img src={'/image/1.png'} style={style.img} />
+                    <img src={props.data.cover} style={style.img} />
                 </div>
                 <div className={'col-sm my-3'} id={''}>
                     <div id={''}>
-                        <a href={'#'} className={''}>책제목(더미)</a>
-                        <span className={'ms-2'}>소제목(더미)</span>
+                        <a href={'#'} className={'text-decoration-none'}>{props.data.title}</a>
                     </div>
                     <div>
                         <span>
-                            {/*지은이 그림 옮긴이 등 받아오는 api정보에 맞게 a태그가 추가될 필요가 있어보임*/}
-                            <a href={'#'} className={''}>지은이</a> |
-                            <span className={''}> 출판일</span>
+                            <a href={'#'} className={'text-decoration-none'}>{props.data.author}</a> |
+                            <span className={'ms-2'}>{props.data.pubDate}</span>
                         </span>
                     </div>
                     <div className={'d-flex'}>
@@ -42,7 +40,7 @@ function ViewMainBook(props) {
                             </thead>
                             <tbody>
                             <tr className={'text-center'}>
-                                <td>0000원</td>
+                                <td>{props.data.priceStandard}원</td>
                                 <td>0000원</td>
                                 <td>0000원</td>
                             </tr>

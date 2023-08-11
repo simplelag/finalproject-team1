@@ -18,7 +18,7 @@ public class APIControl {
     // 상품리스트 조회 api
     @RequestMapping(value = "/api", method = RequestMethod.GET)
     public Object BookListApi(@RequestParam("Type") String type) throws Exception {
-        String url = "https://www.aladin.co.kr/ttb/api/ItemList.aspx?ttbkey=ttbjhyoon4250959001&QueryType="+ type +"&MaxResults=8&start=1&SearchTarget=Book&output=js&Version=20131101&Cover=Big";
+        String url = "https://www.aladin.co.kr/ttb/api/ItemList.aspx?ttbkey=ttbjhyoon4250959001&QueryType="+ type +"&MaxResults=10&start=1&SearchTarget=Book&output=js&Version=20131101&Cover=Big";
 
         List<ProductItem> itemList = bookService.getItemList(url);
 
@@ -27,8 +27,8 @@ public class APIControl {
 
     // 검색 api
     @RequestMapping(value = "/search", method = RequestMethod.GET)
-    public Object BookSearchApi(@RequestParam("SearchType") String searchType) throws Exception {
-        String url = "https://www.aladin.co.kr/ttb/api/ItemSearch.aspx?ttbkey=ttbjhyoon4250959001&Query=aladdin&QueryType="+ searchType +"&MaxResults=10&start=1&SearchTarget=Book&output=js&Version=20131101&Cover=Big";
+    public Object BookSearchApi(@RequestParam("SearchValue") String searchValue,@RequestParam("SearchType") String searchType) throws Exception {
+        String url = "https://www.aladin.co.kr/ttb/api/ItemSearch.aspx?ttbkey=ttbjhyoon4250959001&Query="+ searchValue +"&QueryType="+ searchType +"&MaxResults=10&start=1&SearchTarget=Book&output=js&Version=20131101&Cover=Big";
 
         List<ProductItem> itemList = bookService.getItemList(url);
 
