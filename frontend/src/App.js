@@ -8,13 +8,16 @@ import ViewMainList from "./pages/searchResult/ViewMainList";
 import ViewBestList from "./pages/searchResult/ViewBestList";
 import Admin from "./pages/admin/Admin";
 import QuestionDetail from "./pages/admin/QuestionDetail";
-
-
+import SellerPage from "./pages/seller/SellerPage";
+import BookDetailPage from "./pages/seller/BookDetailPage";
 
 function App() {
     return (
         <BrowserRouter>
             <Routes>
+                <Route path={"/SellerPage"} element={<SellerPage />} />
+                <Route path={"/BookDetailPage"} element={<BookDetailPage />}/>
+                <Route path={"/BookDetailPage"} element={<BookDetailPage/>}/>
                 <Route path={"/"} element={<Main />} />
                 <Route path={"/board"} element={<BoardMain />} />
                 <Route path={"/board/write"} element={<BoardWrite />} />
