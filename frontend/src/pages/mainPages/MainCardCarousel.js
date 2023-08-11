@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from "react";
 import axios from "axios";
-import collapse from "bootstrap/js/src/collapse";
 
 const swiperSlide = {
     slide: {
@@ -46,8 +45,6 @@ function MainCardCarousel(props) {
             })
     }, [])
 
-
-
     return (
         <div className={'my-3'}>
             <h1 className={'ms-5'}>{props.title}</h1>
@@ -55,7 +52,7 @@ function MainCardCarousel(props) {
                 {
                     bookList.map(item => {
                         return (
-                            <swiper-slide style={swiperSlide.slide}><img src={item.cover} style={swiperSlide.img} />{item.title}</swiper-slide>
+                            <swiper-slide style={swiperSlide.slide} key={item.isbn13}><img src={item.cover} style={swiperSlide.img} />{item.title}</swiper-slide>
                         )
                     })
                 }
