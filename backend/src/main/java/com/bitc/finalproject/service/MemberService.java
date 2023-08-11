@@ -10,6 +10,7 @@ public interface MemberService{
     List<MemberEntity> allMemberData(String userId) throws Exception;
 
     boolean checkId(String userId) throws Exception;
+    boolean checkName(String name) throws Exception;
     void saveMember(MemberEntity memberEntity) throws Exception;
 
 //    회원 탈퇴

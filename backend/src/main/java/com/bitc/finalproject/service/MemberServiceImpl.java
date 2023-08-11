@@ -27,6 +27,12 @@ public class MemberServiceImpl implements MemberService{
     public boolean checkId(String userId) throws Exception {
         return memberRepository.existsByMemberId(userId);
     }
+
+    @Override
+    public boolean checkName(String name) throws Exception {
+        return memberRepository.existsByMemberName(name);
+    }
+
     @Override
     public void saveMember(MemberEntity memberEntity) throws Exception {
         memberRepository.save(memberEntity);

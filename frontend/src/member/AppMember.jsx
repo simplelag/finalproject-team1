@@ -17,7 +17,7 @@ function AppMember(props) {
                         <Route path={'/login/sign'} element={<JoinMember />} />
                         <Route path={'/login/main'} element={<CheckLogin />} />
                         <Route path={'/login/myLogin'} element={<MyLogin />} />
-                        <Route path={'/login/myLoginUpdate'} element={<MyLoginUpdate />} />
+                        <Route path={`/login/myLogin/myUserUpdate`} element={<MyLoginUpdate />} />
                     </Route>
                 </Routes>
             </BrowserRouter>

@@ -7,7 +7,6 @@ import axios from "axios";
 function JoinMember(props) {
 
     const navi = useNavigate();
-    const [nullValueCheck, setNullValueCheck] = useState(0);
 
     // 아이디
     const [userId, setUserId] = useState('');
@@ -17,24 +16,24 @@ function JoinMember(props) {
     // 비밀번호
     const[ password, setPassword] = useState('');
     const[ passwordRe, setPasswordRe] = useState('');
-    // 비밀번호와 비밀번호 확인이 같을때만 넣을 것
-    // const[ passwordCheck, setPasswordCheck ] = useState('');
 
     // 이름
     const[name, setName] = useState('');
+    // 이름 중복 체크
+    const [nameCheck, setNameCheck] = useState(false);
 
     // 이메일
     const [emailFirst, setEmailFirst] = useState('');
     const [emailLast, setEmailLast] = useState('');
-    // param으로 합치기 떄문에 나중에 지울거임
-    const [email, setEmail] = useState('');
+    // 이메일 직접 입력 시 input type을 email로 바꾸기 위해서
+    const [emailFlag, setEmailFlag] = useState(true);
+    // 이메일 검증
+    const [emailTest, setEmailTest] = useState(false);
 
     // 폰 번호
     const [phoneFirstNumber, setPhoneFirstNumber] = useState('010');
     const [phoneMiddleNumber, setPhoneMiddleNumber] = useState('');
     const [phoneLastNumber, setPhoneLastNumber] = useState('');
-    // param으로 합치기 떄문에 나중에 지울거임
-    const [phoneNumber, setPhoneNumber] = useState('');
 
     // 우편번호 및 주소
     const [zoneCode, setZoneCode] = useState('');
@@ -44,23 +43,52 @@ function JoinMember(props) {
     // 약관 동의
     const [isAgree, setIsAgree] = useState(false);
 
-    // 이메일 합치기
-    // 나중에 회원가입 누를 때 param으로 나중에 더하면 됨
-    const handleEmailFirst= (e)=>{setEmailFirst(e.target.value);}
-    const handleEmailLast = (e) => {setEmailLast(e.target.value);}
-    
-    // 휴대폰 합치기
-    // 이메일이랑 똑같이 param으로 나중에 추가하면 됨
-    const handlePhoneFirst = (e) => setPhoneFirstNumber(e.target.value);
-    const handlePhoneMiddle = (e) => setPhoneMiddleNumber(e.target.value);
-    const handlePhoneLast = (e) => setPhoneLastNumber(e.target.value);
+    // 최대 입력 수 제한, 특수문자 제한
+    function stopText(e, maxValue, type){
+        // 최대 입력 수 제한, 한글이 최대 입력 수 넘어가는 것도 제한
+        let value = e.target.value.slice(0, maxValue);
+        switch(type){
+            case 1:{
+                // 영문,숫자만 입력
+                value = value.replace(/[^a-zA-Z0-9]/g, "")
+                return value;
+                break;
+            }
+            case 2:{
+                // 한글만 입력
+                value = e.target.value.replace(/[^ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/g, "")
+                return value;
+                break;
+            }
+            case 3:{
+                // 특수문자 제한
+                value = e.target.value.replace(/[\{\}\[\]\/?.,;:|\)*~`!^\-_+┼<>@\#$%&\'\"\\\(\=]/gi, "")
+                return value;
+                break;
+            }
+            case 4:{
+                // 한글, 숫자만 입력
+                value = e.target.value.replace(/[^^ㄱ-ㅎ|ㅏ-ㅣ|가-힣|0-9]/g, "")
+                return value;
+                break;
+            }
+            case 5:{
+                // 숫자만 입력
+                value = e.target.value.replace(/[^0-9]/g, "")
+                return value;
+                break;
+            }
+        }
+    }
+
+    // 아이디
+    const handleUserId = (e) => {
+        // 영문,숫자만 사용
+        const value = stopText(e,10,1);
+        setUserId(value);
+    }
 
     // 아이디 중복 체크
-    const handleUserId = (e) => {setUserId(e.target.value);}
-
-    // 이름
-    const handleName = (e) => {setName(e.target.value);}
-
     const btnDoubleCheck = (e) => {
         axios.get("http://localhost:8080/sign/idCheck", {
             params:{
@@ -81,14 +109,98 @@ function JoinMember(props) {
             })
     }
 
-    
     // 비밀번호랑 비밀번호 확인이랑 같은지 확인
     const handlePassword = (e) => {setPassword(e.target.value)}
     const handlePasswordRe = (e) => {setPasswordRe(e.target.value)}
 
+    // 이름
+    const handleName = (e) => {
+        const name = stopText(e, 50, 3);
+        setName(name);
+    }
+
+    // 이름 중복 체크
+    const handleNameCheck = (e) => {
+        axios.get("http://localhost:8080/sign/nameCheck",{
+            params:{
+                name : name
+            }
+        })
+            .then(res => {
+                if(res.data === true){
+                    setNameCheck(true)
+                }else{
+                    setNameCheck(false)
+                }
+            })
+            .catch(err => {
+                console.log("이름 중복 체크 실패");
+            })
+    }
+
+    // 이메일
+    const handleEmailFirst= (e)=>{
+        setEmailFirst(e.target.value);
+    }
+
+    const handleEmailLast = (e) => {
+        setEmailFlag(e.target.value == '' ? true : false)
+        setEmailLast(e.target.value);
+    }
+
+    // 다른 방법을 못 찾겠음
+    // 이메일 첫번째 input 태그 검증
+    const emailFirstVal = (e) => {
+        let a = /^[A-Za-z0-9]([-_.]?[A-Za-z0-9])*@[A-Za-z0-9]([-_.]?[A-Za-z0-9])*\.[A-Za-z]{2,3}$/;
+        if(emailFlag){
+            // emailFlag === true => email
+            if(a.test(emailFirst)) {
+                setEmailTest(true);
+            }else{
+                setEmailTest(false);
+            }
+        }else if(!emailFlag){
+            // emailFlag === false => text
+            if(a.test(emailFirst)) {
+                setEmailTest(false);
+            }else{
+                setEmailTest(true);
+            }
+        }
+    }
+
+    // 이메일 두번째 input 태그 검증
+    const emailLastVal = (e) => {
+        let a = /^[A-Za-z0-9]([-_.]?[A-Za-z0-9])*@[A-Za-z0-9]([-_.]?[A-Za-z0-9])*\.[A-Za-z]{2,3}$/;
+        if(emailFlag){
+            if(a.test(emailFirst)) {
+                setEmailTest(true);
+            }else{
+                setEmailTest(false);
+            }
+        }else if(!emailFlag){
+            if(a.test(emailFirst)) {
+                setEmailTest(false);
+            }else{
+                setEmailTest(true);
+            }
+        }
+    }
+
+    // 휴대폰
+    const handlePhoneFirst = (e) => setPhoneFirstNumber(e.target.value);
+    const handlePhoneMiddle = (e) => {
+        // 숫자만 입력
+        const middle = stopText(e,4,5);
+        setPhoneMiddleNumber(middle);
+    }
+    const handlePhoneLast = (e) => {
+        // 숫자만 입력
+        const last = stopText(e,4,5);
+        setPhoneLastNumber(last);
+    }
+
     // 우편번호 및 주소 검색
-    // 상세주소 입력
-    const handleRoadAddDetail = (e) => {setRoadAddressDetail(e.target.value);}
 
     // scriptUrl : Daum 우편번호 서비스의 스크립트 주소입니다. default값이 정해져있음
     const scriptUrl = "https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js";
@@ -122,6 +234,12 @@ function JoinMember(props) {
         open({ onComplete: handleComplete });
     };
 
+    // 상세주소 입력
+    const handleRoadAddDetail = (e) => {
+        const addDetail = stopText(e, 100, 4)
+        setRoadAddressDetail(addDetail);
+    }
+
     // 약관 동의
     const handleAgree = (e) => {
         if(isAgree == false){
@@ -130,10 +248,6 @@ function JoinMember(props) {
             setIsAgree(false);
         }
     }
-
-    // 특수문자 입력 금지
-    
-    // 특수문자, 문자 금지(숫자만 사용)
 
     // 회원가입 버튼 클릭 시
     const btnJoinMember = (e) => {
@@ -155,15 +269,20 @@ function JoinMember(props) {
             alert("약관에 동의해주세요");
         }else if(userIdCheck === '' || userId !== userIdCheck){
             alert("아이디 중복 확인을 해주세요");
-        }else if(userId === userIdCheck && password === passwordRe){
+        }else if(nameCheck){
+            alert("이름이 중복입니다.");
+        } else if(!emailTest){
+            alert("이메일의 형식이 올바르지 않습니다.")
+        }
+        else if(userId === userIdCheck && password === passwordRe) {
             axios.post("http://localhost:8080/sign/signup", null, {
                 params: {
                     userId: userId,
                     password: password,
-                    name : name,
+                    name: name,
                     email: emailFirst + emailLast,
                     phone: phoneFirstNumber + '-' + phoneMiddleNumber + '-' + phoneLastNumber,
-                    address: roadAddress + roadAddressDetail
+                    address: zoneCode + '/' + roadAddress + '/' + roadAddressDetail
                 }
             })
                 .then(res => {
@@ -213,7 +332,7 @@ function JoinMember(props) {
                             <label htmlFor={'name'} className={'form-label align-self-top mt-1'}>이름</label>
                         </div>
                         <div className={'col-sm-5'}>
-                            <input type={'name'} className={'form-control'} id={'name'} value={name} onChange={handleName}/>
+                            <input type={'name'} className={'form-control'} id={'name'} value={name} onBlur={handleNameCheck} onChange={handleName}/>
                         </div>
                     </div>
                     <div className={'form-group d-flex mt-3'}>
@@ -221,11 +340,11 @@ function JoinMember(props) {
                             <label htmlFor={'emailFirst'} className={'form-label align-self-center mt-1'}>이메일</label>
                         </div>
                         <div className={'col-sm-4'}>
-                            <input type={'text'} className={'form-control'} id={'emailFirst'} value={emailFirst} onChange={handleEmailFirst} />
+                            <input type={emailFlag === true ? 'email' : 'text'} className={'form-control'} id={'emailFirst'} name={'emailFirst'} value={emailFirst} onBlur={emailFirstVal} onChange={handleEmailFirst}/>
                         </div>
                         <div className={'align-self-center mt-1'}>@</div>
                         <div className={'col-sm-4'}>
-                            <select className={'form-select'} id={'emailLast'} onChange={handleEmailLast} value={emailLast}>
+                            <select className={'form-select'} id={'emailLast'} onBlur={emailLastVal} onChange={handleEmailLast} value={emailLast}>
                                 <option value={''}>직접 입력</option>
                                 <option value={'@naver.com'}>naver.com</option>
                                 <option value={'@daum.net'}>daum.net</option>
@@ -247,11 +366,11 @@ function JoinMember(props) {
                         </div>
                         <div className={'form-label align-self-center mt-1'}>-</div>
                         <div className={'col-sm-2'}>
-                            <input type={'text'} className={'form-control'} id={'phoneMiddleNumber'} value={phoneMiddleNumber} onChange={handlePhoneMiddle}/>
+                            <input type={'text'} className={'form-control'} id={'phoneMiddleNumber'} minLength={4} maxLength={4} value={phoneMiddleNumber} onChange={handlePhoneMiddle}/>
                         </div>
                         <div className={'form-label align-self-center mt-1'}>-</div>
                         <div className={'col-sm-2'}>
-                            <input type={'text'} className={'form-control'} id={'phoneLastNumber'} value={phoneLastNumber}
+                            <input type={'text'} className={'form-control'} id={'phoneLastNumber'} maxLength={4} value={phoneLastNumber}
                             onChange={handlePhoneLast}/>
                         </div>
                     </div>

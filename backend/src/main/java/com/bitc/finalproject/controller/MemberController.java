@@ -46,7 +46,13 @@ public class MemberController {
         return memberService.checkId(userId);
     }
 
+    @RequestMapping(value = "/sign/nameCheck", method = RequestMethod.GET)
+    public boolean showCheckName(@RequestParam("name") String name) throws Exception{
+        return memberService.checkName(name);
+    }
+
 //    회원가입 버튼 클릭
+//    회원정보 수정 - 회원 정보 변경 // 똑같이 수정이라서 가능함
     @RequestMapping(value = "/sign/signup", method = RequestMethod.POST)
     public void showSingUp(
             @RequestParam("userId") String userId,
@@ -58,6 +64,13 @@ public class MemberController {
     ) throws Exception{
         MemberEntity memberEntity = new MemberEntity(userId, password, name, email, phone, address);
         memberService.saveMember(memberEntity);
+    }
+    
+    
+//    회원정보 수정 - 회원 정보 가져오기
+    @RequestMapping(value = "/login/myLogin/myUserUpdate", method = RequestMethod.GET)
+    public List<MemberEntity> showMemberDetail(@RequestParam("userId") String userId) throws Exception{
+        return memberService.allMemberData(userId);
     }
 
 //    회원정보 수정 - 회원 탈퇴

@@ -9,6 +9,7 @@ import java.util.List;
 
 public interface MemberRepository extends JpaRepository<MemberEntity, String> {
     boolean existsByMemberId(@Param("userId") String userId) throws Exception;
+    boolean existsByMemberName(@Param("name") String name) throws Exception;
     int countByMemberIdAndMemberPassword(String userId, String password) throws Exception;
     List<MemberEntity> findAllByMemberId(String userId) throws Exception;
 

@@ -5,13 +5,19 @@ import Tabs from 'react-bootstrap/Tabs';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import axios from "axios";
+import {useCookies} from "react-cookie";
 
 
 function MyLogin(props) {
     const navi = useNavigate();
 
+    // 아이디
+    const [userId, setUserId] = useState(sessionStorage.getItem("id"))
     // 등급
     const [grade, setGrade] = useState(sessionStorage.getItem("grade"));
+
+    // 회원 탈퇴 시 쿠키 삭제
+    const [cookies, setCookies, removeCookies] = useCookies(['rememberUserId']);
     
     // modal 창 사용
     const [show, setShow] = useState(false);
@@ -35,13 +41,14 @@ function MyLogin(props) {
     const handleWD = () => {
         axios.delete("http://localhost:8080/login/myLogin/withdraw",{
             params:{
-                id : sessionStorage.getItem("id"),
+                id : userId,
                 password: password
             }
         })
             .then(res => {
                 if(res.data > 0){
                     alert("회원을 탈퇴했습니다.")
+                    removeCookies("rememberUserId");
                     navi('/login')
                 }else if(res.data === 0){
                     alert("비밀번호가 틀렸습니다.");
@@ -59,14 +66,14 @@ function MyLogin(props) {
                 <div className={'row'}>
                     <div className={'col-sm-5 ms-4'}>
                         <div className={'row my-4'}>
-                            <p className={'ms-3'}>회원 정보 <Link to={'/login/myLoginUpdate'} className={'btn btn-success ms-2'}>회원정보 수정</Link></p>
+                            <p className={'ms-3'}>회원 정보 <Link to={`/login/myLogin/myUserUpdate`} className={'btn btn-success ms-2'}>회원정보 수정</Link></p>
                             <div className={'col-sm-4 text-center'}>
                                 <p>아이디</p>
                                 <p>닉네임</p>
                                 <p>회원등급</p>
                             </div>
                             <div className={'col-sm-7 text-center'}>
-                                <p>{sessionStorage.getItem("id")}</p>
+                                <p>{userId}</p>
                                 <p>{sessionStorage.getItem("name")}</p>
                                 <p>{grade}</p>
                             </div>
@@ -122,6 +129,7 @@ function MyLogin(props) {
                     </Tab>
                 </Tabs>
             </div>
+            {/* 모달 창 */}
             <Modal
                 show={show}
                 onHide={handleClose}
