@@ -2,9 +2,9 @@ import React, {useEffect, useState} from 'react';
 import axios from "axios";
 
 function BookDetailPage() {
-    const [BookIsbn,setBookIsbn] = useState('해리 포터');
+    const [BookIsbn,setBookIsbn] = useState('');
     const [BookInfo,setBookInfo] = useState([]);
-    const [Booktitle,setBooktitle] = useState('');
+    const [Booktitle,setBooktitle] = useState('해리포터');
     const [Booksubtitle,setBooksubtitle] = useState('');
     const [autohr,setauthor] = useState('');
     const [Bookpublisher,setBookpublisher] = useState('');
