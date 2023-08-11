@@ -1,7 +1,7 @@
 package com.bitc.finalproject.service;
 
-import com.bitc.finalproject.data.entity.MemberEntity;
-import com.bitc.finalproject.data.repository.MemberRepository;
+import com.bitc.finalproject.entity.MemberEntity;
+import com.bitc.finalproject.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -27,8 +27,24 @@ public class MemberServiceImpl implements MemberService{
     public boolean checkId(String userId) throws Exception {
         return memberRepository.existsByMemberId(userId);
     }
+
+    @Override
+    public boolean checkName(String name) throws Exception {
+        return memberRepository.existsByMemberName(name);
+    }
+
     @Override
     public void saveMember(MemberEntity memberEntity) throws Exception {
         memberRepository.save(memberEntity);
+    }
+
+//    @Override
+//    public int memberWithDraw(String userId, String password) throws Exception {
+//        return memberRepository.removeByMemberIdAndMemberPassword(userId, password);
+//    }
+
+    @Override
+    public void memberWithDraw(MemberEntity memberEntity) throws Exception {
+        memberRepository.delete(memberEntity);
     }
 }

@@ -1,4 +1,4 @@
-package com.bitc.finalproject.data.entity;
+package com.bitc.finalproject.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -40,6 +40,11 @@ public class MemberEntity {
     @Column(nullable = true, length = 6)
     private LocalDateTime memberDatetime = LocalDateTime.now();
 
+    @Builder
+    public MemberEntity(String memberId, String memberPassword){
+        this.memberId = memberId;
+        this.memberPassword = memberPassword;
+    }
     @Builder
     public MemberEntity(String memberId, String memberPassword, String memberName, String memberEmail, String memberPhone, String memberAddress){
         this.memberId = memberId;
