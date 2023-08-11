@@ -45,7 +45,7 @@ function BoardMain(props) {
                                         <td className={'text-center col-sm-1'}>{item.boardPk}</td>
                                         <td className={'text-center col-sm-1'}>{item.boardCategory}</td>
                                         <td>
-                                            <a href={'/main/board/' + item.boardPk} className={'btn'}>{item.boardTitle}</a>
+                                            <a href={'/board/' + item.boardPk} className={'btn'}>{item.boardTitle}</a>
                                         </td>
                                         <td className={'text-center col-sm-1'}>{item.boardWriterName}</td>
                                         <td className={'text-center col-sm-1'}>{item.boardVisitCount}</td>
@@ -59,7 +59,7 @@ function BoardMain(props) {
                     </tbody>
                 </table>
                 <div className={'my-3 d-flex justify-content-end'}>
-                    <a href={'/main/board/write'} className={'btn'}>글작성</a>
+                    <a href={'/board/write'} className={'btn'}>글작성</a>
                 </div>
             </div>
             <Footer />
