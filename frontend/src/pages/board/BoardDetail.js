@@ -52,7 +52,7 @@ function BoardDetail(props) {
             }
         })
             .then(res => {
-                navi('/main/board')
+                navi('/board')
             })
     }
 
@@ -62,7 +62,7 @@ function BoardDetail(props) {
             boardPk: boardPk,
         })
             .then(res => {
-                navi('/main/board')
+                navi('/board')
             })
     }
 
@@ -90,10 +90,10 @@ function BoardDetail(props) {
                             <div className={'d-flex justify-content-center my-3'}>
                                 <button type={'button'} className={'btn'}>추천</button>
                             </div>
-                            <a href={'/main/board/'} className={'btn'}>목록</a>
+                            <a href={'/board/'} className={'btn'}>목록</a>
                             <button type={"button"} className={'btn'}>수정</button>
                             <button type={"button"} className={'btn'} onClick={onClickDelete}>삭제</button>
-                            <a href={'/main/board/write'} className={'btn'}>글작성</a>
+                            <a href={'/board/write'} className={'btn'}>글작성</a>
                         </div>
                     </div>
                 </div>
