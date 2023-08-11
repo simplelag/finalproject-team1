@@ -2,8 +2,6 @@ package com.bitc.finalproject.service;
 
 import com.bitc.finalproject.dto.ProductItem;
 import com.bitc.finalproject.dto.ProductObject;
-import com.bitc.finalproject.dto.SearchItemDto;
-import com.bitc.finalproject.dto.SearchItemObject;
 import com.google.gson.Gson;
 import org.springframework.stereotype.Service;
 
@@ -57,40 +55,5 @@ public class BookServiceImpl implements BookService {
         }
         return itemList;
     }
-
-    @Override
-    public List<SearchItemDto> getItemList2(String url) throws Exception {
-        List<SearchItemDto> itemList2 = null;
-        URL urlContainer = null;
-        HttpURLConnection urlConnection = null;
-        BufferedReader reader = null;
-        try {
-            urlContainer = new URL(url);
-            urlConnection = (HttpURLConnection) urlContainer.openConnection();
-            urlConnection.setRequestMethod("GET");
-
-            reader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
-
-            StringBuilder stringBuilder = new StringBuilder();
-            String item;
-
-            while ((item = reader.readLine()) != null) {
-                stringBuilder.append(item);
-            }
-            Gson gson = new Gson();
-            SearchItemObject searchItemObject = gson.fromJson(stringBuilder.toString(), SearchItemObject.class);
-            itemList2 = searchItemObject.getItem();
-        } catch (Exception e) {
-            e.printStackTrace();
-
-        } finally {
-            if (reader != null) {
-                reader.close();
-            }
-            if (urlConnection != null) {
-                urlConnection.disconnect();
-            }
-        }
-        return itemList2;
     }
-}
+

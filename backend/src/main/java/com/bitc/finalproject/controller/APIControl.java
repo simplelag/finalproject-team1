@@ -1,10 +1,8 @@
 package com.bitc.finalproject.controller;
 
 import com.bitc.finalproject.dto.ProductItem;
-import com.bitc.finalproject.dto.SearchItemDto;
 import com.bitc.finalproject.service.BookService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -46,9 +44,9 @@ public class APIControl {
     }
     // 상품(1개)조회 api
     @RequestMapping(value = "/searchIsbn", method = RequestMethod.GET)
-    public Object BookApi(@RequestParam("ISBN") String isbn13) throws Exception {
+    public Object BookApi(@RequestParam("ISBN13") String isbn13) throws Exception {
         String url = "https://www.aladin.co.kr/ttb/api/ItemLookUp.aspx?ttbkey=ttbjhyoon4250959001&itemIdType=ISBN13&ItemId="+ isbn13 +"&output=js&Version=20131101&Cover=Big";
-        List<SearchItemDto> itemList2 = bookService.getItemList2(url);
-        return  itemList2;
+        List<ProductItem> itemList = bookService.getItemList(url);
+        return itemList;
     }
 }

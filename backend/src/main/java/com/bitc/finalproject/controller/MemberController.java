@@ -1,14 +1,10 @@
 package com.bitc.finalproject.controller;
 
-import com.bitc.finalproject.data.entity.MemberEntity;
+import com.bitc.finalproject.entity.BookEntity;
 import com.bitc.finalproject.service.MemberService;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.Session;
 import org.springframework.web.bind.annotation.*;
 
-import javax.naming.Name;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,7 +22,7 @@ public class MemberController {
     ) throws Exception{
         Map<Object, Object> result = new HashMap<>();
         int correctId = memberService.countMember(userId, password);
-        List<MemberEntity> memberEntities = memberService.allMemberData(userId);
+        List<BookEntity.MemberEntity> memberEntities = memberService.allMemberData(userId);
         result.put("login", correctId);
         result.put("name", memberEntities.get(0).getMemberName());
         result.put("grade", memberEntities.get(0).getMemberAuthority());
@@ -50,7 +46,7 @@ public class MemberController {
             @RequestParam("phone") String phone,
             @RequestParam("address") String address
     ) throws Exception{
-        MemberEntity memberEntity = new MemberEntity(userId, password, name, email, phone, address);
+        BookEntity.MemberEntity memberEntity = new BookEntity.MemberEntity(userId, password, name, email, phone, address);
         memberService.saveMember(memberEntity);
     }
 }

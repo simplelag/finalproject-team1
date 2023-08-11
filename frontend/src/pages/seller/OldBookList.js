@@ -1,6 +1,14 @@
-import React from 'react';
+import React, {useEffect} from 'react';
+import axios from "axios";
 
 function OldBookList() {
+    useEffect(() => {
+        axios.get('http://localhost:8080/sellBookList',{}
+        )
+            .then(res =>{
+                console.log(res);
+            })
+    }, []);
 
     return (
         <div className={"container"}>

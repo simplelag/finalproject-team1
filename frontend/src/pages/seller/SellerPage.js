@@ -60,6 +60,7 @@ function SellerPage() {
             saleBookPieces: bookPieces,
             bookGrade: bookGrade,
             saleDiscription: discription,
+            saleBookTitle: bookTitle,
         }
 
         axios.post("http://localhost:8080/sellBookInfo", requestData, {

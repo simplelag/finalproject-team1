@@ -1,9 +1,14 @@
 import React from 'react';
+import Header from "../mainPages/Header";
+import Footer from "../mainPages/Footer";
 
 function ShoppingBasket() {
 
+
     return (
+
         <main className={"container"}>
+            <Header/>
             <div className={"p-2"}>
                 <h4>장바구니</h4>
                 <input className={"form-check-input"} type={"checkbox"} value={""} id={"checkbox"}/>
@@ -60,6 +65,7 @@ function ShoppingBasket() {
             <div className={"text-center"}>
                 <button type={"submit"} className={"btn btn-success"}><h4>주문하기</h4></button>
             </div>
+            <Footer/>
         </main>
     )
 }

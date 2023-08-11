@@ -1,7 +1,7 @@
 package com.bitc.finalproject.service;
 
-import com.bitc.finalproject.data.entity.MemberEntity;
-import com.bitc.finalproject.data.repository.MemberRepository;
+import com.bitc.finalproject.repository.MemberRepository;
+import com.bitc.finalproject.entity.BookEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +19,7 @@ public class MemberServiceImpl implements MemberService{
     }
 
     @Override
-    public List<MemberEntity> allMemberData(String userId) throws Exception {
+    public List<BookEntity.MemberEntity> allMemberData(String userId) throws Exception {
         return memberRepository.findAllByMemberId(userId);
     }
 
@@ -28,7 +28,7 @@ public class MemberServiceImpl implements MemberService{
         return memberRepository.existsByMemberId(userId);
     }
     @Override
-    public void saveMember(MemberEntity memberEntity) throws Exception {
+    public void saveMember(BookEntity.MemberEntity memberEntity) throws Exception {
         memberRepository.save(memberEntity);
     }
 }
