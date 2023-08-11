@@ -17,7 +17,7 @@ function ViewMainList(props) {
             }
         })
             .then(res => {
-                setBest(res.data);
+                setBest(res.data.item);
             })
     }, [])
 
