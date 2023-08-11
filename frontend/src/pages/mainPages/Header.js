@@ -25,18 +25,12 @@ function Header(props) {
         })
             .then(res => {
                 setBookSearch(res.data);
-                navi("/view", {state: {value: search, data: res.data}});
+                navi("/view", {state: {value: search, data: res.data.item, total: res.data.totalResults}});
             })
             .catch(err => {
                 alert("검색 실패")
             })
     }
-
-    // 검색하면 그와 관련된 값들을 보여줌
-    const filterSearch = bookSearch.filter((input) => {
-        return input.title.replace(" ", "").toLocaleLowerCase().includes(search.toLocaleLowerCase())
-    })
-
 
     return (
         <header>
@@ -45,14 +39,9 @@ function Header(props) {
                     <h2><a href={"/"}>HOME</a></h2>
                     <input type={'search'} className={'form-control justify-content-center'} onChange={onChangeSearch}/>
                     <button type={'submit'} className={'btn justify-content-center'} onClick={onClickSearch}>검색</button>
-                    <input type={'search'} className={'form-control justify-content-center'}/>
-                    <button type={'submit'} className={'btn justify-content-center'}>검색</button>
                     <button type={'button'} className={'btn justify-content-end'}><BsCart2 /></button>
                     <button type={'button'} className={'btn justify-content-end'}><BsFillPersonFill /></button>
                 </div>
-                {/*<div className={'col-sm-6'}>*/}
-                {/*    {filterSearch.map(searchList => <p>{searchList.title}</p>)}*/}
-                {/*</div>*/}
             </div>
             <Navbar />
         </header>

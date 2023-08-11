@@ -18,9 +18,10 @@ import java.util.List;
 public class BookServiceImpl implements BookService {
 
     @Override
-    public List<ProductItem> getItemList(String url) throws Exception {
+    public ProductObject getItemList(String url) throws Exception {
 
         List<ProductItem> itemList = null;
+        Integer TotalCount = null;
         URL urlContainer = null;
         HttpURLConnection urlConnection = null;
         BufferedReader reader = null;
@@ -43,6 +44,7 @@ public class BookServiceImpl implements BookService {
 
             ProductObject productObject = gson.fromJson(stringBuilder.toString(), ProductObject.class);
             itemList = productObject.getItem();
+            TotalCount = productObject.getTotalResults();
          }
         catch (Exception e) {
             e.printStackTrace();
@@ -55,42 +57,11 @@ public class BookServiceImpl implements BookService {
                 urlConnection.disconnect();
             }
         }
-        return itemList;
-    }
 
-    @Override
-    public List<SearchItemDto> getItemList2(String url) throws Exception {
-        List<SearchItemDto> itemList2 = null;
-        URL urlContainer = null;
-        HttpURLConnection urlConnection = null;
-        BufferedReader reader = null;
-        try {
-            urlContainer = new URL(url);
-            urlConnection = (HttpURLConnection) urlContainer.openConnection();
-            urlConnection.setRequestMethod("GET");
+        ProductObject productObject = new ProductObject();
+        productObject.setTotalResults(TotalCount);
+        productObject.setItem(itemList);
 
-            reader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
-
-            StringBuilder stringBuilder = new StringBuilder();
-            String item;
-
-            while ((item = reader.readLine()) != null) {
-                stringBuilder.append(item);
-            }
-            Gson gson = new Gson();
-            SearchItemObject searchItemObject = gson.fromJson(stringBuilder.toString(), SearchItemObject.class);
-            itemList2 = searchItemObject.getItem();
-        } catch (Exception e) {
-            e.printStackTrace();
-
-        } finally {
-            if (reader != null) {
-                reader.close();
-            }
-            if (urlConnection != null) {
-                urlConnection.disconnect();
-            }
-        }
-        return itemList2;
+        return productObject;
     }
 }
