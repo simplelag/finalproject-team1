@@ -10,6 +10,11 @@ import Admin from "./pages/admin/Admin";
 import QuestionDetail from "./pages/admin/QuestionDetail";
 import SellerPage from "./pages/seller/SellerPage";
 import BookDetailPage from "./pages/seller/BookDetailPage";
+import Join from "./pages/member/Join";
+import JoinMember from "./pages/member/JoinMember";
+import CheckLogin from "./pages/member/CheckLogin";
+import MyLogin from "./pages/member/MyLogin";
+import MyLoginUpdate from "./pages/member/MyLoginUpdate";
 
 function App() {
     return (
@@ -25,6 +30,11 @@ function App() {
                 <Route path={"/best"} element={<ViewBestList />} />
                 <Route path={"/admin"} element={<Admin id={"admin"}/>} />
                 <Route path={"/admin/question/:boardPk"} element={<QuestionDetail />} />
+                <Route path={"/login"} element={<Join />} />
+                <Route path={"/login/sign"} element={<JoinMember />}/>
+                <Route path={"/login/main"} element={<CheckLogin />}/>
+                <Route path={"/login/myLogin"} element={<MyLogin />}/>
+                <Route path={"/login/myLogin/myUserUpdate"} element={<MyLoginUpdate />}/>
             </Routes>
         </BrowserRouter>
     );

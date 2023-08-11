@@ -25,6 +25,7 @@ function Header(props) {
         })
             .then(res => {
                 setBookSearch(res.data);
+                console.log(res.data)
                 navi("/view", {state: {value: search, data: res.data.item, total: res.data.totalResults}});
             })
             .catch(err => {

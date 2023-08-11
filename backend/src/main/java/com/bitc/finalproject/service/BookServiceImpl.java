@@ -23,7 +23,7 @@ public class BookServiceImpl implements BookService {
         List<ProductItem> itemList = null;
         Integer TotalCount = null;
         URL urlContainer = null;
-        HttpURLConnection urlConnection = null;Wz
+        HttpURLConnection urlConnection = null;
         BufferedReader reader = null;
 
         try {
