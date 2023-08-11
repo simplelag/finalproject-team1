@@ -6,5 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface BookInfoRepository  extends JpaRepository<BookEntity, Integer> {
-    List<BookEntity> findAllByOrderByBookPkDesc();
+    List<BookEntity> findAllByOrderBySalePkDesc();
 }

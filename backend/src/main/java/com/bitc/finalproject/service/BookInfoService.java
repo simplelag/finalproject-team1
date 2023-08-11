@@ -1,8 +1,8 @@
 package com.bitc.finalproject.service;
 
 import com.bitc.finalproject.entity.BookEntity;
+import org.springframework.stereotype.Service;
 
 public interface BookInfoService {
-    static void bookInfoInsert(BookEntity bookEntity) throws Exception {
-    }
+    void bookInfoInsert(BookEntity bookEntity) throws Exception;
 }

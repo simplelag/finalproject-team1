@@ -17,35 +17,28 @@ import java.time.LocalDateTime;
 public class BookEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private  int bookPk;
+    private  int salePk;
     @Column(nullable = false)
-    private String bookTitle;
+    private String saleBookId;
     @Column(nullable = false)
-    private String bookCover;
+    private String saleImgSrc;
     @Column(nullable = false)
-    private String sellerId;
+    private String saleSellerId;
     @Column(nullable = false)
-    private String sellerName;
-//    @Column(nullable = false)
-//    private String bookAuthor;
+    private String saleSellerName;
     @Column(nullable = false)
-    private int bookPrice;
+    private int saleBookPrice;
     @Column(nullable = false)
-    private LocalDateTime dateTime =  LocalDateTime.now();;
-    private int bookPieces;
+    private LocalDateTime saleDateTime =  LocalDateTime.now();
+    private int saleBookPieces;
     @Column(nullable = false)
-    private int bookstandardPrice;
-    @Column(nullable = false)
-    private int bookIsbn;
-    @Column(nullable = false)
-    private String salepostPrice;
-
+    private String salePostPrice;
     @Column(nullable = false)
     private int bookGrade;
+    private String saleDisabled;
+    @Column(nullable = false)
+    private String saleDiscription;
 
-    private String disabled;
-
-    private String bookdiscription;
 
 
 

@@ -50,30 +50,21 @@ function SellerPage() {
                 })
         };
     const save = () =>{
-        // axios.post("http://localhost:8080/sellBookInfo", null, {
-        //     params:{
-        //         bookTitle:  bookTitle,
-        //         bookIsbn: bookISBN,
-        //         bookCover : bookCover,
-        //         sellerId: sellerId,
-        //         sellerName: sellerName,
-        //         bookstandardPrice: bookPrice,
-        //         bookpostPrice: postPrice,
-        //         bookPieces: bookPieces,
-        //         bookdiscription: discription,
-        //     }
-        // })
-        axios.post("http://localhost:8080/sellBookInfo", null, {
-            params:{
-                bookTitle: bookTitle,
-                // bookIsbn: bookISBN,
-                bookCover : bookCover,
-                sellerId: sellerId,
-                sellerName: sellerName,
-                bookPrice: bookPrice,
-                bookpostPrice: postPrice,
-                bookPieces: bookPieces,
-                bookdiscription: discription,
+        const requestData ={
+            saleBookId: bookISBN,
+            saleImgSrc: bookCover,
+            saleSellerId: sellerId,
+            saleSellerName: sellerName,
+            saleBookPrice: bookPrice,
+            salePostPrice: postPrice,
+            saleBookPieces: bookPieces,
+            bookGrade: bookGrade,
+            saleDiscription: discription,
+        }
+
+        axios.post("http://localhost:8080/sellBookInfo", requestData, {
+            headers:{
+                'Content-Type': 'application/json'
             }
         })
             .then(response => {

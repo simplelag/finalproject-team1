@@ -21,12 +21,7 @@ function BookDetailPage() {
         })
             .then(res => {
                 setBookInfo(res.data);
-                console.log(BookInfo)
-                setcover(BookInfo.cover);
-                setauthor(BookInfo.author);
-                setpubdate(BookInfo.pubDate);
-                setBookpublisher(BookInfo.publisher)
-                setBooktitle(BookInfo.title)
+
 
             })
             .catch(error => {
