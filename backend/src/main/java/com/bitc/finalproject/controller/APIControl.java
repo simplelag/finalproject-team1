@@ -5,6 +5,7 @@ import com.bitc.finalproject.service.BookService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URLEncoder;
 import java.sql.Struct;
 import java.util.List;
 
@@ -28,6 +29,7 @@ public class APIControl {
     // 검색 api
     @RequestMapping(value = "/search", method = RequestMethod.GET)
     public Object BookSearchApi(@RequestParam("SearchValue") String searchValue,@RequestParam("SearchType") String searchType) throws Exception {
+        searchValue = URLEncoder.encode(searchValue, "UTF-8");
         String url = "https://www.aladin.co.kr/ttb/api/ItemSearch.aspx?ttbkey=ttbjhyoon4250959001&Query="+ searchValue +"&QueryType="+ searchType +"&MaxResults=10&start=1&SearchTarget=Book&output=js&Version=20131101&Cover=Big";
 
         ProductObject itemList = bookService.getItemList(url);

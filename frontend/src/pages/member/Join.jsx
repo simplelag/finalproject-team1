@@ -49,7 +49,7 @@ function Join(props) {
                     sessionStorage.setItem("id", userId)
                     sessionStorage.setItem("name", res.data.name)
                     sessionStorage.setItem("grade",res.data.grade)
-                    navi('/');
+                    navi('/login/main');
                 }else if(res.data.login === 0){
                     alert("로그인에 실패하셨습니다.")
                 }

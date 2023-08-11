@@ -31,7 +31,7 @@ public class BookServiceImpl implements BookService {
             urlConnection = (HttpURLConnection) urlContainer.openConnection();
             urlConnection.setRequestMethod("GET");
 
-            reader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
+            reader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream(), "UTF-8"));
 
             StringBuilder stringBuilder = new StringBuilder();
             String item;
