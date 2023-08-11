@@ -1,5 +1,6 @@
 package com.bitc.finalproject.controller;
 
+import com.bitc.finalproject.dto.BoardDto;
 import com.bitc.finalproject.entity.BoardEntity;
 import com.bitc.finalproject.service.AdminService;
 import com.bitc.finalproject.service.BoardService;
@@ -28,15 +29,21 @@ public class AdminController {
         return map;
     }
 
+    // 페이지네이션을 위해 Pageable 객체를받음
+    // Pageable 객체는 frontend의 commons 경로에서 get방식 통신을 위해 page, size 등의 파라미터를 넘겨주는데
+    // 그걸 그냥 Pageable 객체로 받겠다고해도 되는거임
     @RequestMapping(value = "/getQuestions", method = RequestMethod.GET)
-    public Object getQuestionList(Pageable pageable) throws Exception {
-        System.out.println(pageable);
-        List<BoardEntity> boardEntityList = adminService.getQuestionList(pageable);
-        return boardEntityList;
+    public Object getQuestionList(@RequestParam String title, @RequestParam String name, @RequestParam String content, Pageable pageable) throws Exception {
+        // 서비스에 pageable을 넘겨줌
+        List<BoardDto> boardList = adminService.findBoardList(title, name, content, pageable);
+        if(title.equals(content) && !title.equals("")){
+
+        }
+        return boardList;
     }
 
     @RequestMapping(value = "/getQuestionNumber", method = RequestMethod.GET)
-    public int getQuestionNumber() throws Exception{
-        return adminService.getQuestionNum();
+    public int getQuestionNumber(@RequestParam String title, @RequestParam String name, @RequestParam String content) throws Exception{
+        return adminService.getQuestionNum(title, name, content);
     }
 }
