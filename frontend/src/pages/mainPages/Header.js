@@ -1,6 +1,6 @@
 import React, {useState} from "react";
-import Navbar from "./Navbar";
-import { BsCart2,BsFillPersonFill } from "react-icons/bs";
+import HeaderNavbar from "./HeaderNavbar";
+import {BsCart2, BsFillPersonFill} from "react-icons/bs";
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
 
@@ -36,15 +36,30 @@ function Header(props) {
     return (
         <header>
             <div className={'container my-3'}>
-                <div className="d-flex">
-                    <h2><a href={"/"}>HOME</a></h2>
-                    <input type={'search'} className={'form-control justify-content-center'} onChange={onChangeSearch}/>
-                    <button type={'submit'} className={'btn justify-content-center'} onClick={onClickSearch}>검색</button>
-                    <button type={'button'} className={'btn justify-content-end'}><BsCart2 /></button>
-                    <button type={'button'} className={'btn justify-content-end'}><BsFillPersonFill /></button>
+                <div className="d-flex align-items-end justify-content-between">
+                    <a href={"/"}>
+                        <img className={"headerLogo"} src="/image/logo.png" alt="home"/>
+                    </a>
+
+                    <div className={"d-flex align-items-end ps-5"}>
+                        <input type={'search'} className={'form-control'} onChange={onChangeSearch}/>
+                        <button type={'submit'} className={'btn search'} onClick={onClickSearch}>검색</button>
+                    </div>
+
+                    {(sessionStorage.getItem("id") &&
+                        <div className={"d-flex align-items-center loginBtns"}>
+                            <span>{sessionStorage.getItem("name")}님 안녕하세요 </span>
+                            <button type={'button'} className={'btn'}><BsCart2 className={"my-auto"}/></button>
+                            <button type={'button'} className={'btn'}><BsFillPersonFill/></button>
+                        </div>) ||
+                        (<div>
+                        <a href="/Login" className={"text-decoration-none text-black"}>로그인</a>
+                    </div>)}
+
+
                 </div>
             </div>
-            <Navbar />
+            <HeaderNavbar/>
         </header>
     )
 }

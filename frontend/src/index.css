@@ -11,3 +11,29 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.headerLogo {
+  width: 10em;
+  margin-right:1em;
+}
+
+.search.btn {
+  width: 5em;
+}
+
+.loginBtns svg{
+  vertical-align: baseline;
+}
+
+.loginBtns span{
+  font-size: 1em;
+  color: #666;
+}
+
+.navbarMain {
+
+}
+
+.navbarMain .menu {
+  margin: 0em 2em;
+}
