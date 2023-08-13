@@ -12,7 +12,7 @@ ide: intelliJ
 
 - frontend
 언어: 자바스크립트, react framework
-nvm 사용
+nvm: 18.17.0 버전 설치
 node.js: 18.17.0 버전
 npm: 9.6.7 버전
 실행:
