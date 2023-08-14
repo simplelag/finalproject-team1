@@ -7,7 +7,7 @@ function QuestionView(props) {
     const [qNum, setQNum] = useState(3);
     const [size, setSize] = useState(5);
     return (
-        <div>
+        <div className={"border"}>
             <table className={'table'}>
                 <thead>
                 <tr className={'text-center'}>
