@@ -9,6 +9,12 @@ import BookDetailPage from "./pages/seller/BookDetailPage";
 import ViewMainList from "./pages/searchResult/ViewMainList";
 import ShoppingBasket from "./pages/seller/ShoppingBasket";
 import OldBookList from "./pages/seller/OldBookList";
+import Join from "./member/Join";
+import JoinMember from "./member/JoinMember";
+import CheckLogin from "./member/CheckLogin";
+import MyLogin from "./member/MyLogin";
+import MyLoginUpdate from "./member/MyLoginUpdate";
+import React from "react";
 
 
 function ViewBestList() {
@@ -30,6 +36,11 @@ function App() {
                 <Route path={"/view"} element={<ViewMainList />} />
                 <Route path={"/best"} element={<ViewBestList />} />
                 <Route path={"/OldBookList"} element={<OldBookList/>}/>
+                <Route path={'/login'} element={<Join />}></Route>
+                <Route path={'/login/sign'} element={<JoinMember />} />
+                <Route path={'/login/main'} element={<CheckLogin />} />
+                <Route path={'/login/myLogin'} element={<MyLogin />} />
+                <Route path={'/login/myLoginUpdate'} element={<MyLoginUpdate />} />
             </Routes>
         </BrowserRouter>
     );

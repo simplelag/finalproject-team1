@@ -1,17 +1,25 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import axios from "axios";
 
 function OldBookList() {
+    const [bookid,setbookid] = useState('');
     useEffect(() => {
         axios.get('http://localhost:8080/sellBookList',{}
         )
             .then(res =>{
-                console.log(res);
+                // (res.data);
+                //
+                // bookid(res.data[n])
+                // 둘중 하나
             })
     }, []);
 
     return (
+
         <div className={"container"}>
+            {
+
+            }
         <div className={"row"}>
             <div className={"col-sm-2"}>
                 <a href="#">
