@@ -1,6 +1,7 @@
 package com.bitc.finalproject.controller;
 
 import com.bitc.finalproject.dto.BoardDto;
+import com.bitc.finalproject.dto.MemberDto;
 import com.bitc.finalproject.entity.BoardEntity;
 import com.bitc.finalproject.service.AdminService;
 import com.bitc.finalproject.service.BoardService;
@@ -19,6 +20,7 @@ public class AdminController {
 
     private final BoardService boardService;
     private final AdminService adminService;
+
     @RequestMapping(value = "/getInfo/{id}", method = RequestMethod.GET)
     public Object boardMain(@PathVariable("id") String id) throws Exception{
         Map<String, String> map = new HashMap<>();
@@ -42,8 +44,20 @@ public class AdminController {
         return boardList;
     }
 
-    @RequestMapping(value = "/getQuestionNumber", method = RequestMethod.GET)
-    public int getQuestionNumber(@RequestParam String title, @RequestParam String name, @RequestParam String content) throws Exception{
-        return adminService.getQuestionNum(title, name, content);
+    @RequestMapping(value = "/getQuestionsCount", method = RequestMethod.GET)
+    public int getQuestionsCount(@RequestParam String title, @RequestParam String name, @RequestParam String content) throws Exception{
+        return adminService.getQuestionsCount(title, name, content);
+    }
+
+    @RequestMapping(value = "/getMembers", method = RequestMethod.GET)
+    public Object getMemberList(@RequestParam String authority, @RequestParam String content, Pageable pageable) throws Exception {
+        // 서비스에 pageable을 넘겨줌
+        List<MemberDto> memberList = adminService.getMemberList(authority, content, pageable);
+        return memberList;
+    }
+
+    @RequestMapping(value = "/getMemberCount", method = RequestMethod.GET)
+    public int getMembersCount(@RequestParam String authority, @RequestParam String content) throws Exception{
+        return adminService.getMemberCount(authority, content);
     }
 }

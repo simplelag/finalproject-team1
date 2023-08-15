@@ -9,6 +9,7 @@ import axios from "axios";
 //     howManyContentsInAPage={qNum} // 한 페이지당 보여줄 게시글 갯수
 //     howManyPagesInABlock={size} // 한 번에 표시할 페이지 버튼 개수
 //     searchType={["제목","내용","제목+내용","작성자"]} // 검색종류, 빈 배열이면 select 태그를 표시하지 않으며 검색내용은 content 라는 파라미터에 저장되어 서버 전달됨
+//     order={"boardPk,DESC"} // 정렬방법
 // />
 
 function Pagenation(props) {
@@ -18,6 +19,7 @@ function Pagenation(props) {
     const howManyContentsInAPage = props.howManyContentsInAPage;
     const howManyPagesInABlock = props.howManyPagesInABlock;
     const searchType = props.searchType;
+    const order = props.order;
     // 페이지네이션 컴포넌트 외부에 게시글 같은리스트가 표시될 것인데,
     // 그 리스트를 서버에서 불러와서 배열 state에 저장해야할거 아님?
     // 그때 사용되는 set 함수, props로 넘어와야함
@@ -90,7 +92,7 @@ function Pagenation(props) {
                 params: {
                     page: page - 1,
                     size: howManyContentsInAPage,
-                    sort: "boardPk,DESC",
+                    sort: order,
                     title: title,
                     name: name,
                     content: content

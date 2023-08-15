@@ -4,7 +4,7 @@ function Footer(props) {
 
     return (
         <div className={'border-top mt-5 py-5 px-5 bg-secondary bg-opacity-10 text-secondary '}>
-            <div className={"container-sm d-flex justify-content-between w-50"}>
+            <div className={"container-sm d-flex justify-content-between"}>
                 <div className={"mx-5 text-start"}>
                     <span>Yoon Jang Ho (Team Leader)</span><br/>
                     <span>Kim Dong Wook</span><br/>
