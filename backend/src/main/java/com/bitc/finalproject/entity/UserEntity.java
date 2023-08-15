@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 
-public class MemberEntity {
+public class UserEntity {
     @Id
     @Column(nullable = false, length = 255)
     private String memberId;
@@ -41,12 +41,12 @@ public class MemberEntity {
     private LocalDateTime memberDatetime = LocalDateTime.now();
 
     @Builder
-    public MemberEntity(String memberId, String memberPassword){
+    public UserEntity(String memberId, String memberPassword){
         this.memberId = memberId;
         this.memberPassword = memberPassword;
     }
     @Builder
-    public MemberEntity(String memberId, String memberPassword, String memberName, String memberEmail, String memberPhone, String memberAddress){
+    public UserEntity(String memberId, String memberPassword, String memberName, String memberEmail, String memberPhone, String memberAddress){
         this.memberId = memberId;
         this.memberPassword = memberPassword;
         this.memberName = memberName;

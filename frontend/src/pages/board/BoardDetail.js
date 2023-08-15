@@ -11,8 +11,8 @@ function BoardDetail(props) {
 
     const [boardPk] = useState(board.boardPk);
     const [title, setTitle] = useState('');
-    const [name, setName] = useState('testUserName')
-    const [id, setId] = useState('testUserId')
+    const [name, setName] = useState(sessionStorage.getItem("name"))
+    const [id, setId] = useState(sessionStorage.getItem("id"))
     const [content, setContent] = useState('');
     const [category, setCategory] = useState('');
     const [visit, setVisit] = useState('');
@@ -56,15 +56,7 @@ function BoardDetail(props) {
             })
     }
 
-    // 수정
-    const Update = () => {
-        axios.put(`http://localhost:8080/board/${boardPk}`, null, {
-            boardPk: boardPk,
-        })
-            .then(res => {
-                navi('/board')
-            })
-    }
+
 
     return (
         <div>

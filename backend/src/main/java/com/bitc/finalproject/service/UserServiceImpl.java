@@ -1,7 +1,7 @@
 package com.bitc.finalproject.service;
 
-import com.bitc.finalproject.entity.MemberEntity;
-import com.bitc.finalproject.repository.MemberRepository;
+import com.bitc.finalproject.entity.UserEntity;
+import com.bitc.finalproject.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -9,9 +9,9 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @Service
-public class MemberServiceImpl implements MemberService{
+public class UserServiceImpl implements UserService {
 
-    private final MemberRepository memberRepository;
+    private final UserRepository memberRepository;
 
     @Override
     public int countMember(String userId, String password) throws Exception {
@@ -19,7 +19,7 @@ public class MemberServiceImpl implements MemberService{
     }
 
     @Override
-    public List<MemberEntity> allMemberData(String userId) throws Exception {
+    public List<UserEntity> allMemberData(String userId) throws Exception {
         return memberRepository.findAllByMemberId(userId);
     }
 
@@ -34,17 +34,12 @@ public class MemberServiceImpl implements MemberService{
     }
 
     @Override
-    public void saveMember(MemberEntity memberEntity) throws Exception {
+    public void saveMember(UserEntity memberEntity) throws Exception {
         memberRepository.save(memberEntity);
     }
 
-//    @Override
-//    public int memberWithDraw(String userId, String password) throws Exception {
-//        return memberRepository.removeByMemberIdAndMemberPassword(userId, password);
-//    }
-
     @Override
-    public void memberWithDraw(MemberEntity memberEntity) throws Exception {
+    public void memberWithDraw(UserEntity memberEntity) throws Exception {
         memberRepository.delete(memberEntity);
     }
 }
