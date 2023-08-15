@@ -1,8 +1,10 @@
 package com.bitc.finalproject.service;
 
 import com.bitc.finalproject.dto.BoardDto;
+import com.bitc.finalproject.dto.MemberDto;
 import com.bitc.finalproject.entity.BoardEntity;
 import com.bitc.finalproject.repository.BoardRepository;
+import com.bitc.finalproject.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -16,9 +18,10 @@ import java.util.List;
 public class AdminServiceImpl implements AdminService {
 
     private final BoardRepository boardRepository;
+    private final MemberRepository memberRepository;
 
     @Override
-    public int getQuestionNum(String boardTitle, String boardWriterName, String boardContent) throws Exception {
+    public int getQuestionsCount(String boardTitle, String boardWriterName, String boardContent) throws Exception {
         int n = 0;
         // 제목+내용 검색일 때
         if(boardTitle.equals(boardContent) && !boardTitle.equals("")){
@@ -42,5 +45,16 @@ public class AdminServiceImpl implements AdminService {
             list =  boardRepository.findBoardDto(boardTitle,boardWriterName,boardContent, "관리자문의", pageable);
         }
         return list;
+    }
+
+    @Override
+    public List<MemberDto> getMemberList(String authority, String content, Pageable pageable) throws Exception {
+        List<MemberDto> list = memberRepository.findMemberDtoByAuthorityAndContent(authority, content, pageable);
+        return list;
+    }
+
+    @Override
+    public int getMemberCount(String authority, String content) throws Exception {
+        return memberRepository.countMemberDtoByAuthorityAndContent(authority, content);
     }
 }
