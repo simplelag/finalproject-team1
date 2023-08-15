@@ -33,12 +33,24 @@ function Header(props) {
             })
     }
 
+    const onClickMyPage = () => {
+        const grade = sessionStorage.getItem("grade");
+        switch (grade) {
+            case "admin":
+                window.location = "/admin";
+                break;
+            case "user":
+                window.location = "/login/myLogin";
+        }
+
+    }
+
     return (
         <header>
             <div className={'container my-3'}>
                 <div className="d-flex align-items-end justify-content-between">
                     <a href={"/"}>
-                        <img className={"headerLogo"} src="/image/logo.png" alt="home"/>
+                        <img className={"headerLogo"} src="/image/logo2.png" alt="home"/>
                     </a>
 
                     <div className={"d-flex align-items-end ps-5"}>
@@ -48,9 +60,9 @@ function Header(props) {
 
                     {(sessionStorage.getItem("id") &&
                         <div className={"d-flex align-items-center loginBtns"}>
-                            <span>{sessionStorage.getItem("name")}님 안녕하세요 </span>
+                            <span>{sessionStorage.getItem("name")} </span>
                             <button type={'button'} className={'btn'}><BsCart2 className={"my-auto"}/></button>
-                            <button type={'button'} className={'btn'}><BsFillPersonFill/></button>
+                            <button type={'button'} className={'btn'} onClick={onClickMyPage}><BsFillPersonFill/></button>
                         </div>) ||
                         (<div>
                         <a href="/Login" className={"text-decoration-none text-black"}>로그인</a>
