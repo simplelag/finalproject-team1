@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react' ;
 import axios from "axios";
 import Header from "../mainPages/Header";
 import Footer from "../mainPages/Footer";
-import {useLocation} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 
 
 
@@ -10,6 +10,7 @@ import {useLocation} from "react-router-dom";
 function SellerPage() {
 
     const location = useLocation();
+    const navi = useNavigate();
 
     const [text,setText] =useState('');
     const[bookList,setBookList] = useState([]);
@@ -23,7 +24,7 @@ function SellerPage() {
     const[sellerName,setSellerName] = useState('testSellerName');
     const[bookPrice,setbookPrice] = useState(0);
     const[bookPieces,setbookPieces] = useState(1);
-    const[bookGrade,setbookGrade] = useState(0);
+    const[bookGrade,setbookGrade] = useState(3);
 
     const onChangetext = (e) =>{
         setText(e.target.value);
@@ -74,6 +75,8 @@ function SellerPage() {
             .then(response => {
                 // 성공적으로 등록되었을 때의 처리
                 console.log("등록이 완료되었습니다.", response);
+                alert("판매등록 완료!")
+                navi("/");
             })
             .catch(error => {
                 // 등록 중에 오류가 발생했을 때의 처리
@@ -129,19 +132,12 @@ function SellerPage() {
             </div>
 
             <div className={"mt-3 p-2"}>
-                <h4>공급 정보</h4>
-                <form>
-                    <label className={"form-label"}>출고지</label>
-                    <input type="text" className={"form-control"}/>
-                </form>
-            </div>
-
-            <div className={"mt-3 p-2"}>
                 <h4>상품 설명/유의사항</h4>
                 <form>
                     <textarea name="explain" id="explain" cols="30" rows="5" value={discription} onChange={onChangediscription}></textarea>
+                    <br/>
                     <label className={"form-label"}>도서 상태</label>
-                    <input type="text" className={"form-control"} onChange={onChangeGrade} value={bookGrade}/>
+                    <input type="text" className={"form-control"} onChange={onChangeGrade} value={bookGrade} placeholder={"미입력시 가장낮은 등급인 3등급으로 입력됩니다."}/>
                 </form>
             </div>
             <div className={"mt-3 p-2 "}>
