@@ -4,11 +4,20 @@ import Pagenation from "../common/Pagenation";
 
 function QuestionView(props) {
     const [boardList, setBoardList] = useState([]);
-    const [qNum, setQNum] = useState(3);
+    const [qNum, setQNum] = useState(10);
     const [size, setSize] = useState(5);
+    const handleQNum = (e) => {
+        setQNum(e.target.value);
+    }
     return (
         <div className={"border"}>
-            <table className={'table'}>
+            <select name="contentsCount" value={qNum} onChange={handleQNum} className={"float-end"}>
+                <option value="10">10개씩 보기</option>
+                <option value="30">30개씩 보기</option>
+                <option value="50">50개씩 보기</option>
+                <option value="100">100개씩 보기</option>
+            </select>
+            <table className={'table border-top'}>
                 <thead>
                 <tr className={'text-center'}>
                     <th>글번호</th>
@@ -36,6 +45,7 @@ function QuestionView(props) {
                 </tbody>
             </table>
             <Pagenation
+                key={qNum}
                 setList={setBoardList}
                 url={"/api/admin/getQuestions"}
                 numberUrl={"/api/admin/getQuestionsCount"}

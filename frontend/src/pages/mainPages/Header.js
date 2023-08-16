@@ -46,7 +46,13 @@ function Header(props) {
             case "user":
                 window.location = "/login/myLogin";
         }
+    }
 
+    const handleLogout = () => {
+        sessionStorage.removeItem("id");
+        sessionStorage.removeItem("name");
+        sessionStorage.removeItem("grade");
+        navi("/");
     }
 
     return (
@@ -65,6 +71,7 @@ function Header(props) {
                     {(sessionStorage.getItem("id") &&
                         <div className={"d-flex align-items-center loginBtns"}>
                             <span>{sessionStorage.getItem("name")} </span>
+                            <button type={"button"} className={"btn"} onClick={handleLogout} >로그아웃</button>
                             <button type={'button'} className={'btn'}><BsCart2 className={"my-auto"}/></button>
                             <button type={'button'} className={'btn'} onClick={onClickMyPage}><BsFillPersonFill/></button>
                         </div>) ||

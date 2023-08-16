@@ -16,7 +16,9 @@ import CheckLogin from "./pages/member/CheckLogin";
 import MyLogin from "./pages/member/MyLogin";
 import MyLoginUpdate from "./pages/member/MyLoginUpdate";
 import OldBookList from "./pages/seller/OldBookList";
-import ShoppingBasket from "./pages/seller/ShoppingBasket";
+import ShoppingBasket from "./pages/seller/ShoppingBasket";=======
+import Chat from "./pages/common/Chat";
+
 
 function App() {
     return (
@@ -38,6 +40,7 @@ function App() {
                 <Route path={"/login/main"} element={<CheckLogin />}/>
                 <Route path={"/login/myLogin"} element={<MyLogin />}/>
                 <Route path={"/login/myLogin/myUserUpdate"} element={<MyLoginUpdate />}/>
+                {/*<Route path={"/chat"} element={<Chat />} />*/}
             </Routes>
         </BrowserRouter>
     );

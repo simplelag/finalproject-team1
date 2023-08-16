@@ -3,6 +3,7 @@ package com.bitc.finalproject.service;
 import com.bitc.finalproject.dto.BoardDto;
 import com.bitc.finalproject.dto.MemberDto;
 import com.bitc.finalproject.entity.BoardEntity;
+import com.bitc.finalproject.entity.MemberEntity;
 import com.bitc.finalproject.repository.BoardRepository;
 import com.bitc.finalproject.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -56,5 +57,10 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public int getMemberCount(String authority, String content) throws Exception {
         return memberRepository.countMemberDtoByAuthorityAndContent(authority, content);
+    }
+
+    @Override
+    public void editAuthority(String id, String authority) throws Exception{
+        memberRepository.updateAuthorityToUserById(id, authority);
     }
 }
