@@ -29,8 +29,17 @@ function MemberView(props) {
         const auth = value[1];
 
 
+        // 새로운 userList 배열 생성
+        const updatedUserList = userList.map(item => {
+            if (item.memberId === id) {
+                return { ...item, memberAuthority: auth };
+            }
+            return item;
+        });
 
-        console.log(`id: ${id}, auth: ${auth}`);
+        // 새로운 배열로 상태 업데이트
+        setUserList(updatedUserList);
+
         axios.put(
             "/api/admin/editAuth",
             null,
@@ -87,13 +96,13 @@ function MemberView(props) {
                 </thead>
                 <tbody>
                 {
-                    userList.map(item => {
+                    userList.map((item,index) => {
                         return (
                             <React.Fragment key={item.memberId}>
                                 <tr id={item.memberId}>
                                     <td>{item.memberDatetime.split("T")[0]}</td>
                                     <td>
-                                        <select name="authEdit" value={`${item.memberId}_${item.memberAuthority}`} onChange={editAuth}>
+                                        <select name="authEdit" value={`${userList[index].memberId}_${item.memberAuthority}`} onChange={editAuth}>
                                             <option value={`${item.memberId}_user`}>user</option>
                                             <option value={`${item.memberId}_block`}>block</option>
                                             <option value={`${item.memberId}_admin`}>admin</option>

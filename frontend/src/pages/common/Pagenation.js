@@ -133,11 +133,7 @@ function Pagenation(props) {
         firstPageAtThisBlock = Math.floor((pageNow - 1) / (howManyPagesInABlock)) * howManyPagesInABlock + 1;
         getList();
         pageBtnArrSet();
-        console.log("============== search ===============");
-        console.log(`searchTypeNow : ${searchTypeNow}`);
-        console.log(`title : ${title}`);
-        console.log(`content : ${content}`);
-        console.log(`name : ${name}`);
+
     }, [pageNow, howManyTotalContents, title, name, content]);
 
     // 현재 페이지를 설정하는 함수,
