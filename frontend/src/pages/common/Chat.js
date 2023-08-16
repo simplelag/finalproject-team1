@@ -1,43 +1,68 @@
-// import React, { useState, useEffect } from 'react';
-// import Stomp from 'stompjs';
-// import SockJS from 'sockjs-client';
-//
-// // npm install stompjs sockjs-client
-// // npm i net -S
-// const Chat = () => {
-//     const [message, setMessage] = useState('');
-//     const [stompClient, setStompClient] = useState(null);
-//
-//     useEffect(() => {
-//         const socket = new SockJS('/ws');
-//         const stomp = Stomp.over(socket);
-//         stomp.connect({}, () => {
-//             setStompClient(stomp);
-//         });
-//
-//         return () => {
-//             if (stompClient) {
-//                 stompClient.disconnect();
-//             }
-//         };
-//     }, []);
-//
-//     const sendWebSocketMessage = () => {
-//         if (stompClient) {
-//             stompClient.send('/app/hello', {}, message);
-//         }
-//     };
-//
-//     return (
-//         <div>
-//             <input
-//                 type="text"
-//                 value={message}
-//                 onChange={(e) => setMessage(e.target.value)}
-//             />
-//             <button onClick={sendWebSocketMessage}>Send Message</button>
-//         </div>
-//     );
-// };
-//
-// export default Chat;
+import React, { useState, useEffect } from 'react';
+import SockJS from 'sockjs-client'
+const Stomp = require('stompjs');
+
+// npm install stompjs sockjs-client
+// npm i net -S
+
+// https://fgh0296.tistory.com/search/sockJS
+
+const Chat = () => {
+    const [message, setMessage] = useState({});
+    const [stompClient, setStompClient] = useState(
+        // stomp 프로토콜 위에서 sockJS가 작동되도록 클라이언트를 생성
+        // "/ws" : 연결할 프로토콜의 URI
+        // 이러고 나면 stompClient로 서버연결, 메세지전송, 구독 등의 기능을 구현함
+        Stomp.over(new SockJS("/ws"))
+    );
+
+    useEffect(()=>{
+
+        // 서버에 연결하기 위해 서버에 CONNECT 프레임을 전송
+        // 연결성공시 서버로부터 연결이 되었다는 CONNECT 응답 프레임이 온다
+        stompClient.connect({},()=>{
+            // 연결 완료시 실행되는 콜백 함수
+            console.log("연결성공");
+            // 상대방에게 메세지를 보내거나 받아야 할 경우 특정 URI에 대해 구독해야함
+            // 채팅방 입장시 해당 채팅방을 구독하는 것과 같음
+            stompClient.subscribe(
+                // 구독할 URI
+                "/sub",
+                // 구독 후 실행될 콜백함수, 구독이후 메세지를 수신받을 때마다
+                // 아래 콜백 함수가 실행됨
+                (frame)=>{
+                    console.log(frame)
+                });
+        })
+
+        // 구독 끊기
+        // return stompClient.subscribe("/sub",(frame)=>{}).unsubscribe();
+    },[])
+
+    const send = ()=>{
+        //메세지 전송
+        // 첫번째 인자: SEND 프레임을 전송할 때 필요한 URI
+        // 두 번째 인자: 헤더 설정
+        // 세 번재 인자: 보낼 데이터
+        stompClient.send("/message",{},JSON.stringify(message))
+    };
+
+    const write = (e)=>{
+        setMessage({
+            content:e.target.value
+        });
+    };
+
+    return (
+        <div>
+            <input
+                type="text"
+                value={message["content"]}
+                onChange={write}
+            />
+            <button onClick={send}>Send Message</button>
+        </div>
+    );
+};
+
+export default Chat;
