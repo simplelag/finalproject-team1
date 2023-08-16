@@ -15,7 +15,10 @@ import JoinMember from "./pages/member/JoinMember";
 import CheckLogin from "./pages/member/CheckLogin";
 import MyLogin from "./pages/member/MyLogin";
 import MyLoginUpdate from "./pages/member/MyLoginUpdate";
+import OldBookList from "./pages/seller/OldBookList";
+import ShoppingBasket from "./pages/seller/ShoppingBasket";=======
 import Chat from "./pages/common/Chat";
+
 
 function App() {
     return (
@@ -23,6 +26,7 @@ function App() {
             <Routes>
                 <Route path={"/sellerPage"} element={<SellerPage />} />
                 <Route path={"/bookDetailPage"} element={<BookDetailPage />}/>
+                <Route path={"/ShoppingBasket"} element={<ShoppingBasket />}/>
                 <Route path={"/"} element={<Main />} />
                 <Route path={"/board"} element={<BoardMain />} />
                 <Route path={"/board/write"} element={<BoardWrite />} />

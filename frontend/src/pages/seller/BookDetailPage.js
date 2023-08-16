@@ -19,6 +19,7 @@ function BookDetailPage() {
         })
             .then(res => {
                 setBookInfo(res.data.item[0]);
+
             })
             .catch(err => {
                 alert("페이지 로딩 오류")
@@ -75,13 +76,10 @@ function BookDetailPage() {
                     </div>
                 </div>
                 <div className={"col-sm-3"}>
-                    <button className={"btn btn-primary"}>판매 등록</button>
                     <button className={"btn btn-success mt-3"}>중고 알림</button>
                 </div>
             </div>
-            {/*<OldBookList/>*/}
-            {/*<OldBookList/>*/}
-            {/*<OldBookList/>*/}
+            <OldBookList/>
             <Footer/>
         </main>
     )

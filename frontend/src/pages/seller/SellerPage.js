@@ -38,7 +38,7 @@ function SellerPage() {
         setbookGrade(e.target.value);
     }
 
-   useState(() => {
+   useEffect(() => {
        axios.get('http://localhost:8080/searchIsbn', {
            params: {
                ISBN13: location.state.ISBN13
@@ -46,6 +46,9 @@ function SellerPage() {
        })
            .then(res => {
                setBookList(res.data.item);
+               setbookISBN(res.data.item[0].isbn13)
+               setbookCover(res.data.item[0].cover)
+               setbookTitle(res.data.item[0].title)
            })
        },[]);
 
@@ -60,6 +63,7 @@ function SellerPage() {
             saleBookPieces: bookPieces,
             bookGrade: bookGrade,
             saleDiscription: discription,
+            saleBookTitle: bookTitle,
         }
 
         axios.post("http://localhost:8080/sellBookInfo", requestData, {

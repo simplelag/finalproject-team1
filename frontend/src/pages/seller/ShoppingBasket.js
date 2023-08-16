@@ -1,9 +1,35 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
+import Header from "../mainPages/Header";
+import Footer from "../mainPages/Footer";
+import {useNavigate} from "react-router-dom";
+import axios from "axios";
 
 function ShoppingBasket() {
+    const [BookInfo,setBookInfo] = useState([]);
+    const [oldBookInfo,setOldBookInfo] = useState([]);
+    const [bookIsbn, setBookIsbn] = useState('');
+    const [bookPrice,setbookPrice] = useState(0);
+    const navi = useNavigate();
+
+
+    useEffect(() => {
+        axios.get('http://localhost:8080/searchUserBasket',{
+            params:{
+                basketMemberId: sessionStorage.getItem("id")
+            }
+        })
+            .then(res =>{
+                setbookPrice(res.data[0])
+
+            })
+    }, []);
+
+
 
     return (
+
         <main className={"container"}>
+            <Header/>
             <div className={"p-2"}>
                 <h4>장바구니</h4>
                 <input className={"form-check-input"} type={"checkbox"} value={""} id={"checkbox"}/>
@@ -40,7 +66,7 @@ function ShoppingBasket() {
                             <s>16,800</s>
                             <br/>
                             "판매가:"
-                            <span class={"p-1"}>15,120</span>
+                            <span className={"p-1"}>15,120</span>
                             "원"
                         </td>
                         <td className={"text-center"}>
@@ -60,6 +86,7 @@ function ShoppingBasket() {
             <div className={"text-center"}>
                 <button type={"submit"} className={"btn btn-success"}><h4>주문하기</h4></button>
             </div>
+            <Footer/>
         </main>
     )
 }
