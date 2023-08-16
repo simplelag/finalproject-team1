@@ -15,7 +15,7 @@ import java.util.Map;
 @RestController
 @CrossOrigin(origins = {"http://localhost:3000"})
 public class MemberController {
-    private final MemberService memberService;
+    private final MemberService userService;
 
 //    로그인 시
     @RequestMapping(value = "/login", method = RequestMethod.POST)
@@ -26,9 +26,9 @@ public class MemberController {
     ) throws Exception{
         HttpSession session = req.getSession();
         Map<Object, Object> result = new HashMap<>();
-        int correctId = memberService.countMember(userId, password);
+        int correctId = userService.countMember(userId, password);
         if(correctId > 0){
-            List<MemberEntity> memberEntities = memberService.allMemberData(userId);
+            List<MemberEntity> memberEntities = userService.allMemberData(userId);
             session.setAttribute("id", userId);
             result.put("name", memberEntities.get(0).getMemberName());
             result.put("grade", memberEntities.get(0).getMemberAuthority());
@@ -41,12 +41,12 @@ public class MemberController {
 //    아이디 중복 확인 버튼 클릭
     @RequestMapping(value = "/sign/idCheck", method = RequestMethod.GET)
     public boolean showCheckId(@RequestParam("userId") String userId) throws Exception{
-        return memberService.checkId(userId);
+        return userService.checkId(userId);
     }
 
     @RequestMapping(value = "/sign/nameCheck", method = RequestMethod.GET)
     public boolean showCheckName(@RequestParam("name") String name) throws Exception{
-        return memberService.checkName(name);
+        return userService.checkName(name);
     }
 
 //    회원가입 버튼 클릭
@@ -61,14 +61,14 @@ public class MemberController {
             @RequestParam("address") String address
     ) throws Exception{
         MemberEntity memberEntity = new MemberEntity(userId, password, name, email, phone, address);
-        memberService.saveMember(memberEntity);
+        userService.saveMember(memberEntity);
     }
     
     
 //    회원정보 수정 - 회원 정보 가져오기
     @RequestMapping(value = "/login/myLogin/myUserUpdate", method = RequestMethod.GET)
     public List<MemberEntity> showMemberDetail(@RequestParam("userId") String userId) throws Exception{
-        return memberService.allMemberData(userId);
+        return userService.allMemberData(userId);
     }
 
 //    회원정보 수정 - 회원 탈퇴
@@ -78,9 +78,9 @@ public class MemberController {
             @RequestParam("password") String password
     ) throws Exception{
         MemberEntity memberEntity = new MemberEntity(userId, password);
-        int correctId = memberService.countMember(userId, password);
+        int correctId = userService.countMember(userId, password);
         if(correctId > 0){
-            memberService.memberWithDraw(memberEntity);
+            userService.memberWithDraw(memberEntity);
         }
         return correctId;
     }
