@@ -1,20 +1,23 @@
 import React, {useEffect, useState} from "react";
 import axios from "axios";
-import {useNavigate, useParams} from "react-router-dom";
+import {useLocation, useNavigate, useParams} from "react-router-dom";
 import Header from "../mainPages/Header";
 import Footer from "../mainPages/Footer";
 
 function BoardUpdate(props) {
 
+    const navi = useNavigate();
+    const location = useLocation();
+
     const board = useParams();
-    const [boardPk] = useState(board.boardPk);
+    const [boardPk] = useState(location.state.boardPk);
     const [title, setTitle] = useState('');
     const [name, setName] = useState(sessionStorage.getItem("name"))
     const [id, setId] = useState(sessionStorage.getItem("id"))
     const [content, setContent] = useState('');
     const [category, setCategory] = useState('');
 
-    const navi = useNavigate();
+
 
     const onClickCategory = (e) => {
         setCategory(e.target.value);
@@ -54,6 +57,9 @@ function BoardUpdate(props) {
             .then(res => {
                 navi('/board')
             })
+            .catch(err => {
+                alert("글수정 오류")
+            })
     }
 
     return (
@@ -77,7 +83,7 @@ function BoardUpdate(props) {
                         </div>
                         <div className={'d-flex'}>
                             <button type={'button'} className={'btn'} onClick={onClickList}>목록</button>
-                            <button type={'button'} className={'btn'} onClick={Update}>글등록</button>
+                            <button type={'button'} className={'btn'} onClick={Update}>글수정</button>
                         </div>
                     </div>
                 </div>

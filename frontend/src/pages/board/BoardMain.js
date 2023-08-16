@@ -3,6 +3,7 @@ import axios from "axios";
 import Header from "../mainPages/Header";
 import Footer from "../mainPages/Footer";
 import {Link, useNavigate} from "react-router-dom";
+import Pagenation from "../common/Pagenation";
 
 function BoardMain(props) {
 

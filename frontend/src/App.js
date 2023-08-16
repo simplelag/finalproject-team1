@@ -15,6 +15,7 @@ import JoinMember from "./pages/member/JoinMember";
 import CheckLogin from "./pages/member/CheckLogin";
 import MyLogin from "./pages/member/MyLogin";
 import MyLoginUpdate from "./pages/member/MyLoginUpdate";
+import BoardUpdate from "./pages/board/BoardUpdate";
 
 function App() {
     return (
@@ -25,6 +26,7 @@ function App() {
                 <Route path={"/"} element={<Main />} />
                 <Route path={"/board"} element={<BoardMain />} />
                 <Route path={"/board/write"} element={<BoardWrite />} />
+                <Route path={"/board/update"} element={<BoardUpdate />} />
                 <Route path={"/board/:boardPk"} element={<BoardDetail />} />
                 <Route path={"/view"} element={<ViewMainList />} />
                 <Route path={"/best"} element={<ViewBestList />} />

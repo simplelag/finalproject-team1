@@ -56,6 +56,9 @@ function BoardDetail(props) {
             })
     }
 
+    const onClickUpdate = () => {
+        navi("/board/update", {state: {boardPk: boardPk}});
+    }
 
 
     return (
@@ -83,7 +86,7 @@ function BoardDetail(props) {
                                 <button type={'button'} className={'btn'}>추천</button>
                             </div>
                             <a href={'/board/'} className={'btn'}>목록</a>
-                            <button type={"button"} className={'btn'}>수정</button>
+                            <button type={"button"} className={'btn'} onClick={onClickUpdate}>수정</button>
                             <button type={"button"} className={'btn'} onClick={onClickDelete}>삭제</button>
                             <a href={'/board/write'} className={'btn'}>글작성</a>
                         </div>
