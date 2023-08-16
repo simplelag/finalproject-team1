@@ -15,6 +15,7 @@ import JoinMember from "./pages/member/JoinMember";
 import CheckLogin from "./pages/member/CheckLogin";
 import MyLogin from "./pages/member/MyLogin";
 import MyLoginUpdate from "./pages/member/MyLoginUpdate";
+import Chat from "./pages/common/Chat";
 
 function App() {
     return (
@@ -35,6 +36,7 @@ function App() {
                 <Route path={"/login/main"} element={<CheckLogin />}/>
                 <Route path={"/login/myLogin"} element={<MyLogin />}/>
                 <Route path={"/login/myLogin/myUserUpdate"} element={<MyLoginUpdate />}/>
+                <Route path={"/chat"} element={<Chat />} />
             </Routes>
         </BrowserRouter>
     );

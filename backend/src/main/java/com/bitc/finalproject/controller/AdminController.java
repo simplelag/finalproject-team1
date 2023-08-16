@@ -21,15 +21,6 @@ public class AdminController {
     private final BoardService boardService;
     private final AdminService adminService;
 
-    @RequestMapping(value = "/getInfo/{id}", method = RequestMethod.GET)
-    public Object boardMain(@PathVariable("id") String id) throws Exception{
-        Map<String, String> map = new HashMap<>();
-        System.out.println(id + " 정보 불러오기");
-        map.put("id",id);
-        map.put("name", "name");
-        map.put("grade", "grade");
-        return map;
-    }
 
     // 페이지네이션을 위해 Pageable 객체를받음
     // Pageable 객체는 frontend의 commons 경로에서 get방식 통신을 위해 page, size 등의 파라미터를 넘겨주는데
@@ -59,5 +50,12 @@ public class AdminController {
     @RequestMapping(value = "/getMemberCount", method = RequestMethod.GET)
     public int getMembersCount(@RequestParam String authority, @RequestParam String content) throws Exception{
         return adminService.getMemberCount(authority, content);
+    }
+
+    @RequestMapping(value = "/editAuth", method = RequestMethod.PUT)
+    public void editAuthority(@RequestParam String id, @RequestParam String authority) throws Exception{
+        System.out.println(id);
+        System.out.println(authority);
+        adminService.editAuthority(id, authority);
     }
 }
