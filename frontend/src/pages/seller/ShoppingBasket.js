@@ -19,8 +19,8 @@ function ShoppingBasket() {
             }
         })
             .then(res =>{
-                setbookPrice(res.data[0])
-
+                console.log(res.data)
+                setOldBookInfo(res.data)
             })
     }, []);
 
@@ -36,7 +36,9 @@ function ShoppingBasket() {
                 <label className={"form-check-label ms-2"} for={"checkbox"}>전체 선택</label>
                 <table className={"table table-bordered mt-3"}>
                     <tbody>
+
                     <tr>
+
                         <th className={"text-center"}>
                             <input type="checkbox" name={"allSelect"}/>
                         </th>
@@ -86,6 +88,7 @@ function ShoppingBasket() {
             <div className={"text-center"}>
                 <button type={"submit"} className={"btn btn-success"}><h4>주문하기</h4></button>
             </div>
+
             <Footer/>
         </main>
     )
