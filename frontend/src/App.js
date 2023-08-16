@@ -36,7 +36,7 @@ function App() {
                 <Route path={"/login/main"} element={<CheckLogin />}/>
                 <Route path={"/login/myLogin"} element={<MyLogin />}/>
                 <Route path={"/login/myLogin/myUserUpdate"} element={<MyLoginUpdate />}/>
-                <Route path={"/chat"} element={<Chat />} />
+                {/*<Route path={"/chat"} element={<Chat />} />*/}
             </Routes>
         </BrowserRouter>
     );
