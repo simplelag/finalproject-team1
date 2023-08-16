@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from "react";
 import axios from "axios";
+import {useNavigate} from "react-router-dom";
 
 const swiperSlide = {
     slide: {
@@ -20,6 +21,7 @@ const swiperSlide = {
 function MainCardCarousel(props) {
 
     const [bookList, setBookList] = useState([]);
+    const navi = useNavigate();
 
     // 스크립트 생성
     useEffect(() => {
@@ -37,13 +39,15 @@ function MainCardCarousel(props) {
     useEffect(() => {
         axios.get('http://localhost:8080/api', {
             params: {
-                Type: props.type
+                Type: props.type,
+                MaxResults: "10"
             }
         })
             .then(res => {
                 setBookList(res.data.item);
             })
     }, [])
+
 
     return (
         <div className={'my-3'}>
@@ -52,7 +56,15 @@ function MainCardCarousel(props) {
                 {
                     bookList.map(itemList => {
                         return (
-                            <swiper-slide style={swiperSlide.slide} key={itemList.isbn13}><img src={itemList.cover} style={swiperSlide.img} />{itemList.title}</swiper-slide>
+                            <swiper-slide style={swiperSlide.slide} key={itemList.isbn13}>
+                                <div onClick={() => {
+                                    navi("/bookDetailPage", {state: {ISBN13: itemList.isbn13}})
+                                    }
+                                }>
+                                    <img src={itemList.cover} style={swiperSlide.img} />
+                                    {itemList.title}
+                                </div>
+                            </swiper-slide>
                         )
                     })
                 }
