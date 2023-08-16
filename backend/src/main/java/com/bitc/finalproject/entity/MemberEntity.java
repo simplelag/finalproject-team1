@@ -55,6 +55,7 @@ public class MemberEntity {
         this.memberAddress = memberAddress;
     }
 
+
 //    sale 테이블에서 member_id, member_name 외래키 설정해야 함
 //    purchase 테이블에서  member_id, member_name 외래키 설정
 }

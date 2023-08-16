@@ -2,6 +2,8 @@ import React, {useEffect, useState} from 'react';
 import {Link, useNavigate} from "react-router-dom";
 import axios from "axios";
 import {useDaumPostcodePopup} from "react-daum-postcode";
+import Header from "../mainPages/Header";
+import Footer from "../mainPages/Footer";
 
 function MyLoginUpdate(props) {
 
@@ -88,12 +90,6 @@ function MyLoginUpdate(props) {
                 setZoneCode(zonecode)
                 setRoadAddress(address)
                 setRoadAddressDetail(addDetail)
-
-                console.log(res)
-            })
-            .catch(err => {
-                console.log("통신 실패")
-                console.log(err)
             })
     }, [])
 
@@ -299,15 +295,13 @@ function MyLoginUpdate(props) {
                 .then(res => {
                     navi('/login');
                 })
-                .catch(err => {
-                    console.log("통신 실패");
-                    console.log(err);
-                })
         }
     }
 
     return (
         <div className={'container my-3'}>
+            <Header />
+            <h1 className={'display-4 mb-3 text-center'}>회원정보 수정</h1>
             <div className={'row'}>
                 <div className={'col-sm-8 mx-auto'}>
                     <div className={'form-group d-flex'}>
@@ -406,6 +400,7 @@ function MyLoginUpdate(props) {
                     </div>
                 </div>
             </div>
+            <Footer />
         </div>
     )
 }

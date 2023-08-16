@@ -9,31 +9,18 @@ import Header from "../mainPages/Header";
 
 
 function Admin(props) {
-    const pid = sessionStorage.getItem("id");
-    const pgrade = sessionStorage.getItem("grade");
-    if(pgrade != "admin"){
+    const id = sessionStorage.getItem("id");
+    const grade = sessionStorage.getItem("grade");
+    const name = sessionStorage.getItem("name");
+    if(grade != "admin"){
         window.location.href = "/";
     }
-    const [id, setId] = useState(pid);
-    const [name, setName] = useState("");
-    const [grade, setGrade] = useState("");
+
 
     const [memberView, setMemberView] = useState(true);
     const [questionView, setQuestionView] = useState(false);
     const [itemView, setItemView] = useState(false);
 
-    useEffect(() => {
-        axios.get(`/api/admin/getInfo/${pid}`)
-            .then(res => {
-                const data = res.data;
-                setId(data.id);
-                setName(data.name);
-                setGrade(data.grade);
-            })
-            .catch(err => {
-                console.log("connection err");
-            })
-    }, [])
 
     let div = <>
         <div>

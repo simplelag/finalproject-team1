@@ -4,8 +4,10 @@ import com.bitc.finalproject.dto.MemberDto;
 import com.bitc.finalproject.entity.MemberEntity;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -41,4 +43,9 @@ public interface MemberRepository extends JpaRepository<MemberEntity, String> {
             "AND m.memberAuthority LIKE %:authority% "
     )
     int countMemberDtoByAuthorityAndContent(String authority, String content);
+
+    @Transactional // 아래 작업이 트랜젝션 안에서 실행되는것을 보장해줌, 걍 이거 없으면 update문 오류남
+    @Modifying
+    @Query("UPDATE MemberEntity m SET m.memberAuthority = :authority WHERE m.memberId = :id")
+    void updateAuthorityToUserById(String id, String authority);
 }

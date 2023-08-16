@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import button from "bootstrap/js/src/button";
 import axios from "axios";
 
@@ -48,7 +48,7 @@ function Pagenation(props) {
     const [howManyTotalContents, setHowManyTotalContents] = useState(0);
 
     // 마지막 페이지 계산 : 총 게시글 수 / 한 페이지당 게시글 수 를 올림한 정수
-    let lastPage = Math.ceil(howManyTotalContents / howManyContentsInAPage)
+    let lastPage = Math.ceil(howManyTotalContents / howManyContentsInAPage);
 
     // 한번에 표시되는 페이지가 [ 1 2 3 4 5 > ] 이런식이라면 firstPageAtThisBlock은 1임
     // [ < 6 7 8 9 10 > ] 이면 firstPageAtThisBlock은 6임
@@ -133,11 +133,7 @@ function Pagenation(props) {
         firstPageAtThisBlock = Math.floor((pageNow - 1) / (howManyPagesInABlock)) * howManyPagesInABlock + 1;
         getList();
         pageBtnArrSet();
-        console.log("============== search ===============");
-        console.log(`searchTypeNow : ${searchTypeNow}`);
-        console.log(`title : ${title}`);
-        console.log(`content : ${content}`);
-        console.log(`name : ${name}`);
+
     }, [pageNow, howManyTotalContents, title, name, content]);
 
     // 현재 페이지를 설정하는 함수,

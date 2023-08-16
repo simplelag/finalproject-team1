@@ -2,6 +2,8 @@ import React, {useEffect, useState} from 'react';
 import axios from "axios";
 import { useCookies } from 'react-cookie';
 import {Link, useNavigate} from "react-router-dom";
+import Header from "../mainPages/Header";
+import Footer from "../mainPages/Footer";
 
 function Join(props) {
 
@@ -38,9 +40,7 @@ function Join(props) {
             }
         })
             .then(res => {
-                console.log(res);
                 if(res.data.login > 0){
-                    alert("로그인 성공");
                     if(isRemember){
                         setCookies('rememberUserId', userId);
                     } else if (!isRemember) {
@@ -49,18 +49,16 @@ function Join(props) {
                     sessionStorage.setItem("id", userId)
                     sessionStorage.setItem("name", res.data.name)
                     sessionStorage.setItem("grade",res.data.grade)
-                    navi('/login/main');
+                    navi('/');
                 }else if(res.data.login === 0){
                     alert("로그인에 실패하셨습니다.")
                 }
-            })
-            .catch(err => {
-                console.log(err);
             })
     }
 
     return (
         <div className={'container my-3'}>
+            <Header />
             <div className={'row'}>
                 <div className="col-sm-4 mx-auto">
                     {/*<form action="/login" method="post">*/}
@@ -84,6 +82,7 @@ function Join(props) {
                     {/*</form>*/}
                 </div>
             </div>
+            <Footer />
         </div>
     )
 }
