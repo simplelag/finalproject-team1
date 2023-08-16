@@ -7,7 +7,7 @@ function QuestionView(props) {
     const [qNum, setQNum] = useState(3);
     const [size, setSize] = useState(5);
     return (
-        <div>
+        <div className={"border"}>
             <table className={'table'}>
                 <thead>
                 <tr className={'text-center'}>
@@ -38,10 +38,11 @@ function QuestionView(props) {
             <Pagenation
                 setList={setBoardList}
                 url={"/api/admin/getQuestions"}
-                numberUrl={"/api/admin/getQuestionNumber"}
+                numberUrl={"/api/admin/getQuestionsCount"}
                 howManyContentsInAPage={qNum}
                 howManyPagesInABlock={size}
                 searchType={["제목","내용","제목+내용","작성자"]}
+                order={"boardPk,DESC"}
             />
         </div>
     );
