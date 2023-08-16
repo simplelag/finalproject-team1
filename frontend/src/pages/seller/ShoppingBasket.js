@@ -7,10 +7,8 @@ import axios from "axios";
 function ShoppingBasket() {
     const [BookInfo,setBookInfo] = useState([]);
     const [oldBookInfo,setOldBookInfo] = useState([]);
-    const [bookIsbn, setBookIsbn] = useState('');
-    const [bookPrice,setbookPrice] = useState(0);
     const navi = useNavigate();
-
+    const [selectAll, setSelectAll] = useState(false);
 
     useEffect(() => {
         axios.get('http://localhost:8080/searchUserBasket',{
@@ -23,7 +21,9 @@ function ShoppingBasket() {
                 setOldBookInfo(res.data)
             })
     }, []);
-
+    const handleSelectAll = () =>{
+        setSelectAll(prevSelectAll => !prevSelectAll);
+    }
 
 
     return (
@@ -32,57 +32,52 @@ function ShoppingBasket() {
             <Header/>
             <div className={"p-2"}>
                 <h4>장바구니</h4>
-                <input className={"form-check-input"} type={"checkbox"} value={""} id={"checkbox"}/>
-                <label className={"form-check-label ms-2"} for={"checkbox"}>전체 선택</label>
-                <table className={"table table-bordered mt-3"}>
-                    <tbody>
-
-                    <tr>
-
-                        <th className={"text-center"}>
-                            <input type="checkbox" name={"allSelect"}/>
-                        </th>
-                        <th className={"text-center"}>상품명</th>
-                        <th className={"text-center"}>가격</th>
-                        <th className={"text-center"}>수량</th>
-                    </tr>
-                    </tbody>
-                </table>
-                <table className={"table table-borderless"}>
-                    <tr>
-                        <td className={"text-center"}>
-                            <input type="checkbox" name={"Selectone"}/>
-                        </td>
-                        <td><a href="#" title={"비가 오면 열리는 상점"}>
-                            <img src="#" alt="이미지가 들어갈 자리"/>
-                        </a>
-                        </td>
-                        <td>
-                            <span>
-                                <a href="#">[국내도서] 비가 오면 열리는 상점
+                <input
+                    className={"form-check-input"}
+                    type={"checkbox"}
+                    value={""}
+                    id={"checkbox"}
+                    checked={selectAll}
+                    onChange={handleSelectAll}
+                />
+                <label className={"form-check-label ms-2"} for={"checkbox"} id={"selectAll"}>전체 선택</label>
+                <table className={"table table-bordered"}>
+                    {oldBookInfo.map(item => (
+                        <tr key={item.basketBookId}>
+                            <td className={"text-center"}>
+                                <input type="checkbox" name={"Selectone"} checked={selectAll}/>
+                            </td>
+                            <td>
+                                <a href="#">
+                                    <img src={item.basketBookCover} alt="이미지가 들어갈 자리" style={{width:200,height:200}}/>
                                 </a>
-                            </span>
-                        </td>
-                        <td>
-                            "정가:"
-                            <s>16,800</s>
-                            <br/>
-                            "판매가:"
-                            <span className={"p-1"}>15,120</span>
-                            "원"
-                        </td>
-                        <td className={"text-center"}>
-                            <div className={"row"}>
-                                <div className={"col-sm-2"}>
-                                    <input type="text" className={"form-control"}
-                                           style={{height: "20px", width: "30px"}}/>
+                            </td>
+                            <td>
+                        <span>
+                            <a href="" className={"text-decoration-none"} style={{color:"black"}}>{item.basketBookTitle}</a>
+                        </span>
+                            </td>
+                            <td>
+                                {/*{"정가:"}*/}
+                                {/*<s>{item.originalPrice}</s>*/}
+                                <br/>
+                                {"판매가:"}
+                                <span className={"p-1"}>{item.basketBookPrice}</span>
+                                {"원"}
+                            </td>
+                            <td className={"text-center"}>
+                                <div className={"row"}>
+                                    {/*<div className={"col-sm-2"}>*/}
+                                    {/*    <input type="text" className={"form-control"}*/}
+                                    {/*           style={{height: "20px", width: "30px"}}/>*/}
+                                    {/*</div>*/}
+                                    <div className={"col-sm-4 ms-2"}>
+                                        <span>{item.basketBookPieces}개</span>
+                                    </div>
                                 </div>
-                                <div className={"col-sm-2 ms-2"}>
-                                    <p>개</p>
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
+                            </td>
+                        </tr>
+                    ))}
                 </table>
             </div>
             <div className={"text-center"}>
