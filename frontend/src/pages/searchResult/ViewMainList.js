@@ -26,6 +26,7 @@ function ViewMainList(props) {
     let lastPage = Math.ceil(location.state.total/viewNum);
     let firstViewBtn = Math.floor((nowPage -1) / 5) * 5 + 1;
 
+    // 버튼 생성
     const btnCreate = () => {
         let btnArray = [];
         if (firstViewBtn != 1) {
@@ -43,19 +44,20 @@ function ViewMainList(props) {
         setBtnList(btnArray);
     }
 
+    // 버튼 이벤트 핸들러
     const nowBtn = (item) => {
         if (item === "<<") {
-            setNowPage(firstViewBtn - 5)
+            setNowPage(firstViewBtn - 5);
         }
         else if (item === ">>") {
-            btnCreate(firstViewBtn + 5)
+            setNowPage(firstViewBtn + 5);
         }
         else {
             reloadingList(item);
         }
-        console.log(nowPage)
     }
 
+    // api
     const reloadingList = (page) => {
         axios.get("http://localhost:8080/search", {
             params: {
@@ -75,12 +77,11 @@ function ViewMainList(props) {
     };
 
 
-
+    // 카테고리 분류
     const onClickSort = (e) => {
         setSort(e.target.value)
-        onClickCategory(location.state.value, e.target.value, "10");
+        onClickCategory(location.state.value, e.target.value, viewNum);
     }
-
 
     const onClickCategory = (search, sort, viewNum) => {
         axios.get("http://localhost:8080/search", {
@@ -93,7 +94,7 @@ function ViewMainList(props) {
             }
         })
             .then(res => {
-                navi("/view", {state: {value: search, data: res.data.item, total: res.data.totalResults}});
+                setBookList(res.data.item)
             })
             .catch(err => {
                 alert("검색 실패")
@@ -101,12 +102,15 @@ function ViewMainList(props) {
     }
 
     const onChangeViewNum = (e) => {
+        setViewNum(e.target.value)
         onClickCategory(location.state.value, sort, e.target.value)
     }
 
+    // 페이지 로딩시 버튼생성
     useEffect(() => {
         btnCreate();
-    },[])
+        console.log(bookList)
+    },[nowPage])
 
     return (
         <div className={'container'}>
@@ -117,7 +121,7 @@ function ViewMainList(props) {
                     <button type={"button"} className={'btn'} value={"Accuracy"} onClick={onClickSort}>정확도순</button>
                     <button type={"button"} className={'btn'} value={"PublishTime"} onClick={onClickSort}>출간일순</button>
                     <button type={"button"} className={'btn'} value={"Title"} onClick={onClickSort}>상품명순</button>
-                    <select value={viewNum} onChange={onChangeViewNum} className={'form-select form-select-sm my-2'}>
+                    <select value={viewNum} defaultValue={viewNum} onChange={onChangeViewNum} className={'form-select form-select-sm my-2'}>
                         <option value={"10"}>10개씩 보기</option>
                         <option value={"20"}>20개씩 보기</option>
                     </select>
@@ -126,7 +130,7 @@ function ViewMainList(props) {
             {
                  bookList.map(item => {
                     return (
-                        <ViewMainBook key={item.isbn13} data={item}/>
+                        <ViewMainBook data={item}/>
                     )
                 })
             }
@@ -140,11 +144,6 @@ function ViewMainList(props) {
             <Footer />
         </div>
     )
-
-
-
-
-
 }
 
 export default ViewMainList;
