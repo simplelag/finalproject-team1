@@ -2,6 +2,8 @@ import React, {useState} from 'react';
 import {Link, useNavigate} from "react-router-dom";
 import DaumPostcode, {useDaumPostcodePopup} from 'react-daum-postcode';
 import axios from "axios";
+import Header from "../mainPages/Header";
+import Footer from "../mainPages/Footer";
 
 
 function JoinMember(props) {
@@ -56,25 +58,25 @@ function JoinMember(props) {
             }
             case 2:{
                 // 한글만 입력
-                value = e.target.value.replace(/[^ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/g, "")
+                value = value.replace(/[^ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/g, "")
                 return value;
                 break;
             }
             case 3:{
                 // 특수문자 제한
-                value = e.target.value.replace(/[\{\}\[\]\/?.,;:|\)*~`!^\-_+┼<>@\#$%&\'\"\\\(\=]/gi, "")
+                value = value.replace(/[\{\}\[\]\/?.,;:|\)*~`!^\-_+┼<>@\#$%&\'\"\\\(\=]/gi, "")
                 return value;
                 break;
             }
             case 4:{
                 // 한글, 숫자만 입력
-                value = e.target.value.replace(/[^^ㄱ-ㅎ|ㅏ-ㅣ|가-힣|0-9]/g, "")
+                value = value.replace(/[^^ㄱ-ㅎ|ㅏ-ㅣ|가-힣|0-9]/g, "")
                 return value;
                 break;
             }
             case 5:{
                 // 숫자만 입력
-                value = e.target.value.replace(/[^0-9]/g, "")
+                value = value.replace(/[^0-9]/g, "")
                 return value;
                 break;
             }
@@ -103,9 +105,6 @@ function JoinMember(props) {
                     alert("사용가능한 Id 입니다.")
                     setUserIdCheck(userId);
                 }
-            })
-            .catch(err => {
-                console.log("통신 실패");
             })
     }
 
@@ -210,7 +209,6 @@ function JoinMember(props) {
     // 클릭 시 팝업창(검색창)
     const handleComplete = (data) => {
         let roadAddress = data.address;
-        let jibunAddress = data.jibunAddress;
         let extraAddress = '';
 
         if (data.addressType === 'R') {
@@ -288,15 +286,13 @@ function JoinMember(props) {
                 .then(res => {
                     navi('/login');
                 })
-                .catch(err => {
-                    console.log("통신 실패");
-                    console.log(err);
-                })
         }
     }
 
     return (
         <div className={'container my-3'}>
+            <Header />
+            <h1 className={'display-4 mb-3 text-center'}>회원가입</h1>
             <div className={'row'}>
                 <div className={'col-sm-8 mx-auto'}>
                     <div className={'form-group d-flex'}>
@@ -409,6 +405,7 @@ function JoinMember(props) {
                     </div>
                 </div>
             </div>
+            <Footer />
         </div>
     )
 }

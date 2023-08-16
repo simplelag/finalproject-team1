@@ -33,6 +33,4 @@ public class BookController {
     public Object searchUserBasket(@RequestParam("basketMemberId") String basketMemberId) throws Exception{
         return bookInfoService.searchUserBasket(basketMemberId);
     }
-
-
 }

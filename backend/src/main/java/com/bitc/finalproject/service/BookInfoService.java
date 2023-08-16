@@ -16,4 +16,6 @@ public interface BookInfoService {
     void basketInsert(BasketEntity basketEntity) throws Exception;
 
     List<BasketEntity> searchUserBasket(String basketMemberId) throws Exception;
+
+    List<BookEntity> mySaleList(String userId) throws Exception;
 }
