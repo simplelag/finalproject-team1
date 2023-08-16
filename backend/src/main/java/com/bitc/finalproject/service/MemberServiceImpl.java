@@ -9,7 +9,7 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @Service
-public class MemberServiceImpl implements MemberService{
+public class MemberServiceImpl implements MemberService {
 
     private final MemberRepository memberRepository;
 
@@ -37,11 +37,6 @@ public class MemberServiceImpl implements MemberService{
     public void saveMember(MemberEntity memberEntity) throws Exception {
         memberRepository.save(memberEntity);
     }
-
-//    @Override
-//    public int memberWithDraw(String userId, String password) throws Exception {
-//        return memberRepository.removeByMemberIdAndMemberPassword(userId, password);
-//    }
 
     @Override
     public void memberWithDraw(MemberEntity memberEntity) throws Exception {

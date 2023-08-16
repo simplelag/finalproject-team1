@@ -7,8 +7,8 @@ function BoardComment(props) {
     const [commentList, setCommentList] = useState([]);
 
     const [boardPk] = useState(props.boardPk);
-    const [commentId, setCommentId] = useState('testUserId');
-    const [commentName, setCommentName] = useState('testUserName');
+    const [commentId, setCommentId] = useState(sessionStorage.getItem("id"));
+    const [commentName, setCommentName] = useState(sessionStorage.getItem("name"));
     const [commentContent, setCommentContent] = useState('');
     const [commentNum, setCommentNum] = useState('');
 

@@ -1,16 +1,18 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
+import axios from "axios";
+import {useNavigate, useParams} from "react-router-dom";
 import Header from "../mainPages/Header";
 import Footer from "../mainPages/Footer";
-import axios from "axios";
-import {useHref, useNavigate} from "react-router-dom";
 
-function BoardWrite(props) {
+function BoardUpdate(props) {
 
+    const board = useParams();
+    const [boardPk] = useState(board.boardPk);
     const [title, setTitle] = useState('');
     const [name, setName] = useState(sessionStorage.getItem("name"))
     const [id, setId] = useState(sessionStorage.getItem("id"))
     const [content, setContent] = useState('');
-    const [category, setCategory] = useState('일반');
+    const [category, setCategory] = useState('');
 
     const navi = useNavigate();
 
@@ -30,24 +32,29 @@ function BoardWrite(props) {
         navi("/board")
     }
 
-    const save = () => {
-        axios.post('http://localhost:8080/board/write', null, {
-            params: {
-                boardCategory: category,
-                boardTitle: title,
-                boardWriterId: id ,
-                boardWriterName: name,
-                boardContent: content,
-            }
-        })
-            .then(() => {
-                navi("/board");
+
+    useEffect(() => {
+        axios.get(`http://localhost:8080/board/${boardPk}`)
+            .then(res => {
+                setTitle(res.data.boardTitle);
+                setName(res.data.boardWriterName);
+                setContent(res.data.boardContent);
+                setCategory(res.data.boardCategory);
             })
-            .catch(() => {
-                alert("글등록 오류")
+            .catch(err => {
+                alert("BoardUpdate Loading Err")
+            })
+    }, [])
+
+    // 수정
+    const Update = () => {
+        axios.put(`http://localhost:8080/board/${boardPk}`, null, {
+            boardPk: boardPk,
+        })
+            .then(res => {
+                navi('/board')
             })
     }
-
 
     return (
         <div>
@@ -70,7 +77,7 @@ function BoardWrite(props) {
                         </div>
                         <div className={'d-flex'}>
                             <button type={'button'} className={'btn'} onClick={onClickList}>목록</button>
-                            <button type={'button'} className={'btn'} onClick={save}>글등록</button>
+                            <button type={'button'} className={'btn'} onClick={Update}>글등록</button>
                         </div>
                     </div>
                 </div>
@@ -78,7 +85,6 @@ function BoardWrite(props) {
             <Footer />
         </div>
     )
-
 }
 
-export default BoardWrite;
+export default BoardUpdate;

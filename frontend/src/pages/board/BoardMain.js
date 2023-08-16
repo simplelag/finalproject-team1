@@ -2,11 +2,13 @@ import React, {useEffect, useState} from "react";
 import axios from "axios";
 import Header from "../mainPages/Header";
 import Footer from "../mainPages/Footer";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 
 function BoardMain(props) {
 
     const [boardList, setBoardList] = useState([]);
+
+    const navi = useNavigate();
 
     // 책 리스트 정보 받아오는 부분
     useEffect(() => {
@@ -19,6 +21,16 @@ function BoardMain(props) {
                 alert("BoardList Connect Err")
             });
     },[])
+
+    const onClickWrite = () => {
+        if (sessionStorage.getItem("id") != null) {
+            navi("/board/write")
+        }
+        else {
+            alert("로그인이 필요합니다")
+            navi("/login")
+        }
+    }
 
     return (
         <div>
@@ -59,7 +71,7 @@ function BoardMain(props) {
                     </tbody>
                 </table>
                 <div className={'my-3 d-flex justify-content-end'}>
-                    <a href={'/board/write'} className={'btn'}>글작성</a>
+                    <button type={"button"} className={'btn'} onClick={onClickWrite}>글작성</button>
                 </div>
             </div>
             <Footer />

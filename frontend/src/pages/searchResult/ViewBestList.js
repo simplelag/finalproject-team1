@@ -9,17 +9,31 @@ import axios from "axios";
 function ViewMainList(props) {
 
     const [best, setBest] = useState([]);
+    const [viewNum, setViewNum] = useState("10");
 
     useEffect(() => {
         axios.get('http://localhost:8080/api', {
             params: {
-                Type: "Bestseller"
+                Type: "Bestseller",
+                MaxResults: viewNum
             }
         })
             .then(res => {
                 setBest(res.data.item);
             })
     }, [])
+
+    const onChangeViewNum = (e) => {
+        axios.get('http://localhost:8080/api', {
+            params: {
+                Type: "Bestseller",
+                MaxResults: e.target.value
+            }
+        })
+            .then(res => {
+                setBest(res.data.item);
+            })
+    }
 
     return (
         <div className={'container'}>
@@ -29,9 +43,9 @@ function ViewMainList(props) {
                 <div className={'my-3'}>
                     <a href={'#'} className={'me-3'}>인기순</a>
                     <a href={'#'}>신상품순</a>
-                    <select className={'form-select form-select-sm my-2'}>
+                    <select value={viewNum} onChange={onChangeViewNum} className={'form-select form-select-sm my-2'}>
                         <option value={'10'}>10개씩 보기</option>
-                        <option value={'5'}>5개씩 보기</option>
+                        <option value={'20'}>20개씩 보기</option>
                     </select>
                 </div>
             </div>

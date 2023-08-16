@@ -4,7 +4,7 @@ import com.bitc.finalproject.entity.MemberEntity;
 
 import java.util.List;
 
-public interface MemberService{
+public interface MemberService {
     int countMember(String userId, String password) throws Exception;
 
     List<MemberEntity> allMemberData(String userId) throws Exception;
@@ -15,5 +15,4 @@ public interface MemberService{
 
 //    회원 탈퇴
     void memberWithDraw(MemberEntity memberEntity) throws Exception;
-//    int memberWithDraw(String userId, String password) throws Exception;
 }

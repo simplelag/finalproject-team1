@@ -20,12 +20,16 @@ function Header(props) {
         axios.get("http://localhost:8080/search", {
             params: {
                 SearchType: "Title",
-                SearchValue: search
+                SearchValue: search,
+                MaxResults: "10",
+                SearchSort: "Accuracy",
+                StartNum: "1"
+
             }
         })
             .then(res => {
                 setBookSearch(res.data);
-                console.log(res.data)
+                console.log(res.data.item)
                 navi("/view", {state: {value: search, data: res.data.item, total: res.data.totalResults}});
             })
             .catch(err => {
