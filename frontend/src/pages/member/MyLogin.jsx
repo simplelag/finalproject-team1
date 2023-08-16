@@ -15,6 +15,9 @@ function MyLogin(props) {
     const [userId, setUserId] = useState(sessionStorage.getItem("id"))
     // 등급
     const [grade, setGrade] = useState(sessionStorage.getItem("grade"));
+    const onClickShoppingBasket = (e) =>{
+        navi("/ShoppingBasket",{state:{userId}});
+    }
 
     // 회원 탈퇴 시 쿠키 삭제
     const cookie = new Cookies()
@@ -77,7 +80,7 @@ function MyLogin(props) {
                         </div>
                     </div>
                     <div className={'col-sm-6 my-4 ms-5 d-grid text-center'}>
-                        <button type={"button"} className={'btn btn-warning'} style={{width: '75%'}}>내 장바구니</button>
+                        <button type={"button"} className={'btn btn-warning'} style={{width: '75%'}}onClick={onClickShoppingBasket}>내 장바구니</button>
                         <button type={"button"} className={'btn btn-primary'} style={{width: '75%'}}>내 쪽지함</button>
                         <button type={"button"} className={'btn btn-warning'} style={{width: '75%'}}>내 쿠폰함</button>
                         <button type={"button"} className={'btn btn-danger'} style={{width: '75%'}}>보유 마일리지</button>

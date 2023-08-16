@@ -15,8 +15,15 @@ import JoinMember from "./pages/member/JoinMember";
 import CheckLogin from "./pages/member/CheckLogin";
 import MyLogin from "./pages/member/MyLogin";
 import MyLoginUpdate from "./pages/member/MyLoginUpdate";
+<<<<<<< HEAD
 import PurchaseMain from "./pages/purchase/PurchaseMain";
 import PurchaseList from "./pages/purchase/PurchaseList";
+=======
+import OldBookList from "./pages/seller/OldBookList";
+import ShoppingBasket from "./pages/seller/ShoppingBasket";=======
+import Chat from "./pages/common/Chat";
+
+>>>>>>> origin/main
 
 function App() {
     return (
@@ -24,6 +31,7 @@ function App() {
             <Routes>
                 <Route path={"/sellerPage"} element={<SellerPage />} />
                 <Route path={"/bookDetailPage"} element={<BookDetailPage />}/>
+                <Route path={"/ShoppingBasket"} element={<ShoppingBasket />}/>
                 <Route path={"/"} element={<Main />} />
                 <Route path={"/board"} element={<BoardMain />} />
                 <Route path={"/board/write"} element={<BoardWrite />} />
@@ -38,6 +46,7 @@ function App() {
                 <Route path={"/login/myLogin"} element={<MyLogin />}/>
                 <Route path={"/login/myLogin/myUserUpdate"} element={<MyLoginUpdate />}/>
                 <Route path={"purchase"} element={<PurchaseList />} />
+                {/*<Route path={"/chat"} element={<Chat />} />*/}
             </Routes>
         </BrowserRouter>
     );

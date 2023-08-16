@@ -14,4 +14,6 @@ public interface AdminService {
     List<MemberDto> getMemberList(String authority, String content, Pageable pageable) throws Exception;
 
     int getMemberCount(String authority, String content) throws Exception;
+
+    void editAuthority(String id, String authority) throws Exception;
 }
