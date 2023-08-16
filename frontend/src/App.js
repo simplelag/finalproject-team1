@@ -43,7 +43,8 @@ function App() {
                 <Route path={"/login/myLogin"} element={<MyLogin />}/>
                 <Route path={"/login/myLogin/myUserUpdate"} element={<MyLoginUpdate />}/>
                 <Route path={"purchase"} element={<PurchaseList />} />
-                {/*<Route path={"/chat"} element={<Chat />} />*/}
+                <Route path={"/chat"} element={<Chat />} />
+                <Route path={"/ws/*"} element={null} />
             </Routes>
         </BrowserRouter>
     );

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import SockJS from 'sockjs-client'
 const Stomp = require('stompjs');
 
@@ -8,13 +8,14 @@ const Stomp = require('stompjs');
 // https://fgh0296.tistory.com/search/sockJS
 
 const Chat = () => {
-    const [message, setMessage] = useState({});
+    const [text, setText] = useState("hello");
     const [stompClient, setStompClient] = useState(
         // stomp 프로토콜 위에서 sockJS가 작동되도록 클라이언트를 생성
         // "/ws" : 연결할 프로토콜의 URI
         // 이러고 나면 stompClient로 서버연결, 메세지전송, 구독 등의 기능을 구현함
         Stomp.over(new SockJS("/ws"))
     );
+
 
     useEffect(()=>{
 
@@ -27,7 +28,7 @@ const Chat = () => {
             // 채팅방 입장시 해당 채팅방을 구독하는 것과 같음
             stompClient.subscribe(
                 // 구독할 URI
-                "/sub",
+                "/topic",
                 // 구독 후 실행될 콜백함수, 구독이후 메세지를 수신받을 때마다
                 // 아래 콜백 함수가 실행됨
                 (frame)=>{
@@ -37,27 +38,33 @@ const Chat = () => {
 
         // 구독 끊기
         // return stompClient.subscribe("/sub",(frame)=>{}).unsubscribe();
+        return () => {
+            if(stompClient.readyState === 1) {
+                stompClient.unsubscribe();
+            }
+        }
     },[])
 
+
+
     const send = ()=>{
+        const messageFrame = text
         //메세지 전송
         // 첫번째 인자: SEND 프레임을 전송할 때 필요한 URI
         // 두 번째 인자: 헤더 설정
         // 세 번재 인자: 보낼 데이터
-        stompClient.send("/message",{},JSON.stringify(message))
+        stompClient.send("/app",{},JSON.stringify(messageFrame))
     };
 
     const write = (e)=>{
-        setMessage({
-            content:e.target.value
-        });
+        setText(e.target.value);
     };
 
     return (
         <div>
             <input
                 type="text"
-                value={message["content"]}
+                value={text}
                 onChange={write}
             />
             <button onClick={send}>Send Message</button>
