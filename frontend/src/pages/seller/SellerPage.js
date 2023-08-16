@@ -2,15 +2,17 @@ import React, {useEffect, useState} from 'react' ;
 import axios from "axios";
 import Header from "../mainPages/Header";
 import Footer from "../mainPages/Footer";
+import {useLocation} from "react-router-dom";
 
 
 
 
 function SellerPage() {
 
+    const location = useLocation();
+
     const [text,setText] =useState('');
     const[bookList,setBookList] = useState([]);
-
     const[salePrice,setsalePrice] = useState('');
     const[discription,setdiscription] = useState('');
     const[postPrice,setpostPrice] = useState(0);
@@ -35,20 +37,21 @@ function SellerPage() {
     const onChangeGrade = (e) =>{
         setbookGrade(e.target.value);
     }
-    const search = () => {
-            axios.get('http://localhost:8080/searchNoType', {
-                params: {
-                    SearchType : text
-                }
-            })
-                .then(res => {
-                    setBookList(res.data);
-                    console.log(bookList)
-                    setbookTitle(res.data[0].title)
-                    setbookISBN(res.data[0].isbn13)
-                    setbookCover(res.data[0].cover)
-                })
-        };
+
+   useEffect(() => {
+       axios.get('http://localhost:8080/searchIsbn', {
+           params: {
+               ISBN13: location.state.ISBN13
+           }
+       })
+           .then(res => {
+               setBookList(res.data.item);
+               setbookISBN(res.data.item[0].isbn13)
+               setbookCover(res.data.item[0].cover)
+               setbookTitle(res.data.item[0].title)
+           })
+       },[]);
+
     const save = () =>{
         const requestData ={
             saleBookId: bookISBN,
@@ -83,15 +86,6 @@ function SellerPage() {
 
         <main className={"container"}>
             <Header/>
-            <div className={"mt-5"}>
-                <form>
-                    <label className={"form-label"}>
-                        <h4>도서 검색</h4>
-                        <input type="text" className={"form-control"} value={text} onChange={onChangetext}/>
-                    </label>
-                    <button type={"button"} className={"ms-3 btn btn-primary"} onClick={search}>검색</button>
-                </form>
-            </div>
 
                 {bookList.map(item => {
                     return(

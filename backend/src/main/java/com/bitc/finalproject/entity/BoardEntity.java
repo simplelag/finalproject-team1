@@ -1,10 +1,7 @@
 package com.bitc.finalproject.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.swing.*;
 import java.sql.Date;
@@ -47,4 +44,5 @@ public class BoardEntity {
     private int boardVisitCount;
 
     private int boardEdited;
+
 }

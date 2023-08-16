@@ -27,7 +27,7 @@ function BoardWrite(props) {
     }
 
     const onClickList = (e) => {
-        navi("/main/board")
+        navi("/board")
     }
 
     const save = () => {
@@ -41,10 +41,10 @@ function BoardWrite(props) {
             }
         })
             .then(() => {
-                navi("/main/board");
+                navi("/board");
             })
             .catch(() => {
-
+                alert("글등록 오류")
             })
     }
 

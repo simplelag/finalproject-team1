@@ -1,4 +1,5 @@
 import React from "react";
+import {useNavigate} from "react-router-dom";
 
 const style = {
     box: {
@@ -13,22 +14,30 @@ const style = {
 
 function ViewMainBook(props) {
 
+    const navi = useNavigate();
+
+    const onClickSell = (e) => {
+        navi("/sellerPage", {state: {ISBN13: props.data.isbn13}});
+    }
+
+    const onClickDetail = (e) => {
+        navi("/bookDetailPage", {state: {ISBN13: props.data.isbn13}})
+    }
+
     return (
         <div>
             <div className={'row'}>
                 <div className={'col-sm-auto m-3'} style={style.box}>
-                    <img src={'/image/1.png'} style={style.img} />
+                    <img src={props.data.cover} style={style.img} />
                 </div>
                 <div className={'col-sm my-3'} id={''}>
                     <div id={''}>
-                        <a href={'#'} className={''}>책제목(더미)</a>
-                        <span className={'ms-2'}>소제목(더미)</span>
+                        <a href={'#'} className={'text-decoration-none'}>{props.data.title}</a>
                     </div>
                     <div>
                         <span>
-                            {/*지은이 그림 옮긴이 등 받아오는 api정보에 맞게 a태그가 추가될 필요가 있어보임*/}
-                            <a href={'#'} className={''}>지은이</a> |
-                            <span className={''}> 출판일</span>
+                            <a href={'#'} className={'text-decoration-none'}>{props.data.author}</a> |
+                            <span className={'ms-2'}>{props.data.pubDate}</span>
                         </span>
                     </div>
                     <div className={'d-flex'}>
@@ -42,7 +51,7 @@ function ViewMainBook(props) {
                             </thead>
                             <tbody>
                             <tr className={'text-center'}>
-                                <td>0000원</td>
+                                <td>{props.data.priceStandard}원</td>
                                 <td>0000원</td>
                                 <td>0000원</td>
                             </tr>
@@ -51,11 +60,11 @@ function ViewMainBook(props) {
                     </div>
                 </div>
                 <div className={'col-sm-auto text-center my-3'}>
-                    <button type={'button'} className={'btn btn-dark'} name={''}>중고도서보기</button>
+                    <button type={'button'} className={'btn btn-dark'} name={''} onClick={onClickDetail}>중고도서보기</button>
                     <br/>
                     <button type={'button'} className={'btn btn-dark my-2'} name={''}>장바구니 담기</button>
                     <br/>
-                    <button type={'button'} className={'btn btn-dark'} name={''}>판매하기</button>
+                    <button type={'button'} className={'btn btn-dark'} name={''} onClick={onClickSell}>판매하기</button>
                 </div>
             </div>
         </div>

@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from "react";
 import axios from "axios";
-import collapse from "bootstrap/js/src/collapse";
 
 const swiperSlide = {
     slide: {
@@ -42,20 +41,18 @@ function MainCardCarousel(props) {
             }
         })
             .then(res => {
-                setBookList(res.data);
+                setBookList(res.data.item);
             })
     }, [])
-
-
 
     return (
         <div className={'my-3'}>
             <h1 className={'ms-5'}>{props.title}</h1>
             <swiper-container className="mySwiper" slides-per-view="4" space-between="30" navigation="true" loop="true">
                 {
-                    bookList.map(item => {
+                    bookList.map(itemList => {
                         return (
-                            <swiper-slide style={swiperSlide.slide}><img src={item.cover} style={swiperSlide.img} />{item.title}</swiper-slide>
+                            <swiper-slide style={swiperSlide.slide} key={itemList.isbn13}><img src={itemList.cover} style={swiperSlide.img} />{itemList.title}</swiper-slide>
                         )
                     })
                 }

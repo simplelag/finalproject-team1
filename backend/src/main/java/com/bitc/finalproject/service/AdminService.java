@@ -1,11 +1,17 @@
 package com.bitc.finalproject.service;
 
+import com.bitc.finalproject.dto.BoardDto;
+import com.bitc.finalproject.dto.MemberDto;
 import com.bitc.finalproject.entity.BoardEntity;
 
 import org.springframework.data.domain.Pageable;
 import java.util.List;
 
 public interface AdminService {
-    List<BoardEntity> getQuestionList(Pageable pageable) throws Exception;
-    int getQuestionNum() throws Exception;
+    int getQuestionsCount(String boardTitle, String boardWriterName, String boardContent) throws Exception;
+    List<BoardDto> findBoardList(String boardTitle, String boardWriterName, String boardContent, Pageable pageable) throws Exception;
+
+    List<MemberDto> getMemberList(String authority, String content, Pageable pageable) throws Exception;
+
+    int getMemberCount(String authority, String content) throws Exception;
 }

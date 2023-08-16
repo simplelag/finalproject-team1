@@ -6,34 +6,22 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
-
 @Entity
-@Table(name = "comment")
+@Table(name="basket")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
-public class CommentEntity {
+public class BasketEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int commentPk;
-
+    private int basketPk;
     @Column(nullable = false)
-    private int commentBoardPk;
-
+    private int basketSalePk;
     @Column(nullable = false)
-    private String commentWriterId;
-
+    private String basketMemberId;
     @Column(nullable = false)
-    private String commentWriterName;
-
+    private String basketBookId;
     @Column(nullable = false)
-    private String commentContent;
-
-    @Column(nullable = false)
-    private LocalDateTime commentDatetime = LocalDateTime.now();
-
-    private int commentNum;
-
+    private int basketBookPrice;
 }
