@@ -15,15 +15,12 @@ import JoinMember from "./pages/member/JoinMember";
 import CheckLogin from "./pages/member/CheckLogin";
 import MyLogin from "./pages/member/MyLogin";
 import MyLoginUpdate from "./pages/member/MyLoginUpdate";
-<<<<<<< HEAD
 import PurchaseMain from "./pages/purchase/PurchaseMain";
 import PurchaseList from "./pages/purchase/PurchaseList";
-=======
 import OldBookList from "./pages/seller/OldBookList";
-import ShoppingBasket from "./pages/seller/ShoppingBasket";=======
+import ShoppingBasket from "./pages/seller/ShoppingBasket";
 import Chat from "./pages/common/Chat";
 
->>>>>>> origin/main
 
 function App() {
     return (

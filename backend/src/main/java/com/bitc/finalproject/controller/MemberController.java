@@ -63,8 +63,7 @@ public class MemberController {
         MemberEntity memberEntity = new MemberEntity(userId, password, name, email, phone, address);
         userService.saveMember(memberEntity);
     }
-    
-    
+
 //    회원정보 수정 - 회원 정보 가져오기
     @RequestMapping(value = "/login/myLogin/myUserUpdate", method = RequestMethod.GET)
     public List<MemberEntity> showMemberDetail(@RequestParam("userId") String userId) throws Exception{
