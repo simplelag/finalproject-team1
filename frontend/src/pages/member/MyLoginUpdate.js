@@ -1,17 +1,16 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Link, useNavigate} from "react-router-dom";
-import DaumPostcode, {useDaumPostcodePopup} from 'react-daum-postcode';
 import axios from "axios";
+import {useDaumPostcodePopup} from "react-daum-postcode";
+import Header from "../mainPages/Header";
+import Footer from "../mainPages/Footer";
 
-
-function JoinMember(props) {
+function MyLoginUpdate(props) {
 
     const navi = useNavigate();
 
     // 아이디
-    const [userId, setUserId] = useState('');
-    // 중복 확인 버튼에서 사용 가능한 id가 나온 경우를 체크
-    const [userIdCheck, setUserIdCheck] = useState('');
+    const [userId, setUserId] = useState(sessionStorage.getItem("id"));
 
     // 비밀번호
     const[ password, setPassword] = useState('');
@@ -40,8 +39,59 @@ function JoinMember(props) {
     const [roadAddress, setRoadAddress] = useState('');
     const [roadAddressDetail, setRoadAddressDetail] = useState('');
 
-    // 약관 동의
-    const [isAgree, setIsAgree] = useState(false);
+    // 회원 정보가 적혀있어야 함
+    useEffect(e => {
+        axios.get(`http://localhost:8080/login/myLogin/myUserUpdate`,{
+            params:{
+                userId : userId
+            }
+        })
+            .then(res => {
+                setPassword(res.data[0].memberPassword)
+                setPasswordRe(res.data[0].memberPassword)
+                setName(res.data[0].memberName);
+
+
+                // 이메일
+                let idx = res.data[0].memberEmail.indexOf('@');
+                let emailCheck = res.data[0].memberEmail.substring(idx);
+                let emailFirst = '';
+                if(emailCheck === '@naver.com' || emailCheck === '@daum.net' || emailCheck === '@nate.com' || emailCheck === '@bict.co.kr' ){
+                    emailFirst = res.data[0].memberEmail.substring(0,idx);
+                    setEmailFlag(false);
+                    setEmailTest(true)
+                }else{
+                    emailFirst = res.data[0].memberEmail;
+                    emailCheck = '';
+                }
+                setEmailFirst(emailFirst)
+                setEmailLast(emailCheck)
+
+                // 전화번호
+                let phone = res.data[0].memberPhone;
+                let pIdx = phone.indexOf('-')
+                let pIdx2 = phone.indexOf('-', pIdx+1)
+                const phoneFirst = phone.substring(0, pIdx)
+                const phoneMiddle = phone.substring(pIdx+1, pIdx2)
+                const phoneLast = phone.substring(pIdx2+1)
+
+                setPhoneFirstNumber(phoneFirst)
+                setPhoneMiddleNumber(phoneMiddle)
+                setPhoneLastNumber(phoneLast)
+                
+                // 주소
+                const memberAddress = res.data[0].memberAddress;
+                let addCheck1 = memberAddress.indexOf('/');
+                let addCheck2 = memberAddress.indexOf('/', addCheck1+1);
+                const zonecode = memberAddress.substring(0,addCheck1)
+                const address = memberAddress.substring(addCheck1+1, addCheck2)
+                const addDetail = memberAddress.substring(addCheck2+1)
+
+                setZoneCode(zonecode)
+                setRoadAddress(address)
+                setRoadAddressDetail(addDetail)
+            })
+    }, [])
 
     // 최대 입력 수 제한, 특수문자 제한
     function stopText(e, maxValue, type){
@@ -56,54 +106,29 @@ function JoinMember(props) {
             }
             case 2:{
                 // 한글만 입력
-                value = value.replace(/[^ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/g, "")
+                value = e.target.value.replace(/[^ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/g, "")
                 return value;
                 break;
             }
             case 3:{
                 // 특수문자 제한
-                value = value.replace(/[\{\}\[\]\/?.,;:|\)*~`!^\-_+┼<>@\#$%&\'\"\\\(\=]/gi, "")
+                value = e.target.value.replace(/[\{\}\[\]\/?.,;:|\)*~`!^\-_+┼<>@\#$%&\'\"\\\(\=]/gi, "")
                 return value;
                 break;
             }
             case 4:{
                 // 한글, 숫자만 입력
-                value = value.replace(/[^^ㄱ-ㅎ|ㅏ-ㅣ|가-힣|0-9]/g, "")
+                value = e.target.value.replace(/[^^ㄱ-ㅎ|ㅏ-ㅣ|가-힣|0-9]/g, "")
                 return value;
                 break;
             }
             case 5:{
                 // 숫자만 입력
-                value = value.replace(/[^0-9]/g, "")
+                value = e.target.value.replace(/[^0-9]/g, "")
                 return value;
                 break;
             }
         }
-    }
-
-    // 아이디
-    const handleUserId = (e) => {
-        // 영문,숫자만 사용
-        const value = stopText(e,10,1);
-        setUserId(value);
-    }
-
-    // 아이디 중복 체크
-    const btnDoubleCheck = (e) => {
-        axios.get("http://localhost:8080/sign/idCheck", {
-            params:{
-                userId : userId
-            }
-        })
-            .then(res => {
-                if(res.data == true){
-                    alert("사용불가 id 입니다.")
-                    setUserId('');
-                }else{
-                    alert("사용가능한 Id 입니다.")
-                    setUserIdCheck(userId);
-                }
-            })
     }
 
     // 비밀번호랑 비밀번호 확인이랑 같은지 확인
@@ -141,7 +166,7 @@ function JoinMember(props) {
     }
 
     const handleEmailLast = (e) => {
-        setEmailFlag(e.target.value == '' ? true : false)
+        setEmailFlag(e.target.value === '' ? true : false)
         setEmailLast(e.target.value);
     }
 
@@ -236,20 +261,10 @@ function JoinMember(props) {
         setRoadAddressDetail(addDetail);
     }
 
-    // 약관 동의
-    const handleAgree = (e) => {
-        if(isAgree == false){
-            setIsAgree(true);
-        }else{
-            setIsAgree(false);
-        }
-    }
-
     // 회원가입 버튼 클릭 시
-    const btnJoinMember = (e) => {
-        if(userId === ''){
-            alert("아이디를 입력하세요");
-        }else if(password === '' || passwordRe === ''){
+    const btnUpdateMember = (e) => {
+
+        if(password === '' || passwordRe === ''){
             alert("비밀번호를 입력하세요");
         } else if(name === ''){
             alert("이름을 입력하세요");
@@ -261,17 +276,13 @@ function JoinMember(props) {
             alert("우편 번호 찾기를 누르세요");
         }else if(roadAddressDetail === ''){
             alert("상세주소를 입력하세요");
-        } else if(!isAgree) {
-            alert("약관에 동의해주세요");
-        }else if(userIdCheck === '' || userId !== userIdCheck){
-            alert("아이디 중복 확인을 해주세요");
         }else if(nameCheck){
             alert("이름이 중복입니다.");
         } else if(!emailTest){
             alert("이메일의 형식이 올바르지 않습니다.")
         }
-        else if(userId === userIdCheck && password === passwordRe) {
-            axios.post("http://localhost:8080/sign/signup", null, {
+        else if(password === passwordRe) {
+            axios.post("http://localhost:8080/sign/signup",null, {
                 params: {
                     userId: userId,
                     password: password,
@@ -289,6 +300,8 @@ function JoinMember(props) {
 
     return (
         <div className={'container my-3'}>
+            <Header />
+            <h1 className={'display-4 mb-3 text-center'}>회원정보 수정</h1>
             <div className={'row'}>
                 <div className={'col-sm-8 mx-auto'}>
                     <div className={'form-group d-flex'}>
@@ -296,10 +309,7 @@ function JoinMember(props) {
                             <label htmlFor={'id'} className={'form-label align-self-center mt-1'}>아이디</label>
                         </div>
                         <div className={'col-sm-5'}>
-                            <input type={'text'} className={'form-control'} id={'id'} value={userId} onChange={handleUserId}/>
-                        </div>
-                        <div className={'col-sm-2'}>
-                            <button type={'button'} className={'btn btn-primary ms-2'} onClick={btnDoubleCheck}>중복체크</button>
+                            <input type={'text'} className={'form-control'} id={'id'} value={userId} disabled={true}/>
                         </div>
                     </div>
                     <div className={'form-group d-flex mt-3'}>
@@ -358,12 +368,12 @@ function JoinMember(props) {
                         </div>
                         <div className={'form-label align-self-center mt-1'}>-</div>
                         <div className={'col-sm-2'}>
-                            <input type={'text'} className={'form-control'} id={'phoneMiddleNumber'} minLength={4} maxLength={4} value={phoneMiddleNumber} onChange={handlePhoneMiddle}/>
+                            <input type={'text'} className={'form-control'} id={'phoneMiddleNumber'} value={phoneMiddleNumber} onChange={handlePhoneMiddle}/>
                         </div>
                         <div className={'form-label align-self-center mt-1'}>-</div>
                         <div className={'col-sm-2'}>
-                            <input type={'text'} className={'form-control'} id={'phoneLastNumber'} maxLength={4} value={phoneLastNumber}
-                            onChange={handlePhoneLast}/>
+                            <input type={'text'} className={'form-control'} id={'phoneLastNumber'} value={phoneLastNumber}
+                                   onChange={handlePhoneLast}/>
                         </div>
                     </div>
                     <div className={'form-group d-flex mt-3'}>
@@ -384,24 +394,15 @@ function JoinMember(props) {
                             <input type={'text'} className={'form-control'} id={'addressDetail'} value={roadAddressDetail} onChange={handleRoadAddDetail} placeholder={'상세주소'}/>
                         </div>
                     </div>
-                    <div className={'form-group d-flex mt-3'}>
-                        <div className={'col-sm-2 d-flex justify-content-center'}>
-                            <label className={'form-label align-self-top'}>약관</label>
-                        </div>
-                        <div className={'col-sm-5'}>
-                            <p>이러이러한 약관입니다.</p>
-                        </div>
-                        <div className={'col-sm-5'}>
-                            <p>약간동의를 체크해주십시오 <input type={'checkbox'} value={isAgree} onChange={handleAgree}/></p>
-                        </div>
-                    </div>
-                    <div className={'col-sm-5 mx-auto d-grid gap-3'}>
-                        <button type={'button'} className={'btn btn-primary'} onClick={btnJoinMember}>회원가입</button>
-                        <Link to={'/login'} className={'btn btn-warning'}>로그인 하러가기</Link>
+                    <div className={'col-sm-5 mt-5 mx-auto d-grid gap-3'}>
+                        <button type={'button'} className={'btn btn-primary'} onClick={btnUpdateMember}>내 정보 수정</button>
+                        <Link to={'/login/myLogin'} className={'btn btn-warning'}>취소</Link>
                     </div>
                 </div>
             </div>
+            <Footer />
         </div>
     )
 }
-export default JoinMember;
+
+export default MyLoginUpdate;

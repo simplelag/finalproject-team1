@@ -7,6 +7,8 @@ import Modal from 'react-bootstrap/Modal';
 import axios from "axios";
 import {Cookies} from "react-cookie";
 import SalesHistory from "./SalesHistory";
+import Header from "../mainPages/Header";
+import Footer from "../mainPages/Footer";
 
 
 function MyLogin(props) {
@@ -62,6 +64,7 @@ function MyLogin(props) {
 
     return (
         <div className={'container my-3'}>
+            <Header />
             <h1 className={'display-4 mb-3 text-center'}>마이페이지</h1>
             <div className={'border border-2'}>
                 <div className={'row'}>
@@ -155,6 +158,7 @@ function MyLogin(props) {
             <div className={'d-flex justify-content-end'}>
                 <Button variant="primary" className={'btn btn-success'} onClick={handleShow}>회원 탈퇴</Button>
             </div>
+            <Footer />
         </div>
     )
 }

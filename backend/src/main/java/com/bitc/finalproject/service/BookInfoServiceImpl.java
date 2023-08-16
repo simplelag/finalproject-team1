@@ -34,5 +34,8 @@ public class BookInfoServiceImpl implements BookInfoService{
         return basketRepository.findByBasketMemberId(basketMemberId);
     }
 
-
+    @Override
+    public List<BookEntity> mySaleList(String userId) throws Exception {
+        return bookInfoRepository.findBySaleSellerId(userId);
+    }
 }

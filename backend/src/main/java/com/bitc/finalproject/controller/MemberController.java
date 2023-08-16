@@ -1,6 +1,7 @@
 package com.bitc.finalproject.controller;
 
 import com.bitc.finalproject.entity.MemberEntity;
+import com.bitc.finalproject.service.BookInfoService;
 import com.bitc.finalproject.service.MemberService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -16,6 +17,7 @@ import java.util.Map;
 @CrossOrigin(origins = {"http://localhost:3000"})
 public class MemberController {
     private final MemberService userService;
+    private final BookInfoService bookInfoService;
 
 //    로그인 시
     @RequestMapping(value = "/login", method = RequestMethod.POST)
@@ -82,6 +84,11 @@ public class MemberController {
             userService.memberWithDraw(memberEntity);
         }
         return correctId;
+    }
+
+    @RequestMapping(value = "/login/myLogin/mySaleList", method = RequestMethod.GET)
+    public Object showMySaleList(@RequestParam("userId") String userId) throws Exception{
+        return bookInfoService.mySaleList(userId);
     }
 }
 
