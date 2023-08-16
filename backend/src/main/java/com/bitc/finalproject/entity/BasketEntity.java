@@ -24,4 +24,10 @@ public class BasketEntity {
     private String basketBookId;
     @Column(nullable = false)
     private int basketBookPrice;
+    @Column(nullable = false)
+    private String basketBookCover;
+    @Column(nullable = false)
+    private String basketBookTitle;
+    @Column(nullable = false)
+    private int basketBookPieces;
 }

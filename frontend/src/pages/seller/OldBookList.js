@@ -8,6 +8,9 @@ function OldBookList() {
     const [oldBookInfo, setOldBookInfo] = useState([]);
     const [oldBookPk,setOldBookPk] = useState(0);
     const [BookPrice,setBookPrice] = useState(0);
+    const [BookCover, setBookCover] =useState('');
+    const [BookTitle,setBookTitle ] = useState('');
+    const [BookPieces,setBookPieces] = useState(0);
     const navi = useNavigate();
 
     useEffect(() => {
@@ -35,6 +38,9 @@ function OldBookList() {
                     setOldBookInfo(res.data);
                     setOldBookPk(res.data[0].salePk)
                     setBookPrice(res.data[0].saleBookPrice)
+                    setBookCover(res.data[0].saleImgSrc)
+                    setBookTitle(res.data[0].saleBookTitle)
+                    setBookPieces(res.data[0].saleBookPieces)
 
                 }
             })
@@ -49,7 +55,10 @@ function OldBookList() {
                 basketSalePk: oldBookPk,
                 basketMemberId: sessionStorage.getItem("id"),
                 basketBookId: location.state.ISBN13,
-                basketBookPrice: BookPrice
+                basketBookPrice: BookPrice,
+                basketBookCover: BookCover,
+                basketBookTitle: BookTitle,
+                basketBookPieces: BookPieces
             }
             console.log(oldBookPk)
             console.log()

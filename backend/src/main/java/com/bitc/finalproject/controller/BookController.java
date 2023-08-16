@@ -28,6 +28,7 @@ public class BookController {
         bookInfoService.basketInsert(basketEntity);
         return null;
     }
+    @CrossOrigin("http://localhost:3000")
     @RequestMapping(value = "/searchUserBasket", method = RequestMethod.GET)
     public Object searchUserBasket(@RequestParam("basketMemberId") String basketMemberId) throws Exception{
         return bookInfoService.searchUserBasket(basketMemberId);
