@@ -15,6 +15,8 @@ import JoinMember from "./pages/member/JoinMember";
 import CheckLogin from "./pages/member/CheckLogin";
 import MyLogin from "./pages/member/MyLogin";
 import MyLoginUpdate from "./pages/member/MyLoginUpdate";
+import PurchaseMain from "./pages/purchase/PurchaseMain";
+import PurchaseList from "./pages/purchase/PurchaseList";
 
 function App() {
     return (
@@ -35,6 +37,7 @@ function App() {
                 <Route path={"/login/main"} element={<CheckLogin />}/>
                 <Route path={"/login/myLogin"} element={<MyLogin />}/>
                 <Route path={"/login/myLogin/myUserUpdate"} element={<MyLoginUpdate />}/>
+                <Route path={"purchase"} element={<PurchaseList />} />
             </Routes>
         </BrowserRouter>
     );

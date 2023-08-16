@@ -56,25 +56,25 @@ function JoinMember(props) {
             }
             case 2:{
                 // 한글만 입력
-                value = e.target.value.replace(/[^ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/g, "")
+                value = value.replace(/[^ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/g, "")
                 return value;
                 break;
             }
             case 3:{
                 // 특수문자 제한
-                value = e.target.value.replace(/[\{\}\[\]\/?.,;:|\)*~`!^\-_+┼<>@\#$%&\'\"\\\(\=]/gi, "")
+                value = value.replace(/[\{\}\[\]\/?.,;:|\)*~`!^\-_+┼<>@\#$%&\'\"\\\(\=]/gi, "")
                 return value;
                 break;
             }
             case 4:{
                 // 한글, 숫자만 입력
-                value = e.target.value.replace(/[^^ㄱ-ㅎ|ㅏ-ㅣ|가-힣|0-9]/g, "")
+                value = value.replace(/[^^ㄱ-ㅎ|ㅏ-ㅣ|가-힣|0-9]/g, "")
                 return value;
                 break;
             }
             case 5:{
                 // 숫자만 입력
-                value = e.target.value.replace(/[^0-9]/g, "")
+                value = value.replace(/[^0-9]/g, "")
                 return value;
                 break;
             }
