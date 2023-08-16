@@ -5,7 +5,7 @@ import axios from "axios";
 function MemberView(props) {
 
     const [userList, setUserList] = useState([]);
-    const [qNum, setQNum] = useState(3);
+    const [qNum, setQNum] = useState(10);
     const [size, setSize] = useState(5);
     const [authority, setAuthority] = useState("");
 
@@ -53,12 +53,15 @@ function MemberView(props) {
             })
             .catch()
     }
-
+    const handleQNum = (e) => {
+        setQNum(e.target.value);
+    }
 
     return (
         <div className={"border"}>
-            <div className={"d-flex justify-content-between"}>
+            <div className={"d-flex justify-content-between align-items-center"}>
                 <h3>회원 관리</h3>
+
                 <div>
                     <button onClick={handleAuthorityBtn} value={""}
                             className={`btn ${authority == "" ? "active" : ""}`}>전체회원
@@ -73,9 +76,16 @@ function MemberView(props) {
                             className={`btn ${authority == "block" ? "active" : ""}`}>차단된 회원
                     </button>
                 </div>
+
+                <select name="contentsCount" value={qNum} onChange={handleQNum}>
+                    <option value="10">10개씩 보기</option>
+                    <option value="30">30개씩 보기</option>
+                    <option value="50">50개씩 보기</option>
+                    <option value="100">100개씩 보기</option>
+                </select>
             </div>
 
-            <table className={'table text-center'}>
+            <table className={'table text-center border-top'}>
                 <colgroup>
                     <col style={{width: "20%"}}/>
                     <col style={{width: "10%"}}/>
@@ -135,7 +145,7 @@ function MemberView(props) {
                 </tbody>
             </table>
             <Pagenation
-                key={authority} // key값이 바뀔 때마다 컴포넌트가 강제로 언마운트되었다가 다시 마운트됨 => 리렌더링됨
+                key={authority+qNum} // key값이 바뀔 때마다 컴포넌트가 강제로 언마운트되었다가 다시 마운트됨 => 리렌더링됨
                 setList={setUserList}
                 url={`/api/admin/getMembers?authority=${authority}`}
                 numberUrl={`/api/admin/getMemberCount?authority=${authority}`}
