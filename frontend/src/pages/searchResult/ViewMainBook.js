@@ -62,7 +62,6 @@ function ViewMainBook(props) {
                 <div className={'col-sm-auto text-center my-3'}>
                     <button type={'button'} className={'btn btn-dark'} name={''} onClick={onClickDetail}>중고도서보기</button>
                     <br/>
-                    <button type={'button'} className={'btn btn-dark my-2'} name={''}>장바구니 담기</button>
                     <br/>
                     <button type={'button'} className={'btn btn-dark'} name={''} onClick={onClickSell}>판매하기</button>
                 </div>

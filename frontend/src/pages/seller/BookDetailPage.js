@@ -4,10 +4,14 @@ import Header from "../mainPages/Header";
 import Footer from "../mainPages/Footer";
 import OldBookList from "./OldBookList";
 import {useLocation, useNavigate} from "react-router-dom";
+import props from "sockjs-client/lib/event/trans-message";
 
-function BookDetailPage() {
+function BookDetailPage(props) {
     const [BookInfo,setBookInfo] = useState([]);
 
+    const onClickSell = (e) => {
+        navi("/sellerPage", {state: {ISBN13: location.state.ISBN13}});
+    }
     const location = useLocation();
     const navi = useNavigate();
 
@@ -19,6 +23,7 @@ function BookDetailPage() {
         })
             .then(res => {
                 setBookInfo(res.data.item[0]);
+
             })
             .catch(err => {
                 alert("페이지 로딩 오류")
@@ -75,13 +80,11 @@ function BookDetailPage() {
                     </div>
                 </div>
                 <div className={"col-sm-3"}>
-                    <button className={"btn btn-primary"}>판매 등록</button>
+                    <button className={"btn btn-dark mt-2"} onClick={onClickSell}> 판매 등록</button>
                     <button className={"btn btn-success mt-3"}>중고 알림</button>
                 </div>
             </div>
-            {/*<OldBookList/>*/}
-            {/*<OldBookList/>*/}
-            {/*<OldBookList/>*/}
+            <OldBookList/>
             <Footer/>
         </main>
     )

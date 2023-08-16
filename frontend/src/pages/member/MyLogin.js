@@ -5,7 +5,10 @@ import Tabs from 'react-bootstrap/Tabs';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import axios from "axios";
-import {useCookies} from "react-cookie";
+import {Cookies} from "react-cookie";
+import SalesHistory from "./SalesHistory";
+import Header from "../mainPages/Header";
+import Footer from "../mainPages/Footer";
 
 
 function MyLogin(props) {
@@ -15,9 +18,12 @@ function MyLogin(props) {
     const [userId, setUserId] = useState(sessionStorage.getItem("id"))
     // 등급
     const [grade, setGrade] = useState(sessionStorage.getItem("grade"));
+    const onClickShoppingBasket = (e) =>{
+        navi("/ShoppingBasket",{state:{userId}});
+    }
 
     // 회원 탈퇴 시 쿠키 삭제
-    const [cookies, setCookies, removeCookies] = useCookies(['rememberUserId']);
+    const cookie = new Cookies()
     
     // modal 창 사용
     const [show, setShow] = useState(false);
@@ -48,19 +54,17 @@ function MyLogin(props) {
             .then(res => {
                 if(res.data > 0){
                     alert("회원을 탈퇴했습니다.")
-                    removeCookies("rememberUserId");
+                    cookie.remove('rememberUserId',{path: '/'})
                     navi('/login')
                 }else if(res.data === 0){
                     alert("비밀번호가 틀렸습니다.");
                 }
             })
-            .catch(err => {
-                console.log(err);
-            })
     }
 
     return (
         <div className={'container my-3'}>
+            <Header />
             <h1 className={'display-4 mb-3 text-center'}>마이페이지</h1>
             <div className={'border border-2'}>
                 <div className={'row'}>
@@ -80,7 +84,7 @@ function MyLogin(props) {
                         </div>
                     </div>
                     <div className={'col-sm-6 my-4 ms-5 d-grid text-center'}>
-                        <button type={"button"} className={'btn btn-warning'} style={{width: '75%'}}>내 장바구니</button>
+                        <button type={"button"} className={'btn btn-warning'} style={{width: '75%'}}onClick={onClickShoppingBasket}>내 장바구니</button>
                         <button type={"button"} className={'btn btn-primary'} style={{width: '75%'}}>내 쪽지함</button>
                         <button type={"button"} className={'btn btn-warning'} style={{width: '75%'}}>내 쿠폰함</button>
                         <button type={"button"} className={'btn btn-danger'} style={{width: '75%'}}>보유 마일리지</button>
@@ -103,7 +107,7 @@ function MyLogin(props) {
                         심장은 시들어 거친 인생에 어디 아름다우냐? 되려니와, 그들의 그들을 방황하였으며, 충분히 아니다. 이상의 뛰노는 우리 풀밭에 못할 시들어 사막이다. 만천하의 속에서 우리의 것은 말이다. 옷을 이상이 피부가 찾아 무한한 이것이다. 용기가 창공에 우리의 봄바람을 반짝이는 보는 대한 소리다.이것은 밥을 부패뿐이다. 산야에 싹이 청춘의 청춘은 생생하며, 위하여 시들어 그것은 약동하다. 살았으며, 얼마나 새가 기쁘며, 긴지라 대중을 있다. 타오르고 생명을 같이, 피가 같은 사막이다. 만천하의 실현에 피어나는 것이다. 이성은 기쁘며, 풍부하게 소리다.이것은 지혜는 용감하고 두손을 그들은 옷을 뿐이다.
                     </Tab>
                     <Tab eventKey="profile" title="판매 내역">
-                        판매 내역
+                        <SalesHistory />
                     </Tab>
                     <Tab eventKey="longer-tab" title="문의 내역">
                         문의 내역
@@ -154,6 +158,7 @@ function MyLogin(props) {
             <div className={'d-flex justify-content-end'}>
                 <Button variant="primary" className={'btn btn-success'} onClick={handleShow}>회원 탈퇴</Button>
             </div>
+            <Footer />
         </div>
     )
 }

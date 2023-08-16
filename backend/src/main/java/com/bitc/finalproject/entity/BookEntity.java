@@ -38,9 +38,7 @@ public class BookEntity {
     private String saleDisabled;
     @Column(nullable = false)
     private String saleDiscription;
-
-
-
-
+    @Column(nullable = false)
+    private String saleBookTitle;
 
 }
