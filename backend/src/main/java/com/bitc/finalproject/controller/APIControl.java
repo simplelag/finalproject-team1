@@ -29,10 +29,11 @@ public class APIControl {
     // 검색 api
     @RequestMapping(value = "/search", method = RequestMethod.GET)
     public Object BookSearchApi(@RequestParam("SearchValue") String searchValue, @RequestParam("SearchType") String searchType,
-                                @RequestParam("SearchSort") String searchSort, @RequestParam("MaxResults") String MaxResults) throws Exception {
+                                @RequestParam("SearchSort") String searchSort, @RequestParam("MaxResults") String MaxResults,
+                                @RequestParam("StartNum") String startNum) throws Exception {
         searchValue = URLEncoder.encode(searchValue, "UTF-8");
         String url = "https://www.aladin.co.kr/ttb/api/ItemSearch.aspx?ttbkey=ttbjhyoon4250959001&Query="+ searchValue +"&QueryType="+ searchType +
-                "&MaxResults=" + MaxResults + "&start=1&SearchTarget=Book&output=js&Version=20131101&Cover=Big&Sort=" + searchSort + "";
+                "&MaxResults=" + MaxResults + "&start=" + startNum + "&SearchTarget=Book&output=js&Version=20131101&Cover=Big&Sort=" + searchSort + "";
 
         ProductObject itemList = bookService.getItemList(url);
 

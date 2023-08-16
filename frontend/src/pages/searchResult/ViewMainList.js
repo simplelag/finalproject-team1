@@ -5,6 +5,7 @@ import Header from "../mainPages/Header";
 import Footer from "../mainPages/Footer";
 import axios from "axios";
 import async from "async";
+import Pagenation from "../common/Pagenation";
 
 
 function ViewMainList(props) {
@@ -12,9 +13,68 @@ function ViewMainList(props) {
     const location = useLocation();
     const navi = useNavigate();
 
+
     const [search, setSearch] = useState(location.state.value);
     const [sort, setSort] = useState('Accuracy');
     const [viewNum, setViewNum] = useState("10");
+    const [nowPage, setNowPage] = useState("1")
+
+
+    const [bookList, setBookList] = useState(location.state.data);
+    const [btnList, setBtnList] = useState([]);
+
+    let lastPage = Math.ceil(location.state.total/viewNum);
+    let firstViewBtn = Math.floor((nowPage -1) / 5) * 5 + 1;
+
+    const btnCreate = () => {
+        let btnArray = [];
+        if (firstViewBtn != 1) {
+            btnArray.push("<<")
+        }
+        for (let i = firstViewBtn; i < firstViewBtn + 5; i++) {
+            btnArray.push(i);
+            if (i >= lastPage) {
+                break;
+            }
+            if (i == firstViewBtn + 5 - 1) {
+                btnArray.push(">>")
+            }
+        }
+        setBtnList(btnArray);
+    }
+
+    const nowBtn = (item) => {
+        if (item === "<<") {
+            setNowPage(firstViewBtn - 5)
+        }
+        else if (item === ">>") {
+            btnCreate(firstViewBtn + 5)
+        }
+        else {
+            reloadingList(item);
+        }
+        console.log(nowPage)
+    }
+
+    const reloadingList = (page) => {
+        axios.get("http://localhost:8080/search", {
+            params: {
+                StartNum: page,
+                SearchType: "Title",
+                SearchValue: search,
+                SearchSort: sort,
+                MaxResults: viewNum
+            }
+        })
+            .then(res => {
+                setBookList(res.data.item)
+            })
+            .catch(err => {
+                alert("Btn Err")
+            })
+    };
+
+
 
     const onClickSort = (e) => {
         setSort(e.target.value)
@@ -28,7 +88,8 @@ function ViewMainList(props) {
                 SearchType: "Title",
                 SearchValue: search,
                 SearchSort: sort,
-                MaxResults: viewNum
+                MaxResults: viewNum,
+                StartNum: "1",
             }
         })
             .then(res => {
@@ -42,6 +103,10 @@ function ViewMainList(props) {
     const onChangeViewNum = (e) => {
         onClickCategory(location.state.value, sort, e.target.value)
     }
+
+    useEffect(() => {
+        btnCreate();
+    },[])
 
     return (
         <div className={'container'}>
@@ -59,15 +124,27 @@ function ViewMainList(props) {
                 </div>
             </div>
             {
-                 location.state.data.map(item => {
+                 bookList.map(item => {
                     return (
                         <ViewMainBook key={item.isbn13} data={item}/>
+                    )
+                })
+            }
+            {
+                btnList.map(item => {
+                    return (
+                        <button key={item} onClick={() => {nowBtn(item)}} className={"btn"}>{item}</button>
                     )
                 })
             }
             <Footer />
         </div>
     )
+
+
+
+
+
 }
 
 export default ViewMainList;

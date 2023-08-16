@@ -37,7 +37,8 @@ function MainCardCarousel(props) {
     useEffect(() => {
         axios.get('http://localhost:8080/api', {
             params: {
-                Type: props.type
+                Type: props.type,
+                MaxResults: "10"
             }
         })
             .then(res => {

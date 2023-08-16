@@ -1,7 +1,7 @@
 package com.bitc.finalproject.controller;
 
-import com.bitc.finalproject.entity.UserEntity;
-import com.bitc.finalproject.service.UserService;
+import com.bitc.finalproject.entity.MemberEntity;
+import com.bitc.finalproject.service.MemberService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -14,8 +14,8 @@ import java.util.Map;
 @RequiredArgsConstructor
 @RestController
 @CrossOrigin(origins = {"http://localhost:3000"})
-public class UserController {
-    private final UserService userService;
+public class MemberController {
+    private final MemberService userService;
 
 //    로그인 시
     @RequestMapping(value = "/login", method = RequestMethod.POST)
@@ -28,7 +28,7 @@ public class UserController {
         Map<Object, Object> result = new HashMap<>();
         int correctId = userService.countMember(userId, password);
         if(correctId > 0){
-            List<UserEntity> memberEntities = userService.allMemberData(userId);
+            List<MemberEntity> memberEntities = userService.allMemberData(userId);
             session.setAttribute("id", userId);
             result.put("name", memberEntities.get(0).getMemberName());
             result.put("grade", memberEntities.get(0).getMemberAuthority());
@@ -60,14 +60,14 @@ public class UserController {
             @RequestParam("phone") String phone,
             @RequestParam("address") String address
     ) throws Exception{
-        UserEntity memberEntity = new UserEntity(userId, password, name, email, phone, address);
+        MemberEntity memberEntity = new MemberEntity(userId, password, name, email, phone, address);
         userService.saveMember(memberEntity);
     }
     
     
 //    회원정보 수정 - 회원 정보 가져오기
     @RequestMapping(value = "/login/myLogin/myUserUpdate", method = RequestMethod.GET)
-    public List<UserEntity> showMemberDetail(@RequestParam("userId") String userId) throws Exception{
+    public List<MemberEntity> showMemberDetail(@RequestParam("userId") String userId) throws Exception{
         return userService.allMemberData(userId);
     }
 
@@ -77,7 +77,7 @@ public class UserController {
             @RequestParam("id") String userId,
             @RequestParam("password") String password
     ) throws Exception{
-        UserEntity memberEntity = new UserEntity(userId, password);
+        MemberEntity memberEntity = new MemberEntity(userId, password);
         int correctId = userService.countMember(userId, password);
         if(correctId > 0){
             userService.memberWithDraw(memberEntity);
