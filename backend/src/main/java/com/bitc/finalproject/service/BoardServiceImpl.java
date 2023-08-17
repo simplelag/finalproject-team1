@@ -44,4 +44,10 @@ public class BoardServiceImpl implements BoardService{
     public void deleteBoard(int boardPk) throws Exception {
         boardRepository.deleteById(boardPk);
     }
+
+    @Override
+    public Optional<BoardEntity> likeCnt(int boardPk) throws Exception {
+
+        return boardRepository.findBoardLikeByBoardPk(boardPk);
+    }
 }

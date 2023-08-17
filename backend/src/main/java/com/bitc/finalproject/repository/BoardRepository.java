@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 
 
 import java.util.List;
+import java.util.Optional;
 
 public interface BoardRepository extends JpaRepository<BoardEntity, Integer> {
     List<BoardEntity> findAllByOrderByBoardPkDesc();
@@ -47,4 +48,7 @@ public interface BoardRepository extends JpaRepository<BoardEntity, Integer> {
                     "AND b.boardCategory = :boardCategory "
     )
     int countByTitleAndContent(String boardTitle, String boardContent, String boardCategory);
+
+
+    Optional<BoardEntity> findBoardLikeByBoardPk(int boardPk) throws Exception;
 }
