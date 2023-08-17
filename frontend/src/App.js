@@ -44,7 +44,7 @@ function App() {
                 <Route path={"/login/myLogin/myUserUpdate"} element={<MyLoginUpdate />}/>
                 <Route path={"purchase"} element={<PurchaseList />} />
                 <Route path={"/chat"} element={<Chat />} />
-                <Route path={"/ws/*"} element={null} />
+                <Route path={"*"} element={<p>에러</p>} />
             </Routes>
         </BrowserRouter>
     );
