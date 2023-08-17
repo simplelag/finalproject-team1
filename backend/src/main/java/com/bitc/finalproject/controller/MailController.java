@@ -10,9 +10,11 @@ import org.springframework.web.socket.messaging.WebSocketStompClient;
 @Controller
 public class MailController {
 
-    @MessageMapping("/news")
-    @SendTo("/topic/news")
+    // client에서 메시지를 /app으로 보내면 @MessageMapping에서 받아서 처리함
+    @MessageMapping("/message")
+    @SendTo("/topic")
     public String broadcastNews(@Payload String message) {
+        System.out.println(message);
         return "Hello, " + message + "!";
 
     }
