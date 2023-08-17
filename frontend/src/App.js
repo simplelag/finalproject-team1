@@ -19,7 +19,7 @@ import PurchaseMain from "./pages/purchase/PurchaseMain";
 import PurchaseList from "./pages/purchase/PurchaseList";
 import OldBookList from "./pages/seller/OldBookList";
 import ShoppingBasket from "./pages/seller/ShoppingBasket";
-import Chat from "./pages/common/Chat";
+import Mail from "./pages/common/Mail";
 
 
 function App() {
@@ -43,7 +43,7 @@ function App() {
                 <Route path={"/login/myLogin"} element={<MyLogin />}/>
                 <Route path={"/login/myLogin/myUserUpdate"} element={<MyLoginUpdate />}/>
                 <Route path={"purchase"} element={<PurchaseList />} />
-                <Route path={"/chat"} element={<Chat />} />
+                <Route path={"/chat"} element={<Mail />} />
                 <Route path={"*"} element={<p>에러</p>} />
             </Routes>
         </BrowserRouter>
