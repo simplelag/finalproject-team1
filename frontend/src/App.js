@@ -19,7 +19,11 @@ import PurchaseMain from "./pages/purchase/PurchaseMain";
 import PurchaseList from "./pages/purchase/PurchaseList";
 import OldBookList from "./pages/seller/OldBookList";
 import ShoppingBasket from "./pages/seller/ShoppingBasket";
+
+import ViewOldBookList from "./pages/searchResult/ViewOldBookList";
+
 import Chat from "./pages/common/Chat";
+
 
 
 function App() {
@@ -35,6 +39,7 @@ function App() {
                 <Route path={"/board/:boardPk"} element={<BoardDetail />} />
                 <Route path={"/view"} element={<ViewMainList />} />
                 <Route path={"/best"} element={<ViewBestList />} />
+                <Route path={"/OldBook"} element={<ViewOldBookList />} />
                 <Route path={"/admin"} element={<Admin id={"admin"}/>} />
                 <Route path={"/admin/question/:boardPk"} element={<QuestionDetail />} />
                 <Route path={"/login"} element={<Join />} />

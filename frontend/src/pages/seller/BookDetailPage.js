@@ -38,11 +38,11 @@ function BookDetailPage(props) {
                 <ul style={{listStyleType: "none"}}>
                     <li>
                         <div>
-                        <a href="#" className={"text-decoration-none ms-2"} style={{color: "black"}}>책 제목:{BookInfo.title}</a>
+                        <a href="#" className={"text-decoration-none ms-2"} style={{color: "black",fontSize:"20pt"}}>책 제목:{BookInfo.title}</a>
                         </div>
                     </li>
                     <li className={"mt-2"}>
-                        <a href="#" className={"text-decoration-none ms-2"} style={{color: "black"}}>지은이:{BookInfo.author}</a>
+                        <a href="#" className={"text-decoration-none ms-2 "} style={{color: "black",fontSize:"10pt"}}>지은이:{BookInfo.author}</a>
                         <a href="#" className={"text-decoration-none ms-2"} style={{color: "black"}}>출판사:{BookInfo.publisher}</a>
                         <a href="#" className={"text-decoration-none ms-2"} style={{color: "black"}}>출판일:{BookInfo.pubDate}</a>
                     </li>
@@ -51,37 +51,24 @@ function BookDetailPage(props) {
             <hr/>
             <div className={"row"}>
                 <div className={"col-sm-3"}>
-                    <a href="#"><img src={BookInfo.cover} alt="이미지 나오는 곳"/></a>
+                    <img src={BookInfo.cover} className={"ms-5"} style={{width:"300px",height:"350px"}} alt="이미지 나오는 곳"/>
                 </div>
-                <div className={"col-sm-6"}>
+                <div className={"col-sm-4"}>
                     <div className={""} id={"info"}>
                         <div id={"infoList"}>
-                            <ul style={{listStyleType:"none"}}>
-                                <li>
-                                    <span>새 상품 정가</span>
-                                    <span className={"ms-2"}>{BookInfo.priceStandard}</span>
-                                </li>
-                                <li className={"mt-2"}>
-                                    <span>새 상품 판매가</span>
-                                    <span className={"ms-2"}>{BookInfo.priceSales}</span>
-                                </li>
-                            </ul>
-                            <ul style={{listStyleType:"none"}}>
-                                <li>
-                                    <span>중고 도서 최고가</span>
-                                    <span className={"ms-2"}>원</span>
-                                </li>
-                                <li className={"mt-2"}>
-                                    <span>중고 도서 최저가</span>
-                                    <span className={"ms-2"}>원</span>
-                                </li>
-                            </ul>
+                                    <span>{BookInfo.categoryName}</span>
+                                    <br/>
+                                    <span className={"mt-2"}>새 상품 정가</span>
+                                    <span className={"ms-2"}>{BookInfo.priceStandard}원</span>
+                            <div className={"col-sm-auto mt-3"}>
+                                 <span style={{fontSize:"13pt"}}>{BookInfo.description}</span>
+                        </div>
                         </div>
                     </div>
                 </div>
-                <div className={"col-sm-3"}>
+                <div className={"col-sm-auto"}>
                     <button className={"btn btn-dark mt-2"} onClick={onClickSell}> 판매 등록</button>
-                    <button className={"btn btn-success mt-3"}>중고 알림</button>
+                    <button className={"btn btn-success mt-2 ms-2"}>중고 알림</button>
                 </div>
             </div>
             <OldBookList/>
