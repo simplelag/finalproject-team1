@@ -16,6 +16,7 @@ import CheckLogin from "./pages/member/CheckLogin";
 import MyLogin from "./pages/member/MyLogin";
 import MyLoginUpdate from "./pages/member/MyLoginUpdate";
 import ShoppingBasket from "./pages/seller/ShoppingBasket";
+import ViewOldBookList from "./pages/searchResult/ViewOldBookList";
 
 
 function App() {
@@ -31,6 +32,7 @@ function App() {
                 <Route path={"/board/:boardPk"} element={<BoardDetail />} />
                 <Route path={"/view"} element={<ViewMainList />} />
                 <Route path={"/best"} element={<ViewBestList />} />
+                <Route path={"/OldBook"} element={<ViewOldBookList />} />
                 <Route path={"/admin"} element={<Admin id={"admin"}/>} />
                 <Route path={"/admin/question/:boardPk"} element={<QuestionDetail />} />
                 <Route path={"/login"} element={<Join />} />

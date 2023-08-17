@@ -18,6 +18,11 @@ public class BookController {
         bookInfoService.bookInfoInsert(bookEntity);
         return null;
     }
+    @RequestMapping(value = "/searchOldBook", method = RequestMethod.GET)
+    public Object searchOldBook() throws Exception{
+        List<BookEntity> bookEntityList = bookInfoService.selectBookList();
+        return bookEntityList;
+    }
     @CrossOrigin("http://localhost:3000")
     @RequestMapping(value ="/oldBookInfo", method = RequestMethod.GET)
     public Object oldBook(@RequestParam("ISBN13") String isbn) throws Exception{
@@ -33,6 +38,14 @@ public class BookController {
     public Object searchUserBasket(@RequestParam("basketMemberId") String basketMemberId) throws Exception{
         return bookInfoService.searchUserBasket(basketMemberId);
     }
+
+    @CrossOrigin("http://localhost:3000")
+    @RequestMapping(value = "/searchUserBaseketDelete",method = RequestMethod.DELETE)
+    public Object BasketDelete(@RequestParam("basketPk") int basketpk) throws Exception{
+        bookInfoService.deleteBasket(basketpk);
+        return "redirect:/ShoppingBasket";
+    }
+
 
 
 }
