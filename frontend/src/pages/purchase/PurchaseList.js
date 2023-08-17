@@ -1,6 +1,6 @@
 import React from 'react';
 import PurchaseMain from "./PurchaseMain";
-import PurchaseImfor from "./PurchaseImfor";
+import PurchaseInfor from "./PurchaseInfor";
 
 function PurchaseList(props) {
 
@@ -8,8 +8,7 @@ function PurchaseList(props) {
         <div>
             <h1 className={'text-center'}>구매 페이지</h1>
             <div className={`container my-4`}>
-                <PurchaseMain />
-                <PurchaseImfor />
+                <PurchaseInfor />
             </div>
         </div>
     )

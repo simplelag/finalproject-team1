@@ -41,7 +41,6 @@ function OldBookList() {
                     setBookCover(res.data[0].saleImgSrc)
                     setBookTitle(res.data[0].saleBookTitle)
                     setBookPieces(res.data[0].saleBookPieces)
-
                 }
             })
     }, []);
@@ -78,11 +77,29 @@ function OldBookList() {
         }
     }
 
-    return (
+    // 구매 버튼 눌렀을때 발생하는 이벤트
+    const handleInPurchase = (e) => {
+        axios.get('http://localhost:8080/purchase/insert',{
+            params:{
+                ISBN13: location.state.ISBN13,
+                BookName: oldBookInfo[e.target.name].saleBookTitle,
+                BuyerId: sessionStorage.getItem("id"),
+                BuyerName: sessionStorage.getItem("name"),
+                SellerId: oldBookInfo[e.target.name].saleSellerId,
+                SellerName: oldBookInfo[e.target.name].saleSellerName,
+                SellerPrice: oldBookInfo[e.target.name].saleBookPrice
+            }
+        })
+            .then(res => {
+                console.log(`통신 성공`)
+            })
+    }
 
+
+    return (
         <div className={"container mt-5"}>
-            {oldBookInfo.map(book => (
-                <div className={"row"}>
+            {oldBookInfo.map((book, index) => (
+                <div className={"row mt-4"}>
                     <div className={"col-sm-3"}>
                         <a href="#">
                             <img src={book.saleImgSrc} alt="이미지 나오는 곳"/>
@@ -109,7 +126,7 @@ function OldBookList() {
                     </div>
                     <div className={"col-sm-2"}>
                         <a href="#"className={"btn btn-link bg-dark"} style={{fontSize:"10pt",color:"white",textDecoration:"none",width:"100pt"}} onClick={save}>장바구니 담기</a>
-                        <a href="#"className={"btn btn-link bg-dark"} style={{fontSize:"10pt",color:"white",textDecoration:"none", width:"100pt"}}>바로 구매</a>
+                        <a href="/purchase" className={"btn btn-link bg-dark"} style={{fontSize:"10pt",color:"white",textDecoration:"none", width:"100pt"}} name={index} onClick={handleInPurchase}>바로 구매</a>
                     </div>
                 </div>
             ))}

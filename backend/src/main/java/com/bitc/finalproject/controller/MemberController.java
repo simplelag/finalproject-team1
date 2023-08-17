@@ -85,7 +85,8 @@ public class MemberController {
         }
         return correctId;
     }
-
+    
+//    마이페이지 - 판매 내역
     @RequestMapping(value = "/login/myLogin/mySaleList", method = RequestMethod.GET)
     public Object showMySaleList(@RequestParam("userId") String userId) throws Exception{
         return bookInfoService.mySaleList(userId);

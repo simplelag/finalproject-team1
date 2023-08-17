@@ -1,9 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import axios from "axios";
 import {useDaumPostcodePopup} from "react-daum-postcode";
+import PurchaseMain from "./PurchaseMain";
 
 
-function PurchaseImfor(props) {
+function PurchaseInfor(props) {
 
     // 기존 배송지 disabled 확인
     const [oriButton, setOriButton] = useState(false)
@@ -27,6 +28,18 @@ function PurchaseImfor(props) {
     const [reqMessage, setReqMessage] = useState('')
     const [reqMessageSel, setReqMessageSel] = useState('')
     const [messageDis, setMessageDis] = useState(false)
+
+    const [purchaseProduct, setPurchaseProduct] = useState()
+
+    // 주문 총액
+    const [orderAllFee, setOrderAllFee] = useState(0);
+    // 배송료
+    const [deliveryFee, setDeliveryFee] = useState(2500);
+    // 최종 금액
+    const [finalFee, setFinalFee] = useState(0);
+
+    // 결제 수단
+    const [payMethod, setPayMethod] = useState('');
 
     useEffect(e => {
         handleOriginalInfo()
@@ -154,8 +167,25 @@ function PurchaseImfor(props) {
         }
     }
 
+    // 주문 총액
+    const handleOrderAllFee = (e) => {
+
+    }
+
+    // 최종 금액
+    const handleFinalFee =(e) => {
+
+    }
+
+
+    // 결제 방법
+    const handlePayMethod = (e) => {
+        setPayMethod(e.target.value);
+    }
+
     return (
         <div>
+            {/*<PurchaseMain setPurchaseProduct={setPurchaseList} />*/}
             <p>배송 정보 입력</p>
             <div className={'border border-2 my-3'}>
                 <div className={'d-flex mt-2'}>
@@ -213,7 +243,7 @@ function PurchaseImfor(props) {
                         <label htmlFor={'message'} className={'form-label align-self-top mt-1'}>요청사항</label>
                     </div>
                     <div className={'col-sm-4'}>
-                        <textarea cols={90} rows={5} id={'message'} value={reqMessage} onChange={handleReqMessage}
+                        <textarea className={'form-control-sm'} cols={90} rows={5} id={'message'} value={reqMessage} onChange={handleReqMessage}
                                   disabled={messageDis}/>
                         <select className={'form-select'} value={reqMessageSel} onInput={handleReqMessageSel}>
                             <option value={''}>직접입력</option>
@@ -234,13 +264,13 @@ function PurchaseImfor(props) {
                             <label htmlFor={'userId'} className={'form-label'}>주문 총액</label>
                         </div>
                         <div className={'col-sm-3'}>
-                            <input type={'text'} className={'form-control'} id={'userId'}/>
+                            <input type={'text'} className={'form-control'} id={'userId'} value={orderAllFee} onChange={handleOrderAllFee} disabled={true}/>
                         </div>
                         <div className={'col-sm-2 text-center align-self-center'}>
                             <label htmlFor={'userId'} className={'form-label'}>마일리지 할인액</label>
                         </div>
                         <div className={'col-sm-3'}>
-                            <input type={'text'} className={'form-control'} id={'userId'}/>
+                            <input type={'text'} className={'form-control'} id={'userId'} disabled={true}/>
                         </div>
                     </div>
                     <div className={'flex-row d-flex my-4'}>
@@ -248,13 +278,13 @@ function PurchaseImfor(props) {
                             <label htmlFor={'userId'} className={'form-label'}>배송료</label>
                         </div>
                         <div className={'col-sm-3'}>
-                            <input type={'text'} className={'form-control'} id={'userId'}/>
+                            <input type={'text'} className={'form-control'} id={'userId'} value={deliveryFee} disabled={true}/>
                         </div>
                         <div className={'col-sm-2 text-center align-self-center'}>
                             <label htmlFor={'userId'} className={'form-label'}>쿠폰 할인액</label>
                         </div>
                         <div className={'col-sm-3'}>
-                            <input type={'text'} className={'form-control'} id={'userId'}/>
+                            <input type={'text'} className={'form-control'} id={'userId'} disabled={true}/>
                         </div>
                     </div>
                     <div className={'flex-row d-flex my-4'}>
@@ -262,7 +292,7 @@ function PurchaseImfor(props) {
                             <label htmlFor={'userId'} className={'form-label'}>최종 금액</label>
                         </div>
                         <div className={'col-sm-3'}>
-                            <input type={'text'} className={'form-control'} id={'userId'}/>
+                            <input type={'text'} className={'form-control'} id={'userId'} value={finalFee} onChange={handleFinalFee} disabled={true}/>
                         </div>
                     </div>
                 </div>
@@ -271,21 +301,21 @@ function PurchaseImfor(props) {
             <p>결제 수단</p>
             <div className={'border border-2 my-3'}>
                 <div className={'row ms-4 my-4'}>
-                    <div className={'btn-group-vertical'}>
+                    <div className={'btn-group-vertical'} value={payMethod} onInput={handlePayMethod}>
                         <div className={'my-2'}>
-                            <input type="radio" className={'form-check-input'} name="payment" value="apple"/>
+                            <input type="radio" className={'form-check-input'} name="payment" value="신용카드"/>
                             <label className={'form-check-label ms-3'} htmlFor={'payment1'}>신용카드</label>
                         </div>
                         <div className={'my-2'}>
-                            <input type="radio" className={'form-check-input'} name="payment" value="apple"/>
+                            <input type="radio" className={'form-check-input'} name="payment" value="카카오 페이"/>
                             <label className={'form-check-label ms-3'} htmlFor={'payment1'}>카카오 페이</label>
                         </div>
                         <div className={'my-2'}>
-                            <input type="radio" className={'form-check-input'} name="payment" value="apple"/>
+                            <input type="radio" className={'form-check-input'} name="payment" value="네이버 페이"/>
                             <label className={'form-check-label ms-3'} htmlFor={'payment1'}>네이버 페이</label>
                         </div>
                         <div className={'my-2'}>
-                            <input type="radio" className={'form-check-input'} name="payment" value="apple"/>
+                            <input type="radio" className={'form-check-input'} name="payment" value="토스"/>
                             <label className={'form-check-label ms-3'} htmlFor={'payment1'}>토스</label>
                         </div>
                     </div>
@@ -295,4 +325,4 @@ function PurchaseImfor(props) {
     )
 }
 
-export default PurchaseImfor;
+export default PurchaseInfor;
