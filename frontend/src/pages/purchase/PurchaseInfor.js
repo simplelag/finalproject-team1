@@ -185,7 +185,7 @@ function PurchaseInfor(props) {
 
     return (
         <div>
-            {/*<PurchaseMain setPurchaseProduct={setPurchaseList} />*/}
+            <PurchaseMain />
             <p>배송 정보 입력</p>
             <div className={'border border-2 my-3'}>
                 <div className={'d-flex mt-2'}>

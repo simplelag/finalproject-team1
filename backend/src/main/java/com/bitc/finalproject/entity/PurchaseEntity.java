@@ -63,10 +63,10 @@ public class PurchaseEntity {
     }
 
     @Builder
-    public PurchaseEntity(int purchasePk, String purchaseBookName, String purchaseBookId, String purchaseBuyerId, String purchaseBuyerName, String purchaseSellerId, String purchaseSellerName, int purchasePayment){
+    public PurchaseEntity(int purchasePk, String purchaseBookId, String purchaseBookName, String purchaseBuyerId, String purchaseBuyerName, String purchaseSellerId, String purchaseSellerName, int purchasePayment){
         this.purchasePk = purchasePk;
-        this.purchaseBookName = purchaseBookName;
         this.purchaseBookId = purchaseBookId;
+        this.purchaseBookName = purchaseBookName;
         this.purchaseBuyerId = purchaseBuyerId;
         this.purchaseBuyerName = purchaseBuyerName;
         this.purchaseSellerId = purchaseSellerId;
