@@ -45,7 +45,4 @@ public class BookController {
         bookInfoService.deleteBasket(basketpk);
         return "redirect:/ShoppingBasket";
     }
-
-
-
 }

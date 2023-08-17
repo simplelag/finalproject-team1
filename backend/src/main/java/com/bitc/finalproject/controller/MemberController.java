@@ -1,6 +1,7 @@
 package com.bitc.finalproject.controller;
 
 import com.bitc.finalproject.entity.MemberEntity;
+import com.bitc.finalproject.service.BookInfoService;
 import com.bitc.finalproject.service.MemberService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -16,6 +17,7 @@ import java.util.Map;
 @CrossOrigin(origins = {"http://localhost:3000"})
 public class MemberController {
     private final MemberService userService;
+    private final BookInfoService bookInfoService;
 
 //    로그인 시
     @RequestMapping(value = "/login", method = RequestMethod.POST)
@@ -63,8 +65,7 @@ public class MemberController {
         MemberEntity memberEntity = new MemberEntity(userId, password, name, email, phone, address);
         userService.saveMember(memberEntity);
     }
-    
-    
+
 //    회원정보 수정 - 회원 정보 가져오기
     @RequestMapping(value = "/login/myLogin/myUserUpdate", method = RequestMethod.GET)
     public List<MemberEntity> showMemberDetail(@RequestParam("userId") String userId) throws Exception{
@@ -83,6 +84,11 @@ public class MemberController {
             userService.memberWithDraw(memberEntity);
         }
         return correctId;
+    }
+
+    @RequestMapping(value = "/login/myLogin/mySaleList", method = RequestMethod.GET)
+    public Object showMySaleList(@RequestParam("userId") String userId) throws Exception{
+        return bookInfoService.mySaleList(userId);
     }
 }
 
