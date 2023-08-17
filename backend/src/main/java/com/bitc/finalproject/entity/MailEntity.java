@@ -29,4 +29,6 @@ public class MailEntity {
     private LocalDateTime mailDatetime = LocalDateTime.now();
     @Column(nullable = false)
     private int mailPurchasePk;
+    @Column(nullable = false)
+    private int mailUnread = 1;
 }

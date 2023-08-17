@@ -17,15 +17,15 @@ const Stomp = require('stompjs');
 
 const Mail = () => {
     const [content, setContent] = useState("hello");
-    const [id, setId] = useState("");
-    const [name, setName] = useState("");
+    const [id, setId] = useState(sessionStorage.getItem("id") || "admin");
+    const [name, setName] = useState(sessionStorage.getItem("name") || "adminName");
 
     const [itemNumber, setItemNumber] = useState("");
     const channel = useRef([]);
     const [stompClient, setStompClient] = useState(null);
     const [isConnected, setIsConnected] = useState(false);
 
-    const [messages, setMessages] = useState([{"mailFromId":"123","mailFromName":"123","mailContent":"hello","mailPurchasePk":"123"},{"mailFromId":"123","mailFromName":"123","mailContent":"hello","mailPurchasePk":"123"}]);
+    const [messages, setMessages] = useState([]);
     const [mC, setMC] = useState(messages.length);
 
     useEffect(() => {
@@ -105,7 +105,7 @@ const Mail = () => {
                 // 아래 콜백 함수가 실행됨
                 (frame) => {
                     let tempMessages = messages;
-                    tempMessages.unshift(JSON.parse(frame.body));
+                    tempMessages.push(JSON.parse(frame.body));
                     setMessages(tempMessages);
                     setMC(tempMessages.length);
                 }));
@@ -134,6 +134,9 @@ const Mail = () => {
 
     return (
         <div className={"container m-5"}>
+
+            <MailSpeechBubbles key={mC} myId={id} jsons={messages} readJsons = {setMessages}/>
+
             <div>
                 <label htmlFor="itemNumber">itemNumber </label>
                 <input
@@ -178,7 +181,7 @@ const Mail = () => {
             </div>
 
 
-                <MailSpeechBubbles key={mC} myId={id} jsons={messages}/>
+
 
         </div>
     );
