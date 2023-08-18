@@ -9,6 +9,7 @@ import {Cookies} from "react-cookie";
 import SalesHistory from "./SalesHistory";
 import Header from "../mainPages/Header";
 import Footer from "../mainPages/Footer";
+import MailOpenButton from "../common/MailOpenButton";
 
 
 function MyLogin(props) {
@@ -99,6 +100,7 @@ function MyLogin(props) {
                     fill
                 >
                     <Tab eventKey="home" title="주문 내역">
+                        <MailOpenButton purchasePk={123} />
                         {/* 여기에다 원하는 거 사용하면 됨 */}
                         전인 타오르고 석가는 밥을 굳세게 봄바람이다. 장식하는 원질이 풀이 피다. 노년에게서 미인을 오아이스도 새가 가치를 피다. 청춘 방황하였으며, 우리 가슴이 바이며, 몸이 약동하다. 주는 천지는 못할 생명을 이상은 뼈 이상의 수 그와 사막이다. 주며, 창공에 부패를 싶이 칼이다. 뜨거운지라, 꽃 용기가 우리의 역사를 칼이다. 불어 우리 몸이 이것이다. 이 청춘 하는 교향악이다.
 

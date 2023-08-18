@@ -45,7 +45,7 @@ function App() {
                 <Route path={"purchase"} element={<PurchaseList />} />
                 <Route path={"/chat"} element={<Mail />} />
                 <Route path={"*"} element={<p>에러</p>} />
-                <Route path={"/mail"} element={<Mail />} />
+                <Route path={"/mail/:purchaseNumber"} element={<Mail />} />
             </Routes>
         </BrowserRouter>
     );
