@@ -24,6 +24,18 @@ public class BookController {
         return bookEntityList;
     }
     @CrossOrigin("http://localhost:3000")
+    @RequestMapping(value = "/highPrice", method = RequestMethod.GET)
+    public Object searchHighPrice(@RequestParam("ISBN13")String isbn13 )throws Exception{
+        List<BookEntity> bookEntityList = bookInfoService.searchHighPrice(isbn13);
+        return bookEntityList;
+    }
+    @CrossOrigin("http://localhost:3000")
+    @RequestMapping(value = "/lowPrice", method = RequestMethod.GET)
+    public Object searchLowPrice(@RequestParam("ISBN13")String isbn13 )throws Exception{
+        List<BookEntity> bookEntityList = bookInfoService.searchLowPrice(isbn13);
+        return bookEntityList;
+    }
+    @CrossOrigin("http://localhost:3000")
     @RequestMapping(value ="/oldBookInfo", method = RequestMethod.GET)
     public Object oldBook(@RequestParam("ISBN13") String isbn) throws Exception{
         return bookInfoService.getOldBooksByIsbn13(isbn);

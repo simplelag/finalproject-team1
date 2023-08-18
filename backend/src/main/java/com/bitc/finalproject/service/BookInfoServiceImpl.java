@@ -50,4 +50,14 @@ public class BookInfoServiceImpl implements BookInfoService{
     public List<BookEntity> mySaleList(String userId) throws Exception {
         return bookInfoRepository.findBySaleSellerId(userId);
     }
+
+    @Override
+    public List<BookEntity> searchLowPrice(String isbn13) {
+        return bookInfoRepository.findBySaleBookIdOrderBySaleBookPriceAsc(isbn13);
+    }
+
+    @Override
+    public List<BookEntity> searchHighPrice(String isbn13) {
+        return  bookInfoRepository.findBySaleBookIdOrderBySaleBookPriceDesc(isbn13);
+    }
 }
