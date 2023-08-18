@@ -57,4 +57,9 @@ public class BookController {
         bookInfoService.deleteBasket(basketpk);
         return "redirect:/ShoppingBasket";
     }
+    @CrossOrigin("http://localhost:3000")
+    @RequestMapping(value = "/oldBookResult", method =  RequestMethod.GET)
+    public Object oldBook()throws  Exception{
+        return 100;
+    }
 }

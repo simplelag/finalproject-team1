@@ -89,7 +89,7 @@ function ViewOldBookList(props) {
                     </div>
                         <div className={"col-sm text-end my-3"}>
                             <button type={'button'} className={'btn btn-dark'} onClick={() => save(index)}> 장바구니에 넣기 </button>
-                            <button type={'button'} className={'btn btn-dark'}> 즉시 구매하기 </button>
+                            <button type={'button'} className={'btn btn-dark ms-3'}> 즉시 구매하기 </button>
                         </div>
                         <div className={'d-flex'}>
                             <table className={'table'}>
@@ -112,8 +112,8 @@ function ViewOldBookList(props) {
             <Pagenation
                 setList={setOldBookInfo}
                 url= {"http://localhost:8080/searchOldBook"}
-                numberUrl= {"http://localhost:8080/searchOldBook"}
-                howManyContentsInAPage={10}
+                numberUrl= {"http://localhost:8080/oldBookResult"}
+                howManyContentsInAPage={5}
                 howManyPagesInABlock={5}
                 searchType={[]}
                 order="boardPk,DESC"

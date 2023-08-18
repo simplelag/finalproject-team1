@@ -17,24 +17,28 @@ function Header(props) {
     }
 
     const onClickSearch = (e) => {
-        axios.get("http://localhost:8080/search", {
-            params: {
-                SearchType: "Title",
-                SearchValue: search,
-                MaxResults: "10",
-                SearchSort: "Accuracy",
-                StartNum: "1"
+        if (search !== "") {
+            axios.get("http://localhost:8080/search", {
+                params: {
+                    SearchType: "Title",
+                    SearchValue: search,
+                    MaxResults: "10",
+                    SearchSort: "Accuracy",
+                    StartNum: "1"
 
-            }
-        })
-            .then(res => {
-                setBookSearch(res.data);
-                console.log(res.data.item)
-                navi("/view", {state: {value: search, data: res.data.item, total: res.data.totalResults}});
+                }
             })
-            .catch(err => {
-                alert("검색 실패")
-            })
+                .then(res => {
+                    setBookSearch(res.data);
+                    console.log(res.data.item)
+                    navi("/view", {state: {value: search, data: res.data.item, total: res.data.totalResults}});
+                })
+                .catch(err => {
+                    alert("검색 실패")
+                })
+        } else {
+            alert("검색어를 입력해 주세요!")
+        }
     }
 
     const onClickMyPage = () => {
@@ -64,20 +68,22 @@ function Header(props) {
                     </a>
 
                     <div className={"d-flex align-items-end ps-5"}>
-                        <input type={'search'} className={'form-control'} onChange={onChangeSearch}/>
-                        <button type={'submit'} className={'btn search'} onClick={onClickSearch}>검색</button>
+                        <div className={"input-group"}>
+                            <input type={'search'} className={'form-control'} onChange={onChangeSearch}/>
+                            <button type={'submit'} className={'btn search'} onClick={onClickSearch}>검색</button>
+                        </div>
                     </div>
-
                     {(sessionStorage.getItem("id") &&
-                        <div className={"d-flex align-items-center loginBtns"}>
-                            <span>{sessionStorage.getItem("name")} </span>
-                            <button type={"button"} className={"btn"} onClick={handleLogout} >로그아웃</button>
-                            <button type={'button'} className={'btn'}><BsCart2 className={"my-auto"}/></button>
-                            <button type={'button'} className={'btn'} onClick={onClickMyPage}><BsFillPersonFill/></button>
-                        </div>) ||
+                            <div className={"d-flex align-items-center loginBtns"}>
+                                <span>{sessionStorage.getItem("name")} </span>
+                                <button type={"button"} className={"btn"} onClick={handleLogout}>로그아웃</button>
+                                <button type={'button'} className={'btn'}><BsCart2 className={"my-auto"}/></button>
+                                <button type={'button'} className={'btn'} onClick={onClickMyPage}><BsFillPersonFill/>
+                                </button>
+                            </div>) ||
                         (<div>
-                        <a href="/Login" className={"text-decoration-none text-black"}>로그인</a>
-                    </div>)}
+                            <a href="/Login" className={"text-decoration-none text-black"}>로그인</a>
+                        </div>)}
 
 
                 </div>
