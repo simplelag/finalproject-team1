@@ -34,46 +34,76 @@ function BookDetailPage(props) {
     return (
         <main>
             <Header/>
-            <div className={"left mt-5"}>
-                <ul style={{listStyleType: "none"}}>
-                    <li>
-                        <div>
-                        <a href="#" className={"text-decoration-none ms-2"} style={{color: "black",fontSize:"20pt"}}>책 제목:{BookInfo.title}</a>
-                        </div>
-                    </li>
-                    <li className={"mt-2"}>
-                        <a href="#" className={"text-decoration-none ms-2 "} style={{color: "black",fontSize:"10pt"}}>지은이:{BookInfo.author}</a>
-                        <a href="#" className={"text-decoration-none ms-2"} style={{color: "black"}}>출판사:{BookInfo.publisher}</a>
-                        <a href="#" className={"text-decoration-none ms-2"} style={{color: "black"}}>출판일:{BookInfo.pubDate}</a>
-                    </li>
-                </ul>
-            </div>
-            <hr/>
+            <div className="container mt-5">
+                <div className="row">
+                    <div className="col-md-6">
+                        <img
+                            src={BookInfo.cover}
+                            className="ms-5"
+                            alt="이미지 나오는 곳"
+                            style={{width:"300px",height:"400px"}}
+                        />
+                    </div>
+                    <div className="col-md-6">
+                        <a
+                            href="#"
+                            className="text-decoration-none"
+                            style={{ color: 'black', fontSize: '20pt' }}
+                        >
+                            책 제목: {BookInfo.title}
+                        </a>
+                        <br />
+                        <a
+                            href="#"
+                            className="text-decoration-none"
+                            style={{ color: 'black', fontSize: '10pt' }}
+                        >
+                            지은이: {BookInfo.author}
+                        </a>
 
-            <div className={"row m-3"}>
-                <div className={"col-sm-3"}>
-                    <img src={BookInfo.cover} className={"ms-5"} style={{width:"300px",height:"350px"}} alt="이미지 나오는 곳"/>
-                </div>
-                <div className={"col-sm-4"}>
-                    <div className={""} id={"info"}>
-                        <div id={"infoList"}>
-                                    <span>{BookInfo.categoryName}</span>
-                                    <br/>
-                                    <span className={"mt-2"}>새 상품 정가</span>
-                                    <span className={"ms-2"}>{BookInfo.priceStandard}원</span>
-                            <div className={"col-sm-auto mt-3"}>
-                                 <span style={{fontSize:"13pt"}}>{BookInfo.description}</span>
-                        </div>
-                        </div>
+                        <a
+                            href="#"
+                            className="text-decoration-none"
+                            style={{ color: 'black' }}
+                        >
+                            출판사: {BookInfo.publisher}
+                        </a>
+                        <br />
+                        <a
+                            href="#"
+                            className="text-decoration-none"
+                            style={{ color: 'black' }}
+                        >
+                            출판일: {BookInfo.pubDate}
+                        </a>
+                        <br/>
+                        <span>{BookInfo.categoryName}</span>
+                        <br />
+                        <span className="mt-3">새 상품 정가</span>
+                        <span className="ms-3">{BookInfo.priceStandard}원</span>
+                        <br/>
+                        <br/>
+                        <span style={{ fontSize: '13pt' }}>{BookInfo.description}</span>
                     </div>
                 </div>
-                <div className={"col-sm-auto"}>
-                    <button className={"btn btn-dark mt-2"} onClick={onClickSell}> 판매 등록</button>
-                    <button className={"btn btn-success mt-2 ms-2"}>중고 알림</button>
+            </div>
+            <div className="container d-flex justify-content-end">
+                <div className="row">
+                    <div className="col-md-10">
+                        <button
+                            className="btn btn-dark mt-2"
+                            onClick={onClickSell}
+                        >
+                            판매 등록
+                        </button>
+                        <button className="btn btn-success mt-2">
+                            중고 알림
+                        </button>
+                    </div>
                 </div>
             </div>
-            <hr/>
-            <div>
+            <hr />
+            <div className="container">
                 <h2>중고 서적 판매</h2>
             </div>
             <OldBookList/>

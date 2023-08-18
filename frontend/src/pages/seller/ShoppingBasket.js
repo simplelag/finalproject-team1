@@ -32,6 +32,9 @@ function ShoppingBasket() {
         setselectItems(updateSelecteItems);
     }
 
+    const gotoDetail = (basketBookId) =>{
+        navi("/bookDetailPage", {state: {ISBN13 : basketBookId }});
+    }
 
     const handleDeleteItem = (basketPk) =>{
         axios.delete(`http://localhost:8080/searchUserBaseketDelete`,{
@@ -78,12 +81,12 @@ function ShoppingBasket() {
                             </td>
                             <td>
                                 <a href="#">
-                                    <img src={item.basketBookCover} alt="이미지가 들어갈 자리" style={{width:200,height:200}}/>
+                                    <img src={item.basketBookCover} alt="이미지가 들어갈 자리" style={{width:"200px",height:"200px"}} onClick={() => gotoDetail(item.basketBookId)}/>
                                 </a>
                             </td>
                             <td>
                         <span>
-                            <a href="" className={"text-decoration-none"} style={{color:"black"}}>{item.basketBookTitle}</a>
+                            <a href="" className={"text-decoration-none"} style={{color:"black"}} onClick={() => gotoDetail(item.basketBookId)}>{item.basketBookTitle}</a>
                         </span>
                             </td>
                             <td>

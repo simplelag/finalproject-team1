@@ -72,7 +72,7 @@ function ViewOldBookList(props) {
             {oldBookInfo.map((info,index) =>(
                 <div className={'row mt-5'} key={info.salePk}>
                     <div className={'col-sm-auto'} style={style.box}>
-                        <img src={info.saleImgSrc} style={style.img} />
+                        <img src={info.saleImgSrc} style={style.img}  onClick={() => gotoDetail(info.saleBookId)} />
                     </div>
                     <div className={'col-sm-5 my-3'}>
                         <div>
@@ -109,15 +109,15 @@ function ViewOldBookList(props) {
                     </div>
                 </div>
                 ))}
-            {/*<Pagenation*/}
-            {/*    setList={setOldBookInfo}*/}
-            {/*    url= {oldBookInfo}*/}
-            {/*    numberUrl= {oldBookInfo.length}*/}
-            {/*    howManyContentsInAPage={10}*/}
-            {/*    howManyPagesInABlock={5}*/}
-            {/*    searchType={[]}*/}
-            {/*    order="boardPk,DESC"*/}
-            {/*/>*/}
+            <Pagenation
+                setList={setOldBookInfo}
+                url= {"http://localhost:8080/searchOldBook"}
+                numberUrl= {"http://localhost:8080/searchOldBook"}
+                howManyContentsInAPage={10}
+                howManyPagesInABlock={5}
+                searchType={[]}
+                order="boardPk,DESC"
+            />
             <Footer/>
 
         </div>

@@ -63,15 +63,15 @@ function ViewMainBook(props) {
         <div>
             <div className={'row'}>
                 <div className={'col-sm-auto m-3'} style={style.box}>
-                    <img src={props.data.cover} style={style.img} />
+                    <img src={props.data.cover} style={style.img} onClick={onClickDetail} />
                 </div>
                 <div className={'col-sm my-3'} id={''}>
                     <div id={''}>
-                        <a href={'#'} className={'text-decoration-none'}>{props.data.title}</a>
+                        <a href={'#'} className={'text-decoration-none'} style={{color:"black"}} onClick={onClickDetail}>{props.data.title}</a>
                     </div>
                     <div>
                         <span>
-                            <a href={'#'} className={'text-decoration-none'}>{props.data.author}</a> |
+                            <a href={'#'} className={'text-decoration-none'} style={{color:"black"}}>{props.data.author}</a> |
                             <span className={'ms-2'}>{props.data.pubDate}</span>
                         </span>
                     </div>
