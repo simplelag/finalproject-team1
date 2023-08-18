@@ -109,15 +109,15 @@ function ViewOldBookList(props) {
                     </div>
                 </div>
                 ))}
-            <Pagenation
-                setList={setOldBookInfo}
-                url= {oldBookInfo}
-                numberUrl= {oldBookInfo.length}
-                howManyContentsInAPage={10}
-                howManyPagesInABlock={5}
-                searchType={[]}
-                order="boardPk,DESC"
-            />
+            {/*<Pagenation*/}
+            {/*    setList={setOldBookInfo}*/}
+            {/*    url= {oldBookInfo}*/}
+            {/*    numberUrl= {oldBookInfo.length}*/}
+            {/*    howManyContentsInAPage={10}*/}
+            {/*    howManyPagesInABlock={5}*/}
+            {/*    searchType={[]}*/}
+            {/*    order="boardPk,DESC"*/}
+            {/*/>*/}
             <Footer/>
 
         </div>
