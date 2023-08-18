@@ -49,7 +49,8 @@ function BookDetailPage(props) {
                 </ul>
             </div>
             <hr/>
-            <div className={"row"}>
+
+            <div className={"row m-3"}>
                 <div className={"col-sm-3"}>
                     <img src={BookInfo.cover} className={"ms-5"} style={{width:"300px",height:"350px"}} alt="이미지 나오는 곳"/>
                 </div>
@@ -70,6 +71,10 @@ function BookDetailPage(props) {
                     <button className={"btn btn-dark mt-2"} onClick={onClickSell}> 판매 등록</button>
                     <button className={"btn btn-success mt-2 ms-2"}>중고 알림</button>
                 </div>
+            </div>
+            <hr/>
+            <div>
+                <h2>중고 서적 판매</h2>
             </div>
             <OldBookList/>
             <Footer/>
