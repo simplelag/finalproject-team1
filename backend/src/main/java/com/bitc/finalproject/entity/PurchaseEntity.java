@@ -29,7 +29,7 @@ public class PurchaseEntity {
     @Column(nullable = false)
     private String purchaseSellerName;
     @Column
-    private LocalDateTime purchaseDatetime;
+    private LocalDateTime purchaseDatetime = LocalDateTime.now();
     @Column
     private int purchaseParcel;
     @Column
@@ -52,6 +52,17 @@ public class PurchaseEntity {
     private int purchaseNumber=1;
 
     @Builder
+    public PurchaseEntity(int purchasePk, String purchaseBookId, String purchaseBuyerId, String purchaseBuyerName, String purchaseSellerId, String purchaseSellerName, int purchaseState){
+        this.purchasePk = purchasePk;
+        this.purchaseBookId = purchaseBookId;
+        this.purchaseBuyerId = purchaseBuyerId;
+        this.purchaseBuyerName = purchaseBuyerName;
+        this.purchaseSellerId = purchaseSellerId;
+        this.purchaseSellerName = purchaseSellerName;
+        this.purchaseState = purchaseState;
+    }
+
+    @Builder
     public PurchaseEntity(String purchaseBookId, String purchaseBookName, String purchaseBuyerId, String purchaseBuyerName, String purchaseSellerId, String purchaseSellerName, int purchasePayment){
         this.purchaseBookId = purchaseBookId;
         this.purchaseBookName = purchaseBookName;
@@ -72,5 +83,20 @@ public class PurchaseEntity {
         this.purchaseSellerId = purchaseSellerId;
         this.purchaseSellerName = purchaseSellerName;
         this.purchasePayment = purchasePayment;
+    }
+//    구매 버튼
+    @Builder
+    public PurchaseEntity(int purchasePk, String purchaseBookId, String purchaseBookName, String purchaseBuyerId, String purchaseBuyerName, String purchaseSellerId, String purchaseSellerName, int purchaseState, int purchasePamentType, String purchaseComment, String purchaseAddress){
+        this.purchasePk = purchasePk;
+        this.purchaseBookId = purchaseBookId;
+        this.purchaseBookName = purchaseBookName;
+        this.purchaseBuyerId = purchaseBuyerId;
+        this.purchaseBuyerName = purchaseBuyerName;
+        this.purchaseSellerId = purchaseSellerId;
+        this.purchaseSellerName = purchaseSellerName;
+        this.purchaseState = purchaseState;
+        this.purchasePamentType = purchasePamentType;
+        this.purchaseComment = purchaseComment;
+        this.purchaseAddress = purchaseAddress;
     }
 }

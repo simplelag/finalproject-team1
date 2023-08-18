@@ -26,4 +26,14 @@ public class PurchaseServiceImpl implements PurchaseService{
     public List<PurchaseEntity> showIndivList(String userId, int state) throws Exception {
         return purchaseRepository.findByPurchaseBuyerIdAndPurchaseState(userId, state);
     }
+
+    @Override
+    public void productListDelete(PurchaseEntity purchaseEntity) throws Exception {
+        purchaseRepository.delete(purchaseEntity);
+    }
+
+    @Override
+    public void savePurchase(PurchaseEntity purchaseEntity) throws Exception {
+        purchaseRepository.save(purchaseEntity);
+    }
 }

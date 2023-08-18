@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import axios from "axios";
+import PurchaseInfor from "./PurchaseInfor";
 
 function PurchaseMain(props) {
 
@@ -14,13 +15,7 @@ function PurchaseMain(props) {
             }
         })
             .then(res => {
-                console.log("통신 성공");
                 setPurchaseList(res.data)
-                props.setPurchaseList(res.data);
-            })
-            .catch(err => {
-                console.log('통신 에러')
-                console.log(err)
             })
     },[]);
 
@@ -47,9 +42,9 @@ function PurchaseMain(props) {
                     </thead>
                     <tbody>
                         {
-                            purchaseList.map((item,index) => {
+                            purchaseList.map((item, index) => {
                                 return (
-                                    <tr>
+                                    <tr key={index}>
                                         <td></td>
                                         <td className={'align-middle'}>{item.purchaseBookName}</td>
                                         <td className={'align-middle text-center'}>{item.purchaseSellerId}</td>
@@ -62,6 +57,7 @@ function PurchaseMain(props) {
                     </tbody>
                 </table>
             </div>
+            <PurchaseInfor purchaseProduct={purchaseList} />
         </div>
     )
 }

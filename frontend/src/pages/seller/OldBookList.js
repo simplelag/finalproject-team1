@@ -54,7 +54,7 @@ function OldBookList() {
                     // 등록 중에 오류가 발생했을 때의 처리
                     console.error("등록 중 오류 발생:", error);
                 });
-    }
+        }
     }
 
     // 구매 버튼 눌렀을때 발생하는 이벤트
@@ -74,7 +74,6 @@ function OldBookList() {
                 console.log(`통신 성공`)
             })
     }
-
 
     return (
         <div className={"container mt-5"}>

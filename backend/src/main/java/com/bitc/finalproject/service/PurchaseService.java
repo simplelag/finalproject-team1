@@ -13,4 +13,9 @@ public interface PurchaseService {
 
 //    구매 페이지에서 구매할 목록 보여주기
     List<PurchaseEntity> showIndivList(String userId, int state) throws Exception;
+
+    void productListDelete(PurchaseEntity purchaseEntity) throws Exception;
+
+//    구매하기
+    void savePurchase(PurchaseEntity purchaseEntity) throws Exception;
 }
