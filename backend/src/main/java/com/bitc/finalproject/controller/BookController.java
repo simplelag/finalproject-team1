@@ -18,6 +18,23 @@ public class BookController {
         bookInfoService.bookInfoInsert(bookEntity);
         return null;
     }
+    @RequestMapping(value = "/searchOldBook", method = RequestMethod.GET)
+    public Object searchOldBook() throws Exception{
+        List<BookEntity> bookEntityList = bookInfoService.selectBookList();
+        return bookEntityList;
+    }
+    @CrossOrigin("http://localhost:3000")
+    @RequestMapping(value = "/highPrice", method = RequestMethod.GET)
+    public Object searchHighPrice(@RequestParam("ISBN13")String isbn13 )throws Exception{
+        List<BookEntity> bookEntityList = bookInfoService.searchHighPrice(isbn13);
+        return bookEntityList;
+    }
+    @CrossOrigin("http://localhost:3000")
+    @RequestMapping(value = "/lowPrice", method = RequestMethod.GET)
+    public Object searchLowPrice(@RequestParam("ISBN13")String isbn13 )throws Exception{
+        List<BookEntity> bookEntityList = bookInfoService.searchLowPrice(isbn13);
+        return bookEntityList;
+    }
     @CrossOrigin("http://localhost:3000")
     @RequestMapping(value ="/oldBookInfo", method = RequestMethod.GET)
     public Object oldBook(@RequestParam("ISBN13") String isbn) throws Exception{
@@ -32,5 +49,12 @@ public class BookController {
     @RequestMapping(value = "/searchUserBasket", method = RequestMethod.GET)
     public Object searchUserBasket(@RequestParam("basketMemberId") String basketMemberId) throws Exception{
         return bookInfoService.searchUserBasket(basketMemberId);
+    }
+
+    @CrossOrigin("http://localhost:3000")
+    @RequestMapping(value = "/searchUserBaseketDelete",method = RequestMethod.DELETE)
+    public Object BasketDelete(@RequestParam("basketPk") int basketpk) throws Exception{
+        bookInfoService.deleteBasket(basketpk);
+        return "redirect:/ShoppingBasket";
     }
 }

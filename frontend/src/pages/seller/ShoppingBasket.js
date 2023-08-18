@@ -5,10 +5,11 @@ import {useNavigate} from "react-router-dom";
 import axios from "axios";
 
 function ShoppingBasket() {
-    const [BookInfo,setBookInfo] = useState([]);
     const [oldBookInfo,setOldBookInfo] = useState([]);
     const navi = useNavigate();
     const [selectAll, setSelectAll] = useState(false);
+    const [selectItems, setselectItems] = useState({});
+    const [basketPk,setbasketPk] = useState();
 
     useEffect(() => {
         axios.get('http://localhost:8080/searchUserBasket',{
@@ -23,9 +24,35 @@ function ShoppingBasket() {
     }, []);
     const handleSelectAll = () =>{
         setSelectAll(prevSelectAll => !prevSelectAll);
+
+        const updateSelecteItems = {};
+        oldBookInfo.forEach(item => {
+            updateSelecteItems[item.basketPk] = !selectAll
+        });
+        setselectItems(updateSelecteItems);
     }
 
 
+    const handleDeleteItem = (basketPk) =>{
+        axios.delete(`http://localhost:8080/searchUserBaseketDelete`,{
+            params:{
+                basketPk: basketPk
+            }
+        })
+            .then(res =>{
+                alert("장바구니에서 제거가 완료되었습니다!")
+                // deleteItem으로 제거된 basketPk값을 뺴고 다시 OldBookInfo를 재설정하고 랜더링함
+                const updatedBookInfo = oldBookInfo.filter(item => item.basketPk !== basketPk);
+                setOldBookInfo(updatedBookInfo);
+            })
+    }
+
+    const handleSelectItem = (basketPk) =>{
+        setselectItems(prevSelectedItems => ({
+            ...prevSelectedItems,
+            [basketPk]: !prevSelectedItems[basketPk]
+        }));
+    };
     return (
 
         <main className={"container"}>
@@ -45,7 +72,9 @@ function ShoppingBasket() {
                     {oldBookInfo.map(item => (
                         <tr key={item.basketBookId}>
                             <td className={"text-center"}>
-                                <input type="checkbox" name={"Selectone"} checked={selectAll}/>
+                                <input type="checkbox" name={"Selectone"} checked={selectItems[item.basketPk] || false}
+                                onChange={() => handleSelectItem(item.basketPk)}
+                                />
                             </td>
                             <td>
                                 <a href="#">
@@ -58,8 +87,6 @@ function ShoppingBasket() {
                         </span>
                             </td>
                             <td>
-                                {/*{"정가:"}*/}
-                                {/*<s>{item.originalPrice}</s>*/}
                                 <br/>
                                 {"판매가:"}
                                 <span className={"p-1"}>{item.basketBookPrice}</span>
@@ -67,12 +94,11 @@ function ShoppingBasket() {
                             </td>
                             <td className={"text-center"}>
                                 <div className={"row"}>
-                                    {/*<div className={"col-sm-2"}>*/}
-                                    {/*    <input type="text" className={"form-control"}*/}
-                                    {/*           style={{height: "20px", width: "30px"}}/>*/}
-                                    {/*</div>*/}
-                                    <div className={"col-sm-4 ms-2"}>
+                                    <div className={"col-sm-4 ms-1 mt-4" }>
                                         <span>{item.basketBookPieces}개</span>
+                                    </div>
+                                    <div className={"col-sm-7 ms-1 mt-4"}>
+                                        <button type={"button"} className={"btn btn-danger"} onClick={() => handleDeleteItem(item.basketPk)}>삭제</button>
                                     </div>
                                 </div>
                             </td>
