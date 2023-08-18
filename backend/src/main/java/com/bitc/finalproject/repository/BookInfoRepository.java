@@ -7,7 +7,8 @@ import java.util.List;
 
 public interface BookInfoRepository  extends JpaRepository<BookEntity, Integer> {
     List<BookEntity> findAllByOrderBySalePkDesc();
-    List<BookEntity> findAllByOrderBySaleBookPriceDesc();
+    List<BookEntity> findBySaleBookIdOrderBySaleBookPriceDesc(String isbn13);
+    List<BookEntity> findBySaleBookIdOrderBySaleBookPriceAsc(String isbn13);
     List<BookEntity> findBySaleBookId(String isbn13);
 
     List<BookEntity> findBySaleSellerId(String userId);

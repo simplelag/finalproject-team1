@@ -1,12 +1,13 @@
 import React, {useEffect, useState} from 'react';
 import axios from "axios";
 import {useLocation, useNavigate} from "react-router-dom";
+import Pagenation from "../common/Pagenation";
+
 
 function OldBookList() {
     const location = useLocation();
     const [oldBookInfo, setOldBookInfo] = useState([]);
     const navi = useNavigate();
-
 
     useEffect(() => {
         axios.get('http://localhost:8080/oldBookInfo',{
@@ -17,7 +18,6 @@ function OldBookList() {
             .then(res =>{
                 const data = res.data;
                 if(res.data.length == 0){
-
                 }
                 else {
                     setOldBookInfo(res.data);
@@ -79,7 +79,7 @@ function OldBookList() {
                         </ul>
                     </div>
                     <div className={"col-sm-1"}>
-                        <p>등급 :{book.bookGrade}</p>
+                        <p>등급 : {book.bookGrade}</p>
                     </div>
                     <div className={"col-sm-1"}>
                         <span>판매가격 : {book.saleBookPrice}</span>
@@ -93,6 +93,7 @@ function OldBookList() {
                     </div>
                 </div>
             ))}
+
         </div>
     )
 }
