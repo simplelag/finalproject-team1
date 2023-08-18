@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {Fragment, useEffect, useState} from "react";
 import Header from "../mainPages/Header";
 import Footer from "../mainPages/Footer";
 import {useNavigate, useParams} from "react-router-dom";
@@ -49,6 +49,7 @@ function BoardDetail(props) {
         axios.delete(`http://localhost:8080/board/${boardPk}`, {
             params: {
                 boardWriterId: id,
+                nowId: sessionStorage.getItem("id"),
             }
         })
             .then(res => {
@@ -56,7 +57,24 @@ function BoardDetail(props) {
             })
     }
 
+    const onClickUpdate = () => {
+        navi("/board/update", {state: {boardPk: boardPk}});
+    }
 
+    const onClickLike = () => {
+        axios.post('http://localhost:8080/board/like', null,{
+            params: {
+                boardPk: boardPk,
+                likeMemberId: id,
+            }
+        })
+            .then(res =>{
+                setLike(res.data.boardLike)
+            })
+            .catch(err => {
+                console.log(err)
+            })
+    }
 
     return (
         <div>
@@ -80,10 +98,10 @@ function BoardDetail(props) {
                             </table>
                             <textarea rows={10} className={'form-control'} value={content} onChange={onChangeContent}></textarea>
                             <div className={'d-flex justify-content-center my-3'}>
-                                <button type={'button'} className={'btn'}>추천</button>
+                                <button type={'button'} className={'btn'} onClick={onClickLike}>추천</button>
                             </div>
                             <a href={'/board/'} className={'btn'}>목록</a>
-                            <button type={"button"} className={'btn'}>수정</button>
+                            <button type={"button"} className={'btn'} onClick={onClickUpdate}>수정</button>
                             <button type={"button"} className={'btn'} onClick={onClickDelete}>삭제</button>
                             <a href={'/board/write'} className={'btn'}>글작성</a>
                         </div>

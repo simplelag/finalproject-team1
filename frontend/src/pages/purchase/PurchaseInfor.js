@@ -48,45 +48,38 @@ function PurchaseInfor(props) {
         // if(props.purchaseProduct.length > 0){
         //     console.log(props.purchaseProduct[0].purchaseBookId)
         // }
-    },[props.purchaseProduct])
+    }, [props.purchaseProduct])
 
     useEffect(() => {
         handleOriginalInfo()
-        useEffect(() => {
-            const handleBeforeUnload = (event) => {
-                event.preventDefault();
-                event.returnValue = '정말 나가시겠습니까?';
-            };
+        const handleBeforeUnload = (event) => {
+            event.preventDefault();
+            event.returnValue = '정말 나가시겠습니까?';
+        };
 
-            const handleExit = (event) => {
-                purchaseProduct.map(item => {
-                    console.log(item.saleSellerId)
+        const handleExit = (event) => {
+            axios.delete('http://localhost:8080/purchase/delete', {
+                purchaseProduct,
+                params: {
+                    BuyerId: userId,
+                    BuyerName: sessionStorage.getItem("name"),
+                    state: 0
+                }
+            })
+                .then(res => {
+                    console.log("통신 성공", res)
                 })
-                axios.delete('http://localhost:8080/purchase/delete', {
-                    purchaseProduct,
-                    params:{
-                        BuyerId: userId,
-                        BuyerName: sessionStorage.getItem("name"),
-                        SellerId: purchaseProduct.purchaseSellerId,
-                        SellerName: purchaseProduct.purchaseSellerName,
-                        state: 0
-                    }
+                .catch(err => {
+                    console.log("통신 실패", err)
                 })
-                    .then(res => {
-                        console.log("통신 성공", res)
-                    })
-                    .catch(err => {
-                        console.log("통신 실패", err)
-                    })
-            };
+        }
+        window.addEventListener('beforeunload', handleBeforeUnload);
 
-            window.addEventListener('beforeunload', handleBeforeUnload);
-
-            return () => {
-                handleExit()
-                window.removeEventListener('beforeunload', handleExit);
-            };
-    },[])
+        return () => {
+            handleExit()
+            window.removeEventListener('beforeunload', handleExit);
+        }
+    }, [])
 
     useEffect(() => {
         handleOrderAllFee()
@@ -95,19 +88,19 @@ function PurchaseInfor(props) {
 
     // 기존 배송지 가져오기
     const handleOriginalInfo = (e) => {
-        axios.get('http://localhost:8080/login/myLogin/myUserUpdate',{
-            params:{
-                userId : userId
+        axios.get('http://localhost:8080/login/myLogin/myUserUpdate', {
+            params: {
+                userId: userId
             }
         })
             .then(res => {
                 // 전화번호
                 let phone = res.data[0].memberPhone;
                 let pIdx = phone.indexOf('-')
-                let pIdx2 = phone.indexOf('-', pIdx+1)
+                let pIdx2 = phone.indexOf('-', pIdx + 1)
                 const phoneFirst = phone.substring(0, pIdx)
-                const phoneMiddle = phone.substring(pIdx+1, pIdx2)
-                const phoneLast = phone.substring(pIdx2+1)
+                const phoneMiddle = phone.substring(pIdx + 1, pIdx2)
+                const phoneLast = phone.substring(pIdx2 + 1)
 
                 setPhoneFirstNumber(phoneFirst)
                 setPhoneMiddleNumber(phoneMiddle)
@@ -116,19 +109,19 @@ function PurchaseInfor(props) {
                 // 주소
                 const memberAddress = res.data[0].memberAddress;
                 let addCheck1 = memberAddress.indexOf('/');
-                let addCheck2 = memberAddress.indexOf('/', addCheck1+1);
-                const zonecode = memberAddress.substring(0,addCheck1)
-                const address = memberAddress.substring(addCheck1+1, addCheck2)
-                const addDetail = memberAddress.substring(addCheck2+1)
+                let addCheck2 = memberAddress.indexOf('/', addCheck1 + 1);
+                const zonecode = memberAddress.substring(0, addCheck1)
+                const address = memberAddress.substring(addCheck1 + 1, addCheck2)
+                const addDetail = memberAddress.substring(addCheck2 + 1)
 
                 setZoneCode(zonecode)
                 setRoadAddress(address)
                 setRoadAddressDetail(addDetail)
 
-                if(oriButton === false){
+                if (oriButton === false) {
                     setOriButton(true)
                     setNewButton(false)
-                }else{
+                } else {
                     setOriButton(false)
                     setNewButton(true)
                 }
@@ -142,10 +135,10 @@ function PurchaseInfor(props) {
         setRoadAddressDetail('')
         setPhoneMiddleNumber('')
         setPhoneLastNumber('')
-        if(newButton === false){
+        if (newButton === false) {
             setOriButton(false)
             setNewButton(true)
-        }else{
+        } else {
             setOriButton(true)
             setNewButton(false)
         }
@@ -184,7 +177,7 @@ function PurchaseInfor(props) {
 
     // 우편 번호 찾기 클릭 시 발생하는 이벤트
     const handleBtnZoneCode = () => {
-        open({ onComplete: handleComplete });
+        open({onComplete: handleComplete});
     };
 
     // 상세주소 입력
@@ -203,7 +196,7 @@ function PurchaseInfor(props) {
         let last = e.target.value.replace(/[^0-9]/g, "")
         setPhoneLastNumber(last)
     }
-    
+
     // 요청 메시지
     const handleReqMessageSel = (e) => {
         setReqMessageSel(e.target.value)
@@ -230,7 +223,7 @@ function PurchaseInfor(props) {
     }
 
     // 최종 금액
-    const handleFinalFee =(e) => {
+    const handleFinalFee = (e) => {
         setFinalFee(orderAllFee + deliveryFee);
     }
 
@@ -241,9 +234,9 @@ function PurchaseInfor(props) {
 
     // 구매하기 버튼 클릭 시
     const handlePurchase = (e) => {
-        if(zoneCode !== '' && roadAddressDetail !== '' && phoneMiddleNumber !== '' && phoneLastNumber !== '' && payMethod !== null){
-            axios.post('http://localhost:8080/purchase/Product',purchaseProduct,{
-                params:{
+        if (zoneCode !== '' && roadAddressDetail !== '' && phoneMiddleNumber !== '' && phoneLastNumber !== '' && payMethod !== null) {
+            axios.post('http://localhost:8080/purchase/Product', purchaseProduct, {
+                params: {
                     userId: userId,
                     state: 1,
                     payMethod: payMethod,
@@ -257,12 +250,12 @@ function PurchaseInfor(props) {
                 .catch(err => {
                     console.log("통신 실패", err)
                 })
-        }else{
-            if(zoneCode === '' || roadAddressDetail === ''){
+        } else {
+            if (zoneCode === '' || roadAddressDetail === '') {
                 alert("주소를 입력하세요")
-            }else if(phoneMiddleNumber === '' || phoneLastNumber === ''){
+            } else if (phoneMiddleNumber === '' || phoneLastNumber === '') {
                 alert("휴대전화 번호를 입력하세요")
-            }else if(payMethod === null){
+            } else if (payMethod === null) {
                 alert("결제수단을 선택하세요")
             }
         }
@@ -273,15 +266,20 @@ function PurchaseInfor(props) {
             <p>배송 정보 입력</p>
             <div className={'border border-2 my-3'}>
                 <div className={'d-flex mt-2'}>
-                    <button type={'button'} className={'btn btn-success ms-2'} onClick={handleOriginalInfo} disabled={oriButton}>기존 배송지</button>
-                    <button type={'button'} className={'btn btn-success ms-2'} onClick={handleNewInfo} disabled={newButton}>새 배송지</button>
+                    <button type={'button'} className={'btn btn-success ms-2'} onClick={handleOriginalInfo}
+                            disabled={oriButton}>기존 배송지
+                    </button>
+                    <button type={'button'} className={'btn btn-success ms-2'} onClick={handleNewInfo}
+                            disabled={newButton}>새 배송지
+                    </button>
                 </div>
                 <div className={'flex-row d-flex my-4'}>
                     <div className={'col-sm-2 text-center align-self-center'}>
                         <label htmlFor={'userId'} className={'form-label'}>주문자</label>
                     </div>
                     <div className={'col-sm-3'}>
-                        <input type={'text'} className={'form-control'} id={'userId'} value={userId} disabled={true} />
+                        <input type={'text'} className={'form-control'} id={'userId'} value={userId}
+                               disabled={true}/>
                     </div>
                 </div>
                 <div className={'flex-row d-flex mt-4'}>
@@ -289,25 +287,33 @@ function PurchaseInfor(props) {
                         <label htmlFor={'postal'} className={'form-label align-self-top mt-1'}>우편번호</label>
                     </div>
                     <div className={'col-sm-2'}>
-                        <input type={'text'} className={'form-control'} id={'postal'} value={zoneCode} readOnly={true}/>
+                        <input type={'text'} className={'form-control'} id={'postal'} value={zoneCode}
+                               readOnly={true}/>
                     </div>
                     <div className={'col-sm-2'}>
-                        <button type={'button'} className={'btn btn-primary ms-2'} onClick={handleBtnZoneCode}>우편번호 찾기</button>
+                        <button type={'button'} className={'btn btn-primary ms-2'}
+                                onClick={handleBtnZoneCode}>우편번호
+                            찾기
+                        </button>
                     </div>
                 </div>
                 <div className={'flex-row d-flex my-2'}>
                     <div className={'col-sm-2'}></div>
                     <div className={'col-sm-7'}>
-                        <input type={'text'} className={'form-control'} id={'address'} placeholder={'주소'} value={roadAddress} readOnly={true}/>
-                        <input type={'text'} className={'form-control my-1'} id={'addressDetail'} value={roadAddressDetail} onChange={handleRoadAddDetail} placeholder={'상세주소'}/>
+                        <input type={'text'} className={'form-control'} id={'address'} placeholder={'주소'}
+                               value={roadAddress} readOnly={true}/>
+                        <input type={'text'} className={'form-control my-1'} id={'addressDetail'}
+                               value={roadAddressDetail} onChange={handleRoadAddDetail} placeholder={'상세주소'}/>
                     </div>
                 </div>
                 <div className={'flex-row d-flex my-4'}>
                     <div className={'col-sm-2 text-center'}>
-                        <label htmlFor={'phoneMiddleNumber'} className={'form-label align-self-center mt-1'}>전화번호</label>
+                        <label htmlFor={'phoneMiddleNumber'}
+                               className={'form-label align-self-center mt-1'}>전화번호</label>
                     </div>
                     <div className={'col-sm-2'}>
-                        <select className={'form-select'} id={'phoneFirstNumber'} value={phoneFirstNumber} onChange={handlePhoneFirst}>
+                        <select className={'form-select'} id={'phoneFirstNumber'} value={phoneFirstNumber}
+                                onChange={handlePhoneFirst}>
                             <option value={'010'}>010</option>
                             <option value={'011'}>011</option>
                             <option value={'012'}>012</option>
@@ -315,11 +321,13 @@ function PurchaseInfor(props) {
                     </div>
                     <div className={'align-self-center mt-1'}>-</div>
                     <div className={'col-sm-2'}>
-                        <input type={'text'} className={'form-control'} id={'phoneMiddleNumber'} value={phoneMiddleNumber} onChange={handlePhoneMiddle} maxLength={4}/>
+                        <input type={'text'} className={'form-control'} id={'phoneMiddleNumber'}
+                               value={phoneMiddleNumber} onChange={handlePhoneMiddle} maxLength={4}/>
                     </div>
                     <div className={'form-label align-self-center mt-1'}>-</div>
                     <div className={'col-sm-2'}>
-                        <input type={'text'} className={'form-control'} id={'phoneLastNumber'} value={phoneLastNumber} onChange={handlePhoneLast} maxLength={4} />
+                        <input type={'text'} className={'form-control'} id={'phoneLastNumber'}
+                               value={phoneLastNumber} onChange={handlePhoneLast} maxLength={4}/>
                     </div>
                 </div>
                 <div className={'flex-row d-flex my-4'}>
@@ -327,7 +335,8 @@ function PurchaseInfor(props) {
                         <label htmlFor={'message'} className={'form-label align-self-top mt-1'}>요청사항</label>
                     </div>
                     <div className={'col-sm-4'}>
-                        <textarea className={'form-control-sm'} cols={90} rows={5} id={'message'} value={reqMessage} onChange={handleReqMessage} disabled={messageDis}/>
+                            <textarea className={'form-control-sm'} cols={90} rows={5} id={'message'} value={reqMessage}
+                                      onChange={handleReqMessage} disabled={messageDis}/>
                         <select className={'form-select'} value={reqMessageSel} onInput={handleReqMessageSel}>
                             <option value={''}>직접입력</option>
                             <option value={'문앞에 나둬주세요'}>문앞에 나둬주세요</option>
@@ -347,7 +356,8 @@ function PurchaseInfor(props) {
                             <label htmlFor={'userId'} className={'form-label'}>주문 총액</label>
                         </div>
                         <div className={'col-sm-3'}>
-                            <input type={'text'} className={'form-control'} id={'userId'} value={orderAllFee} disabled={true}/>
+                            <input type={'text'} className={'form-control'} id={'userId'} value={orderAllFee}
+                                   disabled={true}/>
                         </div>
                         <div className={'col-sm-2 text-center align-self-center'}>
                             <label htmlFor={'userId'} className={'form-label'}>마일리지 할인액</label>
@@ -361,7 +371,8 @@ function PurchaseInfor(props) {
                             <label htmlFor={'userId'} className={'form-label'}>배송료</label>
                         </div>
                         <div className={'col-sm-3'}>
-                            <input type={'text'} className={'form-control'} id={'userId'} value={deliveryFee} disabled={true}/>
+                            <input type={'text'} className={'form-control'} id={'userId'} value={deliveryFee}
+                                   disabled={true}/>
                         </div>
                         <div className={'col-sm-2 text-center align-self-center'}>
                             <label htmlFor={'userId'} className={'form-label'}>쿠폰 할인액</label>
@@ -375,7 +386,8 @@ function PurchaseInfor(props) {
                             <label htmlFor={'userId'} className={'form-label'}>최종 금액</label>
                         </div>
                         <div className={'col-sm-3'}>
-                            <input type={'text'} className={'form-control'} id={'userId'} value={finalFee} disabled={true}/>
+                            <input type={'text'} className={'form-control'} id={'userId'} value={finalFee}
+                                   disabled={true}/>
                         </div>
                     </div>
                 </div>
@@ -386,27 +398,32 @@ function PurchaseInfor(props) {
                 <div className={'row ms-4 my-4'}>
                     <div className={'btn-group-vertical'} value={payMethod}>
                         <div className={'my-2'}>
-                            <input type="radio" className={'form-check-input'} name="payment" value={0} checked={payMethod == 0} onChange={handlePayMethod}/>
+                            <input type="radio" className={'form-check-input'} name="payment" value={0}
+                                   checked={payMethod == 0} onChange={handlePayMethod}/>
                             <label className={'form-check-label ms-3'} htmlFor={'payment1'}>신용카드</label>
                         </div>
                         <div className={'my-2'}>
-                            <input type="radio" className={'form-check-input'} name="payment" value={1} checked={payMethod == 1} onChange={handlePayMethod}/>
+                            <input type="radio" className={'form-check-input'} name="payment" value={1}
+                                   checked={payMethod == 1} onChange={handlePayMethod}/>
                             <label className={'form-check-label ms-3'} htmlFor={'payment1'}>카카오 페이</label>
                         </div>
                         <div className={'my-2'}>
-                            <input type="radio" className={'form-check-input'} name="payment" value={2} checked={payMethod == 2} onChange={handlePayMethod}/>
+                            <input type="radio" className={'form-check-input'} name="payment" value={2}
+                                   checked={payMethod == 2} onChange={handlePayMethod}/>
                             <label className={'form-check-label ms-3'} htmlFor={'payment1'}>네이버 페이</label>
                         </div>
                         <div className={'my-2'}>
-                            <input type="radio" className={'form-check-input'} name="payment" value={3} checked={payMethod == 3} onChange={handlePayMethod}/>
+                            <input type="radio" className={'form-check-input'} name="payment" value={3}
+                                   checked={payMethod == 3} onChange={handlePayMethod}/>
                             <label className={'form-check-label ms-3'} htmlFor={'payment1'}>토스</label>
                         </div>
                     </div>
                 </div>
             </div>
             <div className={'mt-4 d-flex justify-content-center gap-2'}>
-                <button type={'button'} className={'btn btn-lg btn-success'} onClick={handlePurchase}>구매하기</button>
-                <a href="/" className={'btn btn-lg btn-danger'} >취소</a>
+                <button type={'button'} className={'btn btn-lg btn-success'} onClick={handlePurchase}>구매하기
+                </button>
+                <a href="/" className={'btn btn-lg btn-danger'}>취소</a>
             </div>
         </div>
     )

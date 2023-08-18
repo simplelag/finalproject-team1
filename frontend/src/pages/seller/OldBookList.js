@@ -1,12 +1,13 @@
 import React, {useEffect, useState} from 'react';
 import axios from "axios";
 import {useLocation, useNavigate} from "react-router-dom";
+import Pagenation from "../common/Pagenation";
+
 
 function OldBookList() {
     const location = useLocation();
     const [oldBookInfo, setOldBookInfo] = useState([]);
     const navi = useNavigate();
-
 
     useEffect(() => {
         axios.get('http://localhost:8080/oldBookInfo',{
@@ -17,7 +18,6 @@ function OldBookList() {
             .then(res =>{
                 const data = res.data;
                 if(res.data.length == 0){
-
                 }
                 else {
                     setOldBookInfo(res.data);
@@ -76,9 +76,10 @@ function OldBookList() {
     }
 
     return (
+
         <div className={"container mt-5"}>
             {oldBookInfo.map((book,index) => (
-                <div className={"row mt-4"} key={book.salePk}>
+                <div className={"row"} key={book.salePk}>
                     <div className={"col-sm-3"}>
                         <a href="#">
                             <img src={book.saleImgSrc} alt="이미지 나오는 곳"/>
@@ -96,7 +97,7 @@ function OldBookList() {
                         </ul>
                     </div>
                     <div className={"col-sm-1"}>
-                        <p>등급 :{book.bookGrade}</p>
+                        <p>등급 : {book.bookGrade}</p>
                     </div>
                     <div className={"col-sm-1"}>
                         <span>판매가격 : {book.saleBookPrice}</span>
@@ -105,11 +106,12 @@ function OldBookList() {
                         <span>판매자 이름 : {book.saleSellerName}</span>
                     </div>
                     <div className={"col-sm-2"}>
-                        <a href="#"className={"btn btn-link bg-dark"} style={{fontSize:"10pt",color:"white",textDecoration:"none",width:"100pt"}} onClick={save}>장바구니 담기</a>
+                        <a href="#"className={"btn btn-link bg-dark"} style={{fontSize:"10pt",color:"white",textDecoration:"none",width:"100pt"}} onClick={() => save(index)}>장바구니 담기</a>
                         <a href="/purchase" className={"btn btn-link bg-dark"} style={{fontSize:"10pt",color:"white",textDecoration:"none", width:"100pt"}} name={index} onClick={handleInPurchase}>바로 구매</a>
                     </div>
                 </div>
             ))}
+
         </div>
     )
 }

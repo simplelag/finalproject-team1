@@ -8,6 +8,7 @@ function ShoppingBasket() {
     const [oldBookInfo,setOldBookInfo] = useState([]);
     const navi = useNavigate();
     const [selectAll, setSelectAll] = useState(false);
+    const [selectItems, setselectItems] = useState({});
     const [basketPk,setbasketPk] = useState();
 
     useEffect(() => {
@@ -23,8 +24,13 @@ function ShoppingBasket() {
     }, []);
     const handleSelectAll = () =>{
         setSelectAll(prevSelectAll => !prevSelectAll);
-    }
 
+        const updateSelecteItems = {};
+        oldBookInfo.forEach(item => {
+            updateSelecteItems[item.basketPk] = !selectAll
+        });
+        setselectItems(updateSelecteItems);
+    }
 
     const handleDeleteItem = (basketPk) =>{
         axios.delete(`http://localhost:8080/searchUserBaseketDelete`,{
@@ -40,6 +46,16 @@ function ShoppingBasket() {
             })
     }
 
+    const handleSelectItem = (basketPk) =>{
+        setselectItems(prevSelectedItems => ({
+            ...prevSelectedItems,
+            [basketPk]: !prevSelectedItems[basketPk]
+        }));
+    };
+
+    const handlePurchase = (e) => {
+
+    }
     return (
 
         <main className={"container"}>
@@ -59,7 +75,9 @@ function ShoppingBasket() {
                     {oldBookInfo.map(item => (
                         <tr key={item.basketBookId}>
                             <td className={"text-center"}>
-                                <input type="checkbox" name={"Selectone"} checked={selectAll} />
+                                <input type="checkbox" name={"Selectone"} checked={selectItems[item.basketPk] || false}
+                                onChange={() => handleSelectItem(item.basketPk)}
+                                />
                             </td>
                             <td>
                                 <a href="#">
@@ -82,7 +100,7 @@ function ShoppingBasket() {
                                     <div className={"col-sm-4 ms-1 mt-4" }>
                                         <span>{item.basketBookPieces}개</span>
                                     </div>
-                                    <div className={"col-sm-6 ms-1 mt-4"}>
+                                    <div className={"col-sm-7 ms-1 mt-4"}>
                                         <button type={"button"} className={"btn btn-danger"} onClick={() => handleDeleteItem(item.basketPk)}>삭제</button>
                                     </div>
                                 </div>

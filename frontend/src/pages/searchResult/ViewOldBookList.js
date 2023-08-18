@@ -30,6 +30,9 @@ function ViewOldBookList(props) {
                 setOldBookInfo(res.data)
             })
     }, [])
+    const gotoDetail = (saleBookId) =>{
+        navi("/bookDetailPage", {state: {ISBN13 : saleBookId }});
+    }
     const save = (index) =>{
         if(sessionStorage.getItem("id") === null){
             alert("로그인 해주세요!")
@@ -73,27 +76,27 @@ function ViewOldBookList(props) {
                     </div>
                     <div className={'col-sm-5 my-3'}>
                         <div>
-                            <a href={'#'} className={"text-decoration-none ms-3"} style={{color:"black"}} >책 제목:{info.saleBookTitle}</a>
+                            <a href={'#'} className={"text-decoration-none ms-3"} style={{color:"black"}} onClick={() => gotoDetail(info.saleBookId)} >책 제목:{info.saleBookTitle}</a>
                         </div>
                         <div>
                             <span>
-                                <p className={" ms-3 mt-3"} style={{color:"black"}}>판매자:{info.saleSellerName}</p>
+                                <p className={" ms-3 mt-3"} style={{color:"black"}}>판매자 : {info.saleSellerName}</p>
                                 <p className={"ms-3"} style={{color:"black"}}>판매자 ID : {info.saleSellerId}</p>
                                 <p className={"ms-3"}>판매자 설명 : {info.saleDiscription}</p>
-                                <p className={"ms-3"}>책 품질 :{info.bookGrade}등급</p>
+                                <p className={"ms-3"}>책 품질 : {info.bookGrade}등급</p>
                             </span>
                         </div>
                     </div>
                         <div className={"col-sm text-end my-3"}>
-                            <button type={'button'} className={'btn btn-dark'} onClick={() => save(index)}>장바구니에 넣기</button>
-                            <button type={'button'} className={'btn btn-dark'}>즉시 구매하기</button>
+                            <button type={'button'} className={'btn btn-dark'} onClick={() => save(index)}> 장바구니에 넣기 </button>
+                            <button type={'button'} className={'btn btn-dark'}> 즉시 구매하기 </button>
                         </div>
                         <div className={'d-flex'}>
                             <table className={'table'}>
                                 <thead>
                                     <tr className={'text-center'}>
-                                        <th>판매 가격:</th>
-                                        <th>판매 수량:</th>
+                                        <th>판매 가격 : </th>
+                                        <th>판매 수량 : </th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -106,7 +109,15 @@ function ViewOldBookList(props) {
                     </div>
                 </div>
                 ))}
-
+            {/*<Pagenation*/}
+            {/*    setList={setOldBookInfo}*/}
+            {/*    url= {oldBookInfo}*/}
+            {/*    numberUrl= {oldBookInfo.length}*/}
+            {/*    howManyContentsInAPage={10}*/}
+            {/*    howManyPagesInABlock={5}*/}
+            {/*    searchType={[]}*/}
+            {/*    order="boardPk,DESC"*/}
+            {/*/>*/}
             <Footer/>
 
         </div>
