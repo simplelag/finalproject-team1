@@ -20,8 +20,8 @@ function SellerPage() {
     const[bookTitle,setbookTitle] =useState('');
     const[bookISBN,setbookISBN] = useState(0);
     const[bookCover,setbookCover] = useState('');
-    const[sellerId,setsellerId]  = useState('testSellerId');
-    const[sellerName,setSellerName] = useState('testSellerName');
+    const[sellerId,setsellerId]  = useState(sessionStorage.getItem("id"));
+    const[sellerName,setSellerName] = useState(sessionStorage.getItem("name"));
     const[bookPrice,setbookPrice] = useState(0);
     const[bookPieces,setbookPieces] = useState(1);
     const[bookGrade,setbookGrade] = useState(3);
@@ -38,6 +38,9 @@ function SellerPage() {
     const onChangeGrade = (e) =>{
         setbookGrade(e.target.value);
     }
+    const onChangePieces =(e) =>{
+        setbookPieces(e.target.value);
+    }
 
    useEffect(() => {
        axios.get('http://localhost:8080/searchIsbn', {
@@ -47,6 +50,7 @@ function SellerPage() {
        })
            .then(res => {
                setBookList(res.data.item);
+               console.log(res.data.item)
                setbookISBN(res.data.item[0].isbn13)
                setbookCover(res.data.item[0].cover)
                setbookTitle(res.data.item[0].title)
@@ -89,7 +93,6 @@ function SellerPage() {
 
         <main className={"container"}>
             <Header/>
-
                 {bookList.map(item => {
                     return(
                         <div className={"mt-4"}>
@@ -101,7 +104,7 @@ function SellerPage() {
                                     <p className={"card-text"}>저자: {item.author}</p>
                                     <p className={"card-text"}>ISBN: {item.isbn13}</p>
                                     <p className={"card-text"}>출판사:{item.publisher} </p>
-                                    <p className={"card-text"}>출간일:{item.pubdate}</p>
+                                    <p className={"card-text"}>출간일:{item.pubDate}</p>
                                     <p className={"card-text"}>페이지 수:{item.itempage}</p>
                                     <p className={"card-text"}>정가 :{item.priceStandard} </p>
                                 </div>
@@ -121,11 +124,17 @@ function SellerPage() {
 
                 <form>
                     <div className={"row"}>
-                        <div className={"col-sm-2"}>
+                        <div className={"col-sm-auto"}>
                             <label>중고판매가 :</label>
                         </div>
-                        <div className={"col-sm-3"}>
+                        <div className={"col-sm-auto"}>
                             <input type="text" className={"form-control"} value={bookPrice} onChange={onChangePrice}/>
+                        </div>
+                        <div className={"col-sm-auto"}>
+                            <label>판매 권수 :</label>
+                        </div>
+                        <div className={"col-sm-auto"}>
+                            <input type="text" className={"form-control"} value={bookPieces} onChange={onChangePieces}/>
                         </div>
                     </div>
                 </form>

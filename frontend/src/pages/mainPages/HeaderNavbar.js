@@ -14,7 +14,7 @@ function HeaderNavbar(props) {
                 <Navbar.Collapse className={"collapsingNavbar"} id="basic-navbar-nav">
                     <Nav className={"mx-auto"}>
                         <Nav.Link href={"/best"} className={"menu"}>베스트셀러</Nav.Link>
-                        <Nav.Link href={"#"} className={"menu"}>새로 등록된 중고도서</Nav.Link>
+                        <Nav.Link href={"/Oldbook"} className={"menu"}>새로 등록된 중고도서</Nav.Link>
                         <Nav.Link href={"#"} className={"menu"}>이벤트</Nav.Link>
                         <Nav.Link href={"/board"} className={"menu"}>커뮤니티</Nav.Link>
                     </Nav>

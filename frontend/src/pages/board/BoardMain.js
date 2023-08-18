@@ -3,6 +3,7 @@ import axios from "axios";
 import Header from "../mainPages/Header";
 import Footer from "../mainPages/Footer";
 import {Link, useNavigate} from "react-router-dom";
+import Pagenation from "../common/Pagenation";
 
 function BoardMain(props) {
 
@@ -15,7 +16,6 @@ function BoardMain(props) {
         axios.get("http://localhost:8080/board")
             .then(res => {
                 setBoardList(res.data);
-
             })
             .catch(err => {
                 alert("BoardList Connect Err")
@@ -27,7 +27,7 @@ function BoardMain(props) {
             navi("/board/write")
         }
         else {
-            alert("로그인이 필요합니다")
+            alert("로그인이 필요한 서비스입니다")
             navi("/login")
         }
     }

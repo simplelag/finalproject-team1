@@ -2,8 +2,6 @@ package com.bitc.finalproject.service;
 
 import com.bitc.finalproject.dto.ProductItem;
 import com.bitc.finalproject.dto.ProductObject;
-import com.bitc.finalproject.dto.SearchItemDto;
-import com.bitc.finalproject.dto.SearchItemObject;
 import com.google.gson.Gson;
 import org.springframework.stereotype.Service;
 
