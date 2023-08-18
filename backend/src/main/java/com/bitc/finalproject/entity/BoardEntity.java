@@ -7,6 +7,7 @@ import javax.swing.*;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,7 +38,7 @@ public class BoardEntity {
     private String boardContent;
 
     @Column(nullable = false)
-    private LocalDateTime boardDatetime =  LocalDateTime.now();
+    private String boardDatetime =  LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
 
     private int boardLike;
 

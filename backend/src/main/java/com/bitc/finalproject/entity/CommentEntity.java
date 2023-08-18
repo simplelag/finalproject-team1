@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Entity
 @Table(name = "comment")
@@ -32,7 +33,7 @@ public class CommentEntity {
     private String commentContent;
 
     @Column(nullable = false)
-    private LocalDateTime commentDatetime = LocalDateTime.now();
+    private String commentDatetime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
 
     private int commentNum;
 

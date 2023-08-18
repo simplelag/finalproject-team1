@@ -29,13 +29,22 @@ public class CommentControl {
         return null;
     }
 
-    @RequestMapping(value = "/board/comment/delete/{commentPk}", method = RequestMethod.DELETE)
-    public Object commentDelete(@PathVariable("commentPk") int commentPk, @RequestParam("commentWriterId") String commentWriterId) throws Exception {
+    @RequestMapping(value = "/board/comment/update/{commentPk}", method = RequestMethod.PUT)
+    public Object commentUpdate(@PathVariable("commentPk") int commentPk, CommentEntity commentEntity) throws Exception {
 
-        if (commentWriterId.equals("testUserId")) {
+        commentService.updateComment(commentEntity);
+
+        return null;
+    }
+
+    @RequestMapping(value = "/board/comment/delete/{commentPk}", method = RequestMethod.DELETE)
+    public Object commentDelete(@PathVariable("commentPk") int commentPk, @RequestParam("commentWriterId") String commentWriterId,
+                                @RequestParam("nowId") String nowId, @RequestParam("authority") String authority) throws Exception {
+
+        if ((commentWriterId.equals(nowId)) || authority == "admin") {
             commentService.deleteComment(commentPk);
         }
 
-        return null;
+        return "success";
     }
 }
