@@ -44,6 +44,13 @@ public class BoardControl {
         return "redirect:/board";
     }
 
+    @RequestMapping(value = "/board/update/{boardPk}", method = RequestMethod.PUT)
+    public Object boardUpdate(@PathVariable("boardPk") int boardPk , BoardEntity boardEntity) throws Exception {
+        boardService.writeBoard(boardEntity);
+
+        return null;
+    }
+
     @RequestMapping(value = "/board/{boardPk}", method = RequestMethod.DELETE)
     public Object boardDelete(@PathVariable("boardPk") int boardPk, @RequestParam("boardWriterId") String boardWriterId,
                               @RequestParam("nowId") String nowId) throws Exception {
