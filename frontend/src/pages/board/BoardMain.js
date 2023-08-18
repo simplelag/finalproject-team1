@@ -27,7 +27,7 @@ function BoardMain(props) {
             navi("/board/write")
         }
         else {
-            alert("로그인이 필요합니다")
+            alert("로그인이 필요한 서비스입니다")
             navi("/login")
         }
     }

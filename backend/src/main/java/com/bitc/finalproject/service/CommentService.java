@@ -13,6 +13,9 @@ public interface CommentService {
     // 댓글 쓰기
     void writeComment(CommentEntity commentEntity) throws Exception;
 
+    //댓글 수정
+    void updateComment(CommentEntity commentEntity) throws Exception;
+
     // 댓글 삭제
     void deleteComment(int commentPk) throws Exception;
 }

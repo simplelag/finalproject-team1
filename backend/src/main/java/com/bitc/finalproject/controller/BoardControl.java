@@ -48,7 +48,7 @@ public class BoardControl {
     public Object boardDelete(@PathVariable("boardPk") int boardPk, @RequestParam("boardWriterId") String boardWriterId,
                               @RequestParam("nowId") String nowId) throws Exception {
 
-        if (boardWriterId.equals(nowId)) {
+        if (boardWriterId.equals(nowId) || nowId == "admin") {
             boardService.deleteBoard(boardPk);
         }
 

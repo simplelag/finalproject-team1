@@ -24,6 +24,11 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
+    public void updateComment(CommentEntity commentEntity) throws Exception {
+        commentRepository.save(commentEntity);
+    }
+
+    @Override
     public void deleteComment(int commentPk) throws Exception {
         commentRepository.deleteById(commentPk);
     }
