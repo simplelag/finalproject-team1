@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Entity
 @Table(name = "mail")
@@ -26,7 +27,7 @@ public class MailEntity {
     private String mailFromName;
 
     @Column(nullable = false)
-    private LocalDateTime mailDatetime = LocalDateTime.now();
+    private String mailDatetime = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").format(LocalDateTime.now());
     @Column(nullable = false)
     private int mailPurchasePk;
     @Column(nullable = false)

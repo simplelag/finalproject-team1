@@ -1,6 +1,7 @@
 package com.bitc.finalproject.controller;
 
 import com.bitc.finalproject.entity.MailEntity;
+import com.bitc.finalproject.repository.MailRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
@@ -17,7 +18,7 @@ import org.springframework.web.socket.messaging.WebSocketStompClient;
 public class MailController {
 
     // 최초 연결된 client에게 메세지를 보내기위한 클래스
-    private SimpMessagingTemplate template;
+    private final MailRepository mailRepository;
 
     // @MessageMapping("/message"): client에서 메시지를 /app/message 으로 보내면 @MessageMapping에서 받아서 처리함
     // @SendTo("/topic"): return값을 /topic 으로 보냄
@@ -25,6 +26,7 @@ public class MailController {
     @SendTo("/topic/{itemNumber}")
     public MailEntity broadcastNews(@Payload MailEntity mail, @DestinationVariable String itemNumber) {
         System.out.println(mail);
+        mailRepository.save(mail);
         return mail;
 
     }
