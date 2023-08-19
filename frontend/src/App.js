@@ -15,37 +15,44 @@ import JoinMember from "./pages/member/JoinMember";
 import CheckLogin from "./pages/member/CheckLogin";
 import MyLogin from "./pages/member/MyLogin";
 import MyLoginUpdate from "./pages/member/MyLoginUpdate";
-import PurchaseMain from "./pages/purchase/PurchaseMain";
 import PurchaseList from "./pages/purchase/PurchaseList";
-import OldBookList from "./pages/seller/OldBookList";
 import ShoppingBasket from "./pages/seller/ShoppingBasket";
-import Mail from "./pages/common/Mail";
+
+import ViewOldBookList from "./pages/searchResult/ViewOldBookList";
+
+import BoardUpdate from "./pages/board/BoardUpdate";
+
 
 
 function App() {
     return (
         <BrowserRouter>
             <Routes>
-                <Route path={"/sellerPage"} element={<SellerPage />} />
-                <Route path={"/bookDetailPage"} element={<BookDetailPage />}/>
-                <Route path={"/ShoppingBasket"} element={<ShoppingBasket />}/>
                 <Route path={"/"} element={<Main />} />
-                <Route path={"/board"} element={<BoardMain />} />
-                <Route path={"/board/write"} element={<BoardWrite />} />
-                <Route path={"/board/:boardPk"} element={<BoardDetail />} />
+                <Route path={"/board"}>
+                    <Route index element={<BoardMain />} />
+                    <Route path={"write"} element={<BoardWrite />} />
+                    <Route path={"update"} element={<BoardUpdate />} />
+                    <Route path={":boardPk"} element={<BoardDetail />} />
+                </Route>
+                <Route path={"/bookDetailPage"} element={<BookDetailPage />}/>
                 <Route path={"/view"} element={<ViewMainList />} />
                 <Route path={"/best"} element={<ViewBestList />} />
-                <Route path={"/admin"} element={<Admin id={"admin"}/>} />
-                <Route path={"/admin/question/:boardPk"} element={<QuestionDetail />} />
-                <Route path={"/login"} element={<Join />} />
-                <Route path={"/login/sign"} element={<JoinMember />}/>
-                <Route path={"/login/main"} element={<CheckLogin />}/>
-                <Route path={"/login/myLogin"} element={<MyLogin />}/>
-                <Route path={"/login/myLogin/myUserUpdate"} element={<MyLoginUpdate />}/>
+                <Route path={"/OldBook"} element={<ViewOldBookList />} />
+                <Route path={"/sellerPage"} element={<SellerPage />} />
                 <Route path={"purchase"} element={<PurchaseList />} />
-                <Route path={"/chat"} element={<Mail />} />
-                <Route path={"*"} element={<p>에러</p>} />
-                <Route path={"/mail/:purchaseNumber"} element={<Mail />} />
+                <Route path={"/ShoppingBasket"} element={<ShoppingBasket />}/>
+                <Route path={"/login"}>
+                    <Route index element={<Join />} />
+                    <Route path={"sign"} element={<JoinMember />}/>
+                    <Route path={"main"} element={<CheckLogin />}/>
+                    <Route path={"myLogin"} element={<MyLogin />}/>
+                    <Route path={"myLogin/myUserUpdate"} element={<MyLoginUpdate />}/>
+                </Route>
+                <Route path={"admin"}>
+                    <Route index element={<Admin id={"admin"}/>} />
+                    <Route path={"question/:boardPk"} element={<QuestionDetail />} />
+                </Route>
             </Routes>
         </BrowserRouter>
     );

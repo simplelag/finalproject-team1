@@ -38,7 +38,7 @@ public class BoardEntity {
     private String boardContent;
 
     @Column(nullable = false)
-    private String boardDatetime =  LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
+    private String boardDatetime =  LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
 
     private int boardLike;
 

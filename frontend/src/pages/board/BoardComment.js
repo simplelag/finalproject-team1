@@ -20,7 +20,6 @@ function BoardComment(props) {
     useEffect(() => {
         axios.get(`http://localhost:8080/board/comment/${props.boardPk}`)
             .then(res => {
-                // console.log(res.data)
                 setCommentList(res.data)
 
                 if (sessionStorage.getItem("id") != null) {
@@ -119,7 +118,7 @@ function BoardComment(props) {
                             commentList.map(item => {
                             let visible = false;
 
-                                if (id == item.commentWriterId || sessionStorage.getItem("grade") == "admin") {
+                                if (id == item.commentWriterId) {
                                     visible = true;
 
                                     return (
@@ -128,7 +127,10 @@ function BoardComment(props) {
                                             <p>{item.commentWriterName}</p>
                                             <p>{item.commentContent}</p>
                                             <div className={'d-flex justify-content-end my-2'}>
-                                                <button type={"button"} className={'btn'} onClick={() => {onClickUpdate(item.commentPk)}}>수정</button>
+                                                {
+                                                    visible &&
+                                                    <button type={"button"} className={'btn'} onClick={() => {onClickUpdate(item.commentPk)}}>수정</button>
+                                                }
                                                 {
                                                     visible && <button type={"button"} className={'btn'} onClick={() => {
                                                         onClickDelete(item.commentPk, item.commentWriterId)
@@ -149,6 +151,9 @@ function BoardComment(props) {
                                     )
                                 }
                                 else {
+                                    if (sessionStorage.getItem("grade") == "admin") {
+                                        visible = true;
+                                    }
                                     return (
                                         <div key={item.commentPk} className={'border-top p-3'}>
                                             <p className={'d-flex justify-content-end'}>{item.commentDatetime}</p>

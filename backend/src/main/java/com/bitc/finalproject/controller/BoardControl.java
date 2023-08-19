@@ -1,8 +1,10 @@
 package com.bitc.finalproject.controller;
 
 import com.bitc.finalproject.entity.BoardEntity;
+
 import com.bitc.finalproject.entity.LikeEntity;
 import com.bitc.finalproject.service.BoardService;
+
 import com.bitc.finalproject.service.LikeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -44,11 +46,18 @@ public class BoardControl {
         return "redirect:/board";
     }
 
+    @RequestMapping(value = "/board/update/{boardPk}", method = RequestMethod.PUT)
+    public Object boardUpdate(@PathVariable("boardPk") int boardPk , BoardEntity boardEntity) throws Exception {
+        boardService.writeBoard(boardEntity);
+
+        return null;
+    }
+
     @RequestMapping(value = "/board/{boardPk}", method = RequestMethod.DELETE)
     public Object boardDelete(@PathVariable("boardPk") int boardPk, @RequestParam("boardWriterId") String boardWriterId,
-                              @RequestParam("nowId") String nowId) throws Exception {
+                              @RequestParam("nowId") String nowId, @RequestParam("authority") String authority) throws Exception {
 
-        if (boardWriterId.equals(nowId) || nowId == "admin") {
+        if ((boardWriterId.equals(nowId)) || authority.equals("admin")) {
             boardService.deleteBoard(boardPk);
         }
 
