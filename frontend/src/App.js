@@ -20,6 +20,7 @@ import PurchaseList from "./pages/purchase/PurchaseList";
 import OldBookList from "./pages/seller/OldBookList";
 import ShoppingBasket from "./pages/seller/ShoppingBasket";
 import Mail from "./pages/common/Mail";
+import ViewOldBookList from "./pages/searchResult/ViewOldBookList";
 
 
 function App() {
@@ -46,6 +47,7 @@ function App() {
                 <Route path={"/chat"} element={<Mail />} />
                 <Route path={"*"} element={<p>에러</p>} />
                 <Route path={"/mail/:purchaseNumber"} element={<Mail />} />
+                <Route path={"/Oldbook"} element={<ViewOldBookList />} />
             </Routes>
         </BrowserRouter>
     );
