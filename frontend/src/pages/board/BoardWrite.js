@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import Header from "../mainPages/Header";
 import Footer from "../mainPages/Footer";
 import axios from "axios";
@@ -11,8 +11,15 @@ function BoardWrite(props) {
     const [id, setId] = useState(sessionStorage.getItem("id"))
     const [content, setContent] = useState('');
     const [category, setCategory] = useState('일반');
+    const [visible, setVisible] = useState(false);
 
     const navi = useNavigate();
+
+    useEffect(() => {
+        if (sessionStorage.getItem("grade") == "admin") {
+            setVisible(!visible);
+        }
+    },[])
 
     const onClickCategory = (e) => {
         setCategory(e.target.value);
@@ -58,7 +65,9 @@ function BoardWrite(props) {
                         <div>
                             <button type={'button'} className={'btn'} value={'일반'} onClick={onClickCategory}>일반</button>
                             <button type={'button'} className={'btn'} value={'독후감'} onClick={onClickCategory}>독후감</button>
-                            <button type={'button'} className={'btn'} value={'공지/이벤트'} onClick={onClickCategory}>공지/이벤트</button>
+                            {
+                                visible && <button type={'button'} className={'btn'} value={'공지/이벤트'} onClick={onClickCategory}>공지/이벤트</button>
+                            }
                         </div>
                         <div className={'my-3'}>
                             <input type={'text'} className={'form-control'} value={title} onChange={onChangeTitle} placeholder={'글 제목을 입력하세요'}/>

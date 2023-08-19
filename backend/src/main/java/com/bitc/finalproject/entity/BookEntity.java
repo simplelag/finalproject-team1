@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Entity
 @Table(name = "sale")
@@ -29,7 +30,7 @@ public class BookEntity {
     @Column(nullable = false)
     private int saleBookPrice;
     @Column(nullable = false)
-    private LocalDateTime saleDateTime =  LocalDateTime.now();
+    private String saleDateTime =  LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
     private int saleBookPieces;
     @Column(nullable = false)
     private String salePostPrice;
