@@ -34,8 +34,8 @@ function BoardDetail(props) {
                 setVisit(res.data.boardVisitCount);
                 setLike(res.data.boardLike);
 
-                if (sessionStorage.getItem("id") == boardId || sessionStorage.getItem("grade") == "admin") {
-                    setVisible(!visible);
+                if (sessionStorage.getItem("id") == res.data.boardWriterId) {
+                    setVisible(true);
                 }
             })
             .catch(err => {
@@ -48,8 +48,8 @@ function BoardDetail(props) {
         axios.delete(`http://localhost:8080/board/${boardPk}`, {
             params: {
                 boardWriterId: boardId,
-                nowId: sessionStorage.getItem("id"),
-
+                nowId: id,
+                authority: sessionStorage.getItem("grade")
             }
         })
             .then(res => {
@@ -106,10 +106,13 @@ function BoardDetail(props) {
                                 <button type={'button'} className={'btn btn-outline-dark'} onClick={onClickLike}>추천</button>
                             </div>
                             <a href={'/board/'} className={'btn btn-outline-dark'}>목록</a>
-
-                            <button type={"button"} className={'btn btn-outline-dark'} onClick={onClickUpdate}>수정</button>
                             {
-                                visible && <button type={"button"} className={'btn btn-outline-dark'} onClick={onClickDelete}>삭제</button>
+                                visible && <button type={"button"} className={'btn btn-outline-dark'} onClick={onClickUpdate}>수정</button>
+                            }
+                            {
+                                (visible && <button type={"button"} className={'btn btn-outline-dark'} onClick={onClickDelete}>삭제</button>)
+                                ||
+                                (sessionStorage.getItem("grade") == "admin" && <button type={"button"} className={'btn btn-outline-dark'} onClick={onClickDelete}>삭제</button>)
                             }
                             <a href={'/board/write'} className={'btn btn-outline-dark'}>글작성</a>
                         </div>
