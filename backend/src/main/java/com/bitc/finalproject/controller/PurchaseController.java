@@ -1,12 +1,18 @@
 package com.bitc.finalproject.controller;
 
+import com.bitc.finalproject.entity.BasketEntity;
 import com.bitc.finalproject.entity.PurchaseEntity;
 import com.bitc.finalproject.service.PurchaseService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.type.ListType;
+import org.hibernate.type.descriptor.java.ObjectJavaType;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.PublicKey;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @CrossOrigin("http://localhost:3000")
 @RequiredArgsConstructor
@@ -31,7 +37,13 @@ public class PurchaseController {
         purchaseService.insertPurchaseList(purchaseEntity);
     }
 
-//    구매 리스트 가져오기
+//    장바구니에서 구매하는 경우
+    @RequestMapping(value = "/purchase/basketInsert", method = RequestMethod.PUT)
+    public void PurchaseBasket(@RequestBody Map<String, List> postData) throws Exception{
+        List<BasketEntity> a = postData.get("data1");
+    }
+
+    //    구매 리스트 가져오기
     @RequestMapping(value = "/purchase/List", method = RequestMethod.GET)
     public Object PurchaseIndividualList(@RequestParam("userId") String userId, @RequestParam("state") int state) throws Exception{
         return purchaseService.showIndivList(userId, state);
@@ -42,8 +54,7 @@ public class PurchaseController {
     public void PurchaseProduct(
             @RequestBody List<PurchaseEntity> purchaseEntities,
             @RequestParam("userId") String userId, @RequestParam("state") int state,
-            @RequestParam("payMethod") int payMethod, @RequestParam("reqMessage") String reqMessage,
-            @RequestParam("address") String address
+            @RequestParam("finalFee") int finalFee, @RequestParam("payMethod") int payMethod, @RequestParam("reqMessage") String reqMessage, @RequestParam("address") String address
     ) throws Exception {
         for(int i = 0; i < purchaseEntities.size(); i++){
             int pk = purchaseEntities.get(i).getPurchasePk();
@@ -52,7 +63,7 @@ public class PurchaseController {
             String BuyerName = purchaseEntities.get(i).getPurchaseBuyerName();
             String SellerId = purchaseEntities.get(i).getPurchaseSellerId();
             String SellerName = purchaseEntities.get(i).getPurchaseSellerName();
-            PurchaseEntity purchaseEntity = new PurchaseEntity(pk, BookId, BookName,  userId, BuyerName, SellerId, SellerName, state, payMethod, reqMessage, address);
+            PurchaseEntity purchaseEntity = new PurchaseEntity(pk, BookId, BookName, userId, BuyerName, SellerId, SellerName, state, finalFee, payMethod, reqMessage, address);
             purchaseService.savePurchase(purchaseEntity);
         }
     }
@@ -60,13 +71,11 @@ public class PurchaseController {
 //    구매 페이지에서 나갈 때 삭제하기 위해서
     @RequestMapping(value = "/purchase/delete", method = RequestMethod.DELETE)
     public void PurchaseListDelete(
-            @RequestParam("ISBN13") String isbn13, @RequestParam("BuyerId") String BuyerId, @RequestParam("BuyerName") String BuyerName, @RequestParam("SellerId") String SellerId, @RequestParam("SellerName") String SellerName, @RequestParam("state") int state
+            @RequestParam("state") int state, @RequestBody List<PurchaseEntity> purchaseEntities
     ) throws Exception{
-        PurchaseEntity purchaseEntity = null;
-        List<PurchaseEntity> checkPurchase = purchaseService.findPk(isbn13, BuyerId, SellerId, state);
-        for(int i = 0; i < checkPurchase.size(); i++){
-            int pk = checkPurchase.get(i).getPurchasePk();
-            purchaseEntity = new PurchaseEntity(pk, isbn13, BuyerId, BuyerName, SellerId, SellerName, state);
+        for(int i = 0; i < purchaseEntities.size(); i++) {
+            String BuyerId = purchaseEntities.get(i).getPurchaseBuyerId();
+            List<PurchaseEntity> purchaseEntity = purchaseService.findDeleteList(BuyerId, state);
             purchaseService.productListDelete(purchaseEntity);
         }
     }

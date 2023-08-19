@@ -23,13 +23,18 @@ public class PurchaseServiceImpl implements PurchaseService{
     }
 
     @Override
+    public List<PurchaseEntity> findDeleteList(String buyerId, int state) throws Exception {
+        return purchaseRepository.findByPurchaseBuyerIdAndPurchaseState(buyerId, state);
+    }
+
+    @Override
     public List<PurchaseEntity> showIndivList(String userId, int state) throws Exception {
         return purchaseRepository.findByPurchaseBuyerIdAndPurchaseState(userId, state);
     }
 
     @Override
-    public void productListDelete(PurchaseEntity purchaseEntity) throws Exception {
-        purchaseRepository.delete(purchaseEntity);
+    public void productListDelete(List<PurchaseEntity> purchaseEntity) throws Exception {
+        purchaseRepository.deleteAll(purchaseEntity);
     }
 
     @Override

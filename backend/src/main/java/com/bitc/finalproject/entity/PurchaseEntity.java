@@ -86,7 +86,7 @@ public class PurchaseEntity {
     }
 //    구매 버튼
     @Builder
-    public PurchaseEntity(int purchasePk, String purchaseBookId, String purchaseBookName, String purchaseBuyerId, String purchaseBuyerName, String purchaseSellerId, String purchaseSellerName, int purchaseState, int purchasePamentType, String purchaseComment, String purchaseAddress){
+    public PurchaseEntity(int purchasePk, String purchaseBookId, String purchaseBookName, String purchaseBuyerId, String purchaseBuyerName, String purchaseSellerId, String purchaseSellerName, int purchaseState, int purchasePayment, int purchasePamentType, String purchaseComment, String purchaseAddress){
         this.purchasePk = purchasePk;
         this.purchaseBookId = purchaseBookId;
         this.purchaseBookName = purchaseBookName;
@@ -95,6 +95,7 @@ public class PurchaseEntity {
         this.purchaseSellerId = purchaseSellerId;
         this.purchaseSellerName = purchaseSellerName;
         this.purchaseState = purchaseState;
+        this.purchasePayment = purchasePayment;
         this.purchasePamentType = purchasePamentType;
         this.purchaseComment = purchaseComment;
         this.purchaseAddress = purchaseAddress;

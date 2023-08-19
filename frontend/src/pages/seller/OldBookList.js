@@ -61,7 +61,7 @@ function OldBookList() {
     const handleInPurchase = (e) => {
         axios.get('http://localhost:8080/purchase/insert',{
             params:{
-                ISBN13: location.state.ISBN13,
+                ISBN13: oldBookInfo[e.target.name].salePk,
                 BookName: oldBookInfo[e.target.name].saleBookTitle,
                 BuyerId: sessionStorage.getItem("id"),
                 BuyerName: sessionStorage.getItem("name"),
@@ -79,7 +79,7 @@ function OldBookList() {
 
         <div className={"container mt-5"}>
             {oldBookInfo.map((book,index) => (
-                <div className={"row"} key={book.salePk}>
+                <div className={"row mt-4"} key={book.salePk}>
                     <div className={"col-sm-3"}>
                         <a href="#">
                             <img src={book.saleImgSrc} alt="이미지 나오는 곳"/>

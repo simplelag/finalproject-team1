@@ -54,9 +54,19 @@ function ShoppingBasket() {
     };
 
     const handlePurchase = (e) => {
+        const postData = new Map();
+        postData.set("data1", oldBookInfo);
+        postData.set("data2", selectItems);
 
+        axios.put("http://localhost:8080/purchase/basketInsert", postData)
+            .then(res =>{
+                console.log("통신 성공", res)
+            })
+            .catch(err => {
+                console.log("통신 실패", err)
+            })
     }
-    return (
+     return (
 
         <main className={"container"}>
             <Header/>
@@ -110,7 +120,7 @@ function ShoppingBasket() {
                 </table>
             </div>
             <div className={"text-center"}>
-                <button type={"submit"} className={"btn btn-success"}><h4>주문하기</h4></button>
+                <button type={"submit"} className={"btn btn-success"} onClick={handlePurchase}><h4>주문하기</h4></button>
             </div>
 
             <Footer/>

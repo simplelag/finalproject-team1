@@ -45,40 +45,28 @@ function PurchaseInfor(props) {
 
     useEffect(() => {
         setPurchaseProduct(props.purchaseProduct)
-        // if(props.purchaseProduct.length > 0){
-        //     console.log(props.purchaseProduct[0].purchaseBookId)
+        // 나갈 때 삭제가 어려움, 계속 안됨
+        // const handleExit = () => {
+        //     axios.delete('http://localhost:8080/purchase/delete',{
+        //         params:{
+        //             state: 0
+        //         },
+        //         data: props.purchaseProduct
+        //     })
+        //         .then(res => {
+        //             console.log("통신 성공", res)
+        //         })
+        //         .catch(err => {
+        //             console.log("통신 실패", err)
+        //         })
+        // }
+        // return () => {
+        //     handleExit()
         // }
     }, [props.purchaseProduct])
 
     useEffect(() => {
         handleOriginalInfo()
-        const handleBeforeUnload = (event) => {
-            event.preventDefault();
-            event.returnValue = '정말 나가시겠습니까?';
-        };
-
-        const handleExit = (event) => {
-            axios.delete('http://localhost:8080/purchase/delete', {
-                purchaseProduct,
-                params: {
-                    BuyerId: userId,
-                    BuyerName: sessionStorage.getItem("name"),
-                    state: 0
-                }
-            })
-                .then(res => {
-                    console.log("통신 성공", res)
-                })
-                .catch(err => {
-                    console.log("통신 실패", err)
-                })
-        }
-        window.addEventListener('beforeunload', handleBeforeUnload);
-
-        return () => {
-            handleExit()
-            window.removeEventListener('beforeunload', handleExit);
-        }
     }, [])
 
     useEffect(() => {
@@ -239,6 +227,7 @@ function PurchaseInfor(props) {
                 params: {
                     userId: userId,
                     state: 1,
+                    finalFee: finalFee,
                     payMethod: payMethod,
                     reqMessage: reqMessage,
                     address: zoneCode + '/' + roadAddress + '/' + roadAddressDetail
@@ -246,6 +235,7 @@ function PurchaseInfor(props) {
             })
                 .then(res => {
                     alert("구매 성공")
+                    navigate('/')
                 })
                 .catch(err => {
                     console.log("통신 실패", err)
@@ -421,8 +411,7 @@ function PurchaseInfor(props) {
                 </div>
             </div>
             <div className={'mt-4 d-flex justify-content-center gap-2'}>
-                <button type={'button'} className={'btn btn-lg btn-success'} onClick={handlePurchase}>구매하기
-                </button>
+                <button type={'button'} className={'btn btn-lg btn-success'} onClick={handlePurchase}>구매하기</button>
                 <a href="/" className={'btn btn-lg btn-danger'}>취소</a>
             </div>
         </div>

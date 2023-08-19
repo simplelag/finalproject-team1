@@ -12,5 +12,5 @@ public interface PurchaseRepository extends JpaRepository<PurchaseEntity, Intege
 //    찾아서 주문번호를 가져올려고 만든것
     List<PurchaseEntity> findByPurchaseBookIdAndPurchaseBuyerIdAndPurchaseSellerIdAndPurchasePayment(String isbn13, String purchaseId, String sellerId, int payment) throws Exception;
 
-    List<PurchaseEntity> findByPurchaseBookIdAndPurchaseBuyerIdAndPurchaseSellerIdAndPurchaseState(String isbn13, String purchaseId, String sellerId, int state) throws Exception;
+    List<PurchaseEntity> findByPurchaseBuyerIdAndPurchaseSellerIdAndPurchaseState(String purchaseId, String sellerId, int state) throws Exception;
 }
