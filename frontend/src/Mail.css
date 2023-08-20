@@ -1,0 +1,67 @@
+[class|="bubble"] .read {
+    flex-shrink: 0;
+    font-size: 0.3rem;
+    margin: 0rem 0.3rem;
+}
+
+[class|="bubble"] .name {
+    margin: 0.2rem 0.5rem;
+}
+
+[class|="bubble"] .datetime {
+    flex-shrink: 0;
+    font-size: 0.8rem;
+    margin: 0rem 0.3rem 1rem 0.3rem;
+}
+
+[class|="bubble"] .datetime .date{
+
+}
+
+[class|="bubble"] .datetime .time{
+
+}
+
+[class|="bubble"] .content {
+    border-radius: 0.64rem;
+    padding: 0.2rem 0.6rem;
+    margin: 0.14rem;
+}
+
+.bubble-me .name{
+}
+
+.bubble-me {
+    margin-right: 0.2rem;
+    margin-left: 1rem;
+    text-align: end;
+}
+
+.bubble-me .content-read {
+    display: flex;
+    justify-content: end;
+    align-items: end;
+    margin-left: 3px;
+}
+
+.bubble-me .content-read .content {
+    border: 1px solid black;
+}
+
+.bubble-other {
+    margin-left: 0.2rem;
+    margin-right: 1rem;
+    text-align: start;
+}
+
+.bubble-other .content-read {
+    display: flex;
+    justify-content: start;
+    flex-direction: row-reverse;
+    align-items: end;
+    margin-right: 3px;
+}
+
+.bubble-other .content-read .content {
+    border: 1px solid black;
+}

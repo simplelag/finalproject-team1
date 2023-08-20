@@ -27,7 +27,7 @@ public class MailEntity {
     private String mailFromName;
 
     @Column(nullable = false)
-    private String mailDatetime = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").format(LocalDateTime.now());
+    private String mailDatetime = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm").format(LocalDateTime.now());
     @Column(nullable = false)
     private int mailPurchasePk;
     @Column(nullable = false)
