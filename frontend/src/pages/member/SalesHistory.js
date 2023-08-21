@@ -34,7 +34,6 @@ function SalesHistory(props) {
                         <th className={'text-center'}>판매상태</th>
                         <th>상품명</th>
                         <th className={'text-center'}>가격</th>
-                        {/* 수량은 db에서 없어서 아무거나 가져온거임*/}
                         <th className={'text-center'}>수량</th>
                         <th className={'text-center'}>배송상태</th>
                     </tr>
