@@ -1,5 +1,6 @@
 package com.bitc.finalproject.repository;
 
+import com.bitc.finalproject.entity.BasketEntity;
 import com.bitc.finalproject.entity.PurchaseEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 

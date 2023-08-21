@@ -1,5 +1,7 @@
 package com.bitc.finalproject.service;
 
+import com.bitc.finalproject.entity.BasketEntity;
+import com.bitc.finalproject.entity.BookEntity;
 import com.bitc.finalproject.entity.MemberEntity;
 import com.bitc.finalproject.entity.PurchaseEntity;
 
@@ -21,4 +23,10 @@ public interface PurchaseService {
 
 //    구매하기
     void savePurchase(PurchaseEntity purchaseEntity) throws Exception;
+
+//    장바구니에서 체크한 것 확인
+    List<BasketEntity> basketList(List<Integer> trueKeys) throws Exception;
+
+//    장바구니에서 체크된 것을 sale 테이블에서 가져오기
+    List<BookEntity> basketListSale(List<Integer> cheekListSalePk) throws Exception;
 }

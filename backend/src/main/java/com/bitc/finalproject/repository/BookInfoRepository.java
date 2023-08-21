@@ -11,6 +11,8 @@ public interface BookInfoRepository  extends JpaRepository<BookEntity, Integer> 
     List<BookEntity> findBySaleBookIdOrderBySaleBookPriceAsc(String isbn13);
     List<BookEntity> findBySaleBookId(String isbn13);
 
-    List<BookEntity> findBySaleSellerId(String userId);
+    List<BookEntity> findBySaleSellerIdOrderBySalePkDesc(String userId);
+
+    List<BookEntity> findAllBySalePkIn(List<Integer> cheekList);
 
 }
