@@ -58,16 +58,16 @@ function OldBookList() {
     }
 
     // 구매 버튼 눌렀을때 발생하는 이벤트
-    const handleInPurchase = (e) => {
+    const handleInPurchase = (index) => {
         axios.get('http://localhost:8080/purchase/insert',{
             params:{
-                ISBN13: oldBookInfo[e.target.name].salePk,
-                BookName: oldBookInfo[e.target.name].saleBookTitle,
+                ISBN13: oldBookInfo[index].saleBookId,
+                BookName: oldBookInfo[index].saleBookTitle,
                 BuyerId: sessionStorage.getItem("id"),
                 BuyerName: sessionStorage.getItem("name"),
-                SellerId: oldBookInfo[e.target.name].saleSellerId,
-                SellerName: oldBookInfo[e.target.name].saleSellerName,
-                SellerPrice: oldBookInfo[e.target.name].saleBookPrice
+                SellerId: oldBookInfo[index].saleSellerId,
+                SellerName: oldBookInfo[index].saleSellerName,
+                SellerPrice: oldBookInfo[index].saleBookPrice
             }
         })
             .then(res => {
@@ -107,7 +107,7 @@ function OldBookList() {
                     </div>
                     <div className={"col-sm-2"}>
                         <a href="#"className={"btn btn-link bg-dark"} style={{fontSize:"10pt",color:"white",textDecoration:"none",width:"100pt"}} onClick={() => save(index)}>장바구니 담기</a>
-                        <a href="/purchase" className={"btn btn-link bg-dark"} style={{fontSize:"10pt",color:"white",textDecoration:"none", width:"100pt"}} name={index} onClick={handleInPurchase}>바로 구매</a>
+                        <a href="/purchase" className={"btn btn-link bg-dark"} style={{fontSize:"10pt",color:"white",textDecoration:"none", width:"100pt"}} onClick={() => handleInPurchase(index)}>바로 구매</a>
                     </div>
                 </div>
             ))}

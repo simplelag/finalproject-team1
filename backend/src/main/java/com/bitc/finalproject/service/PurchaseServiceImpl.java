@@ -1,7 +1,11 @@
 package com.bitc.finalproject.service;
 
+import com.bitc.finalproject.entity.BasketEntity;
+import com.bitc.finalproject.entity.BookEntity;
 import com.bitc.finalproject.entity.MemberEntity;
 import com.bitc.finalproject.entity.PurchaseEntity;
+import com.bitc.finalproject.repository.BasketRepository;
+import com.bitc.finalproject.repository.BookInfoRepository;
 import com.bitc.finalproject.repository.PurchaseRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -12,6 +16,9 @@ import java.util.List;
 @Service
 public class PurchaseServiceImpl implements PurchaseService{
     private final PurchaseRepository purchaseRepository;
+    private final BasketRepository basketRepository;
+
+    private final BookInfoRepository bookInfoRepository;
     @Override
     public void insertPurchaseList(PurchaseEntity purchaseEntity) throws Exception {
         purchaseRepository.save(purchaseEntity);
@@ -40,5 +47,15 @@ public class PurchaseServiceImpl implements PurchaseService{
     @Override
     public void savePurchase(PurchaseEntity purchaseEntity) throws Exception {
         purchaseRepository.save(purchaseEntity);
+    }
+
+    @Override
+    public List<BasketEntity> basketList(List<Integer> trueKeys) throws Exception {
+        return basketRepository.findAllByBasketPkIn(trueKeys);
+    }
+
+    @Override
+    public List<BookEntity> basketListSale(List<Integer> cheekListSalePk) throws Exception {
+        return bookInfoRepository.findAllBySalePkIn(cheekListSalePk);
     }
 }
