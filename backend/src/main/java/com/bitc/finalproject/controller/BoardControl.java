@@ -1,12 +1,16 @@
 package com.bitc.finalproject.controller;
 
+import com.bitc.finalproject.dto.BoardDto;
 import com.bitc.finalproject.entity.BoardEntity;
 
 import com.bitc.finalproject.entity.LikeEntity;
+import com.bitc.finalproject.repository.BoardRepository;
+import com.bitc.finalproject.service.AdminService;
 import com.bitc.finalproject.service.BoardService;
 
 import com.bitc.finalproject.service.LikeService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,6 +23,7 @@ public class BoardControl {
 
     private final BoardService boardService;
     private final LikeService likeService;
+    private final AdminService adminService;
 
     @RequestMapping(value = "/board", method = RequestMethod.GET)
     public Object boardMain() throws Exception{
@@ -82,5 +87,20 @@ public class BoardControl {
         Optional<BoardEntity> board = boardService.likeCnt(boardPk);
 
         return board;
+    }
+
+    // 사용자용 문의글 리스트반환
+    @RequestMapping(value = "/board/getQuestionsUser/{id}", method = RequestMethod.GET)
+    public Object getQuestionListUser(@RequestParam String title, @PathVariable String id, @RequestParam String content, Pageable pageable) throws Exception {
+        System.out.println("문의글리스트 사용자 id: "+id);
+        List<BoardDto> list = adminService.findBoardListUser(title, id, content, pageable);
+        return list;
+    }
+
+    // 사용자용 문의글 총개수 반환
+    @RequestMapping(value = "/board/getQuestionsCountUser/{id}", method = RequestMethod.GET)
+    public int getQuestionsCountUser(@RequestParam String title, @PathVariable String id, @RequestParam String content) throws Exception{
+
+        return adminService.getQuestionsCountUser(title, id, content);
     }
 }

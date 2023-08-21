@@ -9,18 +9,20 @@ import BoardComment from "../board/BoardComment";
 
 function QuestionDetail(props) {
 
+    const navi = useNavigate();
 
     const board = useParams();
-
     const [boardPk] = useState(board.boardPk);
     const [title, setTitle] = useState('');
-    const [name, setName] = useState('testUserName')
-    const [id, setId] = useState('testUserId')
+    const [name, setName] = useState(sessionStorage.getItem("name"))
+    const [id, setId] = useState(sessionStorage.getItem("id"))
+    const [boardId, setBoardId] = useState('')
     const [content, setContent] = useState('');
     const [category, setCategory] = useState('');
     const [visit, setVisit] = useState('');
-    const navi = useNavigate();
+    const [like, setLike] = useState('');
 
+    const [visible, setVisible] = useState(false);
 
     // 게시글 정보 받아오는 부분
     useEffect(() => {
@@ -28,42 +30,57 @@ function QuestionDetail(props) {
             .then(res => {
                 setTitle(res.data.boardTitle);
                 setName(res.data.boardWriterName);
+                setBoardId(res.data.boardWriterId)
                 setContent(res.data.boardContent);
                 setCategory(res.data.boardCategory);
                 setVisit(res.data.boardVisitCount);
+                setLike(res.data.boardLike);
+
+                if (sessionStorage.getItem("id") == res.data.boardWriterId) {
+                    setVisible(true);
+                }
             })
             .catch(err => {
                 alert("BoardDetail Connect Err")
             })
     }, [])
 
-    const onChangeContent = (e) => {
-        setContent(e.target.value)
-    }
-    const onChangeTitle = (e) => {
-        setTitle(e.target.value)
-    }
-
     // 삭제
     const onClickDelete = () => {
         axios.delete(`http://localhost:8080/board/${boardPk}`, {
             params: {
-                boardWriterId: id,
+                boardWriterId: boardId,
+                nowId: id,
+                authority: sessionStorage.getItem("grade")
             }
         })
             .then(res => {
-                navi('/main/board')
+                navi('/board')
             })
     }
 
-    // 수정
-    const Update = () => {
-        axios.put(`http://localhost:8080/board/${boardPk}`, null, {
-            boardPk: boardPk,
-        })
-            .then(res => {
-                navi('/main/board')
+    const onClickUpdate = () => {
+        navi("/board/update", {state: {boardPk: boardPk}});
+    }
+
+    const onClickLike = () => {
+        if (sessionStorage.getItem("id") == null) {
+            alert("로그인이 필요한 서비스입니다")
+        }
+        else {
+            axios.post('http://localhost:8080/board/like', null,{
+                params: {
+                    boardPk: boardPk,
+                    likeMemberId: id,
+                }
             })
+                .then(res =>{
+                    setLike(res.data.boardLike)
+                })
+                .catch(err => {
+                    console.log(err)
+                })
+        }
     }
 
     return (
@@ -76,23 +93,18 @@ function QuestionDetail(props) {
                             <tbody>
                             <tr>
                                 <td className={'col-sm-1'}>{category}</td>
-                                <td colSpan={2} className={''}>{title}</td>
+                                <td className={''}>{title}</td>
                             </tr>
                             <tr>
-                                <td>{name}</td>
-                                <td className={'text-end'}>댓글: </td>
-                                <td className={'text-end'}>조회수: {visit}</td>
+                                <td className={''}>{name}</td>
+                                <td className={'text-end col-1'}>댓글수: </td>
+                                <td className={'text-end col-1'}>추천수: {like}</td>
+                                <td className={'text-end col-1'}>조회수: {visit}</td>
                             </tr>
                             </tbody>
                         </table>
-                        <textarea rows={10} className={'form-control'} value={content} onChange={onChangeContent}></textarea>
-                        <div className={'d-flex justify-content-center my-3'}>
-                            <button type={'button'} className={'btn'}>추천</button>
-                        </div>
-                        <a href={'/main/board/'} className={'btn'}>목록</a>
-                        <button type={"button"} className={'btn'}>수정</button>
-                        <button type={"button"} className={'btn'} onClick={onClickDelete}>삭제</button>
-                        <a href={'/main/board/write'} className={'btn'}>글작성</a>
+                        <textarea rows={10} className={'form-control'} value={content} readOnly={true}></textarea>
+                        <a href={'/admin'} className={'btn btn-outline-dark'}>목록</a>
                     </div>
                 </div>
             </div>
