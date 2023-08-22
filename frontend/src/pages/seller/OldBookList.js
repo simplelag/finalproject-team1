@@ -49,7 +49,7 @@ function OldBookList() {
         }
     }
 
-    // 구매 버튼 눌렀을때 발생하는 이벤트
+    // 구매 버튼 눌렀을때 발생하는 이벤트(구매 페이지로 이동)
     const handleInPurchase = (index) => {
         axios.get('http://localhost:8080/purchase/insert',{
             params:{

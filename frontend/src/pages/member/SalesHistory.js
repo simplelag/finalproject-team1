@@ -17,6 +17,11 @@ function SalesHistory(props) {
             })
     },[]);
 
+    //  판매자가 판매 취소하기
+    const handleCancel = (index) => {
+
+    }
+
     return (
         <div className={'container my-4'}>
             <h1 className={'display-5 my-4 text-center'}>판매 내역 페이지</h1>
@@ -35,21 +40,28 @@ function SalesHistory(props) {
                         <th>상품명</th>
                         <th className={'text-center'}>가격</th>
                         <th className={'text-center'}>수량</th>
-                        <th className={'text-center'}>배송상태</th>
+                        <th className={'text-center'}></th>
                     </tr>
                     </thead>
                     <tbody>
                     {
-                        mySaleList.map(item => {
+                        mySaleList.map((item,index) => {
                             return (
-                                <tr>
-                                    <td className={'text-center align-middle'}>{item.saleDisabled === null ? '판매중' : '판매완료'}</td>
+                                <tr key={item.salePk}>
+                                    <td className={'text-center align-middle'}>
+                                        {item.saleDisabled === null ? "판매중" : "판매 불가"}
+                                    </td>
                                     <td className={'align-middle'}>{item.saleBookTitle}</td>
                                     <td className={'align-middle text-center'}>{item.saleBookPrice}</td>
                                     <td className={'align-middle text-center'}>{item.saleBookPieces}</td>
-                                    <td className={'d-grid'}>
-                                        <button type={'button'} className={'btn btn-success'}>배송하기</button>
-                                        <button type={'button'} className={'btn btn-warning'}>조회하기</button>
+                                    <td>
+                                        <span>{item.saleDisabled === null ?
+                                            <div className={'d-grid'}>
+                                                <button type={'button'} className={'btn btn-success'}>배송하기</button>
+                                                <button type={'button'} className={'btn btn-warning'}>조회하기</button>
+                                                <button type={'button'} className={'btn btn-danger'} onClick={() => handleCancel(index)}>취소하기</button>
+                                            </div>
+                                            : ""}</span>
                                     </td>
                                 </tr>
                             );

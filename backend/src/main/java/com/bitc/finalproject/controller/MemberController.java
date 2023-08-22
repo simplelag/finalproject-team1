@@ -1,8 +1,10 @@
 package com.bitc.finalproject.controller;
 
 import com.bitc.finalproject.entity.MemberEntity;
+import com.bitc.finalproject.entity.PurchaseEntity;
 import com.bitc.finalproject.service.BookInfoService;
 import com.bitc.finalproject.service.MemberService;
+import com.bitc.finalproject.service.PurchaseService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +20,7 @@ import java.util.Map;
 public class MemberController {
     private final MemberService userService;
     private final BookInfoService bookInfoService;
+    private final PurchaseService purchaseService;
 
 //    로그인 시
     @RequestMapping(value = "/login", method = RequestMethod.POST)
@@ -65,7 +68,6 @@ public class MemberController {
     ) throws Exception{
         MemberEntity memberEntity = null;
         memberEntity = new MemberEntity(userId, password, name, email, phone, address);
-
         userService.saveMember(memberEntity);
     }
 
@@ -88,6 +90,19 @@ public class MemberController {
         }
         return correctId;
     }
+
+//    마이페이지 - 구매 내역
+    @RequestMapping(value = "/login/myLogin/myPurchaseList", method = RequestMethod.GET)
+    public Object showMyPurchaseList(@RequestParam("userId") String userId) throws Exception{
+        return purchaseService.myPurchaseList(userId);
+    }
+
+//    마이페이지 - 구매 취소
+    @RequestMapping(value = "/login/myLogin/delete", method = RequestMethod.DELETE)
+    public void showMyPurchaseCancel(@RequestBody PurchaseEntity purchaseEntity) throws Exception{
+        purchaseService.myPurchaseCancel(purchaseEntity);
+    }
+
     
 //    마이페이지 - 판매 내역
     @RequestMapping(value = "/login/myLogin/mySaleList", method = RequestMethod.GET)

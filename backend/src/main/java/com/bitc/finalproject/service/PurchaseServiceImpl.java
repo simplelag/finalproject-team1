@@ -19,9 +19,15 @@ public class PurchaseServiceImpl implements PurchaseService{
     private final BasketRepository basketRepository;
 
     private final BookInfoRepository bookInfoRepository;
+//    @Override
+//    public void insertPurchaseList(PurchaseEntity purchaseEntity) throws Exception {
+//        purchaseRepository.save(purchaseEntity);
+//    }
+
     @Override
-    public void insertPurchaseList(PurchaseEntity purchaseEntity) throws Exception {
-        purchaseRepository.save(purchaseEntity);
+    public PurchaseEntity insertPurchaseList(PurchaseEntity purchaseEntity) throws Exception {
+        PurchaseEntity p = purchaseRepository.save(purchaseEntity);
+        return p;
     }
 
     @Override
@@ -40,8 +46,8 @@ public class PurchaseServiceImpl implements PurchaseService{
     }
 
     @Override
-    public void productListDelete(List<PurchaseEntity> purchaseEntity) throws Exception {
-        purchaseRepository.deleteAll(purchaseEntity);
+    public void productListDelete(PurchaseEntity purchaseEntity) throws Exception {
+        purchaseRepository.delete(purchaseEntity);
     }
 
     @Override
@@ -57,5 +63,15 @@ public class PurchaseServiceImpl implements PurchaseService{
     @Override
     public List<BookEntity> basketListSale(List<Integer> cheekListSalePk) throws Exception {
         return bookInfoRepository.findAllBySalePkIn(cheekListSalePk);
+    }
+
+    @Override
+    public List<PurchaseEntity> myPurchaseList(String userId) throws Exception {
+        return purchaseRepository.findByPurchaseBuyerIdOrderByPurchasePkDesc(userId);
+    }
+
+    @Override
+    public void myPurchaseCancel(PurchaseEntity purchaseEntity) throws Exception {
+        purchaseRepository.delete(purchaseEntity);
     }
 }

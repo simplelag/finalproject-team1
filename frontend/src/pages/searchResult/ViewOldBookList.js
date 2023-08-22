@@ -74,7 +74,8 @@ function ViewOldBookList(props) {
             }
         })
             .then(res => {
-                console.log(`통신 성공`)
+                console.log(`통신 성공`);
+                console.log(res);
                 navi('/purchase')
             })
     }
@@ -141,9 +142,7 @@ function ViewOldBookList(props) {
             {/*    order="boardPk,DESC"*/}
             {/*/>*/}
             <Footer/>
-
         </main>
     )
 }
-
 export default ViewOldBookList;
