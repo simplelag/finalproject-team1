@@ -12,6 +12,7 @@ import com.bitc.finalproject.service.LikeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Optional;
@@ -46,7 +47,9 @@ public class BoardControl {
 
     @RequestMapping(value = "/board/write", method = RequestMethod.POST)
     public Object boardInsert(BoardEntity boardEntity) throws Exception {
+
         boardService.writeBoard(boardEntity);
+        System.out.println("글스기 pk " + boardEntity.getBoardPk());
 
         return "redirect:/board";
     }
@@ -102,5 +105,13 @@ public class BoardControl {
     public int getQuestionsCountUser(@RequestParam String title, @PathVariable String id, @RequestParam String content) throws Exception{
 
         return adminService.getQuestionsCountUser(title, id, content);
+    }
+
+    @RequestMapping(value = "/question/write", method = RequestMethod.POST)
+    public int questionInsert(BoardEntity boardEntity) throws Exception {
+
+        boardService.writeBoard(boardEntity);
+
+        return boardEntity.getBoardPk();
     }
 }
