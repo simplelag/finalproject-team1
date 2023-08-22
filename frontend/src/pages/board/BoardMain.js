@@ -8,6 +8,8 @@ import Pagenation from "../common/Pagenation";
 function BoardMain(props) {
 
     const [boardList, setBoardList] = useState([]);
+    const [qNum, setQNum] = useState(10);
+    const [size, setSize] = useState(5);
 
     const navi = useNavigate();
 
@@ -38,7 +40,7 @@ function BoardMain(props) {
             <div className={'container my-5'}>
                 <table className={'table'}>
                     <thead>
-                        <tr className={'text-center'}>
+                        <tr className={'text-center border'}>
                             <th>글번호</th>
                             <th>말머리</th>
                             <th>제목</th>
@@ -51,7 +53,26 @@ function BoardMain(props) {
                     <tbody>
                     {
                         boardList.map(item => {
-                            if (item.boardCategory != "관리자문의") {
+                            if (item.boardCategory != "관리자문의" && item.boardCategory == "공지/이벤트") {
+                                return (
+                                    <tr key={item.boardPk} className={"table-secondary border"}>
+                                        <td className={'text-center col-sm-1'}>{item.boardPk}</td>
+                                        <td className={'text-center col-sm-1'}>{item.boardCategory}</td>
+                                        <td>
+                                            <a href={'/board/' + item.boardPk} className={'btn'}>{item.boardTitle}</a>
+                                        </td>
+                                        <td className={'text-center col-sm-1'}>{item.boardWriterName}</td>
+                                        <td className={'text-center col-sm-1'}>{item.boardVisitCount}</td>
+                                        <td className={'text-center col-sm-1'}>{item.boardLike}</td>
+                                        <td className={'text-center col-sm-2'}>{item.boardDatetime}</td>
+                                    </tr>
+                                )
+                            }
+                        })
+                    }
+                    {
+                        boardList.map(item => {
+                            if (item.boardCategory != "관리자문의" && item.boardCategory != "공지/이벤트") {
                                 return (
                                     <tr key={item.boardPk}>
                                         <td className={'text-center col-sm-1'}>{item.boardPk}</td>

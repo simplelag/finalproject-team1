@@ -28,7 +28,7 @@ public class BoardServiceImpl implements BoardService{
             boardEntity.setBoardVisitCount(boardEntity.getBoardVisitCount() + 1);
             boardRepository.save(boardEntity);
 
-            return boardEntity;
+            return null;
         }
         else {
             throw new NullPointerException();

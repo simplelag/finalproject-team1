@@ -7,6 +7,8 @@ import BoardComment from "./BoardComment";
 
 function BoardDetail(props) {
 
+    console.log(props)
+
     const navi = useNavigate();
 
     const board = useParams();
@@ -19,6 +21,7 @@ function BoardDetail(props) {
     const [category, setCategory] = useState('');
     const [visit, setVisit] = useState('');
     const [like, setLike] = useState('');
+    const [commentCount, setCommentCount] = useState('')
 
     const [visible, setVisible] = useState(false);
 
@@ -95,7 +98,7 @@ function BoardDetail(props) {
                                 </tr>
                                 <tr>
                                     <td className={''}>{name}</td>
-                                    <td className={'text-end col-1'}>댓글수: </td>
+                                    <td className={'text-end col-1'}>댓글수: {commentCount}</td>
                                     <td className={'text-end col-1'}>추천수: {like}</td>
                                     <td className={'text-end col-1'}>조회수: {visit}</td>
                                 </tr>
@@ -118,7 +121,7 @@ function BoardDetail(props) {
                         </div>
                     </div>
                 </div>
-            <BoardComment boardPk={boardPk} />
+            <BoardComment boardPk={boardPk} setCommentCount={setCommentCount} />
             <Footer />
         </div>
     )
