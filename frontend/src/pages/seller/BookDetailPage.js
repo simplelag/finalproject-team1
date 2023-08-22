@@ -23,7 +23,6 @@ function BookDetailPage(props) {
         })
             .then(res => {
                 setBookInfo(res.data.item[0]);
-
             })
             .catch(err => {
                 alert("페이지 로딩 오류")

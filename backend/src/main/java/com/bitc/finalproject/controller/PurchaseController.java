@@ -9,6 +9,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.awt.print.Book;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,7 +21,7 @@ public class PurchaseController {
 
 //    상세 페이지에서 바로 구매하는 경우 (구매페이지로 이동)
     @RequestMapping(value = "/purchase/insert", method = RequestMethod.GET)
-    public void PurchaseIndividualInsert(
+    public Object PurchaseIndividualInsert(
             @RequestParam("ISBN13") String isbn13, @RequestParam("BookName") String BookName,
             @RequestParam("BuyerId") String BuyerId, @RequestParam("BuyerName") String BuyerName, @RequestParam("SellerId") String SellerId, @RequestParam("SellerName") String SellerName, @RequestParam("SellerPrice") int SellerPrice
     ) throws Exception{
@@ -32,10 +33,13 @@ public class PurchaseController {
         }else{
             purchaseEntity = new PurchaseEntity(isbn13, BookName, BuyerId, BuyerName, SellerId, SellerName, SellerPrice);
         }
-        purchaseService.insertPurchaseList(purchaseEntity);
+
+//        purchaseService.insertPurchaseList(purchaseEntity);
+        purchaseEntity = purchaseService.insertPurchaseList(purchaseEntity);
+        return purchaseEntity;
     }
 
-//    장바구니에서 구매하는 경우
+//    장바구니에서 구매하는 경우(구매페이지로 이동)
     @RequestMapping(value = "/purchase/basketInsert", method = RequestMethod.PUT)
     public void PurchaseBasket(
             @RequestBody String postData , @RequestParam("userId") String userId,
@@ -101,7 +105,8 @@ public class PurchaseController {
             String BuyerName = purchaseEntities.get(i).getPurchaseBuyerName();
             String SellerId = purchaseEntities.get(i).getPurchaseSellerId();
             String SellerName = purchaseEntities.get(i).getPurchaseSellerName();
-            PurchaseEntity purchaseEntity = new PurchaseEntity(pk, BookId, BookName, userId, BuyerName, SellerId, SellerName, state, finalFee, payMethod, reqMessage, address);
+            int indivPrice = purchaseEntities.get(i).getPurchasePayment();
+            PurchaseEntity purchaseEntity = new PurchaseEntity(pk, BookId, BookName, userId, BuyerName, SellerId, SellerName, state, indivPrice, payMethod, reqMessage, address);
             purchaseService.savePurchase(purchaseEntity);
         }
     }
@@ -109,11 +114,17 @@ public class PurchaseController {
 //    구매 페이지에서 나갈 때 삭제하기 위해서
     @RequestMapping(value = "/purchase/delete", method = RequestMethod.DELETE)
     public void PurchaseListDelete(
-            @RequestParam("state") int state, @RequestBody List<PurchaseEntity> purchaseEntities
+            @RequestParam("userId") String userId, @RequestParam("state") int state
     ) throws Exception{
-        for(int i = 0; i < purchaseEntities.size(); i++) {
-            String BuyerId = purchaseEntities.get(i).getPurchaseBuyerId();
-            List<PurchaseEntity> purchaseEntity = purchaseService.findDeleteList(BuyerId, state);
+        List<PurchaseEntity> purchaseEntityList = purchaseService.findDeleteList(userId, state);
+        for(int i = 0; i < purchaseEntityList.size(); i++){
+            int pk = purchaseEntityList.get(i).getPurchasePk();
+            String BookId = purchaseEntityList.get(i).getPurchaseBookId();
+            String BookName = purchaseEntityList.get(i).getPurchaseBookName();
+            String BuyerName = purchaseEntityList.get(i).getPurchaseBuyerName();
+            String SellerId = purchaseEntityList.get(i).getPurchaseSellerId();
+            String SellerName = purchaseEntityList.get(i).getPurchaseSellerName();
+            PurchaseEntity purchaseEntity = new PurchaseEntity(pk, BookId, BookName, userId, BuyerName, SellerId, SellerName, state);
             purchaseService.productListDelete(purchaseEntity);
         }
     }

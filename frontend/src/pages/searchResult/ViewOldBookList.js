@@ -77,7 +77,8 @@ function ViewOldBookList(props) {
             }
         })
             .then(res => {
-                console.log(`통신 성공`)
+                console.log(`통신 성공`);
+                console.log(res);
                 navi('/purchase')
             })
     }
@@ -89,10 +90,10 @@ function ViewOldBookList(props) {
 
             {oldBookInfo.map((info,index) =>(
                 <div className={'row mt-5'} key={info.salePk}>
-                    <div className={'col-sm-auto'} style={style.box}>
-                        <img src={info.saleImgSrc} style={style.img} />
-                    </div>
-                    <div className={'col-sm-5 my-3'}>
+                        <div className={'col-sm-auto'} style={style.box}>
+                            <img src={info.saleImgSrc} style={style.img} />
+                        </div>
+                        <div className={'col-sm-5 my-3'}>
                         <div>
                             <a href={'#'} className={"text-decoration-none ms-3"} style={{color:"black"}} onClick={() => gotoDetail(info.saleBookId)} >책 제목:{info.saleBookTitle}</a>
                         </div>

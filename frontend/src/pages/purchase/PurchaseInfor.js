@@ -31,7 +31,7 @@ function PurchaseInfor(props) {
     const [messageDis, setMessageDis] = useState(false)
 
     // 부모 컴포넌트에서 데이터 가져오기
-    const [purchaseProduct, setPurchaseProduct] = useState(props.purchaseProduct);
+    const [purchaseProduct, setPurchaseProduct] = useState([]);
 
     // 주문 총액
     const [orderAllFee, setOrderAllFee] = useState(0);
@@ -43,30 +43,46 @@ function PurchaseInfor(props) {
     // 결제 수단
     const [payMethod, setPayMethod] = useState(null);
 
+    const scrollToTop = () => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth', // 부드러운 스크롤 효과를 원한다면 추가
+        });
+    };
+
     useEffect(() => {
-        setPurchaseProduct(props.purchaseProduct)
-        // 나갈 때 삭제가 어려움, 계속 안됨
-        // const handleExit = () => {
-        //     axios.delete('http://localhost:8080/purchase/delete',{
-        //         params:{
-        //             state: 0
-        //         },
-        //         data: props.purchaseProduct
-        //     })
-        //         .then(res => {
-        //             console.log("통신 성공", res)
-        //         })
-        //         .catch(err => {
-        //             console.log("통신 실패", err)
-        //         })
-        // }
-        // return () => {
-        //     handleExit()
-        // }
-    }, [props.purchaseProduct])
+        setPurchaseProduct(props.purchaseList)
+    }, [props.purchaseList])
 
     useEffect(() => {
         handleOriginalInfo()
+        scrollToTop()
+
+        const preventClose = (e) => {
+            e.preventDefault();
+            e.returnValue = "";
+        }
+        (() => {
+            window.addEventListener('beforeunload', preventClose);
+        })();
+
+        return(() => {
+            window.removeEventListener('beforeunload', preventClose);
+
+            axios.delete('http://localhost:8080/purchase/delete',{
+                params:{
+                    userId :userId,
+                    state: 0
+                },
+                data: props.purchaseList
+            })
+                .then(res=>{
+                    console.log(res)
+                })
+                .catch(err => {
+                    console.log(err)
+                })
+        })
     }, [])
 
     useEffect(() => {

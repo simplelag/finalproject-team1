@@ -5,7 +5,7 @@ import PurchaseInfor from "./PurchaseInfor";
 function PurchaseMain(props) {
 
     const [userId, setUserId] = useState(sessionStorage.getItem("id"))
-    const [ purchaseList, setPurchaseList ] = useState([]);
+    const [purchaseList, setPurchaseList ] = useState([]);
 
     useEffect(() => {
         axios.get('http://localhost:8080/purchase/List',{
@@ -57,7 +57,7 @@ function PurchaseMain(props) {
                     </tbody>
                 </table>
             </div>
-            <PurchaseInfor purchaseProduct={purchaseList} />
+            <PurchaseInfor purchaseList={purchaseList} />
         </div>
     )
 }
