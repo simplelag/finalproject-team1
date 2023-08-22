@@ -63,7 +63,7 @@ function OldBookList() {
             }
         })
             .then(res => {
-
+                navi("/purchase", {state: {value : [res.data]}})
             })
     }
 
@@ -102,7 +102,7 @@ function OldBookList() {
                             </div>
                             <div className={"col-sm-2 text-center"}>
                                 <a href="#"className={"btn btn-link bg-dark mb-2"} style={{fontSize:"10pt",color:"white",textDecoration:"none",width:"100pt"}} onClick={() => save(index)}>장바구니 담기</a>
-                                <a href="/purchase" className={"btn btn-link bg-dark"} style={{fontSize:"10pt",color:"white",textDecoration:"none", width:"100pt"}} onClick={() => handleInPurchase(index)}>바로 구매</a>
+                                <a href="#" className={"btn btn-link bg-dark"} style={{fontSize:"10pt",color:"white",textDecoration:"none", width:"100pt"}} onClick={() => handleInPurchase(index)}>바로 구매</a>
                             </div>
                         </div>
                     )

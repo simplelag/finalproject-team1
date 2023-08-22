@@ -76,10 +76,9 @@ function ViewOldBookList(props) {
             .then(res => {
                 console.log(`통신 성공`);
                 console.log(res);
-                navi('/purchase')
+                navi("/purchase", {state: {value : [res.data]}})
             })
     }
-
 
     return (
         <main className={'container'}>

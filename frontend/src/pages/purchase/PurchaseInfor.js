@@ -1,9 +1,12 @@
 import React, {useEffect, useState} from 'react';
 import axios from "axios";
 import {useDaumPostcodePopup} from "react-daum-postcode";
-import {useNavigate} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 
 function PurchaseInfor(props) {
+
+    const location = useLocation();
+    const list = location.state.value;
 
     const navigate = useNavigate();
 
@@ -58,16 +61,27 @@ function PurchaseInfor(props) {
         handleOriginalInfo()
         scrollToTop()
 
-        const preventClose = (e) => {
-            e.preventDefault();
-            e.returnValue = "";
-        }
-        (() => {
-            window.addEventListener('beforeunload', preventClose);
-        })();
+        // const preventClose = (e) => {
+        //     e.preventDefault();
+        //     e.returnValue = "";
+        // }
+        // (() => {
+        //     window.addEventListener('beforeunload', preventClose);
+        // })();
+    }, [])
 
+    useEffect(() => {
         return(() => {
-            window.removeEventListener('beforeunload', preventClose);
+            // window.removeEventListener('beforeunload', preventClose);
+
+            axios.put("http://localhost:8080/purchase/locationInsert", list, null)
+                .then(res => {
+                    console.log(res)
+                    setPurchaseProduct(list);
+                })
+                .catch(err => {
+                    console.log(err)
+                })
 
             axios.delete('http://localhost:8080/purchase/delete',{
                 params:{
@@ -83,7 +97,7 @@ function PurchaseInfor(props) {
                     console.log(err)
                 })
         })
-    }, [])
+    },[])
 
     useEffect(() => {
         handleOrderAllFee()

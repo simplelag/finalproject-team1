@@ -4,7 +4,6 @@ import Header from "../mainPages/Header";
 import Footer from "../mainPages/Footer";
 
 function PurchaseList(props) {
-
     return (
         <div>
             <Header />
