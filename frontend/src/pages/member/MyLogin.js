@@ -10,6 +10,7 @@ import SalesHistory from "./SalesHistory";
 import Header from "../mainPages/Header";
 import Footer from "../mainPages/Footer";
 import MailOpenButton from "../common/MailOpenButton";
+import QuestionViewUser from "./QuestionViewUser";
 
 
 
@@ -113,10 +114,10 @@ function MyLogin(props) {
                         심장은 시들어 거친 인생에 어디 아름다우냐? 되려니와, 그들의 그들을 방황하였으며, 충분히 아니다. 이상의 뛰노는 우리 풀밭에 못할 시들어 사막이다. 만천하의 속에서 우리의 것은 말이다. 옷을 이상이 피부가 찾아 무한한 이것이다. 용기가 창공에 우리의 봄바람을 반짝이는 보는 대한 소리다.이것은 밥을 부패뿐이다. 산야에 싹이 청춘의 청춘은 생생하며, 위하여 시들어 그것은 약동하다. 살았으며, 얼마나 새가 기쁘며, 긴지라 대중을 있다. 타오르고 생명을 같이, 피가 같은 사막이다. 만천하의 실현에 피어나는 것이다. 이성은 기쁘며, 풍부하게 소리다.이것은 지혜는 용감하고 두손을 그들은 옷을 뿐이다.
                     </Tab>
                     <Tab eventKey="profile" title="판매 내역">
-                        <SalesHistory />
+                        <SalesHistory/>
                     </Tab>
                     <Tab eventKey="longer-tab" title="문의 내역">
-                        문의 내역
+                        <QuestionViewUser id={userId}/>
                     </Tab>
                 </Tabs>
             </div>

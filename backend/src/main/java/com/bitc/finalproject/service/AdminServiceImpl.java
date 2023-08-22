@@ -48,6 +48,29 @@ public class AdminServiceImpl implements AdminService {
         return list;
     }
 
+    public int getQuestionsCountUser(String boardTitle, String boardWriterId, String boardContent) throws Exception{
+        int n = 0;
+        // 제목+내용 검색일 때
+        if(boardTitle.equals(boardContent) && !boardTitle.equals("")){
+            n = boardRepository.countByTitleAndContentUser(boardTitle, boardWriterId, boardContent, "관리자문의");
+        }
+        else{
+            n =  boardRepository.countByBoardTitleContainingAndBoardWriterNameContainingAndBoardContentContainingAndBoardCategory(boardTitle,boardWriterId,boardContent, "관리자문의");
+        }
+        return n;
+    }
+    public List<BoardDto> findBoardListUser(String boardTitle, String boardWriterId, String boardContent, Pageable pageable) throws Exception{
+        List<BoardDto> list = new ArrayList<>();
+        // 제목+내용 검색일 때
+        if(boardTitle.equals(boardContent) && !boardTitle.equals("")){
+            list = boardRepository.findBoardDtoByTitleAndContentUser(boardTitle, boardWriterId, boardContent, "관리자문의", pageable);
+        }
+        else{
+            list =  boardRepository.findBoardDtoUser(boardTitle,boardWriterId,boardContent, "관리자문의", pageable);
+        }
+        return list;
+    }
+
     @Override
     public List<MemberDto> getMemberList(String authority, String content, Pageable pageable) throws Exception {
         List<MemberDto> list = memberRepository.findMemberDtoByAuthorityAndContent(authority, content, pageable);
