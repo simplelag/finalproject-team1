@@ -15,7 +15,7 @@ function BoardUpdate(props) {
     const [id, setId] = useState(sessionStorage.getItem("id"))
     const [content, setContent] = useState('');
     const [category, setCategory] = useState('');
-
+    const [visible, setVisible] = useState(false);
 
 
     const onClickCategory = (e) => {
@@ -42,6 +42,10 @@ function BoardUpdate(props) {
                 setName(res.data.boardWriterName);
                 setContent(res.data.boardContent);
                 setCategory(res.data.boardCategory);
+
+                if (sessionStorage.getItem("grade") == "admin") {
+                    setVisible(!visible);
+                }
             })
             .catch(err => {
                 alert("BoardUpdate Loading Err")
@@ -75,9 +79,11 @@ function BoardUpdate(props) {
                 <div className={'row'}>
                     <div className={'col-sm-10 mx-auto'}>
                         <div>
-                            <button type={'button'} className={'btn'} value={'일반'} onClick={onClickCategory}>일반</button>
-                            <button type={'button'} className={'btn'} value={'독후감'} onClick={onClickCategory}>독후감</button>
-                            <button type={'button'} className={'btn'} value={'공지/이벤트'} onClick={onClickCategory}>공지/이벤트</button>
+                            <button type={'button'} className={'btn btn-outline-dark'} value={'일반'} onClick={onClickCategory}>일반</button>
+                            <button type={'button'} className={'btn btn-outline-dark ms-2'} value={'독후감'} onClick={onClickCategory}>독후감</button>
+                            {
+                                visible && <button type={'button'} className={'btn btn-outline-dark ms-2'} value={'공지/이벤트'} onClick={onClickCategory}>공지/이벤트</button>
+                            }
                         </div>
                         <div className={'my-3'}>
                             <input type={'text'} className={'form-control'} defaultValue={title} onChange={onChangeTitle} />
@@ -87,9 +93,9 @@ function BoardUpdate(props) {
                         <div className={'my-3'}>
                             <textarea className={'form-control'} rows={10} defaultValue={content} onChange={onChangeContent}></textarea>
                         </div>
-                        <div className={'d-flex justify-content-around'}>
-                            <button type={'button'} className={'btn'} onClick={onClickList}>목록</button>
-                            <button type={'button'} className={'btn'} onClick={Update}>작성</button>
+                        <div className={'d-flex'}>
+                            <button type={'button'} className={'btn btn-outline-dark me-auto'} onClick={onClickList}>목록</button>
+                            <button type={'button'} className={'btn btn-outline-dark'} onClick={Update}>작성</button>
                         </div>
                     </div>
                 </div>
