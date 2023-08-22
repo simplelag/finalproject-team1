@@ -46,6 +46,7 @@ public class MemberController {
         return userService.checkId(userId);
     }
 
+//    이름이 존재하는지 확인
     @RequestMapping(value = "/sign/nameCheck", method = RequestMethod.GET)
     public boolean showCheckName(@RequestParam("name") String name) throws Exception{
         return userService.checkName(name);
@@ -62,7 +63,9 @@ public class MemberController {
             @RequestParam("phone") String phone,
             @RequestParam("address") String address
     ) throws Exception{
-        MemberEntity memberEntity = new MemberEntity(userId, password, name, email, phone, address);
+        MemberEntity memberEntity = null;
+        memberEntity = new MemberEntity(userId, password, name, email, phone, address);
+
         userService.saveMember(memberEntity);
     }
 
@@ -85,7 +88,8 @@ public class MemberController {
         }
         return correctId;
     }
-
+    
+//    마이페이지 - 판매 내역
     @RequestMapping(value = "/login/myLogin/mySaleList", method = RequestMethod.GET)
     public Object showMySaleList(@RequestParam("userId") String userId) throws Exception{
         return bookInfoService.mySaleList(userId);

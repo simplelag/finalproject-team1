@@ -7,4 +7,7 @@ import java.util.List;
 
 public interface BasketRepository  extends JpaRepository<BasketEntity, Integer> {
     List<BasketEntity> findByBasketMemberId(String basketMemberId);
+
+//   장바구니에서
+    List<BasketEntity> findAllByBasketPkIn(List<Integer> list) throws Exception;
 }

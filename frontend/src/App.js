@@ -21,10 +21,13 @@ import ShoppingBasket from "./pages/seller/ShoppingBasket";
 import ViewOldBookList from "./pages/searchResult/ViewOldBookList";
 
 import BoardUpdate from "./pages/board/BoardUpdate";
+import Mail from "./pages/common/Mail";
 
 
 
 function App() {
+
+
     return (
         <BrowserRouter>
             <Routes>
@@ -53,6 +56,7 @@ function App() {
                     <Route index element={<Admin id={"admin"}/>} />
                     <Route path={"question/:boardPk"} element={<QuestionDetail />} />
                 </Route>
+                <Route path={"/mail/:purchasePk"} element={<Mail />} />
             </Routes>
         </BrowserRouter>
     );

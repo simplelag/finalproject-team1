@@ -62,4 +62,9 @@ public class MailController {
         return mailRepository.findByMailPurchasePk(purchasePk);
     }
 
+    @RequestMapping(value = "/api/mail/getUnreadCount", method = RequestMethod.GET)
+    public int getUnreadCount(@RequestParam int purchasePk, @RequestParam String id) throws Exception {
+        return mailRepository.countByMailPurchasePkAndMailFromIdNotAndMailUnreadNot(purchasePk,id,0);
+    }
+
 }

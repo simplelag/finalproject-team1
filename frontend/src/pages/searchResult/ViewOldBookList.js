@@ -64,6 +64,24 @@ function ViewOldBookList(props) {
         }
     }
 
+    const handleInPurchase = (index) => {
+        axios.get('http://localhost:8080/purchase/insert',{
+            params:{
+                ISBN13: oldBookInfo[index].saleBookId,
+                BookName: oldBookInfo[index].saleBookTitle,
+                BuyerId: sessionStorage.getItem("id"),
+                BuyerName: sessionStorage.getItem("name"),
+                SellerId: oldBookInfo[index].saleSellerId,
+                SellerName: oldBookInfo[index].saleSellerName,
+                SellerPrice: oldBookInfo[index].saleBookPrice
+            }
+        })
+            .then(res => {
+                console.log(`통신 성공`)
+                navi('/purchase')
+            })
+    }
+
 
     return (
         <div className={'container'}>
@@ -89,7 +107,7 @@ function ViewOldBookList(props) {
                     </div>
                         <div className={"col-sm text-end my-3"}>
                             <button type={'button'} className={'btn btn-dark'} onClick={() => save(index)}> 장바구니에 넣기 </button>
-                            <button type={'button'} className={'btn btn-dark'}> 즉시 구매하기 </button>
+                            <button type={'button'} className={'btn btn-dark'} onClick={() => handleInPurchase(index)}> 즉시 구매하기 </button>
                         </div>
                         <div className={'d-flex'}>
                             <table className={'table'}>

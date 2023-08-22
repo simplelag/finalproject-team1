@@ -54,14 +54,32 @@ function OldBookList() {
                     // 등록 중에 오류가 발생했을 때의 처리
                     console.error("등록 중 오류 발생:", error);
                 });
+        }
     }
+
+    // 구매 버튼 눌렀을때 발생하는 이벤트
+    const handleInPurchase = (index) => {
+        axios.get('http://localhost:8080/purchase/insert',{
+            params:{
+                ISBN13: oldBookInfo[index].saleBookId,
+                BookName: oldBookInfo[index].saleBookTitle,
+                BuyerId: sessionStorage.getItem("id"),
+                BuyerName: sessionStorage.getItem("name"),
+                SellerId: oldBookInfo[index].saleSellerId,
+                SellerName: oldBookInfo[index].saleSellerName,
+                SellerPrice: oldBookInfo[index].saleBookPrice
+            }
+        })
+            .then(res => {
+                console.log(`통신 성공`)
+            })
     }
 
     return (
 
         <div className={"container mt-5"}>
             {oldBookInfo.map((book,index) => (
-                <div className={"row"} key={book.salePk}>
+                <div className={"row mt-4"} key={book.salePk}>
                     <div className={"col-sm-3"}>
                         <a href="#">
                             <img src={book.saleImgSrc} alt="이미지 나오는 곳"/>
@@ -89,7 +107,7 @@ function OldBookList() {
                     </div>
                     <div className={"col-sm-2"}>
                         <a href="#"className={"btn btn-link bg-dark"} style={{fontSize:"10pt",color:"white",textDecoration:"none",width:"100pt"}} onClick={() => save(index)}>장바구니 담기</a>
-                        <a href="#"className={"btn btn-link bg-dark"} style={{fontSize:"10pt",color:"white",textDecoration:"none", width:"100pt"}}>바로 구매</a>
+                        <a href="/purchase" className={"btn btn-link bg-dark"} style={{fontSize:"10pt",color:"white",textDecoration:"none", width:"100pt"}} onClick={() => handleInPurchase(index)}>바로 구매</a>
                     </div>
                 </div>
             ))}

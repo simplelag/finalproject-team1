@@ -18,6 +18,8 @@ public interface MemberRepository extends JpaRepository<MemberEntity, String> {
 
     int countByMemberIdAndMemberPassword(String userId, String password) throws Exception;
 
+    MemberEntity findByMemberId(String userId) throws Exception;
+
     List<MemberEntity> findAllByMemberId(String userId) throws Exception;
 
 //    int removeByMemberIdAndMemberPassword(String userId, String password) throws Exception;

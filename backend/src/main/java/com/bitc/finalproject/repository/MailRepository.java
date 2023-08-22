@@ -8,6 +8,6 @@ import java.util.List;
 
 public interface MailRepository extends JpaRepository<MailEntity, Integer> {
     List<MailEntity> findByMailPurchasePk(int purchasePk);
-
     List<MailEntity> findByMailPkAndMailPurchasePk(int mailPk, int mailPurchasePk);
+    int countByMailPurchasePkAndMailFromIdNotAndMailUnreadNot(int mailPurchasePk,String mailFromId, int mailUnread);
 }

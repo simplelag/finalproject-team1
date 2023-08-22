@@ -42,4 +42,9 @@ public class MemberServiceImpl implements MemberService {
     public void memberWithDraw(MemberEntity memberEntity) throws Exception {
         memberRepository.delete(memberEntity);
     }
+
+    @Override
+    public MemberEntity MemberData(String userId) throws Exception {
+        return memberRepository.findByMemberId(userId);
+    }
 }

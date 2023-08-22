@@ -2,11 +2,13 @@ package com.bitc.finalproject.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.data.annotation.CreatedDate;
 
 import java.time.LocalDateTime;
 
 @Entity
+@DynamicUpdate
 @Table(name="member")
 @Getter
 @Setter
@@ -18,7 +20,7 @@ public class MemberEntity {
     @Column(nullable = false, length = 255)
     private String memberId;
 
-    @Column(nullable = false, unique = true, length = 255)
+    @Column(nullable = false, unique = true)
     private String memberName;
 
     @Column(nullable = false, length = 200)
@@ -45,6 +47,7 @@ public class MemberEntity {
         this.memberId = memberId;
         this.memberPassword = memberPassword;
     }
+
     @Builder
     public MemberEntity(String memberId, String memberPassword, String memberName, String memberEmail, String memberPhone, String memberAddress){
         this.memberId = memberId;
