@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useMemo, useRef, useState} from "react";
 import axios from "axios";
 import Header from "../mainPages/Header";
 import Footer from "../mainPages/Footer";
@@ -8,8 +8,12 @@ import Pagenation from "../common/Pagenation";
 function BoardMain(props) {
 
     const [boardList, setBoardList] = useState([]);
+    const [notice, setNotice] = useState([]);
     const [qNum, setQNum] = useState(10);
     const [size, setSize] = useState(5);
+
+    const [noticeShow, setNoticeShow] = useState(false);
+    const [testList, setTestList] = useState([]);
 
     const navi = useNavigate();
 
@@ -24,6 +28,22 @@ function BoardMain(props) {
             });
     },[])
 
+    useEffect(() => {
+        axios.get("http://localhost:8080/board/notice", {
+            params: {
+                boardCategory: "공지/이벤트",
+            }
+        })
+            .then(res => {
+                setNotice(res.data);
+                setTestList(res.data.slice(0,2))
+            })
+            .catch(err => {
+                alert("공지글 불러오기 실패")
+            })
+    },[])
+
+
     const onClickWrite = () => {
         if (sessionStorage.getItem("id") != null) {
             navi("/board/write")
@@ -33,6 +53,18 @@ function BoardMain(props) {
             navi("/login")
         }
     }
+
+    const onClickView = () => {
+        setNoticeShow(!noticeShow)
+
+        if (noticeShow) {
+            setTestList(notice.splice(0,2))
+        }
+        else {
+            setTestList(notice)
+        }
+    }
+
 
     return (
         <div>
@@ -51,24 +83,32 @@ function BoardMain(props) {
                         </tr>
                     </thead>
                     <tbody>
+
                     {
-                        boardList.map(item => {
-                            if (item.boardCategory != "관리자문의" && item.boardCategory == "공지/이벤트") {
-                                return (
-                                    <tr key={item.boardPk} className={"table-secondary border"}>
-                                        <td className={'text-center col-sm-1'}>{item.boardPk}</td>
-                                        <td className={'text-center col-sm-1'}>{item.boardCategory}</td>
-                                        <td>
-                                            <a href={'/board/' + item.boardPk} className={'btn'}>{item.boardTitle}</a>
-                                        </td>
-                                        <td className={'text-center col-sm-1'}>{item.boardWriterName}</td>
-                                        <td className={'text-center col-sm-1'}>{item.boardVisitCount}</td>
-                                        <td className={'text-center col-sm-1'}>{item.boardLike}</td>
-                                        <td className={'text-center col-sm-2'}>{item.boardDatetime}</td>
-                                    </tr>
-                                )
-                            }
+                        testList.map(item => {
+                            return (
+                                <tr key={item.boardPk} className={"table-secondary border"}>
+                                    <td className={'text-center col-sm-1'}>{item.boardPk}</td>
+                                    <td className={'text-center col-sm-1'} style={{color: "coral"}}>{item.boardCategory}</td>
+                                    <td>
+                                        <a href={'/board/' + item.boardPk} className={'text-decoration-none text-dark'}>{item.boardTitle}</a>
+                                    </td>
+                                    <td className={'text-center col-sm-1'}>{item.boardWriterName}</td>
+                                    <td className={'text-center col-sm-1'}>{item.boardVisitCount}</td>
+                                    <td className={'text-center col-sm-1'}>{item.boardLike}</td>
+                                    <td className={'text-center col-sm-2'}>{item.boardDatetime}</td>
+                                </tr>
+                            )
                         })
+                    }
+                    {
+                        notice.length > 2 &&
+                        <tr className={"text-center"} onClick={onClickView}>
+                            <tr>{noticeShow ? "접기" : "펼치기"}</tr>
+                        </tr>
+                    }
+                    {
+                        console.log(notice.length)
                     }
                     {
                         boardList.map(item => {
@@ -78,7 +118,7 @@ function BoardMain(props) {
                                         <td className={'text-center col-sm-1'}>{item.boardPk}</td>
                                         <td className={'text-center col-sm-1'}>{item.boardCategory}</td>
                                         <td>
-                                            <a href={'/board/' + item.boardPk} className={'btn'}>{item.boardTitle}</a>
+                                            <a href={'/board/' + item.boardPk} className={'text-decoration-none text-dark'}>{item.boardTitle}</a>
                                         </td>
                                         <td className={'text-center col-sm-1'}>{item.boardWriterName}</td>
                                         <td className={'text-center col-sm-1'}>{item.boardVisitCount}</td>
@@ -92,7 +132,7 @@ function BoardMain(props) {
                     </tbody>
                 </table>
                 <div className={'my-3 d-flex justify-content-end'}>
-                    <button type={"button"} className={'btn'} onClick={onClickWrite}>글작성</button>
+                    <button type={"button"} className={'btn btn-outline-dark'} onClick={onClickWrite}>글작성</button>
                 </div>
             </div>
             <Footer />

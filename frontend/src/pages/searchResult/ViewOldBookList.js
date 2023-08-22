@@ -92,7 +92,9 @@ function ViewOldBookList(props) {
                             </div>
                             <div className={'col-sm-6 my-3'}>
                                 <div>
-                                    <a href={'#'} className={"text-decoration-none"} style={{color:"black"}} onClick={() => gotoDetail(info.saleBookId)}>{info.saleBookTitle}</a>
+                                    <a href={'#'} className={"text-decoration-none"} style={{color:"black", fontSize: 18}} onClick={() => gotoDetail(info.saleBookId)}>
+                                        <strong>{info.saleBookTitle}</strong>
+                                    </a>
                                 </div>
                                 <p className={""}>품질 : {info.bookGrade}등급</p>
                                 <div>

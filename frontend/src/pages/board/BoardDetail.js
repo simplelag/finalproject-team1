@@ -7,8 +7,6 @@ import BoardComment from "./BoardComment";
 
 function BoardDetail(props) {
 
-    console.log(props)
-
     const navi = useNavigate();
 
     const board = useParams();
@@ -20,7 +18,7 @@ function BoardDetail(props) {
     const [content, setContent] = useState('');
     const [category, setCategory] = useState('');
     const [visit, setVisit] = useState('');
-    const [like, setLike] = useState('');
+    const [like, setLike] = useState(0);
     const [commentCount, setCommentCount] = useState('')
 
     const [visible, setVisible] = useState(false);
@@ -36,6 +34,7 @@ function BoardDetail(props) {
                 setCategory(res.data.boardCategory);
                 setVisit(res.data.boardVisitCount);
                 setLike(res.data.boardLike);
+                console.log(res.data)
 
                 if (sessionStorage.getItem("id") == res.data.boardWriterId) {
                     setVisible(true);
@@ -44,7 +43,7 @@ function BoardDetail(props) {
             .catch(err => {
                 alert("BoardDetail Connect Err")
             })
-    }, [])
+    },[])
 
     // 삭제
     const onClickDelete = () => {

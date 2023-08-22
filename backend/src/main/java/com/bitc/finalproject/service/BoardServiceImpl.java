@@ -20,6 +20,12 @@ public class BoardServiceImpl implements BoardService{
     }
 
     @Override
+    public List<BoardEntity> selectBoardNoticeList(String boardCategory) throws Exception {
+        return boardRepository.findAllByBoardCategoryOrderByBoardPkDesc(boardCategory);
+    }
+
+
+    @Override
     public BoardEntity selectBoardDetail(int boardPk) throws Exception {
         Optional<BoardEntity> optional = boardRepository.findById(boardPk);
 
@@ -28,7 +34,7 @@ public class BoardServiceImpl implements BoardService{
             boardEntity.setBoardVisitCount(boardEntity.getBoardVisitCount() + 1);
             boardRepository.save(boardEntity);
 
-            return null;
+            return boardEntity;
         }
         else {
             throw new NullPointerException();
