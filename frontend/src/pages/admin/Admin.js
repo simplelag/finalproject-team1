@@ -16,10 +16,7 @@ function Admin(props) {
         window.location.href = "/";
     }
 
-
-    const [memberView, setMemberView] = useState(true);
-    const [questionView, setQuestionView] = useState(false);
-    const [itemView, setItemView] = useState(false);
+    const [view, setView] = useState(props.view || "questionView");
 
 
     let div = <>
@@ -37,25 +34,19 @@ function Admin(props) {
                         </div>
 
                         <div className={"d-flex flex-column"}>
-                            <button type={"button"} className={"btn"}
+                            <button type={"button"}  className={`btn ${view=="questionView"? "active":""}`}
                                     onClick={() => {
-                                        setMemberView(true);
-                                        setQuestionView(false);
-                                        setItemView(false)
-                                    }}>회원관리
-                            </button>
-                            <button type={"button"} className={"btn"}
-                                    onClick={() => {
-                                        setMemberView(false);
-                                        setQuestionView(true);
-                                        setItemView(false)
+                                        setView("questionView");
                                     }}>문의관리
                             </button>
-                            <button type={"button"} className={"btn"}
+                            <button type={"button"} className={`btn ${view=="memberView"? "active":""}`}
                                     onClick={() => {
-                                        setMemberView(false);
-                                        setQuestionView(false);
-                                        setItemView(true)
+                                        setView("memberView");
+                                    }}>회원관리
+                            </button>
+                            <button type={"button"}  className={`btn ${view=="itemView"? "active":""}`}
+                                    onClick={() => {
+                                        setView("itemView");
                                     }}>상품관리
                             </button>
                         </div>
@@ -63,9 +54,11 @@ function Admin(props) {
                 </div>
 
                 <div className={"listSection"}>
-                    {memberView && <MemberView/>}
-                    {questionView && <QuestionView/>}
-                    {itemView && <ItemView/>}
+                    {
+                        view=="itemView"?
+                            <ItemView /> : view=="memberView"?
+                                <MemberView /> : view=="questionView"? <QuestionView />:<QuestionView />
+                    }
                 </div>
 
             </div>

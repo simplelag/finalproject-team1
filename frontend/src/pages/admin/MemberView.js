@@ -28,18 +28,6 @@ function MemberView(props) {
         const id = value[0];
         const auth = value[1];
 
-
-        // 새로운 userList 배열 생성
-        const updatedUserList = userList.map(item => {
-            if (item.memberId === id) {
-                return { ...item, memberAuthority: auth };
-            }
-            return item;
-        });
-
-        // 새로운 배열로 상태 업데이트
-        setUserList(updatedUserList);
-
         axios.put(
             "/api/admin/editAuth",
             null,
@@ -50,6 +38,16 @@ function MemberView(props) {
                 }
             })
             .then(res => {
+                // 새로운 userList 배열 생성
+                const updatedUserList = userList.map(item => {
+                    if (item.memberId === id) {
+                        return { ...item, memberAuthority: auth };
+                    }
+                    return item;
+                });
+
+                // 새로운 배열로 상태 업데이트
+                setUserList(updatedUserList);
             })
             .catch()
     }
@@ -99,7 +97,7 @@ function MemberView(props) {
                     <th>가입일</th>
                     <th>등급</th>
                     <th>아이디</th>
-                    <th>별명</th>
+                    <th>닉네임</th>
                     <th>이메일</th>
                     <th></th>
                 </tr>

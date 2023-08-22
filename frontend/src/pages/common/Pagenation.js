@@ -172,6 +172,7 @@ function Pagenation(props) {
             case "내용": setTitle("");setName("");setContent(text);break;
             case "제목+내용": setTitle(text);setName("");setContent(text);break;
             case "작성자": setTitle("");setName(text);setContent("");break;
+            case "아이디/닉네임": setTitle("");setName(text);setContent("");break;
         }
     }
 
