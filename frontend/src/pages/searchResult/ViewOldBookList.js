@@ -26,7 +26,6 @@ function ViewOldBookList(props) {
         axios.get('http://localhost:8080/searchOldBook', {
         })
             .then(res => {
-                console.log(res.data)
                 setOldBookInfo(res.data)
             })
     }, [])
@@ -55,11 +54,9 @@ function ViewOldBookList(props) {
             })
                 .then(response => {
                     alert("등록 성공!")
-                    console.log("등록이 완료되었습니다.", response)
                 })
                 .catch(error => {
                     // 등록 중에 오류가 발생했을 때의 처리
-                    console.error("등록 중 오류 발생:", error);
                 });
         }
     }
@@ -84,49 +81,56 @@ function ViewOldBookList(props) {
 
 
     return (
-        <div className={'container'}>
+        <main className={'container'}>
             <Header/>
-
-            {oldBookInfo.map((info,index) =>(
-                <div className={'row mt-5'} key={info.salePk}>
-                    <div className={'col-sm-auto'} style={style.box}>
-                        <img src={info.saleImgSrc} style={style.img} />
-                    </div>
-                    <div className={'col-sm-5 my-3'}>
-                        <div>
-                            <a href={'#'} className={"text-decoration-none ms-3"} style={{color:"black"}} onClick={() => gotoDetail(info.saleBookId)} >책 제목:{info.saleBookTitle}</a>
-                        </div>
-                        <div>
-                            <span>
-                                <p className={" ms-3 mt-3"} style={{color:"black"}}>판매자 : {info.saleSellerName}</p>
-                                <p className={"ms-3"} style={{color:"black"}}>판매자 ID : {info.saleSellerId}</p>
-                                <p className={"ms-3"}>판매자 설명 : {info.saleDiscription}</p>
-                                <p className={"ms-3"}>책 품질 : {info.bookGrade}등급</p>
-                            </span>
-                        </div>
-                    </div>
-                        <div className={"col-sm text-end my-3"}>
-                            <button type={'button'} className={'btn btn-dark'} onClick={() => save(index)}> 장바구니에 넣기 </button>
-                            <button type={'button'} className={'btn btn-dark'} onClick={() => handleInPurchase(index)}> 즉시 구매하기 </button>
-                        </div>
-                        <div className={'d-flex'}>
-                            <table className={'table'}>
-                                <thead>
-                                    <tr className={'text-center'}>
-                                        <th>판매 가격 : </th>
-                                        <th>판매 수량 : </th>
+            {
+                oldBookInfo.map((info,index) => {
+                    return (
+                        <div className={'row mt-5'} key={info.salePk}>
+                            <div className={'col-sm-2'}>
+                                <img src={info.saleImgSrc} style={style.img} />
+                            </div>
+                            <div className={'col-sm-6 my-3'}>
+                                <div>
+                                    <a href={'#'} className={"text-decoration-none"} style={{color:"black", fontSize: 18}} onClick={() => gotoDetail(info.saleBookId)}>
+                                        <strong>{info.saleBookTitle}</strong>
+                                    </a>
+                                </div>
+                                <p className={""}>품질 : {info.bookGrade}등급</p>
+                                <div>
+                                    <p className={""}>판매자 설명 : {info.saleDiscription}</p>
+                                </div>
+                            </div>
+                            <div className={"col-sm-2"}>
+                                <p><strong>판매자정보</strong></p>
+                                <p className={"mt-3"} style={{color:"black"}}>판매자 : {info.saleSellerName}</p>
+                                <p className={""} style={{color:"black"}}>판매자ID : {info.saleSellerId}</p>
+                            </div>
+                            <div className={"col-sm-2 text-center my-3"}>
+                                <button type={'button'} className={'btn btn-dark'} onClick={() => save(index)}> 장바구니에 넣기 </button>
+                                <br/>
+                                <button type={'button'} className={'btn btn-dark mt-2'} onClick={() => handleInPurchase(index)}> 즉시 구매하기 </button>
+                            </div>
+                            <div className={'d-flex mt-2'}>
+                                <table className={'table'}>
+                                    <thead>
+                                    <tr className={'text-center table-secondary'}>
+                                        <th>판매 가격</th>
+                                        <th>판매 수량</th>
                                     </tr>
-                                </thead>
-                                <tbody>
-                                <tr className={'text-center'}>
-                                    <td>{info.saleBookPrice}원</td>
-                                    <td>{info.saleBookPieces}개</td>
-                                </tr>
-                                </tbody>
-                            </table>
-                    </div>
-                </div>
-                ))}
+                                    </thead>
+                                    <tbody>
+                                    <tr className={'text-center'}>
+                                        <td>{info.saleBookPrice}원</td>
+                                        <td>{info.saleBookPieces}개</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    )
+                })
+            }
             {/*<Pagenation*/}
             {/*    setList={setOldBookInfo}*/}
             {/*    url= {oldBookInfo}*/}
@@ -138,7 +142,7 @@ function ViewOldBookList(props) {
             {/*/>*/}
             <Footer/>
 
-        </div>
+        </main>
     )
 }
 

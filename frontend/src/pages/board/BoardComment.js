@@ -1,10 +1,11 @@
 import React, {useEffect, useState} from "react";
 import axios from "axios";
-import {useNavigate, useParams} from "react-router-dom";
+import {useLocation, useNavigate, useParams} from "react-router-dom";
 
 function BoardComment(props) {
 
     const [commentList, setCommentList] = useState([]);
+    const location = useLocation();
 
     const [boardPk] = useState(props.boardPk);
     const [id, setId] =useState(sessionStorage.getItem("id"));
@@ -12,6 +13,7 @@ function BoardComment(props) {
     const [commentContent, setCommentContent] = useState('');
     const [commentUpdateContent, setCommentUpdateContent] = useState('');
     const [test, setTest] = useState('');
+
 
     const [formVisible, setFormVisible] = useState(false);
     const [commentUpdateVisible, setCommentUpdateVisible] = useState(false);
@@ -21,6 +23,7 @@ function BoardComment(props) {
         axios.get(`http://localhost:8080/board/comment/${props.boardPk}`)
             .then(res => {
                 setCommentList(res.data)
+                props.setCommentCount(res.data.length)
 
                 if (sessionStorage.getItem("id") != null) {
                     setFormVisible(true);
@@ -29,7 +32,7 @@ function BoardComment(props) {
             .catch(err => {
                 alert("댓글 불러오기 실패")
             })
-    },[])
+    },[props])
 
     // 댓글내용 작성
     const onChangeCommentContent = (e) => {
@@ -46,8 +49,8 @@ function BoardComment(props) {
                 commentWriterId: id,
             }
         })
-            .then(() => {
-
+            .then(res => {
+                props.setCommentCount(res.data.length)
             })
             .catch(() => {
                 alert("댓글 등록 실패")
@@ -88,7 +91,7 @@ function BoardComment(props) {
             }
         })
             .then(res => {
-                /*삭제 후 페이지 리로드 필요*/
+                props.setCommentCount(res.data.length)
             })
             .catch(err => {
                 alert("댓글삭제 실패")

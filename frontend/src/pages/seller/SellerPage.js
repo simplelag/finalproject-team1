@@ -50,7 +50,6 @@ function SellerPage() {
        })
            .then(res => {
                setBookList(res.data.item);
-               console.log(res.data.item)
                setbookISBN(res.data.item[0].isbn13)
                setbookCover(res.data.item[0].cover)
                setbookTitle(res.data.item[0].title)
@@ -78,13 +77,11 @@ function SellerPage() {
         })
             .then(response => {
                 // 성공적으로 등록되었을 때의 처리
-                console.log("등록이 완료되었습니다.", response);
                 alert("판매등록 완료!")
                 navi("/");
             })
             .catch(error => {
                 // 등록 중에 오류가 발생했을 때의 처리
-                console.error("등록 중 오류 발생:", error);
             });
     }
 

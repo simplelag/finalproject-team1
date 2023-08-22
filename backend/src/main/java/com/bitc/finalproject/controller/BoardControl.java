@@ -32,6 +32,19 @@ public class BoardControl {
         return boardEntityList;
     }
 
+    @RequestMapping(value = "/board/notice", method = RequestMethod.GET)
+    public Object boardNotice(@RequestParam("boardCategory") String boardCategory) throws Exception {
+        List<BoardEntity> boardEntityList = boardService.selectBoardNoticeList(boardCategory);
+
+        return boardEntityList;
+    }
+
+//    @RequestMapping(value = "/board/count", method = RequestMethod.GET)
+//    public int boardCount() throws Exception {
+//        return
+//    }
+
+
     @RequestMapping(value = "/board/{boardPk}", method = RequestMethod.GET)
     public Object boardDetail(@PathVariable("boardPk") int boardPk) throws Exception {
         BoardEntity boardEntity = boardService.selectBoardDetail(boardPk);

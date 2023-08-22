@@ -9,6 +9,8 @@ public interface BoardService {
 
     List<BoardEntity> selectBoardList() throws Exception;
 
+    List<BoardEntity> selectBoardNoticeList(String boardCategory) throws Exception;
+
     BoardEntity selectBoardDetail(int boardPk) throws Exception;
 
     void writeBoard(BoardEntity boardEntity) throws Exception;

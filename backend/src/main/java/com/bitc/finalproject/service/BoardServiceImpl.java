@@ -20,6 +20,12 @@ public class BoardServiceImpl implements BoardService{
     }
 
     @Override
+    public List<BoardEntity> selectBoardNoticeList(String boardCategory) throws Exception {
+        return boardRepository.findAllByBoardCategoryOrderByBoardPkDesc(boardCategory);
+    }
+
+
+    @Override
     public BoardEntity selectBoardDetail(int boardPk) throws Exception {
         Optional<BoardEntity> optional = boardRepository.findById(boardPk);
 

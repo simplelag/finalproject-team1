@@ -18,7 +18,8 @@ function BoardDetail(props) {
     const [content, setContent] = useState('');
     const [category, setCategory] = useState('');
     const [visit, setVisit] = useState('');
-    const [like, setLike] = useState('');
+    const [like, setLike] = useState(0);
+    const [commentCount, setCommentCount] = useState('')
 
     const [visible, setVisible] = useState(false);
 
@@ -33,6 +34,7 @@ function BoardDetail(props) {
                 setCategory(res.data.boardCategory);
                 setVisit(res.data.boardVisitCount);
                 setLike(res.data.boardLike);
+                console.log(res.data)
 
                 if (sessionStorage.getItem("id") == res.data.boardWriterId) {
                     setVisible(true);
@@ -41,7 +43,7 @@ function BoardDetail(props) {
             .catch(err => {
                 alert("BoardDetail Connect Err")
             })
-    }, [])
+    },[])
 
     // 삭제
     const onClickDelete = () => {
@@ -76,7 +78,7 @@ function BoardDetail(props) {
                     setLike(res.data.boardLike)
                 })
                 .catch(err => {
-                    console.log(err)
+
                 })
         }
     }
@@ -95,7 +97,7 @@ function BoardDetail(props) {
                                 </tr>
                                 <tr>
                                     <td className={''}>{name}</td>
-                                    <td className={'text-end col-1'}>댓글수: </td>
+                                    <td className={'text-end col-1'}>댓글수: {commentCount}</td>
                                     <td className={'text-end col-1'}>추천수: {like}</td>
                                     <td className={'text-end col-1'}>조회수: {visit}</td>
                                 </tr>
@@ -118,7 +120,7 @@ function BoardDetail(props) {
                         </div>
                     </div>
                 </div>
-            <BoardComment boardPk={boardPk} />
+            <BoardComment boardPk={boardPk} setCommentCount={setCommentCount} />
             <Footer />
         </div>
     )
