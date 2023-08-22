@@ -8,8 +8,8 @@ import com.bitc.finalproject.entity.PurchaseEntity;
 import java.util.List;
 
 public interface PurchaseService {
-    void insertPurchaseList(PurchaseEntity purchaseEntity) throws Exception;
-
+//    void insertPurchaseList(PurchaseEntity purchaseEntity) throws Exception;
+    PurchaseEntity insertPurchaseList(PurchaseEntity purchaseEntity) throws Exception;
 //    찾아서 주문번호를 가져올려고 만든것
     List<PurchaseEntity> findPk(String isbn13, String buyerId, String sellerId, int sellerPrice) throws Exception;
 
@@ -19,7 +19,7 @@ public interface PurchaseService {
 //    구매 페이지에서 구매할 목록 보여주기
     List<PurchaseEntity> showIndivList(String userId, int state) throws Exception;
 
-    void productListDelete(List<PurchaseEntity> purchaseEntity) throws Exception;
+    void productListDelete(PurchaseEntity purchaseEntity) throws Exception;
 
 //    구매하기
     void savePurchase(PurchaseEntity purchaseEntity) throws Exception;
@@ -29,4 +29,10 @@ public interface PurchaseService {
 
 //    장바구니에서 체크된 것을 sale 테이블에서 가져오기
     List<BookEntity> basketListSale(List<Integer> cheekListSalePk) throws Exception;
+
+//    마이페이지에서 판매 내역 가져오기
+    List<PurchaseEntity> myPurchaseList(String userId) throws Exception;
+
+//    마이페이지의 구매내역에서 구매 취소
+    void myPurchaseCancel(PurchaseEntity purchaseEntity) throws Exception;
 }

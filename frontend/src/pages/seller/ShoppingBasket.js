@@ -72,7 +72,8 @@ function ShoppingBasket() {
         }
       })
           .then(res => {
-            // navi('/purchase');
+            console.log("통신 성공", res)
+            navi('/purchase');
           })
           .catch(err => {
 
