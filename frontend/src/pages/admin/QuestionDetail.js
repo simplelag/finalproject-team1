@@ -9,17 +9,17 @@ import BoardComment from "../board/BoardComment";
 
 function QuestionDetail(props) {
 
+    const navi = useNavigate();
 
     const board = useParams();
-
     const [boardPk] = useState(board.boardPk);
     const [title, setTitle] = useState('');
-    const [name, setName] = useState('testUserName')
-    const [id, setId] = useState('testUserId')
+    const [name, setName] = useState(sessionStorage.getItem("name"))
+    const [id, setId] = useState(sessionStorage.getItem("id"))
+    const [boardId, setBoardId] = useState('')
     const [content, setContent] = useState('');
     const [category, setCategory] = useState('');
-    const [visit, setVisit] = useState('');
-    const navi = useNavigate();
+    const [datetime, setDatetime] = useState("");
 
 
     // 게시글 정보 받아오는 부분
@@ -28,71 +28,57 @@ function QuestionDetail(props) {
             .then(res => {
                 setTitle(res.data.boardTitle);
                 setName(res.data.boardWriterName);
+                setBoardId(res.data.boardWriterId)
                 setContent(res.data.boardContent);
                 setCategory(res.data.boardCategory);
-                setVisit(res.data.boardVisitCount);
+                setDatetime(res.data.boardDatetime)
             })
             .catch(err => {
                 alert("BoardDetail Connect Err")
             })
     }, [])
 
-    const onChangeContent = (e) => {
-        setContent(e.target.value)
-    }
-    const onChangeTitle = (e) => {
-        setTitle(e.target.value)
-    }
-
     // 삭제
     const onClickDelete = () => {
         axios.delete(`http://localhost:8080/board/${boardPk}`, {
             params: {
-                boardWriterId: id,
+                boardWriterId: boardId,
+                nowId: id,
+                authority: sessionStorage.getItem("grade")
             }
         })
             .then(res => {
-                navi('/main/board')
+                navi('/board')
             })
     }
 
-    // 수정
-    const Update = () => {
-        axios.put(`http://localhost:8080/board/${boardPk}`, null, {
-            boardPk: boardPk,
-        })
-            .then(res => {
-                navi('/main/board')
-            })
+    const onClickUpdate = () => {
+        navi("/board/update", {state: {boardPk: boardPk}});
     }
 
     return (
         <div>
             <Header />
-            <div className={'container my-5'}>
+            <div className={'container mt-5'}>
                 <div className={'row'}>
                     <div className={'col-sm-10 mx-auto'}>
-                        <table className={'table'}>
-                            <tbody>
-                            <tr>
-                                <td className={'col-sm-1'}>{category}</td>
-                                <td colSpan={2} className={''}>{title}</td>
-                            </tr>
-                            <tr>
-                                <td>{name}</td>
-                                <td className={'text-end'}>댓글: </td>
-                                <td className={'text-end'}>조회수: {visit}</td>
-                            </tr>
-                            </tbody>
-                        </table>
-                        <textarea rows={10} className={'form-control'} value={content} onChange={onChangeContent}></textarea>
-                        <div className={'d-flex justify-content-center my-3'}>
-                            <button type={'button'} className={'btn'}>추천</button>
+                        <div>
+                            <p>{category} {boardPk}</p>
+                            <p>제목: {title}</p>
+                            <p>닉네임/아이디: {name} / {boardId}</p>
+                            <p>작성시간: {datetime}</p>
                         </div>
-                        <a href={'/main/board/'} className={'btn'}>목록</a>
-                        <button type={"button"} className={'btn'}>수정</button>
-                        <button type={"button"} className={'btn'} onClick={onClickDelete}>삭제</button>
-                        <a href={'/main/board/write'} className={'btn'}>글작성</a>
+                        <hr/>
+                        <div className={"mb-5"}>
+                            <p>
+                                {content}
+                            </p>
+                            <img src={`/questions/image/${boardPk}`} alt=""/>
+                        </div>
+                        <div className={"d-flex justify-content-end"}>
+                            <a href={sessionStorage.getItem("grade")=="admin"? "/admin": "/login/myLogin"} className={'btn btn-outline-dark'}>목록</a>
+                        </div>
+                        <hr/>
                     </div>
                 </div>
             </div>

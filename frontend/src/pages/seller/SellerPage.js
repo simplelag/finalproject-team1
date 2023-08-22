@@ -40,6 +40,7 @@ function SellerPage() {
         setbookPieces(e.target.value);
     }
 
+<<<<<<< HEAD
     useEffect(() => {
         axios.get('http://localhost:8080/searchIsbn', {
             params: {
@@ -54,6 +55,21 @@ function SellerPage() {
                 setbookTitle(res.data.item[0].title)
             })
     }, []);
+=======
+   useEffect(() => {
+       axios.get('http://localhost:8080/searchIsbn', {
+           params: {
+               ISBN13: location.state.ISBN13
+           }
+       })
+           .then(res => {
+               setBookList(res.data.item);
+               setbookISBN(res.data.item[0].isbn13)
+               setbookCover(res.data.item[0].cover)
+               setbookTitle(res.data.item[0].title)
+           })
+       },[]);
+>>>>>>> origin/main
 
     const save = () => {
         const requestData = {
@@ -76,13 +92,11 @@ function SellerPage() {
         })
             .then(response => {
                 // 성공적으로 등록되었을 때의 처리
-                console.log("등록이 완료되었습니다.", response);
                 alert("판매등록 완료!")
                 navi("/");
             })
             .catch(error => {
                 // 등록 중에 오류가 발생했을 때의 처리
-                console.error("등록 중 오류 발생:", error);
             });
     }
 

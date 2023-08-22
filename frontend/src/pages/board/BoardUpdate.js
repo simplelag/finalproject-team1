@@ -1,20 +1,22 @@
 import React, {useEffect, useState} from "react";
 import axios from "axios";
-import {useNavigate, useParams} from "react-router-dom";
+import {useLocation, useNavigate, useParams} from "react-router-dom";
 import Header from "../mainPages/Header";
 import Footer from "../mainPages/Footer";
 
 function BoardUpdate(props) {
 
-    const board = useParams();
-    const [boardPk] = useState(board.boardPk);
+    const navi = useNavigate();
+    const location = useLocation();
+
+    const [boardPk] = useState(location.state.boardPk);
     const [title, setTitle] = useState('');
     const [name, setName] = useState(sessionStorage.getItem("name"))
     const [id, setId] = useState(sessionStorage.getItem("id"))
     const [content, setContent] = useState('');
     const [category, setCategory] = useState('');
+    const [visible, setVisible] = useState(false);
 
-    const navi = useNavigate();
 
     const onClickCategory = (e) => {
         setCategory(e.target.value);
@@ -40,6 +42,10 @@ function BoardUpdate(props) {
                 setName(res.data.boardWriterName);
                 setContent(res.data.boardContent);
                 setCategory(res.data.boardCategory);
+
+                if (sessionStorage.getItem("grade") == "admin") {
+                    setVisible(!visible);
+                }
             })
             .catch(err => {
                 alert("BoardUpdate Loading Err")
@@ -48,11 +54,21 @@ function BoardUpdate(props) {
 
     // 수정
     const Update = () => {
-        axios.put(`http://localhost:8080/board/${boardPk}`, null, {
-            boardPk: boardPk,
+        axios.put(`http://localhost:8080/board/update/${boardPk}`, null, {
+            params: {
+                boardPk: boardPk,
+                boardCategory: category,
+                boardTitle: title,
+                boardWriterId: id ,
+                boardWriterName: name,
+                boardContent: content,
+            }
         })
             .then(res => {
                 navi('/board')
+            })
+            .catch(err => {
+                alert("글수정 오류")
             })
     }
 
@@ -63,21 +79,23 @@ function BoardUpdate(props) {
                 <div className={'row'}>
                     <div className={'col-sm-10 mx-auto'}>
                         <div>
-                            <button type={'button'} className={'btn'} value={'일반'} onClick={onClickCategory}>일반</button>
-                            <button type={'button'} className={'btn'} value={'독후감'} onClick={onClickCategory}>독후감</button>
-                            <button type={'button'} className={'btn'} value={'공지/이벤트'} onClick={onClickCategory}>공지/이벤트</button>
+                            <button type={'button'} className={'btn btn-outline-dark'} value={'일반'} onClick={onClickCategory}>일반</button>
+                            <button type={'button'} className={'btn btn-outline-dark ms-2'} value={'독후감'} onClick={onClickCategory}>독후감</button>
+                            {
+                                visible && <button type={'button'} className={'btn btn-outline-dark ms-2'} value={'공지/이벤트'} onClick={onClickCategory}>공지/이벤트</button>
+                            }
                         </div>
                         <div className={'my-3'}>
-                            <input type={'text'} className={'form-control'} value={title} onChange={onChangeTitle} placeholder={'글 제목을 입력하세요'}/>
+                            <input type={'text'} className={'form-control'} defaultValue={title} onChange={onChangeTitle} />
                             <input type={'hidden'} className={'form-control'} value={name}/>
                             <input type={'hidden'} className={'form-control'} value={id}/>
                         </div>
                         <div className={'my-3'}>
-                            <textarea className={'form-control'} rows={10} value={content} onChange={onChangeContent} placeholder={'글 내용을 입력하세요'}></textarea>
+                            <textarea className={'form-control'} rows={10} defaultValue={content} onChange={onChangeContent}></textarea>
                         </div>
                         <div className={'d-flex'}>
-                            <button type={'button'} className={'btn'} onClick={onClickList}>목록</button>
-                            <button type={'button'} className={'btn'} onClick={Update}>글등록</button>
+                            <button type={'button'} className={'btn btn-outline-dark me-auto'} onClick={onClickList}>목록</button>
+                            <button type={'button'} className={'btn btn-outline-dark'} onClick={Update}>작성</button>
                         </div>
                     </div>
                 </div>

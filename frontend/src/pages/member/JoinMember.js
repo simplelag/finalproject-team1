@@ -200,7 +200,6 @@ function JoinMember(props) {
     }
 
     // 우편번호 및 주소 검색
-
     // scriptUrl : Daum 우편번호 서비스의 스크립트 주소입니다. default값이 정해져있음
     const scriptUrl = "https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js";
     // 우편 번호 찾기 클릭 시 작동되는 것

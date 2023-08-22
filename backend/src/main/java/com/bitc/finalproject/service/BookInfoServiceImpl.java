@@ -48,7 +48,7 @@ public class BookInfoServiceImpl implements BookInfoService{
 
     @Override
     public List<BookEntity> mySaleList(String userId) throws Exception {
-        return bookInfoRepository.findBySaleSellerId(userId);
+        return bookInfoRepository.findBySaleSellerIdOrderBySalePkDesc(userId);
     }
 
     @Override

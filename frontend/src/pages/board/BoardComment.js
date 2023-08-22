@@ -1,29 +1,38 @@
 import React, {useEffect, useState} from "react";
 import axios from "axios";
-import {useNavigate, useParams} from "react-router-dom";
+import {useLocation, useNavigate, useParams} from "react-router-dom";
 
 function BoardComment(props) {
 
     const [commentList, setCommentList] = useState([]);
+    const location = useLocation();
 
     const [boardPk] = useState(props.boardPk);
-    const [commentId, setCommentId] = useState(sessionStorage.getItem("id"));
+    const [id, setId] =useState(sessionStorage.getItem("id"));
     const [commentName, setCommentName] = useState(sessionStorage.getItem("name"));
     const [commentContent, setCommentContent] = useState('');
-    const [commentNum, setCommentNum] = useState('');
+    const [commentUpdateContent, setCommentUpdateContent] = useState('');
+    const [test, setTest] = useState('');
 
-    const navi = useNavigate();
+
+    const [formVisible, setFormVisible] = useState(false);
+    const [commentUpdateVisible, setCommentUpdateVisible] = useState(false);
 
     // 댓글 리스트 불러오기
     useEffect(() => {
         axios.get(`http://localhost:8080/board/comment/${props.boardPk}`)
             .then(res => {
                 setCommentList(res.data)
+                props.setCommentCount(res.data.length)
+
+                if (sessionStorage.getItem("id") != null) {
+                    setFormVisible(true);
+                }
             })
             .catch(err => {
                 alert("댓글 불러오기 실패")
             })
-    },[])
+    },[props])
 
     // 댓글내용 작성
     const onChangeCommentContent = (e) => {
@@ -37,10 +46,11 @@ function BoardComment(props) {
                 commentBoardPk: boardPk,
                 commentContent: commentContent,
                 commentWriterName: commentName,
-                commentWriterId: commentId,
+                commentWriterId: id,
             }
         })
-            .then(() => {
+            .then(res => {
+                props.setCommentCount(res.data.length)
 
             })
             .catch(() => {
@@ -49,13 +59,22 @@ function BoardComment(props) {
     }
 
     // 댓글 수정
-    const onClickUpdate = () => {
-        let add = "<input type='text' class='form-control'/>";
-
+    const onClickUpdate = (commentPk) => {
+        setCommentUpdateVisible(!commentUpdateVisible);
+        setTest(commentPk);
     }
-    const commentUpdate = () => {
-        axios.put(`http://localhost:8080/board/comment/${boardPk}`, null, {
-
+    const onChangeCommentUpdateContent = (e) => {
+        setCommentUpdateContent(e.target.value);
+    }
+    const commentUpdate = (commentPk) => {
+        axios.put(`http://localhost:8080/board/comment/update/${commentPk}`, null, {
+            params: {
+                commentBoardPk: boardPk,
+                commentPk: commentPk,
+                commentContent: commentUpdateContent,
+                commentWriterName: commentName,
+                commentWriterId: id,
+            }
         })
             .then(res => {
 
@@ -63,22 +82,24 @@ function BoardComment(props) {
     }
 
     // 댓글 삭제
-    const commentDelete = (commentPk) => {
+    const commentDelete = (commentPk, commentId) => {
         axios.delete(`http://localhost:8080/board/comment/delete/${commentPk}`, {
             params: {
                 commentPk: commentPk,
                 commentWriterId: commentId,
+                nowId: id,
+                authority: sessionStorage.getItem("grade")
             }
         })
             .then(res => {
-                /*삭제 후 페이지 리로드*/
+                props.setCommentCount(res.data.length)
             })
             .catch(err => {
                 alert("댓글삭제 실패")
             })
     }
-    const onClickDelete = (e) => {
-        commentDelete(e.target.value);
+    const onClickDelete = (pk, id) => {
+        commentDelete(pk, id);
     }
 
 
@@ -86,27 +107,76 @@ function BoardComment(props) {
         <div className={'container'}>
             <div className={'row'}>
                 <div className={'col-sm-10 mx-auto'}>
-                    <form onSubmit={onSubmitComment}>
-                        <textarea className={'form-control'} rows={3} onChange={onChangeCommentContent} value={commentContent}></textarea>
-                        <div className={'d-flex justify-content-end'}>
-                            <button type={"submit"} className={'btn my-3'}>댓글등록</button>
-                        </div>
-                    </form>
+                    {
+                        formVisible &&
+                        <form onSubmit={onSubmitComment}>
+                            <textarea className={'form-control'} rows={3} onChange={onChangeCommentContent} value={commentContent}></textarea>
+                            <div className={'d-flex justify-content-end'}>
+                                <button type={"submit"} className={'btn my-3 btn-outline-dark'}>댓글등록</button>
+                            </div>
+                        </form>
+                    }
+
                     <div className={'my-5'}>
                         {
                             commentList.map(item => {
-                            return (
-                                <div key={item.commentPk} className={'border-top p-3'}>
-                                    <p className={'d-flex justify-content-end'}>{item.commentDatetime}</p>
-                                    <p>{item.commentWriterName}</p>
-                                    <p>{item.commentContent}</p>
-                                    <div className={'d-flex justify-content-end my-2'}>
-                                        <button type={"button"} className={'btn'} onClick={onClickUpdate}>수정</button>
-                                        <div id={'commentUpdate'}></div>
-                                        <button type={"button"} className={'btn'} value={item.commentPk} onClick={onClickDelete}>삭제{item.commentPk}</button>
-                                    </div>
-                                </div>
-                                )
+                            let visible = false;
+
+                                if (id == item.commentWriterId) {
+                                    visible = true;
+
+                                    return (
+                                        <div key={item.commentPk} className={'border-top p-3'}>
+                                            <div className={"d-flex"}>
+                                                <p className={"me-auto"}>{item.commentWriterName}</p>
+                                                <p>{item.commentDatetime}</p>
+                                            </div>
+                                            <p>{item.commentContent}</p>
+                                            <div className={'d-flex justify-content-end my-2'}>
+                                                {
+                                                    visible &&
+                                                    <button type={"button"} className={'btn btn-outline-dark'} onClick={() => {onClickUpdate(item.commentPk)}}>수정</button>
+                                                }
+                                                {
+                                                    visible && <button type={"button"} className={'btn btn-outline-dark ms-2'} onClick={() => {
+                                                        onClickDelete(item.commentPk, item.commentWriterId)
+                                                    }}>삭제</button>
+                                                }
+                                            </div>
+                                            {
+                                                item.commentPk == test &&
+                                                commentUpdateVisible &&
+                                                <form onSubmit={() => {commentUpdate(item.commentPk)}}>
+                                                    <textarea className={"form-control"} rows={3} onChange={onChangeCommentUpdateContent} defaultValue={item.commentContent} />
+                                                    <div className={"d-flex justify-content-end"}>
+                                                        <button type={"submit"} className={"btn my-2 btn-outline-dark"}>작성</button>
+                                                    </div>
+                                                </form>
+                                            }
+                                        </div>
+                                    )
+                                }
+                                else {
+                                    if (sessionStorage.getItem("grade") == "admin") {
+                                        visible = true;
+                                    }
+                                    return (
+                                        <div key={item.commentPk} className={'border-top p-3'}>
+                                            <div className={"d-flex"}>
+                                                <p className={"me-auto"}>{item.commentWriterName}</p>
+                                                <p>{item.commentDatetime}</p>
+                                            </div>
+                                            <p>{item.commentContent}</p>
+                                            <div className={'d-flex justify-content-end my-2'}>
+                                                {
+                                                    visible && <button type={"button"} className={'btn btn-outline-dark'} onClick={() => {
+                                                        onClickDelete(item.commentPk, item.commentWriterId)
+                                                    }}>삭제</button>
+                                                }
+                                            </div>
+                                        </div>
+                                    )
+                                }
                             })
                         }
                     </div>
