@@ -79,7 +79,7 @@ function BoardDetail(props) {
                     setLike(res.data.boardLike)
                 })
                 .catch(err => {
-                    console.log(err)
+
                 })
         }
     }

@@ -18,7 +18,6 @@ function ShoppingBasket() {
       }
     })
         .then(res => {
-          console.log(res.data)
           setOldBookInfo(res.data)
         })
   }, []);
@@ -73,13 +72,10 @@ function ShoppingBasket() {
         }
       })
           .then(res => {
-            console.log("통신 성공", res)
             // navi('/purchase');
-            console.log(selectItems)
           })
           .catch(err => {
-            console.log("통신 실패", err)
-            console.log(selectItems)
+
           })
     }else{
       alert("주문하실 품목을 체크하세요")
