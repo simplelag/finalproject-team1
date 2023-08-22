@@ -74,7 +74,6 @@ function ShoppingBasket() {
           .then(res => {
             console.log("통신 성공", res)
             navi('/purchase');
-            // navi('/purchase');
           })
           .catch(err => {
 
