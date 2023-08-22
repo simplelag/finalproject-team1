@@ -22,6 +22,7 @@ import ViewOldBookList from "./pages/searchResult/ViewOldBookList";
 
 import BoardUpdate from "./pages/board/BoardUpdate";
 import Mail from "./pages/common/Mail";
+import QuestionWrite from "./pages/admin/QuestionWrite";
 
 
 
@@ -56,6 +57,7 @@ function App() {
                     <Route index element={<Admin id={"admin"}/>} />
                     <Route path={"question/:boardPk"} element={<QuestionDetail />} />
                 </Route>
+                <Route path={"/question/write"} element={<QuestionWrite />} />
                 <Route path={"/mail/:purchasePk"} element={<Mail />} />
             </Routes>
         </BrowserRouter>

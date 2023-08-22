@@ -19,10 +19,8 @@ function QuestionDetail(props) {
     const [boardId, setBoardId] = useState('')
     const [content, setContent] = useState('');
     const [category, setCategory] = useState('');
-    const [visit, setVisit] = useState('');
-    const [like, setLike] = useState('');
+    const [datetime, setDatetime] = useState("");
 
-    const [visible, setVisible] = useState(false);
 
     // 게시글 정보 받아오는 부분
     useEffect(() => {
@@ -33,12 +31,7 @@ function QuestionDetail(props) {
                 setBoardId(res.data.boardWriterId)
                 setContent(res.data.boardContent);
                 setCategory(res.data.boardCategory);
-                setVisit(res.data.boardVisitCount);
-                setLike(res.data.boardLike);
-
-                if (sessionStorage.getItem("id") == res.data.boardWriterId) {
-                    setVisible(true);
-                }
+                setDatetime(res.data.boardDatetime)
             })
             .catch(err => {
                 alert("BoardDetail Connect Err")
@@ -63,48 +56,29 @@ function QuestionDetail(props) {
         navi("/board/update", {state: {boardPk: boardPk}});
     }
 
-    const onClickLike = () => {
-        if (sessionStorage.getItem("id") == null) {
-            alert("로그인이 필요한 서비스입니다")
-        }
-        else {
-            axios.post('http://localhost:8080/board/like', null,{
-                params: {
-                    boardPk: boardPk,
-                    likeMemberId: id,
-                }
-            })
-                .then(res =>{
-                    setLike(res.data.boardLike)
-                })
-                .catch(err => {
-                    console.log(err)
-                })
-        }
-    }
-
     return (
         <div>
             <Header />
-            <div className={'container my-5'}>
+            <div className={'container mt-5'}>
                 <div className={'row'}>
                     <div className={'col-sm-10 mx-auto'}>
-                        <table className={'table'}>
-                            <tbody>
-                            <tr>
-                                <td className={'col-sm-1'}>{category}</td>
-                                <td className={''}>{title}</td>
-                            </tr>
-                            <tr>
-                                <td className={''}>{name}</td>
-                                <td className={'text-end col-1'}>댓글수: </td>
-                                <td className={'text-end col-1'}>추천수: {like}</td>
-                                <td className={'text-end col-1'}>조회수: {visit}</td>
-                            </tr>
-                            </tbody>
-                        </table>
-                        <textarea rows={10} className={'form-control'} value={content} readOnly={true}></textarea>
-                        <a href={'/admin'} className={'btn btn-outline-dark'}>목록</a>
+                        <div>
+                            <p>{category} {boardPk}</p>
+                            <p>제목: {title}</p>
+                            <p>닉네임/아이디: {name} / {boardId}</p>
+                            <p>작성시간: {datetime}</p>
+                        </div>
+                        <hr/>
+                        <div className={"mb-5"}>
+                            <p>
+                                {content}
+                            </p>
+                            <img src={`/questions/image/${boardPk}`} alt=""/>
+                        </div>
+                        <div className={"d-flex justify-content-end"}>
+                            <a href={sessionStorage.getItem("grade")=="admin"? "/admin": "/login/myLogin"} className={'btn btn-outline-dark'}>목록</a>
+                        </div>
+                        <hr/>
                     </div>
                 </div>
             </div>

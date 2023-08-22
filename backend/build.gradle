@@ -30,6 +30,9 @@ dependencies {
 	implementation 'org.webjars:sockjs-client:1.1.2'
 	implementation 'org.webjars:stomp-websocket:2.3.3-1'
 
+	// 이미지 파일 저장을 위한 라이브러리
+	implementation 'commons-io:commons-io:2.11.0'
+
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 //	implementation 'org.springframework.boot:spring-boot-starter-security'
 //	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
