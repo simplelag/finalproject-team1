@@ -41,7 +41,7 @@ public class CommentControl {
     public Object commentDelete(@PathVariable("commentPk") int commentPk, @RequestParam("commentWriterId") String commentWriterId,
                                 @RequestParam("nowId") String nowId, @RequestParam("authority") String authority) throws Exception {
 
-        if ((commentWriterId.equals(nowId)) || authority == "admin") {
+        if ((commentWriterId.equals(nowId)) || authority.equals("admin")) {
             commentService.deleteComment(commentPk);
         }
 

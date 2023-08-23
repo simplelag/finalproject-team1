@@ -18,7 +18,8 @@ function BoardDetail(props) {
     const [content, setContent] = useState('');
     const [category, setCategory] = useState('');
     const [visit, setVisit] = useState('');
-    const [like, setLike] = useState('');
+    const [like, setLike] = useState(0);
+    const [commentCount, setCommentCount] = useState(0);
 
     const [visible, setVisible] = useState(false);
 
@@ -41,7 +42,7 @@ function BoardDetail(props) {
             .catch(err => {
                 alert("BoardDetail Connect Err")
             })
-    }, [])
+    },[])
 
     // 삭제
     const onClickDelete = () => {
@@ -76,7 +77,7 @@ function BoardDetail(props) {
                     setLike(res.data.boardLike)
                 })
                 .catch(err => {
-                    console.log(err)
+
                 })
         }
     }
@@ -89,36 +90,38 @@ function BoardDetail(props) {
                         <div className={'col-sm-10 mx-auto'}>
                             <table className={'table'}>
                                 <tbody>
-                                <tr>
+                                <tr className={"table-dark"}>
                                     <td className={'col-sm-1'}>{category}</td>
-                                    <td className={''}>{title}</td>
+                                    <td colSpan={3} className={'col-sm-auto'}>{title}</td>
                                 </tr>
-                                <tr>
+                                <tr className={"table-secondary"}>
                                     <td className={''}>{name}</td>
-                                    <td className={'text-end col-1'}>댓글수: </td>
+                                    <td className={'text-end col-1'}>댓글수: {commentCount}</td>
                                     <td className={'text-end col-1'}>추천수: {like}</td>
                                     <td className={'text-end col-1'}>조회수: {visit}</td>
                                 </tr>
                                 </tbody>
                             </table>
-                            <textarea rows={10} className={'form-control'} value={content} readOnly={true}></textarea>
+                            <textarea rows={10} className={'form-control'} value={content} disabled={true}></textarea>
                             <div className={'d-flex justify-content-center my-3'}>
                                 <button type={'button'} className={'btn btn-outline-dark'} onClick={onClickLike}>추천</button>
                             </div>
-                            <a href={'/board/'} className={'btn btn-outline-dark'}>목록</a>
-                            {
-                                visible && <button type={"button"} className={'btn btn-outline-dark'} onClick={onClickUpdate}>수정</button>
-                            }
-                            {
-                                (visible && <button type={"button"} className={'btn btn-outline-dark'} onClick={onClickDelete}>삭제</button>)
-                                ||
-                                (sessionStorage.getItem("grade") == "admin" && <button type={"button"} className={'btn btn-outline-dark'} onClick={onClickDelete}>삭제</button>)
-                            }
-                            <a href={'/board/write'} className={'btn btn-outline-dark'}>글작성</a>
+                            <div className={"d-flex"}>
+                                <a href={'/board/'} className={'btn btn-outline-dark me-auto'}>목록</a>
+                                {
+                                    visible && <button type={"button"} className={'btn btn-outline-dark  ms-2'} onClick={onClickUpdate}>수정</button>
+                                }
+                                {
+                                    (visible && <button type={"button"} className={'btn btn-outline-dark ms-2'} onClick={onClickDelete}>삭제</button>)
+                                    ||
+                                    (sessionStorage.getItem("grade") == "admin" && <button type={"button"} className={'btn btn-outline-dark'} onClick={onClickDelete}>삭제</button>)
+                                }
+                                <a href={'/board/write'} className={'btn btn-outline-dark ms-2'}>글작성</a>
+                            </div>
                         </div>
                     </div>
                 </div>
-            <BoardComment boardPk={boardPk} />
+            <BoardComment boardPk={boardPk} setCommentCount={setCommentCount} />
             <Footer />
         </div>
     )

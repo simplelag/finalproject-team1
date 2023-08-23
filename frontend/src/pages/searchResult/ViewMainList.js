@@ -30,7 +30,7 @@ function ViewMainList(props) {
     const btnCreate = () => {
         let btnArray = [];
         if (firstViewBtn != 1) {
-            btnArray.push("<<")
+            btnArray.push("이전")
         }
         for (let i = firstViewBtn; i < firstViewBtn + 5; i++) {
             btnArray.push(i);
@@ -38,7 +38,7 @@ function ViewMainList(props) {
                 break;
             }
             if (i == firstViewBtn + 5 - 1) {
-                btnArray.push(">>")
+                btnArray.push("다음")
             }
         }
         setBtnList(btnArray);
@@ -46,10 +46,10 @@ function ViewMainList(props) {
 
     // 버튼 이벤트 핸들러
     const nowBtn = (item) => {
-        if (item === "<<") {
+        if (item === "이전") {
             setNowPage(firstViewBtn - 5);
         }
-        else if (item === ">>") {
+        else if (item === "다음") {
             setNowPage(firstViewBtn + 5);
         }
         else {
@@ -109,7 +109,6 @@ function ViewMainList(props) {
     // 페이지 로딩시 버튼생성
     useEffect(() => {
         btnCreate();
-        console.log(bookList)
     },[nowPage])
 
     return (
@@ -134,13 +133,15 @@ function ViewMainList(props) {
                     )
                 })
             }
-            {
-                btnList.map(item => {
-                    return (
-                        <button key={item} onClick={() => {nowBtn(item)}} className={"btn"}>{item}</button>
-                    )
-                })
-            }
+            <div className={"text-center"}>
+                {
+                    btnList.map(item => {
+                        return (
+                            <button key={item} onClick={() => {nowBtn(item)}} className={"btn"}>{item}</button>
+                        )
+                    })
+                }
+            </div>
             <Footer />
         </div>
     )

@@ -18,6 +18,7 @@ function ViewMainBook(props) {
     const navi = useNavigate();
     const [highPrice,sethighPrice] = useState(0);
     const [lowPrice,setlowPrice] = useState(0);
+
     const onClickSell = (e) => {
         navi("/sellerPage", {state: {ISBN13: props.data.isbn13}});
     }
@@ -32,7 +33,6 @@ function ViewMainBook(props) {
             }
         })
             .then(res =>{
-                console.log(res.data)
                 if(res.data.length > 0 ) {
                     sethighPrice(res.data[0].saleBookPrice);
                 }
@@ -49,7 +49,6 @@ function ViewMainBook(props) {
             }
         })
             .then(res =>{
-                console.log(res.data)
                 if(res.data.length > 0 ) {
                     setlowPrice(res.data[0].saleBookPrice);
                 }
@@ -62,23 +61,26 @@ function ViewMainBook(props) {
     return (
         <div>
             <div className={'row'}>
-                <div className={'col-sm-auto m-3'} style={style.box}>
+                <div className={'col-sm-auto mt-3'}>
+                    <p>{props.rank}.</p>
+                </div>
+                <div className={'col-sm-auto m-3'}>
                     <img src={props.data.cover} style={style.img} />
                 </div>
                 <div className={'col-sm my-3'} id={''}>
                     <div id={''}>
-                        <a href={'#'} className={'text-decoration-none'}>{props.data.title}</a>
+                        <a className={'text-decoration-none'}>{props.data.title}</a>
                     </div>
                     <div>
                         <span>
-                            <a href={'#'} className={'text-decoration-none'}>{props.data.author}</a> |
+                            <a className={'text-decoration-none'}>{props.data.author}</a> |
                             <span className={'ms-2'}>{props.data.pubDate}</span>
                         </span>
                     </div>
-                    <div className={'d-flex'}>
+                    <div className={''}>
                         <table className={'table mt-5'}>
                             <thead>
-                            <tr className={'text-center'}>
+                            <tr className={'text-center table-secondary'}>
                                 <th>새책 정가</th>
                                 <th>중고최저가</th>
                                 <th>중고최고가</th>
@@ -95,10 +97,11 @@ function ViewMainBook(props) {
                     </div>
                 </div>
                 <div className={'col-sm-auto text-center my-3'}>
-                    <button type={'button'} className={'btn btn-dark'} name={''} onClick={onClickDetail}>중고도서보기</button>
                     <br/>
                     <br/>
-                    <button type={'button'} className={'btn btn-dark'} name={''} onClick={onClickSell}>판매하기</button>
+                    <button type={'button'} className={'btn btn-outline-dark'} name={''} onClick={onClickDetail}>중고도서보기</button>
+                    <br/>
+                    <button type={'button'} className={'btn btn-outline-dark mt-2'} name={''} onClick={onClickSell}>판매하기</button>
                 </div>
             </div>
         </div>
