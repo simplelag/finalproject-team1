@@ -31,17 +31,6 @@ function ShoppingBasket() {
     setselectItems(updateSelecteItems);
   }
 
-<<<<<<< HEAD
-    const gotoDetail = (basketBookId) =>{
-        navi("/bookDetailPage", {state: {ISBN13 : basketBookId }});
-    }
-
-    const handleDeleteItem = (basketPk) =>{
-        axios.delete(`http://localhost:8080/searchUserBaseketDelete`,{
-            params:{
-                basketPk: basketPk
-            }
-=======
   const handleDeleteItem = (basketPk) => {
     axios.delete(`http://localhost:8080/searchUserBaseketDelete`, {
       params: {
@@ -53,7 +42,6 @@ function ShoppingBasket() {
           // deleteItem으로 제거된 basketPk값을 뺴고 다시 OldBookInfo를 재설정하고 랜더링함
           const updatedBookInfo = oldBookInfo.filter(item => item.basketPk !== basketPk);
           setOldBookInfo(updatedBookInfo);
->>>>>>> origin/main
         })
   }
 
@@ -96,37 +84,6 @@ function ShoppingBasket() {
   }
   return (
 
-<<<<<<< HEAD
-        <main className={"container"}>
-            <Header/>
-            <div className={"p-2"}>
-                <h4>장바구니</h4>
-                <input
-                    className={"form-check-input"}
-                    type={"checkbox"}
-                    value={""}
-                    id={"checkbox"}
-                    checked={selectAll}
-                    onChange={handleSelectAll}
-                />
-                <label className={"form-check-label ms-2"} for={"checkbox"} id={"selectAll"}>전체 선택</label>
-                <table className={"table table-bordered"}>
-                    {oldBookInfo.map(item => (
-                        <tr key={item.basketBookId}>
-                            <td className={"text-center"}>
-                                <input type="checkbox" name={"Selectone"} checked={selectItems[item.basketPk] || false}
-                                onChange={() => handleSelectItem(item.basketPk)}
-                                />
-                            </td>
-                            <td>
-                                <a href="#">
-                                    <img src={item.basketBookCover} alt="이미지가 들어갈 자리" style={{width:"200px",height:"200px"}} onClick={() => gotoDetail(item.basketBookId)}/>
-                                </a>
-                            </td>
-                            <td>
-                        <span>
-                            <a href="" className={"text-decoration-none"} style={{color:"black"}} onClick={() => gotoDetail(item.basketBookId)}>{item.basketBookTitle}</a>
-=======
       <main className={"container"}>
         <Header/>
         <div className={"p-2"}>
@@ -157,7 +114,6 @@ function ShoppingBasket() {
                         <span>
                             <a href="" className={"text-decoration-none"}
                                style={{color: "black"}}>{item.basketBookTitle}</a>
->>>>>>> origin/main
                         </span>
                   </td>
                   <td>

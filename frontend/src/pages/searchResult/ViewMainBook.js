@@ -61,18 +61,6 @@ function ViewMainBook(props) {
     return (
         <div>
             <div className={'row'}>
-<<<<<<< HEAD
-                <div className={'col-sm-auto m-3'} style={style.box}>
-                    <img src={props.data.cover} style={style.img} onClick={onClickDetail} />
-                </div>
-                <div className={'col-sm my-3'} id={''}>
-                    <div id={''}>
-                        <a href={'#'} className={'text-decoration-none'} style={{color:"black"}} onClick={onClickDetail}>{props.data.title}</a>
-                    </div>
-                    <div>
-                        <span>
-                            <a href={'#'} className={'text-decoration-none'} style={{color:"black"}}>{props.data.author}</a> |
-=======
                 <div className={'col-sm-auto mt-3'}>
                     <p>{props.rank}.</p>
                 </div>
@@ -86,7 +74,6 @@ function ViewMainBook(props) {
                     <div>
                         <span>
                             <a className={'text-decoration-none'}>{props.data.author}</a> |
->>>>>>> origin/main
                             <span className={'ms-2'}>{props.data.pubDate}</span>
                         </span>
                     </div>

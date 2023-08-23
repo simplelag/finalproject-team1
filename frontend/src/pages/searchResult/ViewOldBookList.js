@@ -84,58 +84,6 @@ function ViewOldBookList(props) {
     return (
         <main className={'container'}>
             <Header/>
-<<<<<<< HEAD
-
-            {oldBookInfo.map((info,index) =>(
-                <div className={'row mt-5'} key={info.salePk}>
-                    <div className={'col-sm-auto'} style={style.box}>
-                        <img src={info.saleImgSrc} style={style.img}  onClick={() => gotoDetail(info.saleBookId)} />
-                    </div>
-                    <div className={'col-sm-5 my-3'}>
-                        <div>
-                            <a href={'#'} className={"text-decoration-none ms-3"} style={{color:"black"}} onClick={() => gotoDetail(info.saleBookId)} >책 제목:{info.saleBookTitle}</a>
-                        </div>
-                        <div>
-                            <span>
-                                <p className={" ms-3 mt-3"} style={{color:"black"}}>판매자 : {info.saleSellerName}</p>
-                                <p className={"ms-3"} style={{color:"black"}}>판매자 ID : {info.saleSellerId}</p>
-                                <p className={"ms-3"}>판매자 설명 : {info.saleDiscription}</p>
-                                <p className={"ms-3"}>책 품질 : {info.bookGrade}등급</p>
-                            </span>
-                        </div>
-                    </div>
-                        <div className={"col-sm text-end my-3"}>
-                            <button type={'button'} className={'btn btn-dark'} onClick={() => save(index)}> 장바구니에 넣기 </button>
-                            <button type={'button'} className={'btn btn-dark ms-3'}> 즉시 구매하기 </button>
-                        </div>
-                        <div className={'d-flex'}>
-                            <table className={'table'}>
-                                <thead>
-                                    <tr className={'text-center'}>
-                                        <th>판매 가격 : </th>
-                                        <th>판매 수량 : </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                <tr className={'text-center'}>
-                                    <td>{info.saleBookPrice}원</td>
-                                    <td>{info.saleBookPieces}개</td>
-                                </tr>
-                                </tbody>
-                            </table>
-                    </div>
-                </div>
-                ))}
-            <Pagenation
-                setList={setOldBookInfo}
-                url= {"http://localhost:8080/searchOldBook"}
-                numberUrl= {"http://localhost:8080/oldBookResult"}
-                howManyContentsInAPage={5}
-                howManyPagesInABlock={5}
-                searchType={[]}
-                order="boardPk,DESC"
-            />
-=======
             {
                 oldBookInfo.map((info,index) => {
                     return (
@@ -184,16 +132,6 @@ function ViewOldBookList(props) {
                     )
                 })
             }
-            {/*<Pagenation*/}
-            {/*    setList={setOldBookInfo}*/}
-            {/*    url= {oldBookInfo}*/}
-            {/*    numberUrl= {oldBookInfo.length}*/}
-            {/*    howManyContentsInAPage={10}*/}
-            {/*    howManyPagesInABlock={5}*/}
-            {/*    searchType={[]}*/}
-            {/*    order="boardPk,DESC"*/}
-            {/*/>*/}
->>>>>>> origin/main
             <Footer/>
         </main>
     )
