@@ -29,7 +29,6 @@ import EventCalendar from "./pages/event/EventCalendar";
 
 function App() {
 
-
     return (
         <BrowserRouter>
             <Routes>
