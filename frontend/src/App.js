@@ -23,11 +23,12 @@ import ViewOldBookList from "./pages/searchResult/ViewOldBookList";
 import BoardUpdate from "./pages/board/BoardUpdate";
 import Mail from "./pages/common/Mail";
 import QuestionWrite from "./pages/admin/QuestionWrite";
-import EventCalendar from "./pages/event/EventCalendar";
+import MailList from "./pages/common/MailList";
 
 
 
 function App() {
+
 
     return (
         <BrowserRouter>
@@ -38,9 +39,6 @@ function App() {
                     <Route path={"write"} element={<BoardWrite />} />
                     <Route path={"update"} element={<BoardUpdate />} />
                     <Route path={":boardPk"} element={<BoardDetail />} />
-                </Route>
-                <Route path={"/event"}>
-                    <Route index element={<EventCalendar />} />
                 </Route>
                 <Route path={"/bookDetailPage"} element={<BookDetailPage />}/>
                 <Route path={"/view"} element={<ViewMainList />} />
@@ -61,7 +59,11 @@ function App() {
                     <Route path={"question/:boardPk"} element={<QuestionDetail />} />
                 </Route>
                 <Route path={"/question/write"} element={<QuestionWrite />} />
-                <Route path={"/mail/:purchasePk"} element={<Mail />} />
+                <Route path={"/mail"}>
+                    <Route path={":room"} element={<Mail />} />
+                    <Route path={"list"} element={<MailList />} />
+                </Route>
+
             </Routes>
         </BrowserRouter>
     );

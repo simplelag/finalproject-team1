@@ -18,12 +18,25 @@ function Admin(props) {
 
     const [view, setView] = useState(props.view || "questionView");
 
+    const styleAdmin = {
+      info:{
+          padding:"1rem 2rem",
+          borderRadius:"1rem",
+          marginBottom:"1rem"
+      },
+      view:{
+          padding:"1rem 2rem",
+          borderRadius:"1rem",
+          marginBottom:"1rem"
+      }
+    };
+
 
     let div = <>
         <div>
             <Header/>
             <div className={"container"}>
-                <div className={"adminInfo border"}>
+                <div className={"adminInfo border"} style={styleAdmin.info}>
                     <h3>관리자 정보</h3>
                     <div className={"d-flex justify-content-between"}>
 
@@ -53,11 +66,12 @@ function Admin(props) {
                     </div>
                 </div>
 
-                <div className={"listSection"}>
+                <div className={"listSection border"} style={styleAdmin.view}>
                     {
                         view=="itemView"?
                             <ItemView /> : view=="memberView"?
-                                <MemberView /> : view=="questionView"? <QuestionView />:<QuestionView />
+                                <MemberView /> :
+                                <QuestionView />
                     }
                 </div>
 
