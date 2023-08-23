@@ -289,7 +289,8 @@ function MyLoginUpdate(props) {
                     name: name,
                     email: emailFirst + emailLast,
                     phone: phoneFirstNumber + '-' + phoneMiddleNumber + '-' + phoneLastNumber,
-                    address: zoneCode + '/' + roadAddress + '/' + roadAddressDetail
+                    address: zoneCode + '/' + roadAddress + '/' + roadAddressDetail,
+                    authority: sessionStorage.getItem("grade") || "user"
                 }
             })
                 .then(res => {

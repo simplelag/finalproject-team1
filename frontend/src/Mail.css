@@ -28,7 +28,15 @@
     margin: 0.14rem;
 }
 
+[class|="bubble"] .name span{
+    border-radius: 0.3rem;
+    /*background: #fcb918;*/
+    background: rgba(252,185,24,0.25);
+    padding: 0rem 0.4rem;
+}
+
 .bubble-me .name{
+
 }
 
 .bubble-me {
@@ -45,11 +53,13 @@
 }
 
 .bubble-me .content-read .content {
-    border: 1px solid black;
+    background: #5E35EB;
+    /*border: 1px solid grey;*/
+    color: white;
 }
 
 .bubble-other {
-    margin-left: 0.2rem;
+    margin-left: 0.6rem;
     margin-right: 1rem;
     text-align: start;
 }
@@ -63,5 +73,6 @@
 }
 
 .bubble-other .content-read .content {
-    border: 1px solid black;
+    /*border: 1px solid black;*/
+    background: #eee;
 }
