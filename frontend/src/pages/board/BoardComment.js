@@ -51,7 +51,6 @@ function BoardComment(props) {
         })
             .then(res => {
                 props.setCommentCount(res.data.length)
-
             })
             .catch(() => {
                 alert("댓글 등록 실패")

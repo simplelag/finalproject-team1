@@ -23,6 +23,7 @@ import ViewOldBookList from "./pages/searchResult/ViewOldBookList";
 import BoardUpdate from "./pages/board/BoardUpdate";
 import Mail from "./pages/common/Mail";
 import QuestionWrite from "./pages/admin/QuestionWrite";
+import EventCalendar from "./pages/event/EventCalendar";
 
 
 
@@ -38,6 +39,9 @@ function App() {
                     <Route path={"write"} element={<BoardWrite />} />
                     <Route path={"update"} element={<BoardUpdate />} />
                     <Route path={":boardPk"} element={<BoardDetail />} />
+                </Route>
+                <Route path={"/event"}>
+                    <Route index element={<EventCalendar />} />
                 </Route>
                 <Route path={"/bookDetailPage"} element={<BookDetailPage />}/>
                 <Route path={"/view"} element={<ViewMainList />} />

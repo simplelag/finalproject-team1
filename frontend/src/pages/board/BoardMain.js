@@ -57,7 +57,7 @@ function BoardMain(props) {
     const [totalPage, setTotalPage] = useState(1);
     const [nowPage, setNowPage] = useState(1);
     const [btnList, setBtnList] = useState([]);
-    
+
     // 5는 표시할 버튼개수
     let firstBtn = Math.floor((nowPage - 1) / 5) * 5 + 1;
 
