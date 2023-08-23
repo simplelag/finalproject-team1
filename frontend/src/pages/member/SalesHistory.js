@@ -38,7 +38,7 @@ function SalesHistory(props) {
                     <tr>
                         <th className={'text-center'}>판매상태</th>
                         <th>상품명</th>
-                        <th className={'text-center'}>가격</th>
+                        <th className={'text-center'}>권당가격</th>
                         <th className={'text-center'}>수량</th>
                         <th className={'text-center'}></th>
                     </tr>

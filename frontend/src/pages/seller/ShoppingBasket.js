@@ -3,6 +3,7 @@ import Header from "../mainPages/Header";
 import Footer from "../mainPages/Footer";
 import {useNavigate} from "react-router-dom";
 import axios from "axios";
+import oldBookList from "./OldBookList";
 
 function ShoppingBasket() {
     const [oldBookInfo, setOldBookInfo] = useState([]);
@@ -54,12 +55,14 @@ function ShoppingBasket() {
 
     const handlePurchase = (e) => {
         // 값 속성이 true일 때 증가해서 0 이상일 때만 작동하게
+        // 장바구니를 체크하지 않았을 때 작동하는 것을 막기 위해서
         let isNull = 0
         for (const key in selectItems) {
             if (selectItems.hasOwnProperty(key) && selectItems[key] === true) {
                 isNull++
             }
         }
+
         if (isNull > 0) {
             const cheekList = JSON.stringify(selectItems)
             axios.put("http://localhost:8080/purchase/basketInsert", cheekList, {
@@ -72,14 +75,39 @@ function ShoppingBasket() {
                 }
             })
                 .then(res => {
-                    console.log("통신 성공", res)
-                    navi("/purchase", {state: {value : res.data}})
+                    // 자기 자신꺼 구매 불가하게
+                    console.log(res.data)
+                    let checkId = 0
+                    let checkIndex = new Array();
+                    let checkPurchase = 0
+                    let checkPurchaseIndex = new Array();
+                    res.data.map((item, index) => {
+                        if(item.purchaseSellerId === sessionStorage.getItem("id")){
+                            checkId++
+                            checkIndex.push(index+1);
+                        }
+                        if(item.purchaseState === 1){
+                            checkPurchase++
+                            checkPurchaseIndex.push(index+1);
+                        }
+                    })
+                    if(checkId === 0 && checkPurchase === 0){
+                        navi("/purchase", {state: {value : res.data}})
+                    }else{
+                        if(checkId !== 0){
+                            alert('선택한 것 중 ' + checkIndex + '번쨰로 선택한 것은 자기가 판매한 책으로 구입할 수 없습니다.')
+                        }else if(checkPurchase !== 0){
+                            alert('선택한 것 중 ' + checkPurchaseIndex + '번쨰로 선택한 것은 이미 구입한 제품입니다.')
+                        }
+                    }
                 })
                 .catch(err => {
                     console.log("통신 실패", err)
                 })
         } else {
-            alert("주문하실 품목을 체크하세요")
+            if(isNull === 0){
+                alert("주문하실 품목을 체크하세요")
+            }
         }
     }
     return (

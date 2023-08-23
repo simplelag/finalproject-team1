@@ -9,7 +9,8 @@ function PurchaseHistory(props) {
     useEffect(() => {
         axios.get('http://localhost:8080/login/myLogin/myPurchaseList', {
             params: {
-                userId: userId
+                userId: userId,
+                state : 1
             }
         })
             .then(res => {
@@ -57,7 +58,7 @@ function PurchaseHistory(props) {
                     <tr>
                         <th className={'text-center'}>주문상태</th>
                         <th>상품명</th>
-                        <th className={'text-center'}>가격</th>
+                        <th className={'text-center'}>권당가격</th>
                         <th className={'text-center'}>수량</th>
                         <th className={'text-center'}></th>
                     </tr>

@@ -15,6 +15,6 @@ public interface PurchaseRepository extends JpaRepository<PurchaseEntity, Intege
     List<PurchaseEntity> findByPurchaseBookIdAndPurchaseBuyerIdAndPurchaseSellerIdAndPurchasePayment(String isbn13, String purchaseId, String sellerId, int payment) throws Exception;
 
 //    마이페이지에서 구매 내역 가져올려고
-    List<PurchaseEntity> findByPurchaseBuyerIdOrderByPurchasePkDesc(String userId);
+    List<PurchaseEntity> findByPurchaseBuyerIdAndPurchaseStateOrderByPurchasePkDesc(String userId, int state);
 
 }

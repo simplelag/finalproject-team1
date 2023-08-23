@@ -20,7 +20,7 @@ import java.util.List;
 public class PurchaseController {
     private final PurchaseService purchaseService;
 
-    //    상세 페이지에서 바로 구매하는 경우 (구매페이지로 이동)
+    //    상세 페이지에서 구매페이지로 이동
     @RequestMapping(value = "/purchase/insert", method = RequestMethod.GET)
     public Object PurchaseIndividualInsert(
             @RequestParam("ISBN13") String isbn13, @RequestParam("BookName") String BookName,
@@ -30,7 +30,8 @@ public class PurchaseController {
         List<PurchaseEntity> checkPurchase = purchaseService.findPk(isbn13, BuyerId, SellerId, SellerPrice);
         if (checkPurchase.size() != 0) {
             int pk = checkPurchase.get(0).getPurchasePk();
-            purchaseEntity = new PurchaseEntity(pk, isbn13, BookName, BuyerId, BuyerName, SellerId, SellerName, SellerPrice);
+            int state = checkPurchase.get(0).getPurchaseState();
+            purchaseEntity = new PurchaseEntity(pk, isbn13, BookName, BuyerId, BuyerName, SellerId, SellerName, SellerPrice, state);
         } else {
             purchaseEntity = new PurchaseEntity(isbn13, BookName, BuyerId, BuyerName, SellerId, SellerName, SellerPrice);
         }
@@ -62,7 +63,7 @@ public class PurchaseController {
 //        return purchase;
     }
 
-    //    장바구니에서 구매하는 경우(구매페이지로 이동)
+    // 장바구니에서 구매페이지로 이동
     @RequestMapping(value = "/purchase/basketInsert", method = RequestMethod.PUT)
     public Object PurchaseBasket(
             @RequestBody String postData, @RequestParam("userId") String userId,
@@ -100,8 +101,10 @@ public class PurchaseController {
             String SellerName = cheekSaleList.get(i).getSaleSellerName();
             List<PurchaseEntity> checkPurchase = purchaseService.findPk(BookId, userId, SellerId, SaleBookPrice);
             if (checkPurchase.size() != 0) {
-                int pk = checkPurchase.get(0).getPurchasePk();
-                purchaseEntity = new PurchaseEntity(pk, BookId, BookName, userId, userName, SellerId, SellerName, SaleBookPrice);
+//                int pk = checkPurchase.get(i).getPurchasePk();
+//                int state = checkPurchase.get(i).getPurchaseState();
+//                purchaseEntity = new PurchaseEntity(pk, BookId, BookName, userId, userName, SellerId, SellerName, SaleBookPrice, state);
+                purchaseEntity = checkPurchase.get(0);
             } else {
                 purchaseEntity = new PurchaseEntity(BookId, BookName, userId, userName, SellerId, SellerName, SaleBookPrice);
             }
@@ -132,7 +135,8 @@ public class PurchaseController {
             String SellerId = purchaseEntities.get(i).getPurchaseSellerId();
             String SellerName = purchaseEntities.get(i).getPurchaseSellerName();
             int indivPrice = purchaseEntities.get(i).getPurchasePayment();
-            PurchaseEntity purchaseEntity = new PurchaseEntity(pk, BookId, BookName, userId, BuyerName, SellerId, SellerName, state, indivPrice, payMethod, reqMessage, address);
+            int number = purchaseEntities.get(i).getPurchaseNumber();
+            PurchaseEntity purchaseEntity = new PurchaseEntity(pk, BookId, BookName, userId, BuyerName, SellerId, SellerName, state, indivPrice, payMethod, reqMessage, address, number);
             purchaseService.savePurchase(purchaseEntity);
         }
     }

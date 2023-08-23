@@ -7,6 +7,7 @@ function PurchaseMain(props) {
 
     const location = useLocation();
     const list = location.state.value;
+    const number = location.state.number
 
     const [userId, setUserId] = useState(sessionStorage.getItem("id"))
     const [purchaseList, setPurchaseList ] = useState([]);
@@ -19,6 +20,9 @@ function PurchaseMain(props) {
             }
         })
             .then(res => {
+                res.data.map((item) => {
+                    item.purchaseNumber = 1
+                })
                 setPurchaseList(res.data)
             })
     },[]);
@@ -66,6 +70,16 @@ function PurchaseMain(props) {
         })
     },[])
 
+    
+    // 수량 체크
+    const [selectedValue, setSelectedValue] = useState(1);
+
+    const handleNumberInput = (index, e) => {
+        setSelectedValue(e.target.value)
+        purchaseList[index].purchaseNumber = parseInt(e.target.value);
+        console.log(purchaseList)
+    };
+
     return (
         <div className={'container my-3 px-0'}>
             <p>주문 정보</p>
@@ -96,13 +110,41 @@ function PurchaseMain(props) {
                                         <td className={'align-middle'}>{item.purchaseBookName}</td>
                                         <td className={'align-middle text-center'}>{item.purchaseSellerId}</td>
                                         <td className={'align-middle text-center'}>{item.purchasePayment}</td>
-                                        <td className={'align-middle text-center'}>{item.purchaseNumber}</td>
+                                        <td className={'align-middle text-center'}>
+                                            {/*{item.purchaseNumber}*/}
+                                            {/*<select value={selectedValue} onChange={(e) => handleNumberInput(index, e)}>*/}
+                                                {
+                                                    number.map((item, index) => {
+                                                        return(
+                                                            <div key={index}>
+                                                                <select value={selectedValue} onChange={(e) => handleNumberInput(index, e)}>
+                                                                    {Array.from(Array(item), (_, index1) => (
+                                                                        <option key={index1} value={index1 + 1}>{index1 + 1}</option>
+                                                                    ))}
+                                                                </select>
+                                                            </div>
+                                                        );
+                                                    })
+                                                }
+                                                {/*{Array.from(Array(item.purchaseNumber), (_, index1) => (*/}
+                                                {/*{Array.from((AllNumber), (_, index1) => (*/}
+                                                {/*    <option key={index1} value={index1 + 1}>{index1 + 1}</option>*/}
+                                                {/*))}*/}
+                                            {/*</select>*/}
+                                        </td>
                                     </tr>
                                 );
                             })
                         }
                     </tbody>
                 </table>
+            </div>
+            <div>
+                <ul>
+                    {/*{selectedValue.map((item, index) => (*/}
+                    {/*    <li key={index}>{item}</li>*/}
+                    {/*))}*/}
+                </ul>
             </div>
             <PurchaseInfor purchaseList={purchaseList} />
         </div>

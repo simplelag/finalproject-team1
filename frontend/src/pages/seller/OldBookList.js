@@ -51,20 +51,28 @@ function OldBookList() {
 
     // 구매 버튼 눌렀을때 발생하는 이벤트(구매 페이지로 이동)
     const handleInPurchase = (index) => {
-        axios.get('http://localhost:8080/purchase/insert',{
-            params:{
-                ISBN13: oldBookInfo[index].saleBookId,
-                BookName: oldBookInfo[index].saleBookTitle,
-                BuyerId: sessionStorage.getItem("id"),
-                BuyerName: sessionStorage.getItem("name"),
-                SellerId: oldBookInfo[index].saleSellerId,
-                SellerName: oldBookInfo[index].saleSellerName,
-                SellerPrice: oldBookInfo[index].saleBookPrice
-            }
-        })
-            .then(res => {
-                navi("/purchase", {state: {value : res.data}})
+        if (oldBookInfo[index].saleSellerId !== sessionStorage.getItem("id")) {
+            axios.get('http://localhost:8080/purchase/insert', {
+                params: {
+                    ISBN13: oldBookInfo[index].saleBookId,
+                    BookName: oldBookInfo[index].saleBookTitle,
+                    BuyerId: sessionStorage.getItem("id"),
+                    BuyerName: sessionStorage.getItem("name"),
+                    SellerId: oldBookInfo[index].saleSellerId,
+                    SellerName: oldBookInfo[index].saleSellerName,
+                    SellerPrice: oldBookInfo[index].saleBookPrice,
+                }
             })
+                .then(res => {
+                    if(res.data.purchaseState === 1){
+                        alert("이미 구입한 책입니다.")
+                    }else{
+                        navi("/purchase", {state: {value: res.data, number : [oldBookInfo[index].saleBookPieces]}})
+                    }
+                })
+        }else{
+            alert('자기가 판매한 책은 구입할 수 없습니다.')
+        }
     }
 
     return (

@@ -65,8 +65,8 @@ public class PurchaseServiceImpl implements PurchaseService{
     }
 
     @Override
-    public List<PurchaseEntity> myPurchaseList(String userId) throws Exception {
-        return purchaseRepository.findByPurchaseBuyerIdOrderByPurchasePkDesc(userId);
+    public List<PurchaseEntity> myPurchaseList(String userId, int state) throws Exception {
+        return purchaseRepository.findByPurchaseBuyerIdAndPurchaseStateOrderByPurchasePkDesc(userId, state);
     }
 
     @Override

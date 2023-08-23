@@ -53,7 +53,11 @@ public class BoardServiceImpl implements BoardService{
 
     @Override
     public Optional<BoardEntity> likeCnt(int boardPk) throws Exception {
-
         return boardRepository.findBoardLikeByBoardPk(boardPk);
+    }
+
+    @Override
+    public List<BoardEntity> myBoardList(String userId) throws Exception {
+        return boardRepository.findByBoardWriterIdOrderByBoardDatetimeDesc(userId);
     }
 }

@@ -65,7 +65,6 @@ function BoardMain(props) {
         }
     }
 
-
     return (
         <div>
             <Header />
