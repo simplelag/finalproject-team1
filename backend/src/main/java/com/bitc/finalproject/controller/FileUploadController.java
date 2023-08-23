@@ -77,12 +77,16 @@ public class FileUploadController {
         // 이미지가 저장된 위치
         String path = uploadDir+"questions"+File.separator;
         List<FileEntity> list = fileRepository.findAllByFileBoardPkOrderByFilePkDesc(boardPk);
-        // 리스트의 첫번째 file_name_saved 값을 가져온다
-        String imageName = list.get(0).getFileNameSaved();
-        // FileSystemResource(파일경로포함파일명) 으로 resource객체를 만든다
-        Resource resource = new FileSystemResource(path + imageName);
-        // http 응답에 resource를 집어넣어서 돌려준다(잘모름)
-        return new ResponseEntity<>(resource, HttpStatus.OK);
+        Resource resource = null;
+        if(!list.isEmpty()){
+            // 리스트의 첫번째 file_name_saved 값을 가져온다
+            String imageName = list.get(0).getFileNameSaved();
+            // FileSystemResource(파일경로포함파일명) 으로 resource객체를 만든다
+            resource = new FileSystemResource(path + imageName);
+            // http 응답에 resource를 집어넣어서 돌려준다(잘모름)
+            return new ResponseEntity<>(resource, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.OK);
     }
     // 삭제의경우 기존의 db에 저장된 정보와 프로젝트에 저장된 파일은 지우고 새로 추가해야할듯
     // 수정의경우 삭제과정을 거친뒤 새로 추가하는식으로 해도될듯

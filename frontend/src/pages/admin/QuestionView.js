@@ -10,8 +10,8 @@ function QuestionView(props) {
         setQNum(e.target.value);
     }
     return (
-        <div className={"border"}>
-            <select name="contentsCount" value={qNum} onChange={handleQNum} className={"float-end"}>
+        <div className={""}>
+            <select name="contentsCount" value={qNum} onChange={handleQNum} className={"float-end form-select w-25"}>
                 <option value="10">10개씩 보기</option>
                 <option value="30">30개씩 보기</option>
                 <option value="50">50개씩 보기</option>
@@ -33,7 +33,7 @@ function QuestionView(props) {
                             <tr key={item.boardPk}>
                                 <td>{item.boardPk}</td>
                                 <td>
-                                    <a href={'/admin/question/' + item.boardPk} className={'btn'}>{item.boardTitle}
+                                    <a href={'/admin/question/' + item.boardPk} className={"text-black text-decoration-none"}>{item.boardTitle}
                                         {item.commentNumber==0 ? "" : ` (${item.commentNumber})`}</a>
                                 </td>
                                 <td>{item.boardWriterName}</td>

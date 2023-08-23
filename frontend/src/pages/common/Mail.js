@@ -19,7 +19,7 @@ const Mail = (props) => {
     const [id, setId] = useState(sessionStorage.getItem("id") || "admin");
     const [name, setName] = useState(sessionStorage.getItem("name") || "adminName");
 
-    const [itemNumber, setItemNumber] = useState(params.purchasePk || "-1");
+    const [itemNumber, setItemNumber] = useState(params.room || "-1");
     const channel = useRef([]);
     const [stompClient, setStompClient] = useState(null);
     const [isConnected, setIsConnected] = useState(false);
@@ -79,7 +79,7 @@ const Mail = (props) => {
 
         axios.get(`/api/mail/getMessages`,
             {
-                params: {purchasePk: itemNumber}
+                params: {room: itemNumber}
             })
             .then((resp) => {
                 setMessages(resp.data);
@@ -112,7 +112,7 @@ const Mail = (props) => {
 
                 axios.get(`/api/mail/getMessages`,
                     {
-                        params: {purchasePk: itemNumber}
+                        params: {room: itemNumber}
                     })
                     .then((resp) => {
                         setMessages(resp.data);
@@ -142,7 +142,7 @@ const Mail = (props) => {
             mailFromId: id,
             mailFromName: name,
             mailContent: content,
-            mailPurchasePk: itemNumber
+            mailRoom: itemNumber
         }
         //메세지 전송
         // 첫번째 인자: SEND 프레임을 전송할 때 필요한 URI

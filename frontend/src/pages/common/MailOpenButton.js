@@ -2,7 +2,17 @@ import React, {useState, useEffect} from 'react';
 import axios from "axios";
 
 function MailOpenButton(props) {
-    const purchasePk = props.purchasePk;
+    const style = props.style || {fontSize:"10pt"}
+    const styleUnread = {
+        borderRadius:"50%",
+        background:"#e43",
+        color:"white",
+        padding:"0rem 0.4rem",
+        float:"right"
+    };
+    const room = props.room;
+    const title = props.title || "";
+    const name = props.name || "";
     const [unreadCount, setUnreadCount] = useState(0);
 
 
@@ -10,7 +20,7 @@ function MailOpenButton(props) {
         axios.get("/api/mail/getUnreadCount",
             {
                 params: {
-                    purchasePk: purchasePk,
+                    room: room,
                     id: sessionStorage.getItem("id") || ""
                 }
             }
@@ -29,16 +39,22 @@ function MailOpenButton(props) {
     const open = (e) => {
         // 사이즈 지정해서 열기
         const option = `width=${400}, height=${465}, top=${e.clientY - 300}, left=${e.clientX + 50}`
-        window.open(`/mail/${purchasePk}`, "_blank", option);
+        window.open(`/mail/${room}`, "_blank", option);
         setUnreadCount(0);
     }
 
     return (
         <div>
-            <button type={"button"} onClick={open}>메일 {purchasePk}</button>
-            {unreadCount == 0 ? "" :
-                <span>미확인: {unreadCount}</span>
-            }
+            <button style={style} type={"button"} onClick={open} className={"chattingBtn btn btn-outline-dark"}>
+                {title && <span>{title}<br/></span>}
+                <span>
+                    {name}
+                    {unreadCount == 0 ? "" :
+                        <span style={styleUnread}>{unreadCount}</span>
+                    }
+                </span>
+            </button>
+
         </div>
 
     );

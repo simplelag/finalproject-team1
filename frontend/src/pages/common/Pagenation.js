@@ -179,7 +179,7 @@ function Pagenation(props) {
 
     return (
         <div className={"d-flex justify-content-between"}>
-            <div></div>
+            <div style={{width:"24rem"}}></div>
             <div>{
                 btns.map(item => {
                     return (
@@ -193,10 +193,10 @@ function Pagenation(props) {
                     )
                 })
             }</div>
-            <div>
+            <div className={"input-group"} style={{width:"24rem"}}>
                 {searchSelect && <SearchSelect handleSearchTypeChange={handleSearchTypeChange} searchType={searchType}/>}
-                <input type="text" value={text} onChange={handleTextChange}/>
-                <button type={"button"} onClick={doSearch}>검색</button>
+                <input style={{width:"5rem"}} className={"form-control"} type="text" value={text} onChange={handleTextChange}/>
+                <button  className={"btn btn-outline-dark"} type={"button"} onClick={doSearch}>검색</button>
             </div>
         </div>
     )
@@ -206,7 +206,7 @@ function SearchSelect(props) {
     const handleSearchTypeChange = props.handleSearchTypeChange;
     const searchType = props.searchType;
     return (
-        <select name="searchTypeSelect" id="searchTypeSelect" onChange={handleSearchTypeChange}>
+        <select style={{width:"5rem"}}  className={"form-select"} name="searchTypeSelect" id="searchTypeSelect" onChange={handleSearchTypeChange}>
             {
                 searchType.map(item => {
                     return <option key={item} value={item}>{item}</option>
