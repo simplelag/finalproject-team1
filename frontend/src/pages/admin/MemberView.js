@@ -56,7 +56,7 @@ function MemberView(props) {
     }
 
     return (
-        <div className={"border"}>
+        <div className={""}>
             <div className={"d-flex justify-content-between align-items-center"}>
                 <h3>회원 관리</h3>
 
@@ -75,7 +75,7 @@ function MemberView(props) {
                     </button>
                 </div>
 
-                <select name="contentsCount" value={qNum} onChange={handleQNum}>
+                <select name="contentsCount" value={qNum} onChange={handleQNum} className={"form-select w-25"}>
                     <option value="10">10개씩 보기</option>
                     <option value="30">30개씩 보기</option>
                     <option value="50">50개씩 보기</option>
@@ -122,9 +122,7 @@ function MemberView(props) {
                                     </td>
                                     <td>{item.memberEmail}</td>
                                     <td>
-                                        <div>
-                                            <button value={item.memberId} type={"button"} onClick={handleTr}>상세</button>
-                                        </div>
+                                        <button className={"btn btn-outline-dark py-0"} value={item.memberId} type={"button"} onClick={handleTr}>상세</button>
                                     </td>
                                 </tr>
 

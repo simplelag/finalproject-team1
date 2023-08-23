@@ -30,7 +30,7 @@ function BoardComment(props) {
                 }
             })
             .catch(err => {
-                alert("댓글 불러오기 실패")
+                alert(`댓글 불러오기 실패: ${err}`);
             })
     },[props])
 
