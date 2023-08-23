@@ -30,7 +30,7 @@ function BoardComment(props) {
                 }
             })
             .catch(err => {
-                alert("댓글 불러오기 실패")
+                alert(`댓글 불러오기 실패: ${err}`);
             })
     },[props])
 
@@ -51,7 +51,6 @@ function BoardComment(props) {
         })
             .then(res => {
                 props.setCommentCount(res.data.length)
-
             })
             .catch(() => {
                 alert("댓글 등록 실패")

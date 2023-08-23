@@ -33,10 +33,10 @@ function ItemView(props) {
                     disabled: disabledReason
                 }
             })
-            .then(()=>{
-                const updatedItemList = itemList.map((item)=>{
-                    if(item.salePk == salePk){
-                        return {...item, saleDisabled:disabledReason};
+            .then(() => {
+                const updatedItemList = itemList.map((item) => {
+                    if (item.salePk == salePk) {
+                        return {...item, saleDisabled: disabledReason};
                     }
                     return item;
                 })
@@ -56,7 +56,7 @@ function ItemView(props) {
     }
 
     return (
-        <div className={"border"}>
+        <div className={""}>
             <div className={"d-flex justify-content-between align-items-center"}>
                 <h3>판매중인 상품 관리</h3>
 
@@ -72,7 +72,7 @@ function ItemView(props) {
                     </button>
                 </div>
 
-                <select name="contentsCount" value={qNum} onChange={handleQNum}>
+                <select name="contentsCount" value={qNum} onChange={handleQNum} className={"form-select w-25"}>
                     <option value="10">10개씩 보기</option>
                     <option value="30">30개씩 보기</option>
                     <option value="50">50개씩 보기</option>
@@ -83,11 +83,11 @@ function ItemView(props) {
             <table className={'table text-center border-top'}>
                 <colgroup>
                     <col style={{width: "10%"}}/>
-                    <col style={{width: "30%"}}/>
+                    <col style={{width: "28%"}}/>
                     <col style={{width: "10%"}}/>
                     <col style={{width: "10%"}}/>
-                    <col style={{width: "5%"}}/>
-                    <col style={{width: "5%"}}/>
+                    <col style={{width: "8%"}}/>
+                    <col style={{width: "4%"}}/>
                 </colgroup>
                 <thead>
                 <tr className={'text-center'}>
@@ -95,7 +95,8 @@ function ItemView(props) {
                     <th>제목</th>
                     <th>아이디</th>
                     <th>닉네임</th>
-                    <th colSpan={2}>판매가능여부</th>
+                    <th>판매가능여부</th>
+                    <th></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -105,30 +106,37 @@ function ItemView(props) {
                             <Fragment key={item.salePk}>
                                 <tr>
                                     <td>{item.salePk}</td>
-                                    <td>{item.saleBookTitle}</td>
+                                    <td className={"text-start"}>{item.saleBookTitle}</td>
                                     <td>{item.saleSellerId}</td>
                                     <td>{item.saleSellerName}</td>
                                     <td key={item.saleDisabled}>{item.saleDisabled ? "불가능" : "가능"}</td>
                                     <td>
-                                        <button type={"button"} id={item.salePk} value={item.saleDisabled} onClick={show}>상세</button>
+                                        <button className={"btn btn-outline-dark py-0 float-end"} type={"button"}
+                                                id={item.salePk} value={item.saleDisabled} onClick={show}>상세
+                                        </button>
                                     </td>
                                 </tr>
                                 <tr style={showTr == item.salePk ? {visibility: "visible"} : {visibility: "collapse"}}>
                                     <td className={"bg-secondary bg-opacity-10"} colSpan={6}>
-                                        <div className={"d-flex"}>
+                                        <div className={"d-flex container"}>
                                             <div>
                                                 <img src={item.saleImgSrc} alt={item.saleBookTitle}/>
                                             </div>
-                                            <div className={"text-start"}>
-                                                <span>Book Id : {item.saleBookId}</span><br/>
-                                                <span>등록 시간 : {item.saleDateTime}</span><br/>
-                                                <span>상태 : {item.bookGrade == 1 ? "좋음" : item.bookGrade == 2 ? "보통" : "나쁨"}</span><br/>
-                                                <span>설명 : {item.saleDiscription}</span><br/>
+                                            <div
+                                                className={"text-start container m-3 d-flex flex-column justify-content-between"}>
+                                                <div>
+                                                    <span>Book Id : {item.saleBookId}</span><br/>
+                                                    <span>등록 시간 : {item.saleDateTime}</span><br/>
+                                                    <span>상태 : {item.bookGrade == 1 ? "좋음" : item.bookGrade == 2 ? "보통" : "나쁨"}</span><br/>
+                                                    <span>설명 : {item.saleDiscription}</span><br/>
+                                                </div>
+
+
                                                 <div className={"input-group"}>
                                                     <input type="text" value={text}
                                                            onChange={handleText}
                                                            className={"form-control"}
-                                                           placeholder={"입력시 판매중지"}
+                                                           placeholder={"판매중지 사유, 입력시 판매중지"}
                                                     />
                                                     <button type={"button"}
                                                             onClick={send}
@@ -136,6 +144,7 @@ function ItemView(props) {
                                                             className={"btn btn-outline-dark"}
                                                     >확인
                                                     </button>
+
                                                 </div>
 
                                             </div>

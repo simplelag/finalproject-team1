@@ -29,7 +29,7 @@ public class MailEntity {
     @Column(nullable = false)
     private String mailDatetime = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm").format(LocalDateTime.now());
     @Column(nullable = false)
-    private int mailPurchasePk;
+    private String mailRoom;
     @Column(nullable = false)
     private int mailUnread = 1;
 }

@@ -15,6 +15,7 @@ function QuestionWrite(props) {
     const [isAble, setIsAble] = useState(false);
     const [file, setFile] = useState(null);
 
+    // 파일을 state에 담는법( e.target.files[0] )
     const handleFileChange = (e) => {
         setFile(e.target.files[0]);
     };
@@ -48,19 +49,24 @@ function QuestionWrite(props) {
             })
                 .then((res) => {
                     alert("문의가 등록되었습니다")
+                    // 문의글 등록에 성공하면 그다음에 파일을 등록하는 순서임(파일이랑 문의글을 동시에 보내는게 아님)
+                    // 문의글등록 성공시 서버에서 boardPk가 리턴되게 만들었음
 
-                    // FormData 객체를 생성하여 파일 데이터를 담습니다.
+                    // FormData 객체를 생성
                     const formData = new FormData();
+                    // FormData 객체에 file state를 추가한다
                     formData.append('file', file);
 
-                    // Axios를 사용하여 서버로 POST 요청을 보냅니다.
-                    axios.post(`/upload/${res.data}`, formData, {
+                    // Axios를 사용하여 서버로 POST 요청을 보낸다
+                    axios.post(`/uploadImg/${res.data}`, formData, {
+                        // multipart/form-data이기때문에 헤더를 추가한다
                         headers: {
-                            'Content-Type': 'multipart/form-data', // 파일 업로드를 위한 헤더 설정
+                            'Content-Type': 'multipart/form-data',
                         },
                     })
                         .then((response) => {
-                            // 서버 응답을 처리합니다.
+                            // 서버 응답을 처리한다
+                            // 성공시 창이 닫히게 설정함
                             console.log('파일 업로드 성공', response.data);
                             window.close();
                         })

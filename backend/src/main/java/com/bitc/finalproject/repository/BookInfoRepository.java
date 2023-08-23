@@ -22,6 +22,8 @@ public interface BookInfoRepository extends JpaRepository<BookEntity, Integer> {
 
     List<BookEntity> findAllBySalePkIn(List<Integer> cheekList);
 
+    BookEntity findBySalePk(int salePk);
+
     // 판매중도서 전체리스트
     @Query("SELECT b " +
             "FROM BookEntity b " +

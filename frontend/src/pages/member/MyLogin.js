@@ -11,7 +11,8 @@ import Header from "../mainPages/Header";
 import Footer from "../mainPages/Footer";
 import MailOpenButton from "../common/MailOpenButton";
 import PurchaseHistory from "./PurchaseHistory";
-import QuestionViewUser from "./QuestionViewUser";
+import QuestionViewUser from "../admin/QuestionViewUser";
+import MailListOpenButton from "../common/MailListOpenButton";
 
 function MyLogin(props) {
     const navi = useNavigate();
@@ -87,7 +88,7 @@ function MyLogin(props) {
                     </div>
                     <div className={'col-sm-6 my-4 ms-5 d-grid text-center'}>
                         <button type={"button"} className={'btn btn-warning'} style={{width: '75%'}}onClick={onClickShoppingBasket}>내 장바구니</button>
-                        <button type={"button"} className={'btn btn-primary'} style={{width: '75%'}}>내 쪽지함</button>
+                        <MailListOpenButton />
                         <button type={"button"} className={'btn btn-warning'} style={{width: '75%'}}>내 쿠폰함</button>
                         <button type={"button"} className={'btn btn-danger'} style={{width: '75%'}}>보유 마일리지</button>
                     </div>
@@ -101,9 +102,6 @@ function MyLogin(props) {
                     fill
                 >
                     <Tab eventKey="home" title="주문 내역">
-                        <MailOpenButton purchasePk={123} />
-                        <MailOpenButton purchasePk={1234} />
-                        {/* 여기에다 원하는 거 사용하면 됨 */}
                         <PurchaseHistory />
                     </Tab>
                     <Tab eventKey="profile" title="판매 내역">
