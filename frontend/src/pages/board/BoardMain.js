@@ -9,26 +9,11 @@ function BoardMain(props) {
 
     const [boardList, setBoardList] = useState([]);
     const [notice, setNotice] = useState([]);
-    const [qNum, setQNum] = useState(10);
-    const [size, setSize] = useState(5);
-
     const [noticeShow, setNoticeShow] = useState(false);
     const [noticeList, setNoticeList] = useState([]);
     const [subList, setSubList] = useState([]);
 
     const navi = useNavigate();
-
-    // 책 리스트 정보 받아오는 부분
-    useEffect(() => {
-        axios.get("http://localhost:8080/board")
-            .then(res => {
-                setBoardList(res.data)
-            })
-            .catch(err => {
-                alert("BoardList Connect Err")
-            });
-    },[])
-
 
     useEffect(() => {
         axios.get("http://localhost:8080/board/category", {
@@ -57,6 +42,7 @@ function BoardMain(props) {
         }
     }
 
+    // 펼치기 및 접기버튼 클릭이벤트 핸들러
     const onClickView = () => {
         setNoticeShow(!noticeShow)
 
@@ -68,6 +54,90 @@ function BoardMain(props) {
         }
     }
 
+    const [totalPage, setTotalPage] = useState(1);
+    const [nowPage, setNowPage] = useState(1);
+    const [btnList, setBtnList] = useState([]);
+    
+    // 5는 표시할 버튼개수
+    let firstBtn = Math.floor((nowPage - 1) / 5) * 5 + 1;
+
+    // 처음 게시물 리스트 로딩
+    useEffect(() => {
+        axios.get("http://localhost:8080/board/normal", {
+            params: {
+                page: 0,
+                size: 10,
+                boardCategory: "일반",
+                boardCategory2: "독후감"
+            }
+        })
+            .then(res => {
+                setBoardList(res.data)
+            })
+    },[])
+
+    // 게시물 리스트 전체 개수 정보 받아오는 부분
+    useEffect(() => {
+        axios.get("http://localhost:8080/board/countList", {
+            params: {
+                boardCategory: "일반",
+                boardCategory2: "독후감"
+            }
+        })
+            .then(res => {
+                btnCreate(res.data)
+            })
+            .catch(err => {
+                alert("BoardList Count Err")
+            });
+    },[nowPage])
+
+    // 버튼 생성
+    const btnCreate = (totalPage) => {
+        let btnArray = [];
+        if (firstBtn != 1) {
+            btnArray.push("이전")
+        }
+        for (let i = firstBtn; i < firstBtn + 5; i++) {
+            btnArray.push(i);
+            // 10은 한페이지에 표시할 게시글 수
+            if (i >= Math.ceil(totalPage/10)) {
+                break;
+            }
+            if (i == firstBtn + 5 - 1) {
+                btnArray.push("다음")
+            }
+        }
+        setBtnList(btnArray);
+    }
+
+    // 페이지네이션 버튼 클릭시 일반, 독후감 게시판 리스트 불러오기
+    const loadList = (page) => {
+        axios.get("http://localhost:8080/board/normal", {
+            params: {
+                page: page - 1,
+                size: 10,
+                boardCategory: "일반",
+                boardCategory2: "독후감"
+            }
+        })
+            .then(res => {
+                setBoardList(res.data);
+            })
+        }
+
+    // 버튼 클릭시 작동하는 이벤트핸들러
+    const nowBtn = (item) => {
+        if (item == "이전") {
+            setNowPage(firstBtn - 5);
+        }
+        else if (item == "다음") {
+            setNowPage(firstBtn + 5);
+        }
+        else {
+            loadList(item);
+        }
+    }
 
     return (
         <div>
@@ -111,27 +181,34 @@ function BoardMain(props) {
                     }
                     {
                         boardList.map(item => {
-                            if (item.boardCategory != "관리자문의" && item.boardCategory != "공지/이벤트") {
-                                return (
-                                    <tr key={item.boardPk}>
-                                        <td className={'text-center col-sm-1'}>{item.boardPk}</td>
-                                        <td className={'text-center col-sm-1'}>{item.boardCategory}</td>
-                                        <td>
-                                            <a href={'/board/' + item.boardPk} className={'text-decoration-none text-dark'}>{item.boardTitle}</a>
-                                        </td>
-                                        <td className={'text-center col-sm-1'}>{item.boardWriterName}</td>
-                                        <td className={'text-center col-sm-1'}>{item.boardVisitCount}</td>
-                                        <td className={'text-center col-sm-1'}>{item.boardLike}</td>
-                                        <td className={'text-center col-sm-2'}>{item.boardDatetime}</td>
-                                    </tr>
-                                )
-                            }
+                            return (
+                                <tr key={item.boardPk}>
+                                    <td className={'text-center col-sm-1'}>{item.boardPk}</td>
+                                    <td className={'text-center col-sm-1'}>{item.boardCategory}</td>
+                                    <td>
+                                        <a href={'/board/' + item.boardPk} className={'text-decoration-none text-dark'}>{item.boardTitle}</a>
+                                    </td>
+                                    <td className={'text-center col-sm-1'}>{item.boardWriterName}</td>
+                                    <td className={'text-center col-sm-1'}>{item.boardVisitCount}</td>
+                                    <td className={'text-center col-sm-1'}>{item.boardLike}</td>
+                                    <td className={'text-center col-sm-2'}>{item.boardDatetime}</td>
+                                </tr>
+                            )
                         })
                     }
                     </tbody>
                 </table>
                 <div className={'my-3 d-flex justify-content-end'}>
                     <button type={"button"} className={'btn btn-outline-dark'} onClick={onClickWrite}>글작성</button>
+                </div>
+                <div className={"text-center"}>
+                    {
+                        btnList.map(item => {
+                            return (
+                                <button key={item} onClick={() => {nowBtn(item)}} className={"btn"}>{item}</button>
+                            )
+                        })
+                    }
                 </div>
             </div>
             <Footer />
