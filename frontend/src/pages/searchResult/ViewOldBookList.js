@@ -76,7 +76,7 @@ function ViewOldBookList(props) {
             .then(res => {
                 console.log(`통신 성공`);
                 console.log(res);
-                navi("/purchase", {state: {value : [res.data]}})
+                navi("/purchase", {state: {value : res.data}})
             })
     }
 

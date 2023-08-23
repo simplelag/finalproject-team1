@@ -7,6 +7,7 @@ import com.bitc.finalproject.service.PurchaseService;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.web.bind.annotation.*;
 
 import java.awt.print.Book;
@@ -39,16 +40,26 @@ public class PurchaseController {
     }
 
     // 상세보기 페이지에서 값 보내서 구매 페이지 다시 적용
+    @RequestMapping(value = "/purchase/locationIndviSave", method = RequestMethod.PUT)
+    public Object PurchaseIndividualInsertLocation(@RequestBody PurchaseEntity purchaseEntity) throws Exception {
+//        size()가 1일때
+        PurchaseEntity purchase = purchaseService.insertPurchaseList(purchaseEntity);
+        List<PurchaseEntity> purchaseList = new ArrayList<>();
+        purchaseList.add(purchase);
+        return purchaseList;
+    }
+
+    // 장바구니 페이지에서 값 보내서 구매 페이지 다시 적용
     @RequestMapping(value = "/purchase/locationInsert", method = RequestMethod.PUT)
-    public Object PurchaseIndividualInsertLocation(@RequestBody List<PurchaseEntity> purchaseEntity) throws Exception {
+    public Object PurchaseIndividualInsertLocation(@RequestBody @NotNull List<PurchaseEntity> purchaseEntity) throws Exception {
         PurchaseEntity purchase = new PurchaseEntity();
         for (int i = 0; i < purchaseEntity.size(); i++) {
             purchase = purchaseService.insertPurchaseList(purchaseEntity.get(i));
         }
         return purchase;
 //        size()가 1일때
-//        purchaseEntity = purchaseService.insertPurchaseList(purchaseEntity);
-//        return purchaseEntity;
+//        PurchaseEntity purchase = purchaseService.insertPurchaseList(purchaseEntity);
+//        return purchase;
     }
 
     //    장바구니에서 구매하는 경우(구매페이지로 이동)
@@ -132,7 +143,7 @@ public class PurchaseController {
             @RequestParam("userId") String userId, @RequestParam("state") int state
     ) throws Exception{
         List<PurchaseEntity> purchaseEntityList = purchaseService.findDeleteList(userId, state);
-        for(int i = 0; i < purchaseEntityList.size(); i++){
+        for(int i = 0; i < purchaseEntityList.size(); i++) {
             int pk = purchaseEntityList.get(i).getPurchasePk();
             String BookId = purchaseEntityList.get(i).getPurchaseBookId();
             String BookName = purchaseEntityList.get(i).getPurchaseBookName();

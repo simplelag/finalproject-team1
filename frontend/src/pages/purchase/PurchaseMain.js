@@ -1,8 +1,12 @@
 import React, {useEffect, useState} from 'react';
 import axios from "axios";
 import PurchaseInfor from "./PurchaseInfor";
+import {useLocation} from "react-router-dom";
 
 function PurchaseMain(props) {
+
+    const location = useLocation();
+    const list = location.state.value;
 
     const [userId, setUserId] = useState(sessionStorage.getItem("id"))
     const [purchaseList, setPurchaseList ] = useState([]);
@@ -18,6 +22,49 @@ function PurchaseMain(props) {
                 setPurchaseList(res.data)
             })
     },[]);
+
+    useEffect(() => {
+        // (() => {
+        //     window.addEventListener('beforeunload', preventClose, {capture: false});
+        // })();
+
+        if(Array.isArray(list)){
+            axios.put("http://localhost:8080/purchase/locationInsert", list, null)
+                .then(res => {
+                    console.log(res)
+                    setPurchaseList(list)
+                })
+                .catch(err => {
+                    console.log(err)
+                })
+        }else{
+            axios.put("http://localhost:8080/purchase/locationIndviSave", list, null)
+                .then(res => {
+                    console.log(res)
+                    setPurchaseList(res.data)
+                })
+                .catch(err => {
+                    console.log(err)
+                })
+        }
+
+        return(() => {
+            // window.removeEventListener('beforeunload', preventClose);
+
+            axios.delete('http://localhost:8080/purchase/delete',{
+                params:{
+                    userId : userId,
+                    state : 0
+                }
+            })
+                .then(res=>{
+                    console.log(res)
+                })
+                .catch(err => {
+                    console.log(err)
+                })
+        })
+    },[])
 
     return (
         <div className={'container my-3 px-0'}>

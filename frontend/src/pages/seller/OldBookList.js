@@ -63,7 +63,7 @@ function OldBookList() {
             }
         })
             .then(res => {
-                navi("/purchase", {state: {value : [res.data]}})
+                navi("/purchase", {state: {value : res.data}})
             })
     }
 

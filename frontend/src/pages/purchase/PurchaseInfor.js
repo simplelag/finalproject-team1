@@ -5,9 +5,6 @@ import {useLocation, useNavigate} from "react-router-dom";
 
 function PurchaseInfor(props) {
 
-    const location = useLocation();
-    const list = location.state.value;
-
     const navigate = useNavigate();
 
     // 기존 배송지 disabled 확인
@@ -61,43 +58,21 @@ function PurchaseInfor(props) {
         handleOriginalInfo()
         scrollToTop()
 
-        // const preventClose = (e) => {
-        //     e.preventDefault();
-        //     e.returnValue = "";
-        // }
-        // (() => {
-        //     window.addEventListener('beforeunload', preventClose);
-        // })();
     }, [])
 
-    useEffect(() => {
-        return(() => {
-            // window.removeEventListener('beforeunload', preventClose);
+    // const preventClose = (e) => {
+    //     e.preventDefault();
+    //     e.returnValue = "";
+    // }
+    // (() => {
+    //     window.addEventListener('beforeunload', preventClose);
+    // })();
 
-            axios.put("http://localhost:8080/purchase/locationInsert", list, null)
-                .then(res => {
-                    console.log(res)
-                    setPurchaseProduct(list);
-                })
-                .catch(err => {
-                    console.log(err)
-                })
-
-            axios.delete('http://localhost:8080/purchase/delete',{
-                params:{
-                    userId :userId,
-                    state: 0
-                },
-                data: props.purchaseList
-            })
-                .then(res=>{
-                    console.log(res)
-                })
-                .catch(err => {
-                    console.log(err)
-                })
-        })
-    },[])
+    // const preventClose = (e) => {
+    //     e.preventDefault();
+    //     return e.returnValue = false;
+    //     // e.returnValue = "";
+    // }
 
     useEffect(() => {
         handleOrderAllFee()

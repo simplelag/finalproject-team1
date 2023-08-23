@@ -26,8 +26,7 @@ public class PurchaseServiceImpl implements PurchaseService{
 
     @Override
     public PurchaseEntity insertPurchaseList(PurchaseEntity purchaseEntity) throws Exception {
-        PurchaseEntity p = purchaseRepository.save(purchaseEntity);
-        return p;
+        return purchaseRepository.save(purchaseEntity);
     }
 
     @Override
