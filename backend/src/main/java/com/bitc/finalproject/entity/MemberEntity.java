@@ -58,6 +58,17 @@ public class MemberEntity {
         this.memberAddress = memberAddress;
     }
 
+    @Builder
+    public MemberEntity(String memberId, String memberPassword, String memberName, String memberEmail, String memberPhone, String memberAddress, String memberAuthority){
+        this.memberId = memberId;
+        this.memberPassword = memberPassword;
+        this.memberName = memberName;
+        this.memberEmail = memberEmail;
+        this.memberPhone = memberPhone;
+        this.memberAddress = memberAddress;
+        this.memberAuthority = memberAuthority;
+    }
+
 
 //    sale 테이블에서 member_id, member_name 외래키 설정해야 함
 //    purchase 테이블에서  member_id, member_name 외래키 설정

@@ -27,4 +27,6 @@ public interface BookInfoService {
     List<BookEntity> searchLowPrice(String isbn13);
 
     List<BookEntity> searchHighPrice(String isbn13);
+
+    void deleteSell(int salepk) throws Exception;
 }

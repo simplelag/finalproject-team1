@@ -76,9 +76,9 @@ function QuestionDetail(props) {
                             <img src={`/questions/image/${boardPk}`} alt="" className={"w-100"}/>
                         </div>
                         <div className={"d-flex justify-content-end"}>
-                            <a href={sessionStorage.getItem("grade")=="admin"? "/admin": "/login/myLogin"} className={'btn btn-outline-dark'}>목록</a>
+                            <a href={sessionStorage.getItem("grade")=="admin"? "/admin": "/login/myLogin"} className={'btn btn-outline-purple'}>목록</a>
                             {authority=="user" &&
-                                <button className={'btn btn-outline-dark'} onClick={onClickDelete}>삭제</button>}
+                                <button className={'btn btn-outline-purple'} onClick={onClickDelete}>삭제</button>}
                         </div>
                         <hr/>
                     </div>

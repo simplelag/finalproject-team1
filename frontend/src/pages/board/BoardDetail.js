@@ -104,19 +104,19 @@ function BoardDetail(props) {
                             </table>
                             <textarea rows={10} className={'form-control'} value={content} disabled={true}></textarea>
                             <div className={'d-flex justify-content-center my-3'}>
-                                <button type={'button'} className={'btn btn-outline-dark'} onClick={onClickLike}>추천</button>
+                                <button type={'button'} className={'btn btn-outline-purple'} onClick={onClickLike}>추천</button>
                             </div>
                             <div className={"d-flex"}>
-                                <a href={'/board/'} className={'btn btn-outline-dark me-auto'}>목록</a>
+                                <a href={'/board/'} className={'btn btn-outline-purple me-auto'}>목록</a>
                                 {
-                                    visible && <button type={"button"} className={'btn btn-outline-dark  ms-2'} onClick={onClickUpdate}>수정</button>
+                                    visible && <button type={"button"} className={'btn btn-outline-purple  ms-2'} onClick={onClickUpdate}>수정</button>
                                 }
                                 {
-                                    (visible && <button type={"button"} className={'btn btn-outline-dark ms-2'} onClick={onClickDelete}>삭제</button>)
+                                    (visible && <button type={"button"} className={'btn btn-outline-purple ms-2'} onClick={onClickDelete}>삭제</button>)
                                     ||
-                                    (sessionStorage.getItem("grade") == "admin" && <button type={"button"} className={'btn btn-outline-dark'} onClick={onClickDelete}>삭제</button>)
+                                    (sessionStorage.getItem("grade") == "admin" && <button type={"button"} className={'btn btn-outline-purple'} onClick={onClickDelete}>삭제</button>)
                                 }
-                                <a href={'/board/write'} className={'btn btn-outline-dark ms-2'}>글작성</a>
+                                <a href={'/board/write'} className={'btn btn-outline-purple ms-2'}>글작성</a>
                             </div>
                         </div>
                     </div>

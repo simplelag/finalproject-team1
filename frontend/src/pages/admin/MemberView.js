@@ -122,7 +122,7 @@ function MemberView(props) {
                                     </td>
                                     <td>{item.memberEmail}</td>
                                     <td>
-                                        <button className={"btn btn-outline-dark py-0"} value={item.memberId} type={"button"} onClick={handleTr}>상세</button>
+                                        <button className={"btn btn-outline-purple py-0"} value={item.memberId} type={"button"} onClick={handleTr}>상세</button>
                                     </td>
                                 </tr>
 

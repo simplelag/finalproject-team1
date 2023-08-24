@@ -279,8 +279,8 @@ const Mail = (props) => {
                     className={"form-control"}
                     style={{height: "4em", resize: "none"}}
                 />
-                <button type={"button"} onClick={send} disabled={!isConnected}
-                        className={"btn btn-outline-dark"}>
+                <button type={"button"} onClick={send} disabled={!isConnected || !content}
+                        className={"btn btn-outline-purple"}>
                     {isConnected ? "전송" : "연결중"}
                 </button>
             </div>

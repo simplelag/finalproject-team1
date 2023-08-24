@@ -2,6 +2,8 @@ package com.bitc.finalproject.controller;
 
 import com.bitc.finalproject.entity.MemberEntity;
 import com.bitc.finalproject.entity.PurchaseEntity;
+import com.bitc.finalproject.repository.MailRepository;
+import com.bitc.finalproject.repository.MemberRepository;
 import com.bitc.finalproject.service.BookInfoService;
 import com.bitc.finalproject.service.MemberService;
 import com.bitc.finalproject.service.PurchaseService;
@@ -10,6 +12,7 @@ import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.lang.reflect.Member;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,6 +24,8 @@ public class MemberController {
     private final MemberService userService;
     private final BookInfoService bookInfoService;
     private final PurchaseService purchaseService;
+    private final MemberRepository memberRepository;
+    private final MailRepository mailRepository;
 
 //    로그인 시
     @RequestMapping(value = "/login", method = RequestMethod.POST)
@@ -64,10 +69,16 @@ public class MemberController {
             @RequestParam("name") String name,
             @RequestParam("email") String email,
             @RequestParam("phone") String phone,
-            @RequestParam("address") String address
+            @RequestParam("address") String address,
+            @RequestParam("authority") String authority
     ) throws Exception{
         MemberEntity memberEntity = null;
-        memberEntity = new MemberEntity(userId, password, name, email, phone, address);
+        if(authority.equals("admin")){
+            memberEntity = new MemberEntity(userId, password, name, email, phone, address, "admin");
+        }
+        else{
+            memberEntity = new MemberEntity(userId, password, name, email, phone, address);
+        }
         userService.saveMember(memberEntity);
     }
 

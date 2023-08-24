@@ -99,9 +99,9 @@ function ViewMainBook(props) {
                 <div className={'col-sm-auto text-center my-3'}>
                     <br/>
                     <br/>
-                    <button type={'button'} className={'btn btn-outline-dark'} name={''} onClick={onClickDetail}>중고도서보기</button>
+                    <button type={'button'} className={'btn btn-outline-purple'} name={''} onClick={onClickDetail}>중고도서보기</button>
                     <br/>
-                    <button type={'button'} className={'btn btn-outline-dark mt-2'} name={''} onClick={onClickSell}>판매하기</button>
+                    <button type={'button'} className={'btn btn-outline-purple mt-2'} name={''} onClick={onClickSell}>판매하기</button>
                 </div>
             </div>
         </div>
