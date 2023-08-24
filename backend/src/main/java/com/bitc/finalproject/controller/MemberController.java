@@ -1,18 +1,13 @@
 package com.bitc.finalproject.controller;
 
-import com.bitc.finalproject.entity.BasketEntity;
-import com.bitc.finalproject.entity.BookEntity;
-import com.bitc.finalproject.entity.MemberEntity;
-import com.bitc.finalproject.entity.PurchaseEntity;
-import com.bitc.finalproject.service.BoardService;
-import com.bitc.finalproject.service.BookInfoService;
-import com.bitc.finalproject.service.MemberService;
-import com.bitc.finalproject.service.PurchaseService;
+import com.bitc.finalproject.entity.*;
+import com.bitc.finalproject.service.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,6 +20,7 @@ public class MemberController {
     private final BookInfoService bookInfoService;
     private final PurchaseService purchaseService;
     private final BoardService boardService;
+    private final ReviewService reviewService;
 
 //    로그인 시
     @RequestMapping(value = "/login", method = RequestMethod.POST)
@@ -107,7 +103,7 @@ public class MemberController {
         return purchaseService.myPurchaseList(userId, state);
     }
 
-//    마이페이지 - 구매 취소
+//    마이페이지 - 구매 내역에서 구매 취소
     @RequestMapping(value = "/login/myLogin/delete", method = RequestMethod.DELETE)
     public void showMyPurchaseCancel(@RequestBody PurchaseEntity purchaseEntity) throws Exception{
 //        구매 취소 후 원래있던 판매 수량으로 되돌리기
@@ -133,6 +129,27 @@ public class MemberController {
     @RequestMapping(value = "/login/myLogin/mySaleList", method = RequestMethod.GET)
     public Object showMySaleList(@RequestParam("userId") String userId) throws Exception{
         return bookInfoService.mySaleList(userId);
+    }
+
+//    마이페이지 - 내가 쓴 리뷰
+    @RequestMapping(value = "/login/myLogin/myReviewList", method = RequestMethod.GET)
+    public Object showMyReviewList(@RequestParam("userId") String userId) throws Exception{
+        Map<Object, Object> result = new HashMap<>();
+        List<ReviewEntity> reviewEntityList =  reviewService.myReviewList(userId);
+//        isbn13값으로 책 제목 찾기
+        List<String> bookTitleList = new ArrayList<>();
+        for(int i = 0; i < reviewEntityList.size(); i++){
+            String isbn13 = reviewEntityList.get(i).getBookReviewIsbn13();
+            List<BookEntity> bookEntities = bookInfoService.getOldBooksByIsbn13(isbn13);
+            if(bookEntities.size() > 0){
+                bookTitleList.add(bookEntities.get(0).getSaleBookTitle());
+            }else{
+                bookTitleList.add("판매하는 책이 아니어서 리뷰를 쓸 수 없습니다.");
+            }
+        }
+        result.put("data1", reviewEntityList);
+        result.put("data2", bookTitleList);
+        return result;
     }
 
 //    마이페이지 - 내가 작성한 게시물 내역

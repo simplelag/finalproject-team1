@@ -124,6 +124,7 @@ public class BoardControl {
     }
 
     // 사용자용 문의글 리스트반환
+    // 사용자용 문의글 리스트반환
     @RequestMapping(value = "/board/getQuestionsUser/{id}", method = RequestMethod.GET)
     public Object getQuestionListUser(@RequestParam String title, @PathVariable String id, @RequestParam String content, Pageable pageable) throws Exception {
         System.out.println("문의글리스트 사용자 id: "+id);
@@ -134,10 +135,9 @@ public class BoardControl {
     // 사용자용 문의글 총개수 반환
     @RequestMapping(value = "/board/getQuestionsCountUser/{id}", method = RequestMethod.GET)
     public int getQuestionsCountUser(@RequestParam String title, @PathVariable String id, @RequestParam String content) throws Exception{
-
         return adminService.getQuestionsCountUser(title, id, content);
     }
-
+    
     @RequestMapping(value = "/question/write", method = RequestMethod.POST)
     public int questionInsert(BoardEntity boardEntity) throws Exception {
 
