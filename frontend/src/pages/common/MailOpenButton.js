@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, Fragment} from 'react';
 import axios from "axios";
 
 function MailOpenButton(props) {
@@ -14,6 +14,7 @@ function MailOpenButton(props) {
     const title = props.title || "";
     const name = props.name || "";
     const [unreadCount, setUnreadCount] = useState(0);
+    const [id, setId] = useState(sessionStorage.getItem("id") || null);
 
 
     const countUnread = () => {
@@ -44,19 +45,22 @@ function MailOpenButton(props) {
     }
 
     return (
-        <div>
-            <button style={style} type={"button"} onClick={open} className={"chattingBtn btn btn-outline-dark"}>
-                {title && <span>{title}<br/></span>}
-                <span>
+        <Fragment>
+            {
+                id &&
+                <div>
+                    <button style={style} type={"button"} onClick={open} className={"chattingBtn btn btn-outline-purple"}>
+                        {title && <span>{title}<br/></span>}
+                        <span>
                     {name}
-                    {unreadCount == 0 ? "" :
-                        <span style={styleUnread}>{unreadCount}</span>
-                    }
+                            {unreadCount == 0 ? "" :
+                                <span style={styleUnread}>{unreadCount}</span>
+                            }
                 </span>
-            </button>
-
-        </div>
-
+                    </button>
+                </div>
+            }
+        </Fragment>
     );
 }
 

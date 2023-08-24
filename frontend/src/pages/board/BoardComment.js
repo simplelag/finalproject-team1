@@ -111,7 +111,7 @@ function BoardComment(props) {
                         <form onSubmit={onSubmitComment}>
                             <textarea className={'form-control'} rows={3} onChange={onChangeCommentContent} value={commentContent}></textarea>
                             <div className={'d-flex justify-content-end'}>
-                                <button type={"submit"} className={'btn my-3 btn-outline-dark'}>댓글등록</button>
+                                <button type={"submit"} className={'btn my-3 btn-outline-purple'}>댓글등록</button>
                             </div>
                         </form>
                     }
@@ -134,10 +134,10 @@ function BoardComment(props) {
                                             <div className={'d-flex justify-content-end my-2'}>
                                                 {
                                                     visible &&
-                                                    <button type={"button"} className={'btn btn-outline-dark'} onClick={() => {onClickUpdate(item.commentPk)}}>수정</button>
+                                                    <button type={"button"} className={'btn btn-outline-purple'} onClick={() => {onClickUpdate(item.commentPk)}}>수정</button>
                                                 }
                                                 {
-                                                    visible && <button type={"button"} className={'btn btn-outline-dark ms-2'} onClick={() => {
+                                                    visible && <button type={"button"} className={'btn btn-outline-purple ms-2'} onClick={() => {
                                                         onClickDelete(item.commentPk, item.commentWriterId)
                                                     }}>삭제</button>
                                                 }
@@ -148,7 +148,7 @@ function BoardComment(props) {
                                                 <form onSubmit={() => {commentUpdate(item.commentPk)}}>
                                                     <textarea className={"form-control"} rows={3} onChange={onChangeCommentUpdateContent} defaultValue={item.commentContent} />
                                                     <div className={"d-flex justify-content-end"}>
-                                                        <button type={"submit"} className={"btn my-2 btn-outline-dark"}>작성</button>
+                                                        <button type={"submit"} className={"btn my-2 btn-outline-purple"}>작성</button>
                                                     </div>
                                                 </form>
                                             }
@@ -168,7 +168,7 @@ function BoardComment(props) {
                                             <p>{item.commentContent}</p>
                                             <div className={'d-flex justify-content-end my-2'}>
                                                 {
-                                                    visible && <button type={"button"} className={'btn btn-outline-dark'} onClick={() => {
+                                                    visible && <button type={"button"} className={'btn btn-outline-purple'} onClick={() => {
                                                         onClickDelete(item.commentPk, item.commentWriterId)
                                                     }}>삭제</button>
                                                 }
