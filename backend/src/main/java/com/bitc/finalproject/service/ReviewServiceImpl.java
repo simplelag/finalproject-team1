@@ -27,4 +27,17 @@ public class ReviewServiceImpl implements ReviewService {
         reviewRepository.deleteById(bookReviewPk);
     }
 
+    @Override
+    public void updateReview(int bookReviewPk, ReviewEntity reviewEntity) throws Exception {
+        ReviewEntity review = reviewRepository.findById(bookReviewPk).orElse(null);
+        if(review == null){
+            throw new Exception("Review not found");
+        }
+        review.setBookReviewGrade(reviewEntity.getBookReviewGrade());
+        review.setBookReviewTitle(reviewEntity.getBookReviewTitle());
+        review.setBookReviewContent(reviewEntity.getBookReviewContent());
+
+        reviewRepository.save(review);
+    }
+
 }

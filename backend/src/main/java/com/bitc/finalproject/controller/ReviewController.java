@@ -28,4 +28,9 @@ public class ReviewController {
         reviewService.deleteReview(bookReviewPk);
         return null;
     }
+    @RequestMapping(value = "/updateReview",method = RequestMethod.PUT)
+    public Object updateReview(@RequestParam("bookReviewPk")int bookReviewPk,@RequestBody ReviewEntity reviewEntity) throws Exception{
+        reviewService.updateReview(bookReviewPk,reviewEntity);
+        return null;
+    }
 }

@@ -19,7 +19,7 @@ function ReviewUpdate({
                         id="editTitle"
                         type="text"
                         name="editReviewTitle"
-                        value={selectedReviewData.reviewTitle}
+                        placeholder={selectedReviewData.reviewTitle}
                         onChange={onChangeTitle}
                     ></input>
                     <label htmlFor="editContent" className="form-label">새 내용</label>

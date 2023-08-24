@@ -56,6 +56,12 @@ function ReviewMain(props) {
             navi("/login")
         }
         else {
+            setIsEditMode(false); // 수정 모드 상태 재설정
+            setSelectedReviewIndex(null); // 선택한 인덱스 초기화
+            setSelectedReviewData({
+                reviewTitle: "",
+                reviewContent: ""
+            });
             setIsModalOpen(!isModalOpen);
         }
     }
