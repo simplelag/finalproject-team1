@@ -75,7 +75,7 @@ function SellerPage() {
                 'Content-Type': 'application/json'
             }
         })
-            .then(response => {
+            .then(response=> {
                 // 성공적으로 등록되었을 때의 처리
                 alert("판매등록 완료!")
                 navi("/");

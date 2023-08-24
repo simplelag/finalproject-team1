@@ -4,7 +4,7 @@ import Header from "../mainPages/Header";
 import Footer from "../mainPages/Footer";
 import OldBookList from "./OldBookList";
 import {useLocation, useNavigate} from "react-router-dom";
-import props from "sockjs-client/lib/event/trans-message";
+import Review from "../review/review/Review";
 
 function BookDetailPage(props) {
     const [BookInfo,setBookInfo] = useState([]);
@@ -23,6 +23,7 @@ function BookDetailPage(props) {
         })
             .then(res => {
                 setBookInfo(res.data.item[0]);
+
             })
             .catch(err => {
                 alert("페이지 로딩 오류")
@@ -64,7 +65,6 @@ function BookDetailPage(props) {
                 </div>
                 <div className={"col-sm-2 text-center"}>
                     <button className={"btn btn-dark mb-2"} onClick={onClickSell}> 판매 등록</button><br/>
-                    <button className={"btn btn-success"}>중고 알림</button>
                 </div>
             </div>
             <hr/>
@@ -74,6 +74,9 @@ function BookDetailPage(props) {
             }
             {
                 <OldBookList/>
+            }
+            {
+                BookInfo && <Review reviewIsbn13={location.state.ISBN13} />
             }
             <Footer/>
         </main>

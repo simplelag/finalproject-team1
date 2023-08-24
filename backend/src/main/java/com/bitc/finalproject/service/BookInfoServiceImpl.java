@@ -71,4 +71,9 @@ public class BookInfoServiceImpl implements BookInfoService{
     public BasketEntity purchaseBasketAfterMinusNumber(String userId, String bookId, int indivPrice) throws Exception {
         return basketRepository.findByBasketMemberIdAndBasketBookIdAndBasketBookPrice(userId, bookId, indivPrice);
     }
+
+    @Override
+    public void deleteSell(int salepk) throws Exception {
+        bookInfoRepository.deleteById(salepk);
+    }
 }

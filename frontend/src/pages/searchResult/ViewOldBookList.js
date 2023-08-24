@@ -55,6 +55,7 @@ function ViewOldBookList(props) {
             })
                 .then(response => {
                     alert("등록 성공!")
+                    navi("/")
                 })
                 .catch(error => {
                     // 등록 중에 오류가 발생했을 때의 처리
@@ -146,15 +147,6 @@ function ViewOldBookList(props) {
                     )
                 })
             }
-            {/*<Pagenation*/}
-            {/*    setList={setOldBookInfo}*/}
-            {/*    url= {oldBookInfo}*/}
-            {/*    numberUrl= {oldBookInfo.length}*/}
-            {/*    howManyContentsInAPage={10}*/}
-            {/*    howManyPagesInABlock={5}*/}
-            {/*    searchType={[]}*/}
-            {/*    order="boardPk,DESC"*/}
-            {/*/>*/}
             <Footer/>
         </main>
     )

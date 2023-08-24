@@ -68,10 +68,16 @@ public class MemberController {
             @RequestParam("name") String name,
             @RequestParam("email") String email,
             @RequestParam("phone") String phone,
-            @RequestParam("address") String address
+            @RequestParam("address") String address,
+            @RequestParam("authority") String authority
     ) throws Exception{
         MemberEntity memberEntity = null;
-        memberEntity = new MemberEntity(userId, password, name, email, phone, address);
+        if(authority.equals("admin")){
+            memberEntity = new MemberEntity(userId, password, name, email, phone, address, "admin");
+        }
+        else{
+            memberEntity = new MemberEntity(userId, password, name, email, phone, address);
+        }
         userService.saveMember(memberEntity);
     }
 
