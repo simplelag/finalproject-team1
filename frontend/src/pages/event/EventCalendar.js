@@ -34,9 +34,9 @@ function EventCalendar(props) {
         let next = [];
         //이번달 마지막날 계산
         for (let i = 1; i < 7 - nextDay; i++) {
-            // if (i === 0) {
-            //     return next;
-            // }
+            if (i === 0) {
+                return next;
+            }
             next.push(i);
         }
 
@@ -44,7 +44,7 @@ function EventCalendar(props) {
         now = [...Array(nextDate + 1).keys()].splice(1);
 
         // 합치기
-        return pre.concat(next, now);
+        return  pre.concat(now, next);
     }
 
     // useEffect(() => {
@@ -59,7 +59,7 @@ function EventCalendar(props) {
 
     const todayClick = () => {
         let Today = new Date().getDate();
-        let monthClick = new Date.getMonth() + 1;
+        let monthClick = new Date().getMonth() + 1;
 
         setMonth(monthClick);
         setToday(Today);
@@ -68,8 +68,10 @@ function EventCalendar(props) {
     return (
         <div>
             <Header />
+
             <CalendarHead year={year} month={month} setMonth={setMonth} todayClick={todayClick} />
             <CalendarBody year={year} month={month} today={today} totalDate={totalDate}/>
+
             <Footer />
         </div>
     )
