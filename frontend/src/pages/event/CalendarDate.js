@@ -32,7 +32,7 @@ function CalendarDate(props) {
                   (idx === 7) ? "red" : "" || (idx === 14) ? "red" : "" || (idx === 21) ? "red" : "" || (idx === 28) ? "red" : "" || (idx === 35) ? "red" : ""}}
                   onClick={() => setModal(true)}>{day}</span>
             {
-                modal && <EventModal year={year} month={month} day={day} setModal={setModal}/>
+                sessionStorage.getItem("grade") == "admin" && modal && <EventModal year={year} month={month} day={day} setModal={setModal}/>
             }
         </li>
     )
