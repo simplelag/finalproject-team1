@@ -10,7 +10,6 @@ public interface ReviewService {
 
     List<ReviewEntity> selectReviewList(String isbn13) throws Exception;
 
-    void deleteReview(int bookReviewPk) throws Exception;
 
-    List<ReviewEntity> myReviewList(String userId) throws Exception;
+    void deleteReview(int bookReviewPk)throws  Exception;
 }

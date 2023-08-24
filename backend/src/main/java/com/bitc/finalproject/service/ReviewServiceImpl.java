@@ -27,9 +27,4 @@ public class ReviewServiceImpl implements ReviewService {
         reviewRepository.deleteById(bookReviewPk);
     }
 
-    @Override
-    public List<ReviewEntity> myReviewList(String userId) throws Exception {
-        return reviewRepository.findByBookReviewBuyerIdOrderByBookReviewPkDesc(userId);
-    }
-
 }

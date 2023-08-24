@@ -1,7 +1,15 @@
 package com.bitc.finalproject.controller;
 
+<<<<<<< HEAD
 import com.bitc.finalproject.entity.MemberEntity;
 import com.bitc.finalproject.entity.PurchaseEntity;
+=======
+import com.bitc.finalproject.entity.BasketEntity;
+import com.bitc.finalproject.entity.BookEntity;
+import com.bitc.finalproject.entity.MemberEntity;
+import com.bitc.finalproject.entity.PurchaseEntity;
+import com.bitc.finalproject.service.BoardService;
+>>>>>>> parent of 01eb4176 (마이페이지 리뷰관리 탭 확인)
 import com.bitc.finalproject.service.BookInfoService;
 import com.bitc.finalproject.service.MemberService;
 import com.bitc.finalproject.service.PurchaseService;
@@ -21,6 +29,10 @@ public class MemberController {
     private final MemberService userService;
     private final BookInfoService bookInfoService;
     private final PurchaseService purchaseService;
+<<<<<<< HEAD
+=======
+    private final BoardService boardService;
+>>>>>>> parent of 01eb4176 (마이페이지 리뷰관리 탭 확인)
 
 //    로그인 시
     @RequestMapping(value = "/login", method = RequestMethod.POST)
@@ -108,6 +120,15 @@ public class MemberController {
     public Object showMySaleList(@RequestParam("userId") String userId) throws Exception{
         return bookInfoService.mySaleList(userId);
     }
+<<<<<<< HEAD
+=======
+
+//    마이페이지 - 내가 작성한 게시물 내역
+    @RequestMapping(value = "/login/myLogin/myBoardList", method = RequestMethod.GET)
+    public Object showMyBoardList(@RequestParam("userId") String userId) throws Exception{
+        return boardService.myBoardList(userId);
+    }
+>>>>>>> parent of 01eb4176 (마이페이지 리뷰관리 탭 확인)
 }
 
 
