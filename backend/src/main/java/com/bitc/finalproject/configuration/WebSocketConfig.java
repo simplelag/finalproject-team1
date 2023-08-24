@@ -1,12 +1,7 @@
 package com.bitc.finalproject.configuration;
 
-import lombok.RequiredArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.messaging.simp.config.ChannelRegistration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
-import org.springframework.stereotype.Component;
 import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
 import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
 import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerConfigurer;
@@ -15,8 +10,6 @@ import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerCo
 @Configuration
 @EnableWebSocketMessageBroker
 public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
-
-
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         // .addEndpoint("/ws"): 웹소켓 엔드포인트, 연결할때 /ws 로 연결하겠다고 클라이언트에서 설정해줘야됨
@@ -31,8 +24,9 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
         // @MessageMapping 메소드 : /app으로 온 메시지를 뭔가 처리를 해서 브로커로 보냄
         // 브로커 : /topic으로 온 메시지를 이를 구독하는 client에게 전달
     }
-
-
 }
+
+
+
 
 

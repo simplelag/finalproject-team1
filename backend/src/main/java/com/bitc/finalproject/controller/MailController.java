@@ -117,5 +117,3 @@ public class MailController {
         String room;
     }
 }
-
-
