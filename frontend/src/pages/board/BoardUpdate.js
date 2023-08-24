@@ -79,10 +79,10 @@ function BoardUpdate(props) {
                 <div className={'row'}>
                     <div className={'col-sm-10 mx-auto'}>
                         <div>
-                            <button type={'button'} className={'btn btn-outline-dark'} value={'일반'} onClick={onClickCategory}>일반</button>
-                            <button type={'button'} className={'btn btn-outline-dark ms-2'} value={'독후감'} onClick={onClickCategory}>독후감</button>
+                            <button type={'button'} className={'btn btn-outline-purple'} value={'일반'} onClick={onClickCategory}>일반</button>
+                            <button type={'button'} className={'btn btn-outline-purple ms-2'} value={'독후감'} onClick={onClickCategory}>독후감</button>
                             {
-                                visible && <button type={'button'} className={'btn btn-outline-dark ms-2'} value={'공지/이벤트'} onClick={onClickCategory}>공지/이벤트</button>
+                                visible && <button type={'button'} className={'btn btn-outline-purple ms-2'} value={'공지/이벤트'} onClick={onClickCategory}>공지/이벤트</button>
                             }
                         </div>
                         <div className={'my-3'}>
@@ -94,8 +94,8 @@ function BoardUpdate(props) {
                             <textarea className={'form-control'} rows={10} defaultValue={content} onChange={onChangeContent}></textarea>
                         </div>
                         <div className={'d-flex'}>
-                            <button type={'button'} className={'btn btn-outline-dark me-auto'} onClick={onClickList}>목록</button>
-                            <button type={'button'} className={'btn btn-outline-dark'} onClick={Update}>작성</button>
+                            <button type={'button'} className={'btn btn-outline-purple me-auto'} onClick={onClickList}>목록</button>
+                            <button type={'button'} className={'btn btn-outline-purple'} onClick={Update}>작성</button>
                         </div>
                     </div>
                 </div>

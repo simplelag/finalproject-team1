@@ -111,7 +111,7 @@ function ItemView(props) {
                                     <td>{item.saleSellerName}</td>
                                     <td key={item.saleDisabled}>{item.saleDisabled ? "불가능" : "가능"}</td>
                                     <td>
-                                        <button className={"btn btn-outline-dark py-0 float-end"} type={"button"}
+                                        <button className={"btn btn-outline-purple py-0 float-end"} type={"button"}
                                                 id={item.salePk} value={item.saleDisabled} onClick={show}>상세
                                         </button>
                                     </td>
@@ -141,7 +141,7 @@ function ItemView(props) {
                                                     <button type={"button"}
                                                             onClick={send}
                                                             value={item.salePk}
-                                                            className={"btn btn-outline-dark"}
+                                                            className={"btn btn-outline-purple"}
                                                     >확인
                                                     </button>
 

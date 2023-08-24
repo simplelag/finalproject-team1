@@ -6,6 +6,7 @@ import QuestionView from "./QuestionView";
 import ItemView from "./ItemView";
 import Footer from "../mainPages/Footer";
 import Header from "../mainPages/Header";
+import {Link} from "react-router-dom";
 
 
 function Admin(props) {
@@ -37,7 +38,11 @@ function Admin(props) {
             <Header/>
             <div className={"container"}>
                 <div className={"adminInfo border"} style={styleAdmin.info}>
-                    <h3>관리자 정보</h3>
+                    <div className={"d-flex justify-content-between"}>
+                        <h3>관리자 정보</h3>
+                        <Link to={`/login/myLogin/myUserUpdate`} className={'btn btn-success mb-2'}>관리자정보 수정</Link>
+                    </div>
+
                     <div className={"d-flex justify-content-between"}>
 
                         <div className={"adminInfo"}>

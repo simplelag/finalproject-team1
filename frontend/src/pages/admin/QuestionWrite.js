@@ -8,8 +8,8 @@ import Footer from "../mainPages/Footer";
 function QuestionWrite(props) {
 
     const [title, setTitle] = useState('');
-    const [name, setName] = useState(sessionStorage.getItem("name"))
-    const [id, setId] = useState(sessionStorage.getItem("id"))
+    const [name, setName] = useState(sessionStorage.getItem("name"));
+    const [id, setId] = useState(sessionStorage.getItem("id") || "");
     const [content, setContent] = useState('');
     const [category, setCategory] = useState('관리자문의');
     const [isAble, setIsAble] = useState(false);
@@ -37,7 +37,7 @@ function QuestionWrite(props) {
 
     const save = (e) => {
 
-        if (isAble) {
+        if (isAble && id != "") {
             axios.post('http://localhost:8080/question/write', null, {
                 params: {
                     boardCategory: category,
@@ -78,6 +78,9 @@ function QuestionWrite(props) {
                 .catch(() => {
                     alert("문의등록 오류")
                 })
+        }
+        else{
+            alert("로그인해주세요");
         }
     }
 
