@@ -5,6 +5,7 @@ import com.bitc.finalproject.service.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.type.descriptor.jdbc.OracleJsonBlobJdbcType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -93,8 +94,8 @@ public class MemberController {
 
 //    마이페이지 - 구매 내역
     @RequestMapping(value = "/login/myLogin/myPurchaseList", method = RequestMethod.GET)
-    public Object showMyPurchaseList(@RequestParam("userId") String userId, @RequestParam("state") int state) throws Exception{
-        return purchaseService.myPurchaseList(userId, state);
+    public Object showMyPurchaseList(@RequestParam("userId") String userId) throws Exception{
+        return purchaseService.myPurchaseList(userId);
     }
 
 //    마이페이지 - 구매 취소
@@ -124,6 +125,23 @@ public class MemberController {
     public Object showMySaleList(@RequestParam("userId") String userId) throws Exception{
         return bookInfoService.mySaleList(userId);
     }
+    
+//    마이페이지 - 판매 접수된 책을 배송하기 버튼 클릭 시 이벤트(현재는 한사람에게 책이 전부 팔렸을 때만)
+    @RequestMapping(value="/login/myLogin/mySalePost", method = RequestMethod.PUT)
+    public void showBookPost(@RequestBody BookEntity bookEntity) throws Exception{
+        String bookId = bookEntity.getSaleBookId();
+        String SellerId = bookEntity.getSaleSellerId();
+        int bookPrice = bookEntity.getSaleBookPrice();
+        int state = 1;
+        List<PurchaseEntity> book = purchaseService.findPurchasedBook(bookId, SellerId, bookPrice, state);
+        for(int i = 0; i < book.size(); i++){
+            PurchaseEntity book1 = book.get(i);
+            book1.setPurchaseParcel(book.get(i).getPurchaseParcel() + 1);
+            book1.setPurchasePostNumber("1");
+            purchaseService.insertPurchaseList(book1);
+        }
+    }
+
 
 //    마이페이지 - 내가 쓴 리뷰
     @RequestMapping(value = "/login/myLogin/myReviewList", method = RequestMethod.GET)

@@ -65,12 +65,17 @@ public class PurchaseServiceImpl implements PurchaseService{
     }
 
     @Override
-    public List<PurchaseEntity> myPurchaseList(String userId, int state) throws Exception {
-        return purchaseRepository.findByPurchaseBuyerIdAndPurchaseStateOrderByPurchasePkDesc(userId, state);
+    public List<PurchaseEntity> myPurchaseList(String userId) throws Exception {
+        return purchaseRepository.findEntitiesByPurchaseBuyerIdAndPurchaseStateNotZero(userId);
     }
 
     @Override
     public void myPurchaseCancel(PurchaseEntity purchaseEntity) throws Exception {
         purchaseRepository.delete(purchaseEntity);
+    }
+
+    @Override
+    public List<PurchaseEntity> findPurchasedBook(String bookId, String sellerId, int bookPrice, int state) throws Exception {
+        return purchaseRepository.findByPurchaseBookIdAndPurchaseSellerIdAndPurchasePaymentAndPurchaseState(bookId, sellerId, bookPrice, state);
     }
 }

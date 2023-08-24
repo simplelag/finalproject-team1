@@ -9,8 +9,7 @@ function PurchaseHistory(props) {
     useEffect(() => {
         axios.get('http://localhost:8080/login/myLogin/myPurchaseList', {
             params: {
-                userId: userId,
-                state : 1
+                userId: userId
             }
         })
             .then(res => {
@@ -86,7 +85,7 @@ function PurchaseHistory(props) {
                                         <div>
                                             {item.purchaseParcel > 1 ? "" :
                                             <div className={'d-grid'}>
-                                                <button type={'button'} className={'btn btn-danger'} onClick={() => handlePurchaseCancel(index)}>구매 취소</button>
+                                                {item.purchaseParcel >= 1 ? null :                                                 <button type={'button'} className={'btn btn-danger'} onClick={() => handlePurchaseCancel(index)}>구매 취소</button>}
                                             </div>}
                                         </div>
 
