@@ -15,6 +15,12 @@ public interface BoardRepository extends JpaRepository<BoardEntity, Integer> {
 
     List<BoardEntity> findAllByBoardCategoryOrderByBoardPkDesc(String boardCategory);
 
+    List<BoardEntity> findAllByBoardCategoryOrBoardCategoryOrderByBoardPkDesc(String boardCategory, String boardCategory2, Pageable pageable);
+
+    List<BoardEntity> findAllByBoardCategoryOrBoardCategoryOrderByBoardPkDesc(String boardCategory, String boardCategory2);
+
+    int countByBoardCategoryOrBoardCategory(String boardCategory, String boardCategory2);
+
     // left join해서 게시글 제목 등과 함께 코멘트 개수까지 표시할수 있는 쿼리
     // Pageable 객체를 받은것 만으로도 sql에 limit .. 구문을 추가해서 알아서 한페이지분량의 리스트만 select해줌
     @Query(

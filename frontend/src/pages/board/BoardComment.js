@@ -30,7 +30,7 @@ function BoardComment(props) {
                 }
             })
             .catch(err => {
-                alert("댓글 불러오기 실패")
+                alert(`댓글 불러오기 실패: ${err}`);
             })
     },[props])
 
@@ -126,16 +126,18 @@ function BoardComment(props) {
 
                                     return (
                                         <div key={item.commentPk} className={'border-top p-3'}>
-                                            <p className={'d-flex justify-content-end'}>{item.commentDatetime}</p>
-                                            <p>{item.commentWriterName}</p>
+                                            <div className={"d-flex"}>
+                                                <p className={"me-auto"}>{item.commentWriterName}</p>
+                                                <p>{item.commentDatetime}</p>
+                                            </div>
                                             <p>{item.commentContent}</p>
                                             <div className={'d-flex justify-content-end my-2'}>
                                                 {
                                                     visible &&
-                                                    <button type={"button"} className={'btn'} onClick={() => {onClickUpdate(item.commentPk)}}>수정</button>
+                                                    <button type={"button"} className={'btn btn-outline-dark'} onClick={() => {onClickUpdate(item.commentPk)}}>수정</button>
                                                 }
                                                 {
-                                                    visible && <button type={"button"} className={'btn'} onClick={() => {
+                                                    visible && <button type={"button"} className={'btn btn-outline-dark ms-2'} onClick={() => {
                                                         onClickDelete(item.commentPk, item.commentWriterId)
                                                     }}>삭제</button>
                                                 }
@@ -159,12 +161,14 @@ function BoardComment(props) {
                                     }
                                     return (
                                         <div key={item.commentPk} className={'border-top p-3'}>
-                                            <p className={'d-flex justify-content-end'}>{item.commentDatetime}</p>
-                                            <p>{item.commentWriterName}</p>
+                                            <div className={"d-flex"}>
+                                                <p className={"me-auto"}>{item.commentWriterName}</p>
+                                                <p>{item.commentDatetime}</p>
+                                            </div>
                                             <p>{item.commentContent}</p>
                                             <div className={'d-flex justify-content-end my-2'}>
                                                 {
-                                                    visible && <button type={"button"} className={'btn'} onClick={() => {
+                                                    visible && <button type={"button"} className={'btn btn-outline-dark'} onClick={() => {
                                                         onClickDelete(item.commentPk, item.commentWriterId)
                                                     }}>삭제</button>
                                                 }

@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import axios from "axios";
 import {useLocation, useNavigate} from "react-router-dom";
 import Pagenation from "../common/Pagenation";
+import MailOpenButton from "../common/MailOpenButton";
 
 
 function OldBookList() {
@@ -115,6 +116,9 @@ function OldBookList() {
                             <div className={"col-sm-2 text-center"}>
                                 <a href="#"className={"btn btn-link bg-dark mb-2"} style={{fontSize:"10pt",color:"white",textDecoration:"none",width:"100pt"}} onClick={() => save(index)}>장바구니 담기</a>
                                 <a href="#" className={"btn btn-link bg-dark"} style={{fontSize:"10pt",color:"white",textDecoration:"none", width:"100pt"}} onClick={() => handleInPurchase(index)}>바로 구매</a>
+                                {book.saleSellerId==sessionStorage.getItem("id")? null:
+                                    <MailOpenButton room={book.salePk+"_"+sessionStorage.getItem("id")} name={"판매자문의"} />
+                                }
                             </div>
                         </div>
                     )

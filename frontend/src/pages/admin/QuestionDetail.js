@@ -20,6 +20,8 @@ function QuestionDetail(props) {
     const [content, setContent] = useState('');
     const [category, setCategory] = useState('');
     const [datetime, setDatetime] = useState("");
+    const [authority, setAuthority] = useState(sessionStorage.getItem("grade") || "block");
+    const [commentCount, setCommentCount] = useState(0);
 
 
     // 게시글 정보 받아오는 부분
@@ -28,10 +30,11 @@ function QuestionDetail(props) {
             .then(res => {
                 setTitle(res.data.boardTitle);
                 setName(res.data.boardWriterName);
-                setBoardId(res.data.boardWriterId)
+                setBoardId(res.data.boardWriterId);
                 setContent(res.data.boardContent);
                 setCategory(res.data.boardCategory);
-                setDatetime(res.data.boardDatetime)
+                setDatetime(res.data.boardDatetime);
+
             })
             .catch(err => {
                 alert("BoardDetail Connect Err")
@@ -44,17 +47,14 @@ function QuestionDetail(props) {
             params: {
                 boardWriterId: boardId,
                 nowId: id,
-                authority: sessionStorage.getItem("grade")
+                authority: authority
             }
         })
             .then(res => {
-                navi('/board')
+                navi('/login/myLogin')
             })
     }
 
-    const onClickUpdate = () => {
-        navi("/board/update", {state: {boardPk: boardPk}});
-    }
 
     return (
         <div>
@@ -73,16 +73,18 @@ function QuestionDetail(props) {
                             <p>
                                 {content}
                             </p>
-                            <img src={`/questions/image/${boardPk}`} alt=""/>
+                            <img src={`/questions/image/${boardPk}`} alt="" className={"w-100"}/>
                         </div>
                         <div className={"d-flex justify-content-end"}>
                             <a href={sessionStorage.getItem("grade")=="admin"? "/admin": "/login/myLogin"} className={'btn btn-outline-dark'}>목록</a>
+                            {authority=="user" &&
+                                <button className={'btn btn-outline-dark'} onClick={onClickDelete}>삭제</button>}
                         </div>
                         <hr/>
                     </div>
                 </div>
             </div>
-            <BoardComment boardPk={boardPk} />
+            <BoardComment boardPk={boardPk} setCommentCount={setCommentCount} />
             <Footer />
         </div>
     )

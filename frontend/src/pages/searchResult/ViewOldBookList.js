@@ -7,6 +7,7 @@ import Footer from "../mainPages/Footer";
 import axios from "axios";
 import {useLocation, useNavigate} from "react-router-dom";
 import Pagenation from "../common/Pagenation";
+import MailOpenButton from "../common/MailOpenButton";
 
 function ViewOldBookList(props) {
     const [oldBookInfo, setOldBookInfo] = useState([]);
@@ -121,6 +122,9 @@ function ViewOldBookList(props) {
                                 <button type={'button'} className={'btn btn-dark'} onClick={() => save(index)}> 장바구니에 넣기 </button>
                                 <br/>
                                 <button type={'button'} className={'btn btn-dark mt-2'} onClick={() => handleInPurchase(index)}> 즉시 구매하기 </button>
+                                {info.saleSellerId==sessionStorage.getItem("id")? null:
+                                    <MailOpenButton room={info.salePk+"_"+sessionStorage.getItem("id")} name={"판매자문의"} />
+                                }
                             </div>
                             <div className={'d-flex mt-2'}>
                                 <table className={'table'}>

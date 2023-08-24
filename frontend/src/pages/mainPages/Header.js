@@ -60,7 +60,7 @@ function Header(props) {
             <div className={'container my-3'}>
                 <div className="d-flex align-items-end justify-content-between">
                     <a href={"/"}>
-                        <img className={"headerLogo"} src="/image/logo2.png" alt="home"/>
+                        <img className={"headerLogo"} src="/image/logo3.png" alt="home"/>
                     </a>
 
                     <div className={"d-flex align-items-end ps-5"}>

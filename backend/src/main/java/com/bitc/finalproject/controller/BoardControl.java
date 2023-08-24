@@ -33,17 +33,35 @@ public class BoardControl {
         return boardEntityList;
     }
 
-    @RequestMapping(value = "/board/notice", method = RequestMethod.GET)
+    @RequestMapping(value = "/board/category", method = RequestMethod.GET)
     public Object boardNotice(@RequestParam("boardCategory") String boardCategory) throws Exception {
         List<BoardEntity> boardEntityList = boardService.selectBoardNoticeList(boardCategory);
 
         return boardEntityList;
     }
 
-//    @RequestMapping(value = "/board/count", method = RequestMethod.GET)
-//    public int boardCount() throws Exception {
-//        return
-//    }
+    @RequestMapping(value = "/board/normal", method = RequestMethod.GET)
+    public Object boardNotice(@RequestParam("boardCategory") String boardCategory, @RequestParam("boardCategory2") String boardCategory2,
+                              Pageable pageable) throws Exception {
+        List<BoardEntity> boardEntityList = boardService.selectBoardNomalList(boardCategory, boardCategory2, pageable);
+
+        return boardEntityList;
+    }
+
+    @RequestMapping(value = "/board/count", method = RequestMethod.GET)
+    public Object boardCount(@RequestParam("boardCategory") String boardCategory, @RequestParam("boardCategory2") String boardCategory2) throws Exception {
+        List<BoardEntity> boardEntityList = boardService.boardListCount(boardCategory, boardCategory2);
+
+        return boardEntityList;
+    }
+
+
+    @RequestMapping(value = "board/countList", method = RequestMethod.GET)
+    public Object boardListCount(@RequestParam("boardCategory") String boardCategory, @RequestParam("boardCategory2") String boardCategory2) throws Exception {
+        return boardService.countList(boardCategory, boardCategory2);
+    }
+
+
 
 
     @RequestMapping(value = "/board/{boardPk}", method = RequestMethod.GET)
