@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.awt.print.Book;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @CrossOrigin("http://localhost:3000")
 @RequiredArgsConstructor
@@ -69,6 +71,8 @@ public class PurchaseController {
             @RequestBody String postData, @RequestParam("userId") String userId,
             @RequestParam("userName") String userName
     ) throws Exception {
+        Map<Object, Object> result = new HashMap<>();
+
         ObjectMapper objectMapper = new ObjectMapper();
         JsonNode jsonNode = objectMapper.readTree(postData);
 
@@ -111,7 +115,10 @@ public class PurchaseController {
             purchaseEntity = purchaseService.insertPurchaseList(purchaseEntity);
             purchaseEntities.add(purchaseEntity);
         }
-        return purchaseEntities;
+        result.put("data1", cheekSaleList);
+        result.put("data2", purchaseEntities);
+        return result;
+//        return purchaseEntities;
     }
 
     //    구매 리스트 가져오기

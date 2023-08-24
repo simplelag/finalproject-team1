@@ -8,6 +8,7 @@ function PurchaseMain(props) {
     const location = useLocation();
     const list = location.state.value;
     const number = location.state.number
+    const number1 = location.state.number1
 
     const [userId, setUserId] = useState(sessionStorage.getItem("id"))
     const [purchaseList, setPurchaseList ] = useState([]);
@@ -70,12 +71,14 @@ function PurchaseMain(props) {
         })
     },[])
 
-    
     // 수량 체크
-    const [selectedValue, setSelectedValue] = useState(1);
+    const [selectedValue, setSelectedValue] = useState([...number1]);
 
-    const handleNumberInput = (index, e) => {
-        setSelectedValue(e.target.value)
+    const handleNumberChange = (index, e) => {
+        // select에 값 변경하기
+        const newValues = [...selectedValue];
+        newValues[index] = parseInt(e.target.value);
+        setSelectedValue(newValues);
         purchaseList[index].purchaseNumber = parseInt(e.target.value);
         console.log(purchaseList)
     };
@@ -112,25 +115,21 @@ function PurchaseMain(props) {
                                         <td className={'align-middle text-center'}>{item.purchasePayment}</td>
                                         <td className={'align-middle text-center'}>
                                             {/*{item.purchaseNumber}*/}
-                                            {/*<select value={selectedValue} onChange={(e) => handleNumberInput(index, e)}>*/}
                                                 {
-                                                    number.map((item, index) => {
+                                                    number.slice(index, index+1).map((item1) => {
                                                         return(
                                                             <div key={index}>
-                                                                <select value={selectedValue} onChange={(e) => handleNumberInput(index, e)}>
-                                                                    {Array.from(Array(item), (_, index1) => (
-                                                                        <option key={index1} value={index1 + 1}>{index1 + 1}</option>
+                                                                <select value={selectedValue[index]} onChange={(e) => handleNumberChange(index, e)}>
+                                                                    {Array.from(Array(item1), (_, index1) => (
+                                                                        <option key={index1} value={index1 + 1}>
+                                                                            {index1 + 1}
+                                                                        </option>
                                                                     ))}
                                                                 </select>
                                                             </div>
                                                         );
                                                     })
                                                 }
-                                                {/*{Array.from(Array(item.purchaseNumber), (_, index1) => (*/}
-                                                {/*{Array.from((AllNumber), (_, index1) => (*/}
-                                                {/*    <option key={index1} value={index1 + 1}>{index1 + 1}</option>*/}
-                                                {/*))}*/}
-                                            {/*</select>*/}
                                         </td>
                                     </tr>
                                 );
@@ -138,13 +137,6 @@ function PurchaseMain(props) {
                         }
                     </tbody>
                 </table>
-            </div>
-            <div>
-                <ul>
-                    {/*{selectedValue.map((item, index) => (*/}
-                    {/*    <li key={index}>{item}</li>*/}
-                    {/*))}*/}
-                </ul>
             </div>
             <PurchaseInfor purchaseList={purchaseList} />
         </div>

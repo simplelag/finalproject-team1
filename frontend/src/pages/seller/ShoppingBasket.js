@@ -76,12 +76,17 @@ function ShoppingBasket() {
             })
                 .then(res => {
                     // 자기 자신꺼 구매 불가하게
-                    console.log(res.data)
                     let checkId = 0
                     let checkIndex = new Array();
+                    // 자기가 구입한 제품 구매 불가하게
                     let checkPurchase = 0
                     let checkPurchaseIndex = new Array();
-                    res.data.map((item, index) => {
+                    // 구매할 수 있는 총 수량
+                    let a = new Array();
+                    // 구매할 수 있는 초기값 수량
+                    let b = new Array();
+                    res.data.data2.map((item, index) => {
+                        b.push(item.saleBookPieces);
                         if(item.purchaseSellerId === sessionStorage.getItem("id")){
                             checkId++
                             checkIndex.push(index+1);
@@ -91,8 +96,11 @@ function ShoppingBasket() {
                             checkPurchaseIndex.push(index+1);
                         }
                     })
+                    res.data.data1.map((item) => {
+                        a.push(item.saleBookPieces);
+                    })
                     if(checkId === 0 && checkPurchase === 0){
-                        navi("/purchase", {state: {value : res.data}})
+                        navi("/purchase", {state: {value : res.data.data2, number : a, number1 : b}})
                     }else{
                         if(checkId !== 0){
                             alert('선택한 것 중 ' + checkIndex + '번쨰로 선택한 것은 자기가 판매한 책으로 구입할 수 없습니다.')
