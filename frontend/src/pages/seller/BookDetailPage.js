@@ -65,7 +65,6 @@ function BookDetailPage(props) {
                 </div>
                 <div className={"col-sm-2 text-center"}>
                     <button className={"btn btn-dark mb-2"} onClick={onClickSell}> 판매 등록</button><br/>
-                    <button className={"btn btn-success"}>중고 알림</button>
                 </div>
             </div>
             <hr/>

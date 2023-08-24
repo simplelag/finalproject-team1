@@ -3,13 +3,14 @@ import {Modal, ModalHeader, ModalBody, ModalFooter, Card, CardBody, CardTitle, C
 import StarIcon from "./StarIcon";
 import {useLocation, useNavigate} from "react-router-dom";
 import axios from "axios";
+import ReviewUpdate from "./ReviewUpdate";
 
 
 
 
 function ReviewMain(props) {
     const location = useLocation();
-    const navi = useNavigate()
+    const navi = useNavigate();
     const [reviewPk, setReviewPk] = useState(0);
     const [reviewBookIsbn,setReviewBookIsbn] = useState(location.state.ISBN13);
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -18,11 +19,16 @@ function ReviewMain(props) {
     const [reviewContent,setreviewContent] =useState("");
     const[buyerId,setBuyerId]  = useState(sessionStorage.getItem("id"));
     const[buyerName,setBuyerName] = useState(sessionStorage.getItem("name"));
-    const[myReviews,setmyReviews] = useState([]);
+    const[updateReviews,setupdateReviews] = useState([]);
     const[allReviews,setAllReviews] = useState([]);
-
     const[reViewrId,setReviewrId]= useState("");
     const[reViewrName,setReviewrName] = useState("");
+    const[isEditMode, setIsEditMode] = useState(false);
+    const [selectedReviewIndex, setSelectedReviewIndex] = useState(null);
+    const [selectReviewData, setSelectedReviewData] =useState({
+        reviewTitle: " ",
+        reviewContent: "",
+    });
 
     useEffect( () => {
         console.log(reviewBookIsbn);
@@ -54,6 +60,16 @@ function ReviewMain(props) {
         }
     }
 
+    const handleEditReview = (index) =>{
+        const reviewToedit = allReviews[index];
+        setSelectedReviewIndex(index);
+        setSelectedReviewData({
+            reviewTitle: reviewToedit.bookReviewTitle,
+            reviewContent: reviewToedit.bookReviewContent,
+        });
+        setIsEditMode(true);
+        setIsModalOpen(true);
+    };
     const handleStarClick = (value) => {
         setStarValue(value);
     };
@@ -72,7 +88,6 @@ function ReviewMain(props) {
         setreviewTitle(e.target.value)
     }
     const deleteReview = (index) =>{
-        console.log(allReviews[index].bookReviewPk)
         axios.delete("http://localhost:8080/deleteReview",{
             params: {
                 bookReviewPk: allReviews[index].bookReviewPk
@@ -80,8 +95,19 @@ function ReviewMain(props) {
             })
             .then(res => {
                 alert("삭제를 완료하였습니다.")
-                navi("/")
+                const updateallReview = allReviews.filter(Review => Review.bookReviewPk !== allReviews[index].bookReviewPk);
+                setAllReviews(updateallReview);
             })
+    }
+    const updateReview = (index) =>{
+            axios.get("http://localhost:8080",{
+                params:{
+                    bookReviewPk: allReviews[index].bookReviewPk
+                }
+            })
+                .then(res =>{
+
+                })
     }
 
 
@@ -94,18 +120,67 @@ function ReviewMain(props) {
             bookReviewContent: reviewContent,
             bookReviewIsbn13: reviewBookIsbn,
         }
-
-        axios.post("http://localhost:8080/saveReview",requestData,{
-            headers:{
-                'Content-Type': 'application/json'
-            }
-        })
-            .then(response => {
-                alert("리뷰 작성 성공!")
-        })
-            .catch(error =>{
-                console.log(error);
+        if (isEditMode) {
+            // 수정 모드일 경우 기존 리뷰 업데이트
+            axios.put(`http://localhost:8080/updateReview/${allReviews[selectedReviewIndex].bookReviewPk}`, requestData, {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
             })
+                .then(response => {
+                    // 성공 처리
+                    alert("리뷰 수정 성공!");
+                    // 수정한 데이터로 allReviews 배열 업데이트
+                    const updatedReviews = [...allReviews];
+                    updatedReviews[selectedReviewIndex] = {
+                        ...updatedReviews[selectedReviewIndex],
+                        ...requestData
+                    };
+                    setAllReviews(updatedReviews);
+                    setIsEditMode(false);
+                    setSelectedReviewIndex(null);
+                    setSelectedReviewData({
+                        reviewTitle: "",
+                        reviewContent: ""
+                    });
+                    toggleModal(); // 모달 닫기
+                })
+                .catch(error => {
+                    // 에러 처리
+                    console.log(error);
+                });
+        } else {
+            // 수정 모드가 아닐 경우 새 리뷰 작성
+            axios.post("http://localhost:8080/saveReview", requestData, {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+                .then(response => {
+                    // 성공 처리
+                    alert("리뷰 작성 성공!");
+                    // 새 데이터로 allReviews 배열 업데이트
+                    setAllReviews([...allReviews, requestData]);
+                    toggleModal(); // 모달 닫기
+                })
+                .catch(error => {
+                    // 에러 처리
+                    console.log(error);
+                });
+        }
+
+
+        // axios.post("http://localhost:8080/saveReview",requestData,{
+        //     headers:{
+        //         'Content-Type': 'application/json'
+        //     }
+        // })
+        //     .then(response => {
+        //         alert("리뷰 작성 성공!")
+        // })
+        //     .catch(error =>{
+        //         console.log(error);
+        //     })
     }
 
     return (
@@ -142,7 +217,8 @@ function ReviewMain(props) {
                                         </div>
                                         {Review.bookReviewBuyerId === sessionStorage.getItem("id")? (
                                             <div className="d-flex justify-content-end">
-                                                <button className="btn btn-danger" onClick={() => deleteReview(index)}>삭제</button>
+                                                <button className="btn btn-dark" onClick={() => handleEditReview(index)}>수정</button>
+                                                <button className="btn btn-danger ms-2" onClick={() => deleteReview(index)}>삭제</button>
                                             </div>
                                         ): (
                                             <div>
@@ -154,7 +230,16 @@ function ReviewMain(props) {
                         })
                 )}
             </div>
-
+            {isEditMode ? (
+                <ReviewUpdate
+                    isOpen={isModalOpen}
+                    toggle={toggleModal}
+                    selectedReviewData={selectReviewData}
+                    onChangeTitle={onChangeTitle}
+                    onChangeContent={onChangeContent}
+                    onSaveEdit={save}
+                />
+                ):(
                 <Modal isOpen={isModalOpen} toggle={toggleModal}>
                     <ModalHeader toggle={toggleModal}>리뷰 작성</ModalHeader>
                     <ModalBody>
@@ -194,6 +279,7 @@ function ReviewMain(props) {
                                 <button type="reset" className="btn btn-dark" id="erase" onClick={reset}>지우기</button>
                             </ModalFooter>
                 </Modal>
+            )}
         </div>
     );
 }

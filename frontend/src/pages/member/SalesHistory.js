@@ -1,10 +1,12 @@
 import React, {useEffect, useState} from 'react';
 import axios from "axios";
+import {useNavigate} from "react-router-dom";
 
 function SalesHistory(props) {
 
     const [userId, setUserId] = useState(sessionStorage.getItem("id"))
     const [ mySaleList, setMySaleList ] = useState([])
+    const navi = useNavigate();
 
     useEffect(() => {
         axios.get('http://localhost:8080/login/myLogin/mySaleList', {
@@ -13,13 +15,23 @@ function SalesHistory(props) {
             }
         })
             .then(res => {
+                console.log(res)
                 setMySaleList(res.data)
             })
     },[]);
 
     //  판매자가 판매 취소하기
     const handleCancel = (index) => {
-
+            axios.delete("http://localhost:8080/deleteSell",{
+                params:{
+                    salePk: mySaleList[index].salePk
+                }
+            })
+                .then(res => {
+                    alert("삭제를 완료하였습니다.")
+                    const updateBookInfo = mySaleList.filter(item => item.salePk !== mySaleList[index].salePk );
+                    setMySaleList(updateBookInfo);
+                })
     }
 
     return (
