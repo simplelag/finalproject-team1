@@ -49,7 +49,7 @@ function MailOpenButton(props) {
             {
                 id &&
                 <div>
-                    <button style={style} type={"button"} onClick={open} className={"chattingBtn btn btn-outline-purple"}>
+                    <button style={style} type={"button"} onClick={open} className={"chattingBtn btn btn-outline-purple my-2"}>
                         {title && <span>{title}<br/></span>}
                         <span>
                     {name}

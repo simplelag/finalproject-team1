@@ -8,6 +8,7 @@ import com.bitc.finalproject.repository.BasketRepository;
 import com.bitc.finalproject.repository.BookInfoRepository;
 import com.bitc.finalproject.repository.PurchaseRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -65,8 +66,8 @@ public class PurchaseServiceImpl implements PurchaseService{
     }
 
     @Override
-    public List<PurchaseEntity> myPurchaseList(String userId, int state) throws Exception {
-        return purchaseRepository.findByPurchaseBuyerIdAndPurchaseStateOrderByPurchasePkDesc(userId, state);
+    public List<PurchaseEntity> myPurchaseList(String userId, int state, Pageable pageable) throws Exception {
+        return purchaseRepository.findByPurchaseBuyerIdAndPurchaseStateOrderByPurchasePkDesc(userId, state, pageable);
     }
 
     @Override

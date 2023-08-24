@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {Fragment, useEffect, useState} from "react";
 import ViewMainBook from "./ViewMainBook";
 
 import Header from "../mainPages/Header";
@@ -39,30 +39,33 @@ function ViewMainList(props) {
     let i = 0;
 
     return (
-        <div className={'container'}>
+        <Fragment>
             <Header />
-            <div className={"mt-5"}>
-                <span>"베스트셀러" 검색결과 총 {viewNum}개</span>
-                <div className={'my-3'}>
-                    <select defaultValue={viewNum} onChange={onChangeViewNum} className={'form-select form-select-sm my-2'}>
-                        <option value={'10'}>Top 10</option>
-                        <option value={'20'}>Top 20</option>
-                    </select>
+            <div className={'container'}>
+                <div className={"mt-5"}>
+                    <span>"베스트셀러" 검색결과 총 {viewNum}개</span>
+                    <div className={'my-3'}>
+                        <select defaultValue={viewNum} onChange={onChangeViewNum} className={'form-select form-select-sm my-2'}>
+                            <option value={'10'}>Top 10</option>
+                            <option value={'20'}>Top 20</option>
+                        </select>
+                    </div>
                 </div>
+                {
+                    console.log(best)
+                }
+                {
+                    best.map(item => {
+                        i++;
+                        return (
+                            <ViewMainBook key={item.isbn13} data={item} rank={i}/>
+                        )
+                    })
+                }
             </div>
-            {
-                console.log(best)
-            }
-            {
-                best.map(item => {
-                    i++;
-                    return (
-                        <ViewMainBook key={item.isbn13} data={item} rank={i}/>
-                    )
-                })
-            }
             <Footer />
-        </div>
+        </Fragment>
+
     )
 }
 

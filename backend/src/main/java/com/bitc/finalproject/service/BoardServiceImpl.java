@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -71,7 +72,9 @@ public class BoardServiceImpl implements BoardService{
     }
 
     @Override
-    public List<BoardEntity> myBoardList(String userId) throws Exception {
-        return boardRepository.findByBoardWriterIdOrderByBoardDatetimeDesc(userId);
+    public List<BoardEntity> myBoardList(String userId, Pageable pageable) throws Exception {
+        String[] list = {"일반","독후감"};
+        return boardRepository.findByBoardWriterIdAndAndBoardCategoryInOrderByBoardDatetimeDesc(userId, list ,pageable);
     }
+
 }

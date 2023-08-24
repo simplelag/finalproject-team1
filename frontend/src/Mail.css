@@ -28,13 +28,9 @@
     margin: 0.14rem;
 }
 
-[class|="bubble"] .name span{
-    border-radius: 0.3rem;
-    /*background: #fcb918;*/
-    background: #eee;
-    padding: 0rem 0.4rem;
-}
+[class|="bubble"] .name span {
 
+}
 .bubble-me .name{
 
 }

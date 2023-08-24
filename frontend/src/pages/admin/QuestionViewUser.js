@@ -26,7 +26,8 @@ function QuestionViewUser(props) {
                 </tr>
                 </thead>
                 <tbody>
-                {
+                { boardList.length==0?
+                    <tr><td colSpan={4} className={"text-center"}>문의 내역이 없습니다.</td></tr> :
                     boardList.map(item => {
                         return (
                             <tr key={item.boardPk}>
