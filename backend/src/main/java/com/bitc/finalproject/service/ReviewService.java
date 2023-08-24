@@ -12,4 +12,6 @@ public interface ReviewService {
 
 
     void deleteReview(int bookReviewPk)throws  Exception;
+
+    List<ReviewEntity> myReviewList(String userId) throws Exception;
 }

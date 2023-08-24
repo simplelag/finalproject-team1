@@ -1,16 +1,15 @@
 import React, {useEffect, useState} from 'react';
-import {useNavigate} from "react-router-dom";
 import axios from "axios";
 
 function ReviewHistory(props) {
 
     const [userId, setUserId] = useState(sessionStorage.getItem("id"))
-    const [ myReviewList, setMyReviewList ] = useState([])
-    const [ myBookTitle, setMyBookTitle] = useState([])
+    const [myReviewList, setMyReviewList] = useState([])
+    const [myBookTitle, setMyBookTitle] = useState([])
 
     useEffect(() => {
         axios.get('http://localhost:8080/login/myLogin/myReviewList', {
-            params:{
+            params: {
                 userId: userId
             }
         })
@@ -19,7 +18,7 @@ function ReviewHistory(props) {
                 setMyReviewList(res.data.data1);
                 setMyBookTitle(res.data.data2);
             })
-    },[]);
+    }, []);
 
     return (
         <div className={'container my-4'}>
@@ -42,12 +41,12 @@ function ReviewHistory(props) {
                     </thead>
                     <tbody>
                     {
-                        myReviewList.map((item,index) => {
+                        myReviewList.map((item, index) => {
                             return (
                                 <tr key={item.salePk}>
                                     <td className={'align-middle'}>
-                                        {myBookTitle.slice(index, index+1).map((item, index1) => {
-                                            return(
+                                        {myBookTitle.slice(index, index + 1).map((item, index1) => {
+                                            return (
                                                 <div>
                                                     {item}
                                                     {/*{item == "판매하는 책이 아니어서 리뷰를 쓸 수 없습니다." ? <td rowSpan="5">1</td> : item}*/}

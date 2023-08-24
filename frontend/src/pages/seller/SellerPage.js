@@ -5,59 +5,57 @@ import Footer from "../mainPages/Footer";
 import {useLocation, useNavigate} from "react-router-dom";
 
 
-
-
 function SellerPage() {
 
     const location = useLocation();
     const navi = useNavigate();
 
-    const [text,setText] =useState('');
-    const[bookList,setBookList] = useState([]);
-    const[salePrice,setsalePrice] = useState('');
-    const[discription,setdiscription] = useState('');
-    const[postPrice,setpostPrice] = useState(0);
-    const[bookTitle,setbookTitle] =useState('');
-    const[bookISBN,setbookISBN] = useState(0);
-    const[bookCover,setbookCover] = useState('');
-    const[sellerId,setsellerId]  = useState(sessionStorage.getItem("id"));
-    const[sellerName,setSellerName] = useState(sessionStorage.getItem("name"));
-    const[bookPrice,setbookPrice] = useState(0);
-    const[bookPieces,setbookPieces] = useState(1);
-    const[bookGrade,setbookGrade] = useState(3);
+    const [text, setText] = useState('');
+    const [bookList, setBookList] = useState([]);
+    const [salePrice, setsalePrice] = useState('');
+    const [discription, setdiscription] = useState('');
+    const [postPrice, setpostPrice] = useState(0);
+    const [bookTitle, setbookTitle] = useState('');
+    const [bookISBN, setbookISBN] = useState(0);
+    const [bookCover, setbookCover] = useState('');
+    const [sellerId, setsellerId] = useState(sessionStorage.getItem("id"));
+    const [sellerName, setSellerName] = useState(sessionStorage.getItem("name"));
+    const [bookPrice, setbookPrice] = useState(0);
+    const [bookPieces, setbookPieces] = useState(1);
+    const [bookGrade, setbookGrade] = useState(3);
 
-    const onChangetext = (e) =>{
+    const onChangetext = (e) => {
         setText(e.target.value);
     }
-    const onChangePrice = (e) =>{
+    const onChangePrice = (e) => {
         setbookPrice(e.target.value);
     }
-    const onChangediscription = (e) =>{
+    const onChangediscription = (e) => {
         setdiscription(e.target.value);
     }
-    const onChangeGrade = (e) =>{
+    const onChangeGrade = (e) => {
         setbookGrade(e.target.value);
     }
-    const onChangePieces =(e) =>{
+    const onChangePieces = (e) => {
         setbookPieces(e.target.value);
     }
 
-   useEffect(() => {
-       axios.get('http://localhost:8080/searchIsbn', {
-           params: {
-               ISBN13: location.state.ISBN13
-           }
-       })
-           .then(res => {
-               setBookList(res.data.item);
-               setbookISBN(res.data.item[0].isbn13)
-               setbookCover(res.data.item[0].cover)
-               setbookTitle(res.data.item[0].title)
-           })
-       },[]);
+    useEffect(() => {
+        axios.get('http://localhost:8080/searchIsbn', {
+            params: {
+                ISBN13: location.state.ISBN13
+            }
+        })
+            .then(res => {
+                setBookList(res.data.item);
+                setbookISBN(res.data.item[0].isbn13)
+                setbookCover(res.data.item[0].cover)
+                setbookTitle(res.data.item[0].title)
+            })
+    }, []);
 
-    const save = () =>{
-        const requestData ={
+    const save = () => {
+        const requestData = {
             saleBookId: bookISBN,
             saleImgSrc: bookCover,
             saleSellerId: sellerId,
@@ -71,11 +69,11 @@ function SellerPage() {
         }
 
         axios.post("http://localhost:8080/sellBookInfo", requestData, {
-            headers:{
+            headers: {
                 'Content-Type': 'application/json'
             }
         })
-            .then(response=> {
+            .then(response => {
                 // 성공적으로 등록되었을 때의 처리
                 alert("판매등록 완료!")
                 navi("/");
@@ -90,9 +88,9 @@ function SellerPage() {
 
         <main className={"container"}>
             <Header/>
-                {bookList.map(item => {
-                    return(
-                        <div className={"mt-4"}>
+            {bookList.map(item => {
+                return (
+                    <div className={"mt-4"}>
                         <div className={"card mb-3 mt-3"}>
                             <div className={"row g-0"}>
                                 <div className={"col-md-8"}>
@@ -110,10 +108,10 @@ function SellerPage() {
                                 </div>
                             </div>
                         </div>
-                        </div>
-                    )
-                })}
-                <h4>상품 기본 정보</h4>
+                    </div>
+                )
+            })}
+            <h4>상품 기본 정보</h4>
 
 
             <div className={"mt-3 p-2"}>
@@ -140,10 +138,12 @@ function SellerPage() {
             <div className={"mt-3 p-2"}>
                 <h4>상품 설명/유의사항</h4>
                 <form>
-                    <textarea name="explain" id="explain" cols="30" rows="5" value={discription} onChange={onChangediscription}></textarea>
+                    <textarea name="explain" id="explain" cols="30" rows="5" value={discription}
+                              onChange={onChangediscription}></textarea>
                     <br/>
                     <label className={"form-label"}>도서 상태</label>
-                    <input type="text" className={"form-control"} onChange={onChangeGrade} value={bookGrade} placeholder={"미입력시 가장낮은 등급인 3등급으로 입력됩니다."}/>
+                    <input type="text" className={"form-control"} onChange={onChangeGrade} value={bookGrade}
+                           placeholder={"미입력시 가장낮은 등급인 3등급으로 입력됩니다."}/>
                 </form>
             </div>
             <div className={"mt-3 p-2 "}>
@@ -152,7 +152,8 @@ function SellerPage() {
                 </form>
             </div>
             <div className={"text-center"}>
-                <button type={"submit"} className={"btn btn-dark"}><p className={"text-white mt-2"} onClick={save}>등록하기</p></button>
+                <button type={"submit"} className={"btn btn-dark"}><p className={"text-white mt-2"}
+                                                                      onClick={save}>등록하기</p></button>
             </div>
             <Footer/>
         </main>

@@ -11,4 +11,6 @@ public interface ReviewRepository extends JpaRepository<ReviewEntity, Integer> {
 
     List<ReviewEntity> findByBookReviewIsbn13(String isbn13);
 
+    List<ReviewEntity> findByBookReviewBuyerIdOrderByBookReviewPkDesc(String userId);
+
 }
