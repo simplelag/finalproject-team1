@@ -60,4 +60,10 @@ public class BookInfoServiceImpl implements BookInfoService{
     public List<BookEntity> searchHighPrice(String isbn13) {
         return  bookInfoRepository.findBySaleBookIdOrderBySaleBookPriceDesc(isbn13);
     }
+
+    @Override
+    public void deleteSell(int salepk) throws Exception {
+        bookInfoRepository.deleteById(salepk);
+    }
+
 }
