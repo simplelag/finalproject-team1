@@ -47,6 +47,9 @@ function Header(props) {
                 window.location = "/login/myLogin";
         }
     }
+    const onClickShoppingBasket = () => {
+        navi("/ShoppingBasket")
+    }
 
     const handleLogout = () => {
         sessionStorage.removeItem("id");
@@ -72,7 +75,7 @@ function Header(props) {
                         <div className={"d-flex align-items-center loginBtns"}>
                             <span>{sessionStorage.getItem("name")} </span>
                             <button type={"button"} className={"btn"} onClick={handleLogout} >로그아웃</button>
-                            <button type={'button'} className={'btn'}><BsCart2 className={"my-auto"}/></button>
+                            <button type={'button'} className={'btn'} onClick={onClickShoppingBasket}><BsCart2 className={"my-auto"}/></button>
                             <button type={'button'} className={'btn'} onClick={onClickMyPage}><BsFillPersonFill/></button>
                         </div>) ||
                         (<div>
