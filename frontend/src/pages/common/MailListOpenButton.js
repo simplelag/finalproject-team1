@@ -8,8 +8,8 @@ function MailListOpenButton(props) {
     }
 
     return (
-        <div>
-            <button type={"button"} className={"btn btn-primary"} onClick={open}>내 쪽지함</button>
+        <div className={'d-grid text-center'}>
+            <button type={"button"} className={"btn btn-primary"} style={{width:'75%'}} onClick={open}>내 쪽지함</button>
         </div>
 
     );
