@@ -19,7 +19,6 @@ function ReviewMain(props) {
     const [reviewContent,setreviewContent] =useState("");
     const[buyerId,setBuyerId]  = useState(sessionStorage.getItem("id"));
     const[buyerName,setBuyerName] = useState(sessionStorage.getItem("name"));
-    const[updateReviews,setupdateReviews] = useState([]);
     const[allReviews,setAllReviews] = useState([]);
     const[reViewrId,setReviewrId]= useState("");
     const[reViewrName,setReviewrName] = useState("");
@@ -31,14 +30,13 @@ function ReviewMain(props) {
     });
 
     useEffect( () => {
-        console.log(reviewBookIsbn);
             axios.get("http://localhost:8080/responseReview", {
                 params: {
                         ISBN13 : reviewBookIsbn
                 }
             })
                 .then(res => {
-                    console.log(res.data)
+                    console.log(res)
                     setAllReviews(res.data)
                     setreviewTitle(res.data.bookReviewTitle);
                     setreviewContent(res.data.bookReviewContent);
@@ -105,19 +103,9 @@ function ReviewMain(props) {
                 setAllReviews(updateallReview);
             })
     }
-    const updateReview = (index) =>{
-            axios.get("http://localhost:8080",{
-                params:{
-                    bookReviewPk: allReviews[index].bookReviewPk
-                }
-            })
-                .then(res =>{
 
-                })
-    }
+    const save= (index) =>{
 
-
-    const save= () =>{
         const requestData ={
             bookReviewBuyerId: buyerId,
             bookReviewBuyerName: buyerName,
@@ -127,34 +115,38 @@ function ReviewMain(props) {
             bookReviewIsbn13: reviewBookIsbn,
         }
         if (isEditMode) {
-            // 수정 모드일 경우 기존 리뷰 업데이트
-            axios.put(`http://localhost:8080/updateReview/${allReviews[selectedReviewIndex].bookReviewPk}`, requestData, {
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            })
-                .then(response => {
-                    // 성공 처리
-                    alert("리뷰 수정 성공!");
-                    // 수정한 데이터로 allReviews 배열 업데이트
-                    const updatedReviews = [...allReviews];
-                    updatedReviews[selectedReviewIndex] = {
-                        ...updatedReviews[selectedReviewIndex],
-                        ...requestData
-                    };
-                    setAllReviews(updatedReviews);
-                    setIsEditMode(false);
-                    setSelectedReviewIndex(null);
-                    setSelectedReviewData({
-                        reviewTitle: "",
-                        reviewContent: ""
-                    });
-                    toggleModal(); // 모달 닫기
+            const selectedReview = allReviews[selectedReviewIndex];
+            if(selectedReview){
+                requestData.bookReviewPk = selectedReview.bookReviewPk;
+                axios.put("http://localhost:8080/updateReview/", requestData, {
+                    params:{
+                        bookReviewPk: requestData.bookReviewPk
+                    }
                 })
-                .catch(error => {
-                    // 에러 처리
-                    console.log(error);
-                });
+                    .then(response => {
+                        // 성공 처리
+                        alert("리뷰 수정 성공!");
+                        // 수정한 데이터로 allReviews 배열 업데이트
+                        const updatedReviews = [...allReviews];
+                        updatedReviews[selectedReviewIndex] = {
+                            ...updatedReviews[selectedReviewIndex],
+                            ...requestData
+                        };
+                        setAllReviews(updatedReviews);
+                        setIsEditMode(false);
+                        setSelectedReviewIndex(null);
+                        setSelectedReviewData({
+                            reviewTitle: "",
+                            reviewContent: ""
+                        });
+                        toggleModal(); // 모달 닫기
+                    })
+                    .catch(error => {
+                        // 에러 처리
+                        console.log(error);
+                    });
+            }
+            // 수정 모드일 경우 기존 리뷰 업데이트
         } else {
             // 수정 모드가 아닐 경우 새 리뷰 작성
             axios.post("http://localhost:8080/saveReview", requestData, {
@@ -174,19 +166,6 @@ function ReviewMain(props) {
                     console.log(error);
                 });
         }
-
-
-        // axios.post("http://localhost:8080/saveReview",requestData,{
-        //     headers:{
-        //         'Content-Type': 'application/json'
-        //     }
-        // })
-        //     .then(response => {
-        //         alert("리뷰 작성 성공!")
-        // })
-        //     .catch(error =>{
-        //         console.log(error);
-        //     })
     }
 
     return (
@@ -241,9 +220,13 @@ function ReviewMain(props) {
                     isOpen={isModalOpen}
                     toggle={toggleModal}
                     selectedReviewData={selectReviewData}
+                    bookReviewPk={selectedReviewIndex !== null ? allReviews[selectedReviewIndex].bookReviewPk : null}
                     onChangeTitle={onChangeTitle}
                     onChangeContent={onChangeContent}
+                    starValue={starValue}
+                    onStarClick={handleStarClick}
                     onSaveEdit={save}
+
                 />
                 ):(
                 <Modal isOpen={isModalOpen} toggle={toggleModal}>

@@ -13,5 +13,5 @@ public interface ReviewService {
 
     void deleteReview(int bookReviewPk)throws  Exception;
 
-    void updateReview(int bookReviewPk, ReviewEntity reviewEntity)throws Exception;
+    void updateReview(ReviewEntity reviewEntity)throws Exception;
 }

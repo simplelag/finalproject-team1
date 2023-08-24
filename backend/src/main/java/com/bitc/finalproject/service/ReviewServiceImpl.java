@@ -28,16 +28,16 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public void updateReview(int bookReviewPk, ReviewEntity reviewEntity) throws Exception {
-        ReviewEntity review = reviewRepository.findById(bookReviewPk).orElse(null);
-        if(review == null){
-            throw new Exception("Review not found");
-        }
-        review.setBookReviewGrade(reviewEntity.getBookReviewGrade());
-        review.setBookReviewTitle(reviewEntity.getBookReviewTitle());
-        review.setBookReviewContent(reviewEntity.getBookReviewContent());
-
-        reviewRepository.save(review);
+    public void updateReview(ReviewEntity reviewEntity) throws Exception {
+        ReviewEntity existingReview = reviewRepository.findById(reviewEntity.getBookReviewPk())
+                .orElseThrow(() -> new RuntimeException("리뷰를 찾을 수 없음"));
+        // 엔티티의 필드를 업데이트
+        existingReview.setBookReviewBuyerId(reviewEntity.getBookReviewBuyerId());
+        existingReview.setBookReviewBuyerName(reviewEntity.getBookReviewBuyerName());
+        existingReview.setBookReviewGrade(reviewEntity.getBookReviewGrade());
+        existingReview.setBookReviewTitle(reviewEntity.getBookReviewTitle());
+        existingReview.setBookReviewContent(reviewEntity.getBookReviewContent());
+        reviewRepository.save(existingReview);
     }
 
 }

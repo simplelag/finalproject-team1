@@ -28,9 +28,15 @@ public class ReviewController {
         reviewService.deleteReview(bookReviewPk);
         return null;
     }
-    @RequestMapping(value = "/updateReview",method = RequestMethod.PUT)
-    public Object updateReview(@RequestParam("bookReviewPk")int bookReviewPk,@RequestBody ReviewEntity reviewEntity) throws Exception{
-        reviewService.updateReview(bookReviewPk,reviewEntity);
-        return null;
+    @CrossOrigin("http://localhost:3000")
+    @PutMapping("/updateReview")
+    public String updateReview(@RequestBody ReviewEntity reviewEntity) {
+        try {
+            reviewService.updateReview(reviewEntity);
+            return "리뷰 수정 성공";
+        } catch (Exception e) {
+            return "리뷰 수정 실패";
+        }
     }
+
 }
