@@ -3,6 +3,7 @@ package com.bitc.finalproject.repository;
 import com.bitc.finalproject.entity.BasketEntity;
 import com.bitc.finalproject.entity.BookEntity;
 import com.bitc.finalproject.entity.PurchaseEntity;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
@@ -16,5 +17,7 @@ public interface PurchaseRepository extends JpaRepository<PurchaseEntity, Intege
 
 //    마이페이지에서 구매 내역 가져올려고
     List<PurchaseEntity> findByPurchaseBuyerIdAndPurchaseStateOrderByPurchasePkDesc(String userId, int state);
+
+    List<PurchaseEntity> findByPurchaseBuyerIdAndPurchaseStateOrderByPurchasePkDesc(String userId, int state, Pageable pageable);
 
 }

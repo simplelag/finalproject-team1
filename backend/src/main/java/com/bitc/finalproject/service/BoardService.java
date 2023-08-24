@@ -28,5 +28,5 @@ public interface BoardService {
 
     Optional<BoardEntity> likeCnt(int boardPk) throws Exception;
 
-    List<BoardEntity> myBoardList(String userId) throws Exception;
+    List<BoardEntity> myBoardList(String userId, Pageable pageable) throws Exception;
 }

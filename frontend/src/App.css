@@ -68,3 +68,19 @@ swiper-slide .bookImg:hover{
   transform: scale(1.1, 1.1);
   transition:all 0.1s ease;
 }
+.myPageBtns{
+  margin-right: 3rem;
+}
+.myPageBtns .btn {
+  margin-bottom: 0.3rem;
+  /*width: 50%!important;*/
+}
+
+.nav-item button {
+  color: black!important;
+}
+
+/*.nav-item button:hover, button.active {*/
+/*  border: 0.2px solid #5E35EB!important;*/
+/*  !*color: white!important;*!*/
+/*}*/

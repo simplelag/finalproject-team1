@@ -2,6 +2,7 @@ package com.bitc.finalproject.service;
 
 import com.bitc.finalproject.entity.BasketEntity;
 import com.bitc.finalproject.entity.BookEntity;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,7 +21,7 @@ public interface BookInfoService {
 
     List<BookEntity> selectBookList() throws Exception;
 
-    List<BookEntity> mySaleList(String userId) throws Exception;
+    List<BookEntity> mySaleList(String userId, Pageable pageable) throws Exception;
 
     List<BookEntity> searchLowPrice(String isbn13);
 
