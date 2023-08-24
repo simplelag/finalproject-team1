@@ -64,6 +64,7 @@ h1 {
   font-weight: bold;
 }
 
-.swiper-button-next {
-  color: black!important;
+swiper-slide .bookImg:hover{
+  transform: scale(1.1, 1.1);
+  transition:all 0.1s ease;
 }
