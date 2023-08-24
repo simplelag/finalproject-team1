@@ -31,7 +31,7 @@
 [class|="bubble"] .name span{
     border-radius: 0.3rem;
     /*background: #fcb918;*/
-    background: rgba(252,185,24,0.25);
+    background: #eee;
     padding: 0rem 0.4rem;
 }
 

@@ -18,4 +18,5 @@ public interface MailRepository extends JpaRepository<MailEntity, Integer> {
     @Query("SELECT DISTINCT m.mailRoom FROM MailEntity m " +
             "WHERE m.mailRoom LIKE CONCAT('%','_',:id) ")
     List<String> findMailRoomAsBuyer(String id);
+
 }

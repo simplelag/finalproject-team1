@@ -2,6 +2,13 @@ package com.bitc.finalproject.controller;
 
 import com.bitc.finalproject.entity.*;
 import com.bitc.finalproject.service.*;
+import com.bitc.finalproject.entity.MemberEntity;
+import com.bitc.finalproject.entity.PurchaseEntity;
+import com.bitc.finalproject.repository.MailRepository;
+import com.bitc.finalproject.repository.MemberRepository;
+import com.bitc.finalproject.service.BookInfoService;
+import com.bitc.finalproject.service.MemberService;
+import com.bitc.finalproject.service.PurchaseService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +28,8 @@ public class MemberController {
     private final PurchaseService purchaseService;
     private final BoardService boardService;
     private final ReviewService reviewService;
+    private final MemberRepository memberRepository;
+    private final MailRepository mailRepository;
 
 //    로그인 시
     @RequestMapping(value = "/login", method = RequestMethod.POST)

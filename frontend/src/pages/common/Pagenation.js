@@ -196,7 +196,7 @@ function Pagenation(props) {
             <div className={"input-group"} style={{width:"24rem"}}>
                 {searchSelect && <SearchSelect handleSearchTypeChange={handleSearchTypeChange} searchType={searchType}/>}
                 <input style={{width:"5rem"}} className={"form-control"} type="text" value={text} onChange={handleTextChange}/>
-                <button  className={"btn btn-outline-dark"} type={"button"} onClick={doSearch}>검색</button>
+                <button  className={"btn btn-outline-purple"} type={"button"} onClick={doSearch}>검색</button>
             </div>
         </div>
     )

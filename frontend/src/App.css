@@ -36,3 +36,35 @@
     transform: rotate(360deg);
   }
 }
+
+.btn-outline-purple {
+  border: 1px solid #5E35EB!important;
+  color: #5E35EB!important;
+}
+
+.btn-outline-purple:hover{
+  border: 1px solid #5E35EB!important;
+  color: white!important;
+  background: #5E35EB!important;
+}
+
+.btn-purple {
+  border: 1px solid #5E35EB!important;
+  color: white!important;
+  background: #5E35EB!important;
+
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Orbit&display=swap');
+
+h1 {
+  font-family: 'Orbit';
+  /*color: #5E35EB!important;*/
+  margin: 3rem 0rem!important;
+  font-weight: bold;
+}
+
+swiper-slide .bookImg:hover{
+  transform: scale(1.1, 1.1);
+  transition:all 0.1s ease;
+}
