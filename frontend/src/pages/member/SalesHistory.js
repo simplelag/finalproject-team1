@@ -17,6 +17,9 @@ function SalesHistory(props) {
             })
     },[]);
 
+    // 판매자가 배송하기 버튼을 클릭 했을 때
+
+
     //  판매자가 판매 취소하기
     const handleCancel = (index) => {
 
@@ -49,7 +52,7 @@ function SalesHistory(props) {
                             return (
                                 <tr key={item.salePk}>
                                     <td className={'text-center align-middle'}>
-                                        {item.saleDisabled === null ? "판매중" : "판매 불가"}
+                                        {item.saleDisabled === null ? <span>{item.saleBookPieces === 0 ? "판매완료" : "판매중"}</span> : "판매 불가"}
                                     </td>
                                     <td className={'align-middle'}>{item.saleBookTitle}</td>
                                     <td className={'align-middle text-center'}>{item.saleBookPrice}</td>
