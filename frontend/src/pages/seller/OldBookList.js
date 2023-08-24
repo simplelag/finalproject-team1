@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import axios from "axios";
 import {useLocation, useNavigate} from "react-router-dom";
+import Pagenation from "../common/Pagenation";
 import MailOpenButton from "../common/MailOpenButton";
 
 
@@ -84,44 +85,45 @@ function OldBookList() {
             {
                 oldBookInfo.length == 0 ? <p className={"text-center"}><strong>등록된 중고도서가 없습니다</strong></p>
                     :
-                oldBookInfo.map((book,index) => {
-                    return (
-                        <div className={"row my-2"} key={book.salePk}>
-                            <div className={"col-sm-2"}>
-                                <a href="#">
-                                    <img src={book.saleImgSrc} alt="이미지 나오는 곳"/>
-                                </a>
+                    oldBookInfo.map((book,index) => {
+                        return (
+                            <div className={"row my-2"} key={book.salePk}>
+                                <div className={"col-sm-2"}>
+                                    <a href="#">
+                                        <img src={book.saleImgSrc} alt="이미지 나오는 곳"/>
+                                    </a>
+                                </div>
+                                <div className={"col-sm-3"}>
+                                    <ul style={{listStyleType:"none"}}>
+                                        <li>
+                                            <p><strong>[중고]{book.saleBookTitle}</strong></p>
+                                        </li>
+                                        <li>
+                                            <p>남은 재고 : {book.saleBookPieces}개</p>
+                                            <p style={{fontSize:"9pt"}}>평균 출고일 5일 이내</p>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div className={"col-sm-1"}>
+                                    <p>등급 : {book.bookGrade}</p>
+                                </div>
+                                <div className={"col-sm-2"}>
+                                    <span>판매 중고가격 : {book.saleBookPrice}원</span>
+                                </div>
+                                <div className={"col-sm-2"}>
+                                    <span>판매자 : {book.saleSellerName}</span>
+                                </div>
+                                <div className={"col-sm-2 text-center"}>
+                                    <a href="#"className={"btn btn-link bg-dark mb-2"} style={{fontSize:"10pt",color:"white",textDecoration:"none",width:"100pt"}} onClick={() => save(index)}>장바구니 담기</a>
+                                    <a href="#" className={"btn btn-link bg-dark"} style={{fontSize:"10pt",color:"white",textDecoration:"none", width:"100pt"}} onClick={() => handleInPurchase(index)}>바로 구매</a>
+                                    {book.saleSellerId==sessionStorage.getItem("id")? null:
+                                        <MailOpenButton room={book.salePk+"_"+sessionStorage.getItem("id")} name={"판매자문의"} />
+                                    }
+
+                                </div>
                             </div>
-                            <div className={"col-sm-3"}>
-                                <ul style={{listStyleType:"none"}}>
-                                    <li>
-                                        <p><strong>[중고]{book.saleBookTitle}</strong></p>
-                                    </li>
-                                    <li>
-                                        <p>남은 재고 : {book.saleBookPieces}개</p>
-                                        <p style={{fontSize:"9pt"}}>평균 출고일 5일 이내</p>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div className={"col-sm-1"}>
-                                <p>등급 : {book.bookGrade}</p>
-                            </div>
-                            <div className={"col-sm-2"}>
-                                <span>판매 중고가격 : {book.saleBookPrice}원</span>
-                            </div>
-                            <div className={"col-sm-2"}>
-                                <span>판매자 : {book.saleSellerName}</span>
-                            </div>
-                            <div className={"col-sm-2 text-center"}>
-                                <a href="#"className={"btn btn-link bg-dark mb-2"} style={{fontSize:"10pt",color:"white",textDecoration:"none",width:"100pt"}} onClick={() => save(index)}>장바구니 담기</a>
-                                <a href="#" className={"btn btn-link bg-dark"} style={{fontSize:"10pt",color:"white",textDecoration:"none", width:"100pt"}} onClick={() => handleInPurchase(index)}>바로 구매</a>
-                                {book.saleSellerId==sessionStorage.getItem("id")? null:
-                                    <MailOpenButton room={book.salePk+"_"+sessionStorage.getItem("id")} name={"판매자문의"} />
-                                }
-                            </div>
-                        </div>
-                    )
-                })}
+                        )
+                    })}
         </div>
     )
 }
