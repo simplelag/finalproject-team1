@@ -82,11 +82,20 @@ function ShoppingBasket() {
                     let checkPurchase = 0
                     let checkPurchaseIndex = new Array();
                     // 구매할 수 있는 총 수량
-                    let a = new Array();
+                    let AllStackList = new Array();
                     // 구매할 수 있는 초기값 수량
-                    let b = new Array();
+                    let invaluePurchaseList = new Array();
+                    // 재고 확인
+                    let stack = 0;
+                    let stackList = new Array();
+
+                    // data1 : saleTable
+                    res.data.data1.map((item) => {
+                        AllStackList.push(item.saleBookPieces)
+                    })
+                    // data2 : purchaseTable
                     res.data.data2.map((item, index) => {
-                        b.push(item.saleBookPieces);
+                        invaluePurchaseList.push(item.saleBookPieces);
                         if(item.purchaseSellerId === sessionStorage.getItem("id")){
                             checkId++
                             checkIndex.push(index+1);
@@ -96,13 +105,20 @@ function ShoppingBasket() {
                             checkPurchaseIndex.push(index+1);
                         }
                     })
-                    res.data.data1.map((item) => {
-                        a.push(item.saleBookPieces);
+                    // data3 : basketTable
+                    res.data.data3.map((item, index) => {
+                        if(item.basketBookPieces === 0){
+                            stack++
+                            stackList.push(index+1)
+                        }
                     })
-                    if(checkId === 0 && checkPurchase === 0){
-                        navi("/purchase", {state: {value : res.data.data2, number : a, number1 : b}})
+
+                    if(stack === 0 && checkId === 0 && checkPurchase === 0){
+                        navi("/purchase", {state: {value : res.data.data2, number : AllStackList, number1 : invaluePurchaseList}})
                     }else{
-                        if(checkId !== 0){
+                        if(stack !== 0){
+                            alert('선택한 것 중 ' + stackList + '번쨰로 선택한 것은 재고가 없습니다.')
+                        }else if(checkId !== 0){
                             alert('선택한 것 중 ' + checkIndex + '번쨰로 선택한 것은 자기가 판매한 책으로 구입할 수 없습니다.')
                         }else if(checkPurchase !== 0){
                             alert('선택한 것 중 ' + checkPurchaseIndex + '번쨰로 선택한 것은 이미 구입한 제품입니다.')

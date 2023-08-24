@@ -26,7 +26,9 @@ function PurchaseHistory(props) {
             purchaseBuyerId : myPurchaseList[index].purchaseBuyerId,
             purchaseBuyerName : myPurchaseList[index].purchaseBuyerName,
             purchaseSellerId : myPurchaseList[index].purchaseSellerId,
-            purchaseSellerName : myPurchaseList[index].purchaseSellerName
+            purchaseSellerName : myPurchaseList[index].purchaseSellerName,
+            purchasePayment : myPurchaseList[index].purchasePayment,
+            purchaseNumber : myPurchaseList[index].purchaseNumber
         }
         axios.delete("http://localhost:8080/login/myLogin/delete",{
             data: requestData

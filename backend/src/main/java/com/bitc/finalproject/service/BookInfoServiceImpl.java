@@ -60,4 +60,15 @@ public class BookInfoServiceImpl implements BookInfoService{
     public List<BookEntity> searchHighPrice(String isbn13) {
         return  bookInfoRepository.findBySaleBookIdOrderBySaleBookPriceDesc(isbn13);
     }
+    
+//    구매 후 수량 줄이기
+    @Override
+    public BookEntity purchaseAfterMinusNumber(String bookId, String sellerId, int indivPrice) {
+        return bookInfoRepository.findBySaleBookIdAndSaleSellerIdAndSaleBookPrice(bookId, sellerId, indivPrice);
+    }
+
+    @Override
+    public BasketEntity purchaseBasketAfterMinusNumber(String userId, String bookId, int indivPrice) throws Exception {
+        return basketRepository.findByBasketMemberIdAndBasketBookIdAndBasketBookPrice(userId, bookId, indivPrice);
+    }
 }

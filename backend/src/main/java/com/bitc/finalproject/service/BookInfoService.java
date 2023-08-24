@@ -27,4 +27,8 @@ public interface BookInfoService {
     List<BookEntity> searchLowPrice(String isbn13);
 
     List<BookEntity> searchHighPrice(String isbn13);
+
+    BookEntity purchaseAfterMinusNumber(String bookId, String sellerId, int indivPrice);
+
+    BasketEntity purchaseBasketAfterMinusNumber(String userId, String bookId, int indivPrice) throws Exception;
 }

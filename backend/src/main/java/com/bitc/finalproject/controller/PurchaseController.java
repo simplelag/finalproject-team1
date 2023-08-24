@@ -3,6 +3,8 @@ package com.bitc.finalproject.controller;
 import com.bitc.finalproject.entity.BasketEntity;
 import com.bitc.finalproject.entity.BookEntity;
 import com.bitc.finalproject.entity.PurchaseEntity;
+import com.bitc.finalproject.service.BookInfoService;
+import com.bitc.finalproject.service.BookService;
 import com.bitc.finalproject.service.PurchaseService;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -21,6 +23,7 @@ import java.util.Map;
 @RestController
 public class PurchaseController {
     private final PurchaseService purchaseService;
+    private final BookInfoService bookInfoService;
 
     //    상세 페이지에서 구매페이지로 이동
     @RequestMapping(value = "/purchase/insert", method = RequestMethod.GET)
@@ -31,9 +34,10 @@ public class PurchaseController {
         PurchaseEntity purchaseEntity = null;
         List<PurchaseEntity> checkPurchase = purchaseService.findPk(isbn13, BuyerId, SellerId, SellerPrice);
         if (checkPurchase.size() != 0) {
-            int pk = checkPurchase.get(0).getPurchasePk();
-            int state = checkPurchase.get(0).getPurchaseState();
-            purchaseEntity = new PurchaseEntity(pk, isbn13, BookName, BuyerId, BuyerName, SellerId, SellerName, SellerPrice, state);
+//            int pk = checkPurchase.get(0).getPurchasePk();
+//            int state = checkPurchase.get(0).getPurchaseState();
+//            purchaseEntity = new PurchaseEntity(pk, isbn13, BookName, BuyerId, BuyerName, SellerId, SellerName, SellerPrice, state);
+            purchaseEntity = checkPurchase.get(0);
         } else {
             purchaseEntity = new PurchaseEntity(isbn13, BookName, BuyerId, BuyerName, SellerId, SellerName, SellerPrice);
         }
@@ -117,6 +121,7 @@ public class PurchaseController {
         }
         result.put("data1", cheekSaleList);
         result.put("data2", purchaseEntities);
+        result.put("data3", cheekList);
         return result;
 //        return purchaseEntities;
     }
@@ -144,6 +149,14 @@ public class PurchaseController {
             int indivPrice = purchaseEntities.get(i).getPurchasePayment();
             int number = purchaseEntities.get(i).getPurchaseNumber();
             PurchaseEntity purchaseEntity = new PurchaseEntity(pk, BookId, BookName, userId, BuyerName, SellerId, SellerName, state, indivPrice, payMethod, reqMessage, address, number);
+//            구매 후 sale테이블에서 수량 줄이기
+            BookEntity bookEntity = bookInfoService.purchaseAfterMinusNumber(BookId, SellerId, indivPrice);
+            bookEntity.setSaleBookPieces(bookEntity.getSaleBookPieces() - number);
+            bookInfoService.bookInfoInsert(bookEntity);
+//            구매 후 장바구니 테이블에서 수량 줄이기
+            BasketEntity basketEntity = bookInfoService.purchaseBasketAfterMinusNumber(userId, BookId, indivPrice);
+            basketEntity.setBasketBookPieces(basketEntity.getBasketBookPieces() - number);
+            bookInfoService.basketInsert(basketEntity);
             purchaseService.savePurchase(purchaseEntity);
         }
     }

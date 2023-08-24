@@ -1,5 +1,7 @@
 package com.bitc.finalproject.controller;
 
+import com.bitc.finalproject.entity.BasketEntity;
+import com.bitc.finalproject.entity.BookEntity;
 import com.bitc.finalproject.entity.MemberEntity;
 import com.bitc.finalproject.entity.PurchaseEntity;
 import com.bitc.finalproject.service.BoardService;
@@ -102,6 +104,22 @@ public class MemberController {
 //    마이페이지 - 구매 취소
     @RequestMapping(value = "/login/myLogin/delete", method = RequestMethod.DELETE)
     public void showMyPurchaseCancel(@RequestBody PurchaseEntity purchaseEntity) throws Exception{
+//        구매 취소 후 원래있던 판매 수량으로 되돌리기
+        String bookId = purchaseEntity.getPurchaseBookId();
+        String userId = purchaseEntity.getPurchaseBuyerId();
+        String sellerId = purchaseEntity.getPurchaseSellerId();
+        int bookPrice = purchaseEntity.getPurchasePayment();
+        int BookNumber = purchaseEntity.getPurchaseNumber();
+//
+        BookEntity book = bookInfoService.purchaseAfterMinusNumber(bookId, sellerId, bookPrice);
+        book.setSaleBookPieces(book.getSaleBookPieces() + BookNumber);
+        bookInfoService.bookInfoInsert(book);
+//
+        BasketEntity basketEntity = bookInfoService.purchaseBasketAfterMinusNumber(userId, bookId, bookPrice);
+        if(basketEntity != null){
+            basketEntity.setBasketBookPieces(basketEntity.getBasketBookPieces() + BookNumber);
+            bookInfoService.basketInsert(basketEntity);
+        }
         purchaseService.myPurchaseCancel(purchaseEntity);
     }
     

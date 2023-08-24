@@ -64,10 +64,14 @@ function OldBookList() {
                 }
             })
                 .then(res => {
-                    if(res.data.purchaseState === 1){
+                    let a = new Array();
+                    a.push(res.data.purchaseNumber)
+                    if(oldBookInfo[index].saleBookPieces === 0){
+                        alert("재고가 없습니다.")
+                    }else if(res.data.purchaseState === 1){
                         alert("이미 구입한 책입니다.")
                     }else{
-                        navi("/purchase", {state: {value: res.data, number : [oldBookInfo[index].saleBookPieces]}})
+                        navi("/purchase", {state: {value: res.data, number : [oldBookInfo[index].saleBookPieces], number1 : a}})
                     }
                 })
         }else{
