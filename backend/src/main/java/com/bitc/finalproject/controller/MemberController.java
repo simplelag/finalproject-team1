@@ -93,8 +93,8 @@ public class MemberController {
 
 //    마이페이지 - 구매 내역
     @RequestMapping(value = "/login/myLogin/myPurchaseList", method = RequestMethod.GET)
-    public Object showMyPurchaseList(@RequestParam("userId") String userId) throws Exception{
-        return purchaseService.myPurchaseList(userId);
+    public Object showMyPurchaseList(@RequestParam("userId") String userId, @RequestParam("state") int state) throws Exception{
+        return purchaseService.myPurchaseList(userId, state);
     }
 
 //    마이페이지 - 구매 취소
@@ -103,7 +103,6 @@ public class MemberController {
         purchaseService.myPurchaseCancel(purchaseEntity);
     }
 
-    
 //    마이페이지 - 판매 내역
     @RequestMapping(value = "/login/myLogin/mySaleList", method = RequestMethod.GET)
     public Object showMySaleList(@RequestParam("userId") String userId) throws Exception{
