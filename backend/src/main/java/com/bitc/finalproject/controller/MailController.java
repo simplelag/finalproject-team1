@@ -94,13 +94,10 @@ public class MailController {
         for(String room : mailRepository.findMailRoomAsBuyer(id)){
             mailListItemDto dto = new mailListItemDto();
             BookEntity entity = saleRepository.findBySalePk(Integer.valueOf(room.split("_")[0]));
-            if(entity != null){
-                dto.title = entity.getSaleBookTitle();
-                dto.name = entity.getSaleSellerName();
-                dto.room = room;
-                listAsBuyer.add(dto);
-            }
-
+            dto.title = entity.getSaleBookTitle();
+            dto.name = entity.getSaleSellerName();
+            dto.room = room;
+            listAsBuyer.add(dto);
         }
 
         res.put("asSeller",listAsSeller);
