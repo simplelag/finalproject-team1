@@ -51,6 +51,13 @@ function Join(props) {
                     sessionStorage.setItem("name", res.data.name)
                     sessionStorage.setItem("grade",res.data.grade)
 
+                    if(res.data.grade == "block") {
+                        alert("접근 제한된 이용자입니다.")
+                        sessionStorage.removeItem("id");
+                        sessionStorage.removeItem("name");
+                        sessionStorage.removeItem("grade");
+                        navi("/");
+                    }
 
                     navi('/');
                 }else if(res.data.login === 0){
