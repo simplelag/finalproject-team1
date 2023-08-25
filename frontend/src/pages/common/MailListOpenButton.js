@@ -8,10 +8,7 @@ function MailListOpenButton(props) {
     }
 
     return (
-        <div>
-            <button type={"button"} className={"btn btn-primary"} onClick={open}>내 쪽지함</button>
-        </div>
-
+            <button type={"button"} className={"btn btn-outline-purple"} onClick={open}>쪽지함</button>
     );
 }
 

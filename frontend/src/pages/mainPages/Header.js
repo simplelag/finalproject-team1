@@ -17,25 +17,28 @@ function Header(props) {
     }
 
     const onClickSearch = (e) => {
-        axios.get("http://localhost:8080/search", {
-            params: {
-                SearchType: "Title",
-                SearchValue: search,
-                MaxResults: "10",
-                SearchSort: "Accuracy",
-                StartNum: "1"
+        if(search!=""){
+            axios.get("http://localhost:8080/search", {
+                params: {
+                    SearchType: "Title",
+                    SearchValue: search,
+                    MaxResults: "10",
+                    SearchSort: "Accuracy",
+                    StartNum: "1"
 
-            }
-        })
-            .then(res => {
-                setBookSearch(res.data);
-                console.log(res.data.item)
-                navi("/view", {state: {value: search, data: res.data.item, total: res.data.totalResults}});
+                }
             })
-            .catch(err => {
-                alert("검색 실패")
-            })
+                .then(res => {
+                    setBookSearch(res.data);
+                    console.log(res.data.item)
+                    navi("/view", {state: {value: search, data: res.data.item, total: res.data.totalResults}});
+                })
+                .catch(err => {
+                    alert("검색 실패")
+                })
+        }
     }
+
 
     const onClickMyPage = () => {
         const grade = sessionStorage.getItem("grade");
@@ -47,8 +50,8 @@ function Header(props) {
                 window.location = "/login/myLogin";
         }
     }
-    const onClickShoppingBasket = () => {
-        navi("/ShoppingBasket")
+    const onClickShoppingBasket = (e) =>{
+        navi("/ShoppingBasket");
     }
 
     const handleLogout = () => {
@@ -66,9 +69,9 @@ function Header(props) {
                         <img className={"headerLogo"} src="/image/logo3.png" alt="home"/>
                     </a>
 
-                    <div className={"d-flex align-items-end ps-5"}>
+                    <div className={"d-flex align-items-end ps-5 input-group w-50"}>
                         <input type={'search'} className={'form-control'} onChange={onChangeSearch}/>
-                        <button type={'submit'} className={'btn search'} onClick={onClickSearch}>검색</button>
+                        <button type={'submit'} className={'btn btn-purple search'} onClick={onClickSearch}>검색</button>
                     </div>
 
                     {(sessionStorage.getItem("id") &&

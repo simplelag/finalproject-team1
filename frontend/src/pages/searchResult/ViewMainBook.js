@@ -69,16 +69,17 @@ function ViewMainBook(props) {
                 </div>
                 <div className={'col-sm my-3'} id={''}>
                     <div id={''}>
-                        <a className={'text-decoration-none'}>{props.data.title}</a>
+                        <a className={'text-decoration-none text-black'}>{props.data.title}</a>
                     </div>
                     <div>
                         <span>
-                            <a className={'text-decoration-none'}>{props.data.author}</a> |
+                            <a className={'text-decoration-none text-black'}>{props.data.author}</a> |
                             <span className={'ms-2'}>{props.data.pubDate}</span>
                         </span>
                     </div>
-                    <div className={''}>
-                        <table className={'table mt-5'}>
+                    <div className={'d-flex justify-content-between'}>
+
+                        <table className={'table mt-5 mb-1 w-75'}>
                             <thead>
                             <tr className={'text-center table-secondary'}>
                                 <th>새책 정가</th>
@@ -94,15 +95,14 @@ function ViewMainBook(props) {
                             </tr>
                             </tbody>
                         </table>
+
+                        <div className={'text-center mb-1 d-flex flex-column justify-content-end'}>
+                            <button type={'button'} className={'btn btn-outline-purple'} name={''} onClick={onClickDetail}>중고도서보기</button>
+                            <button type={'button'} className={'btn btn-outline-purple mt-2'} name={''} onClick={onClickSell}>판매하기</button>
+                        </div>
                     </div>
                 </div>
-                <div className={'col-sm-auto text-center my-3'}>
-                    <br/>
-                    <br/>
-                    <button type={'button'} className={'btn btn-outline-dark'} name={''} onClick={onClickDetail}>중고도서보기</button>
-                    <br/>
-                    <button type={'button'} className={'btn btn-outline-dark mt-2'} name={''} onClick={onClickSell}>판매하기</button>
-                </div>
+
             </div>
         </div>
     )

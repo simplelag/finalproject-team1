@@ -15,6 +15,7 @@ const swiperSlide = {
         objectFit: 'cover',
         marginLeft: 'auto',
         marginRight: 'auto',
+        overflow:"hidden",
     }
 }
 
@@ -61,8 +62,10 @@ function MainCardCarousel(props) {
                                     navi("/bookDetailPage", {state: {ISBN13: itemList.isbn13}})
                                     }
                                 }>
-                                    <img src={itemList.cover} style={swiperSlide.img} />
-                                    {itemList.title}
+                                    <div style={swiperSlide.img}>
+                                        <img className={"bookImg"} src={itemList.cover}  />
+                                    </div>
+                                    <span>{itemList.title}</span>
                                 </div>
                             </swiper-slide>
                         )

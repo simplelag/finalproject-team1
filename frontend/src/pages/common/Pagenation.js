@@ -20,6 +20,7 @@ function Pagenation(props) {
     const howManyPagesInABlock = props.howManyPagesInABlock;
     const searchType = props.searchType;
     const order = props.order;
+    const isSearchable = props.isSearchable===false? false : true;
     // 페이지네이션 컴포넌트 외부에 게시글 같은리스트가 표시될 것인데,
     // 그 리스트를 서버에서 불러와서 배열 state에 저장해야할거 아님?
     // 그때 사용되는 set 함수, props로 넘어와야함
@@ -178,7 +179,7 @@ function Pagenation(props) {
 
 
     return (
-        <div className={"d-flex justify-content-between"}>
+        <div className={"d-flex justify-content-between align-items-start"}>
             <div style={{width:"24rem"}}></div>
             <div>{
                 btns.map(item => {
@@ -193,11 +194,13 @@ function Pagenation(props) {
                     )
                 })
             }</div>
-            <div className={"input-group"} style={{width:"24rem"}}>
-                {searchSelect && <SearchSelect handleSearchTypeChange={handleSearchTypeChange} searchType={searchType}/>}
-                <input style={{width:"5rem"}} className={"form-control"} type="text" value={text} onChange={handleTextChange}/>
-                <button  className={"btn btn-outline-dark"} type={"button"} onClick={doSearch}>검색</button>
-            </div>
+            {isSearchable?
+                <div className={"input-group"} style={{width:"24rem"}}>
+
+                        {searchSelect && <SearchSelect handleSearchTypeChange={handleSearchTypeChange} searchType={searchType}/>}
+                    <input style={{width:"5rem"}} className={"form-control"} type="text" value={text} onChange={handleTextChange}/>
+                    <button  className={"btn btn-outline-purple"} type={"button"} onClick={doSearch}>검색</button>
+                </div> : <div style={{width:"24rem"}}></div>}
         </div>
     )
 }

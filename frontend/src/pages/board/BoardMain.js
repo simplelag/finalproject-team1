@@ -199,7 +199,7 @@ function BoardMain(props) {
                     </tbody>
                 </table>
                 <div className={'my-3 d-flex justify-content-end'}>
-                    <button type={"button"} className={'btn btn-outline-dark'} onClick={onClickWrite}>글작성</button>
+                    <button type={"button"} className={'btn btn-outline-purple'} onClick={onClickWrite}>글작성</button>
                 </div>
                 <div className={"text-center"}>
                     {

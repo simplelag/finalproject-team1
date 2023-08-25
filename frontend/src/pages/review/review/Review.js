@@ -118,7 +118,7 @@ function ReviewMain(props) {
             const selectedReview = allReviews[selectedReviewIndex];
             if(selectedReview){
                 requestData.bookReviewPk = selectedReview.bookReviewPk;
-                axios.put("http://localhost:8080/updateReview/", requestData, {
+                axios.put("http://localhost:8080/updateReview", requestData, {
                     params:{
                         bookReviewPk: requestData.bookReviewPk
                     }

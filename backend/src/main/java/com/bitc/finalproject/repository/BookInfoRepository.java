@@ -1,6 +1,7 @@
 package com.bitc.finalproject.repository;
 
 import com.bitc.finalproject.dto.BoardDto;
+import com.bitc.finalproject.entity.BasketEntity;
 import com.bitc.finalproject.entity.BookEntity;
 import org.aspectj.weaver.Lint;
 import org.springframework.data.domain.Pageable;
@@ -18,6 +19,7 @@ public interface BookInfoRepository extends JpaRepository<BookEntity, Integer> {
 
     List<BookEntity> findBySaleBookId(String isbn13);
 
+    List<BookEntity> findBySaleSellerIdOrderBySalePkDesc(String userId, Pageable pageable);
     List<BookEntity> findBySaleSellerIdOrderBySalePkDesc(String userId);
 
     List<BookEntity> findAllBySalePkIn(List<Integer> cheekList);
@@ -80,4 +82,8 @@ public interface BookInfoRepository extends JpaRepository<BookEntity, Integer> {
             "AND (b.saleDisabled IS NOT null AND b.saleDisabled != '' ) "
     )
     int countUnsellableBookList(String saleBookTitle, String saleSellerName, String content);
+
+    BookEntity findBySaleBookIdAndSaleSellerIdAndSaleBookPrice(String bookId, String sellerId, int indivPrice);
+
+    int countAllBySaleSellerId(String saleSellerId);
 }

@@ -52,17 +52,6 @@ public class PurchaseEntity {
     private int purchaseNumber=1;
 
     @Builder
-    public PurchaseEntity(int purchasePk, String purchaseBookId, String purchaseBuyerId, String purchaseBuyerName, String purchaseSellerId, String purchaseSellerName, int purchaseState){
-        this.purchasePk = purchasePk;
-        this.purchaseBookId = purchaseBookId;
-        this.purchaseBuyerId = purchaseBuyerId;
-        this.purchaseBuyerName = purchaseBuyerName;
-        this.purchaseSellerId = purchaseSellerId;
-        this.purchaseSellerName = purchaseSellerName;
-        this.purchaseState = purchaseState;
-    }
-
-    @Builder
     public PurchaseEntity(String purchaseBookId, String purchaseBookName, String purchaseBuyerId, String purchaseBuyerName, String purchaseSellerId, String purchaseSellerName, int purchasePayment){
         this.purchaseBookId = purchaseBookId;
         this.purchaseBookName = purchaseBookName;
@@ -86,7 +75,7 @@ public class PurchaseEntity {
     }
 //    구매 버튼
     @Builder
-    public PurchaseEntity(int purchasePk, String purchaseBookId, String purchaseBookName, String purchaseBuyerId, String purchaseBuyerName, String purchaseSellerId, String purchaseSellerName, int purchaseState, int purchasePayment, int purchasePamentType, String purchaseComment, String purchaseAddress){
+    public PurchaseEntity(int purchasePk, String purchaseBookId, String purchaseBookName, String purchaseBuyerId, String purchaseBuyerName, String purchaseSellerId, String purchaseSellerName, int purchaseState, int purchasePayment, int purchasePamentType, String purchaseComment, String purchaseAddress, int purchaseNumber){
         this.purchasePk = purchasePk;
         this.purchaseBookId = purchaseBookId;
         this.purchaseBookName = purchaseBookName;
@@ -99,5 +88,19 @@ public class PurchaseEntity {
         this.purchasePamentType = purchasePamentType;
         this.purchaseComment = purchaseComment;
         this.purchaseAddress = purchaseAddress;
+        this.purchaseNumber = purchaseNumber;
+    }
+
+    public PurchaseEntity(int purchasePk, String purchaseBookId, String purchaseBookName, String purchaseBuyerId, String purchaseBuyerName, String purchaseSellerId, String purchaseSellerName, int purchasePayment, int purchaseState) {
+        this.purchasePk = purchasePk;
+        this.purchaseBookId = purchaseBookId;
+        this.purchaseBookName = purchaseBookName;
+        this.purchaseBuyerId = purchaseBuyerId;
+        this.purchaseBuyerName = purchaseBuyerName;
+        this.purchaseSellerId = purchaseSellerId;
+        this.purchaseSellerName = purchaseSellerName;
+        this.purchasePayment = purchasePayment;
+        this.purchaseState = purchaseState;
+
     }
 }

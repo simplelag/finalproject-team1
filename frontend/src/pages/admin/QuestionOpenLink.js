@@ -9,7 +9,7 @@ function QuestionOpenLink(props) {
         window.open(`/question/write`, "_blank", option);
     }
     return (
-        <a onClick={open}>문의</a>
+        <button type={"button"} className={"btn btn-purple"} onClick={open}>문의</button>
     );
 }
 

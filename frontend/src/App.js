@@ -24,6 +24,7 @@ import BoardUpdate from "./pages/board/BoardUpdate";
 import Mail from "./pages/common/Mail";
 import QuestionWrite from "./pages/admin/QuestionWrite";
 import MailList from "./pages/common/MailList";
+import EventCalendar from "./pages/event/EventCalendar";
 
 
 
@@ -63,7 +64,9 @@ function App() {
                     <Route path={":room"} element={<Mail />} />
                     <Route path={"list"} element={<MailList />} />
                 </Route>
-
+                <Route path={"/event"}>
+                    <Route index element={<EventCalendar/>} />
+                </Route>
             </Routes>
         </BrowserRouter>
     );
