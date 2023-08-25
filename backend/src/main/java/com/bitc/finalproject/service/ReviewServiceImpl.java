@@ -3,6 +3,7 @@ package com.bitc.finalproject.service;
 import com.bitc.finalproject.entity.ReviewEntity;
 import com.bitc.finalproject.repository.ReviewRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -28,8 +29,8 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public List<ReviewEntity> myReviewList(String userId) throws Exception {
-        return reviewRepository.findByBookReviewBuyerIdOrderByBookReviewPkDesc(userId);
+    public List<ReviewEntity> myReviewList(String userId, Pageable pageable) throws Exception {
+        return reviewRepository.findByBookReviewBuyerIdOrderByBookReviewPkDesc(userId, pageable);
     }
 
 }

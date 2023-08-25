@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
+import Pagenation from "../common/Pagenation";
 
 function SalesHistory(props) {
 
@@ -8,17 +9,17 @@ function SalesHistory(props) {
     const [ mySaleList, setMySaleList ] = useState([])
     const navi = useNavigate();
 
-    useEffect(() => {
-        axios.get('http://localhost:8080/login/myLogin/mySaleList', {
-            params:{
-                userId: userId
-            }
-        })
-            .then(res => {
-                console.log(res)
-                setMySaleList(res.data)
-            })
-    },[]);
+    // useEffect(() => {
+    //     axios.get('http://localhost:8080/login/myLogin/mySaleList', {
+    //         params:{
+    //             userId: userId
+    //         }
+    //     })
+    //         .then(res => {
+    //             console.log(res)
+    //             setMySaleList(res.data)
+    //         })
+    // },[]);
 
     // 판매자가 배송하기 버튼을 클릭 했을 때
     const handlePost = (index) => {
@@ -53,7 +54,7 @@ function SalesHistory(props) {
 
     return (
         <div className={'container my-4'}>
-            <h1 className={'display-5 my-4 text-center'}>판매 내역 페이지</h1>
+            {/*<h1 className={'display-5 my-4 text-center'}>판매 내역 페이지</h1>*/}
             <div className={'border border-2'}>
                 <table className={'table table-hover table-striped'}>
                     <colgroup>
@@ -73,7 +74,8 @@ function SalesHistory(props) {
                     </tr>
                     </thead>
                     <tbody>
-                    {
+                    { mySaleList.length==0?
+                        <tr><td colSpan={5} className={"text-center"}>판매중인 상품이 없습니다.</td></tr> :
                         mySaleList.map((item,index) => {
                             return (
                                 <tr key={item.salePk}>
@@ -99,6 +101,17 @@ function SalesHistory(props) {
                     </tbody>
                 </table>
             </div>
+            <Pagenation
+                // key={qNum}
+                setList={setMySaleList}
+                url={`/login/myLogin/mySaleList?userId=${userId}`}
+                numberUrl={`/login/myLogin/mySaleListCount?userId=${userId}`}
+                howManyContentsInAPage={5}
+                howManyPagesInABlock={5}
+                searchType={[]}
+                order={""}
+                isSearchable={false}
+            />
         </div>
     )
 }

@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {Fragment, useEffect, useState} from "react";
 
 
 import Header from "../mainPages/Header";
@@ -97,68 +97,74 @@ function ViewOldBookList(props) {
     }
 
     return (
-        <main className={'container'}>
+        <Fragment>
             <Header/>
-            {
-                oldBookInfo.map((info, index) => {
-                    return (
-                        <div className={'row mt-5'} key={info.salePk}>
-                            <div className={'col-sm-2'}>
-                                <img src={info.saleImgSrc} style={style.img}/>
-                            </div>
-                            <div className={'col-sm-6 my-3'}>
-                                <div>
-                                    <a href={'#'} className={"text-decoration-none"}
-                                       style={{color: "black", fontSize: 18}}
-                                       onClick={() => gotoDetail(info.saleBookId)}>
-                                        <strong>{info.saleBookTitle}</strong>
-                                    </a>
+            <main className={'container'}>
+
+                {
+                    oldBookInfo.map((info, index) => {
+                        return (
+                            <div className={'row mt-5'} key={info.salePk}>
+                                <div className={'col-sm-2'}>
+                                    <img src={info.saleImgSrc} style={style.img}/>
                                 </div>
-                                <p className={""}>품질 : {info.bookGrade}등급</p>
-                                <div>
-                                    <p className={""}>판매자 설명 : {info.saleDiscription}</p>
+                                <div className={'col-sm-6 my-3'}>
+                                    <div>
+                                        <a href={'#'} className={"text-decoration-none"}
+                                           style={{color: "black", fontSize: 18}}
+                                           onClick={() => gotoDetail(info.saleBookId)}>
+                                            <strong>{info.saleBookTitle}</strong>
+                                        </a>
+                                    </div>
+                                    <p className={""}>품질 : {info.bookGrade}등급</p>
+                                    <div>
+                                        <p className={""}>판매자 설명 : {info.saleDiscription}</p>
+                                    </div>
+                                </div>
+                                <div className={"col-sm-2"}>
+                                    <p><strong>판매자정보</strong></p>
+                                    <p className={"mt-3"} style={{color: "black"}}>판매자 : {info.saleSellerName}</p>
+                                    <p className={""} style={{color: "black"}}>판매자ID : {info.saleSellerId}</p>
+                                </div>
+                                <div className={"col-sm-2 text-center my-3 d-flex flex-column"}>
+                                    <div>
+                                        <button type={'button'} className={'btn btn-dark w-100'} onClick={() => save(index)}> 장바구니에 담기 </button>
+                                    </div>
+                                    <div>
+                                        <button type={'button'} className={'btn btn-dark w-100 mt-2'}
+                                                onClick={() => handleInPurchase(index)}> 바로 구매
+                                        </button>
+                                    </div>
+                                    <div>
+                                        {info.saleSellerId == sessionStorage.getItem("id") ? null :
+                                            <MailOpenButton room={info.salePk + "_" + sessionStorage.getItem("id")} name={"판매자문의"} style={{width:"100%"}}/>
+                                        }
+                                    </div>
+                                </div>
+                                <div className={'d-flex mt-2'}>
+                                    <table className={'table'}>
+                                        <thead>
+                                        <tr className={'text-center table-secondary'}>
+                                            <th>판매 가격</th>
+                                            <th>판매 수량</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr className={'text-center'}>
+                                            <td>{info.saleBookPrice}원</td>
+                                            <td>{info.saleBookPieces}개</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
-                            <div className={"col-sm-2"}>
-                                <p><strong>판매자정보</strong></p>
-                                <p className={"mt-3"} style={{color: "black"}}>판매자 : {info.saleSellerName}</p>
-                                <p className={""} style={{color: "black"}}>판매자ID : {info.saleSellerId}</p>
-                            </div>
-                            <div className={"col-sm-2 text-center my-3"}>
-                                <button type={'button'} className={'btn btn-dark'} onClick={() => save(index)}> 장바구니에
-                                    넣기
-                                </button>
-                                <br/>
-                                <button type={'button'} className={'btn btn-dark mt-2'}
-                                        onClick={() => handleInPurchase(index)}> 즉시 구매하기
-                                </button>
-                                {info.saleSellerId == sessionStorage.getItem("id") ? null :
-                                    <MailOpenButton room={info.salePk + "_" + sessionStorage.getItem("id")}
-                                                    name={"판매자문의"}/>
-                                }
-                            </div>
-                            <div className={'d-flex mt-2'}>
-                                <table className={'table'}>
-                                    <thead>
-                                    <tr className={'text-center table-secondary'}>
-                                        <th>판매 가격</th>
-                                        <th>판매 수량</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr className={'text-center'}>
-                                        <td>{info.saleBookPrice}원</td>
-                                        <td>{info.saleBookPieces}개</td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    )
-                })
-            }
+                        )
+                    })
+                }
+            </main>
             <Footer/>
-        </main>
+        </Fragment>
+
     )
 }
 
