@@ -48,23 +48,6 @@ function ReviewMain(props) {
                 console.error(err);
             });
     },[reviewBookIsbn]);
-            axios.get("http://localhost:8080/responseReview", {
-                params: {
-                        ISBN13 : reviewBookIsbn
-                }
-            })
-                .then(res => {
-                    console.log(res)
-                    setAllReviews(res.data)
-                    setreviewTitle(res.data.bookReviewTitle);
-                    setreviewContent(res.data.bookReviewContent);
-                    setReviewrName(res.data.bookReviewBuyerId);
-                    setReviewrId(res.data.bookReviewBuyerName);
-                })
-                .catch(err => {
-                    console.error(err);
-                });
-        },[reviewBookIsbn]);
 
     const toggleModal = () => {
         if(sessionStorage.getItem("id") === null){
@@ -123,7 +106,6 @@ function ReviewMain(props) {
     }
 
     const save= (index) =>{
-
 
         const requestData ={
             bookReviewBuyerId: buyerId,
