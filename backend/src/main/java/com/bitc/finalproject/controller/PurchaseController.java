@@ -155,8 +155,10 @@ public class PurchaseController {
             bookInfoService.bookInfoInsert(bookEntity);
 //            구매 후 장바구니 테이블에서 수량 줄이기
             BasketEntity basketEntity = bookInfoService.purchaseBasketAfterMinusNumber(userId, BookId, indivPrice);
-            basketEntity.setBasketBookPieces(basketEntity.getBasketBookPieces() - number);
-            bookInfoService.basketInsert(basketEntity);
+            if(basketEntity != null){
+                basketEntity.setBasketBookPieces(basketEntity.getBasketBookPieces() - number);
+                bookInfoService.basketInsert(basketEntity);
+            }
             purchaseService.savePurchase(purchaseEntity);
         }
     }
