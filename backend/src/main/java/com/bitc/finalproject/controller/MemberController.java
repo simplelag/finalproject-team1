@@ -132,6 +132,22 @@ public class MemberController {
         return bookInfoService.mySaleList(userId, pageable);
     }
 
+//    마이페이지 - 판매 접수된 책을 배송하기 버튼 클릭 시 이벤트(현재는 한사람에게 책이 전부 팔렸을 때만)
+    @RequestMapping(value="/login/myLogin/mySalePost", method = RequestMethod.PUT)
+    public void showBookPost(@RequestBody BookEntity bookEntity) throws Exception {
+        String bookId = bookEntity.getSaleBookId();
+        String SellerId = bookEntity.getSaleSellerId();
+        int bookPrice = bookEntity.getSaleBookPrice();
+        int state = 1;
+        List<PurchaseEntity> book = purchaseService.findPurchasedBook(bookId, SellerId, bookPrice, state);
+        for (int i = 0; i < book.size(); i++) {
+            PurchaseEntity book1 = book.get(i);
+            book1.setPurchaseParcel(book.get(i).getPurchaseParcel() + 1);
+            book1.setPurchasePostNumber("1");
+            purchaseService.insertPurchaseList(book1);
+        }
+    }
+
     //    마이페이지 - 판매 내역개수
     @RequestMapping(value = "/login/myLogin/mySaleListCount", method = RequestMethod.GET)
     public int showMySaleListCount(@RequestParam("userId") String userId) throws Exception{

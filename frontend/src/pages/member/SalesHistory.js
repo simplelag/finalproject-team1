@@ -22,7 +22,15 @@ function SalesHistory(props) {
     // },[]);
 
     // 판매자가 배송하기 버튼을 클릭 했을 때
-
+    const handlePost = (index) => {
+        axios.put("http://localhost:8080/login/myLogin/mySalePost", mySaleList[index], null)
+            .then(res => {
+                console.log("통신 성공", res)
+            })
+            .catch(err => {
+                console.log("통신 실패", err);
+            })
+    }
 
     //  판매자가 판매 취소하기
     const handleCancel = (index) => {
@@ -66,7 +74,7 @@ function SalesHistory(props) {
                             return (
                                 <tr key={item.salePk}>
                                     <td className={'text-center align-middle'}>
-                                        {item.saleDisabled === null ? <span>{item.saleBookPieces === 0 ? "판매완료" : "판매중"}</span> : "판매 불가"}
+                                        {item.saleDisabled === null ? <span>{item.saleBookPieces === 0 ? "판매접수" : "판매중"}</span> : "판매 불가"}
                                     </td>
                                     <td className={'align-middle'}>{item.saleBookTitle}</td>
                                     <td className={'align-middle text-center'}>{item.saleBookPrice}</td>
@@ -74,7 +82,7 @@ function SalesHistory(props) {
                                     <td>
                                         <span>{item.saleDisabled === null ?
                                             <div className={'d-grid'}>
-                                                <button type={'button'} className={'btn btn-success'}>배송하기</button>
+                                                <button type={'button'} className={'btn btn-success'} onClick={() => handlePost(index)}>배송하기</button>
                                                 <button type={'button'} className={'btn btn-warning'}>조회하기</button>
                                                 <button type={'button'} className={'btn btn-danger'} onClick={() => handleCancel(index)}>취소하기</button>
                                             </div>

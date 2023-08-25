@@ -44,6 +44,16 @@ function BoardDetail(props) {
             })
     },[])
 
+    const onClickWrite = () => {
+        if (sessionStorage.getItem("id") != null) {
+            navi("/board/write")
+        }
+        else {
+            alert("로그인이 필요한 서비스입니다")
+            navi("/login")
+        }
+    }
+
     // 삭제
     const onClickDelete = () => {
         axios.delete(`http://localhost:8080/board/${boardPk}`, {
@@ -116,7 +126,7 @@ function BoardDetail(props) {
                                     ||
                                     (sessionStorage.getItem("grade") == "admin" && <button type={"button"} className={'btn btn-outline-purple'} onClick={onClickDelete}>삭제</button>)
                                 }
-                                <a href={'/board/write'} className={'btn btn-outline-purple ms-2'}>글작성</a>
+                                <button type={"button"} onClick={onClickWrite} className={'btn btn-outline-purple ms-2'}>글작성</button>
                             </div>
                         </div>
                     </div>

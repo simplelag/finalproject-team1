@@ -68,8 +68,8 @@ function ViewMainBook(props) {
                     <img src={props.data.cover} style={style.img} />
                 </div>
                 <div className={'col-sm my-3'} id={''}>
-                    <div id={''}>
-                        <a className={'text-decoration-none text-black'}>{props.data.title}</a>
+                    <div className={"mb-2"}>
+                        <a style={{fontSize: 18}} className={'text-decoration-none text-black'}>{props.data.title}</a>
                     </div>
                     <div>
                         <span>
@@ -95,7 +95,6 @@ function ViewMainBook(props) {
                             </tr>
                             </tbody>
                         </table>
-
                         <div className={'text-center mb-1 d-flex flex-column justify-content-end'}>
                             <button type={'button'} className={'btn btn-outline-purple'} name={''} onClick={onClickDetail}>중고도서보기</button>
                             <button type={'button'} className={'btn btn-outline-purple mt-2'} name={''} onClick={onClickSell}>판매하기</button>

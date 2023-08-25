@@ -87,12 +87,10 @@ function PurchaseHistory(props) {
                                     <td className={'align-middle text-center'}>{item.purchaseNumber}</td>
                                     <td>
                                         <div>
-                                            {item.purchaseParcel > 1 ? "" :
-
+                                            {item.purchaseParcel >= 1 ? "" :
                                                 <button type={'button'} className={'btn btn-danger small py-1 px-2'} onClick={() => handlePurchaseCancel(index)}>구매 취소</button>
                                             }
                                         </div>
-
                                     </td>
                                 </tr>
                             );

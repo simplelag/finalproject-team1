@@ -293,7 +293,6 @@ function JoinMember(props) {
         <Fragment>
             <Header />
             <div className={'container my-3'}>
-
                 <h1 className={'display-4 mb-3 text-center'}>회원가입</h1>
                 <div className={'row'}>
                     <div className={'col-sm-8 mx-auto'}>
@@ -407,11 +406,9 @@ function JoinMember(props) {
                         </div>
                     </div>
                 </div>
-
             </div>
             <Footer />
         </Fragment>
-
     )
 }
 export default JoinMember;

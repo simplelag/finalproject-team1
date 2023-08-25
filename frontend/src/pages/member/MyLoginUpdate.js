@@ -303,7 +303,6 @@ function MyLoginUpdate(props) {
         <Fragment>
             <Header />
             <div className={'container my-3'}>
-
                 <h1 className={'display-4 mb-3 text-center'}>회원정보 수정</h1>
                 <div className={'row'}>
                     <div className={'col-sm-8 mx-auto'}>
@@ -406,7 +405,6 @@ function MyLoginUpdate(props) {
             </div>
             <Footer />
         </Fragment>
-
     )
 }
 
