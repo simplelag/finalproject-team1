@@ -292,73 +292,6 @@ function JoinMember(props) {
     return (
         <Fragment>
             <Header />
-            <h1 className={'display-4 mb-3 text-center'}>회원가입</h1>
-            <div className={'row'}>
-                <div className={'col-sm-8 mx-auto'}>
-                    <div className={'form-group d-flex'}>
-                        <div className={'col-sm-2 d-flex justify-content-center'}>
-                            <label htmlFor={'id'} className={'form-label align-self-center mt-1'}>아이디</label>
-                        </div>
-                        <div className={'col-sm-5'}>
-                            <input type={'text'} className={'form-control'} id={'id'} value={userId} onChange={handleUserId}/>
-                        </div>
-                        <div className={'col-sm-2'}>
-                            <button type={'button'} className={'btn btn-primary ms-2'} onClick={btnDoubleCheck}>중복체크</button>
-                        </div>
-                    </div>
-                    <div className={'form-group d-flex mt-3'}>
-                        <div className={'col-sm-2 d-flex justify-content-center'}>
-                            <label htmlFor={'password'} className={'form-label align-self-center mt-1'}>비밀번호</label>
-                        </div>
-                        <div className={'col-sm-5'}>
-                            <input type={'password'} className={'form-control'} id={'password'} value={password} onChange={handlePassword}/>
-                        </div>
-                    </div>
-                    <div className={'form-group d-flex mt-3'}>
-                        <div className={'col-sm-2 d-flex justify-content-center'}>
-                            <label htmlFor={'passwordRe'} className={'form-label align-self-top mt-1'}>비밀번호 확인</label>
-                        </div>
-                        <div className={'col-sm-5'}>
-                            <input type={'password'} className={'form-control'} id={'passwordRe'} value={passwordRe} onChange={handlePasswordRe}/>
-                            {password !== passwordRe ? <p className={'mt-1 text-danger'}>비밀번호가 같지 않습니다.</p> : null}
-                        </div>
-                    </div>
-                    <div className={'form-group d-flex mt-3'}>
-                        <div className={'col-sm-2 d-flex justify-content-center'}>
-                            <label htmlFor={'name'} className={'form-label align-self-top mt-1'}>닉네임</label>
-                        </div>
-                        <div className={'col-sm-5'}>
-                            <input type={'name'} className={'form-control'} id={'name'} value={name} onBlur={handleNameCheck} onChange={handleName}/>
-                        </div>
-                    </div>
-                    <div className={'form-group d-flex mt-3'}>
-                        <div className={'col-sm-2 d-flex justify-content-center'}>
-                            <label htmlFor={'emailFirst'} className={'form-label align-self-center mt-1'}>이메일</label>
-                        </div>
-                        <div className={'col-sm-4'}>
-                            <input type={emailFlag === true ? 'email' : 'text'} className={'form-control'} id={'emailFirst'} name={'emailFirst'} value={emailFirst} onBlur={emailFirstVal} onChange={handleEmailFirst}/>
-                        </div>
-                        <div className={'align-self-center mt-1'}>@</div>
-                        <div className={'col-sm-4'}>
-                            <select className={'form-select'} id={'emailLast'} onBlur={emailLastVal} onChange={handleEmailLast} value={emailLast}>
-                                <option value={''}>직접 입력</option>
-                                <option value={'@naver.com'}>naver.com</option>
-                                <option value={'@daum.net'}>daum.net</option>
-                                <option value={'@nate.com'}>nate.com</option>
-                                <option value={'@bict.co.kr'}>bict.co.kr</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div className={'form-group d-flex mt-3'}>
-                        <div className={'col-sm-2 d-flex justify-content-center'}>
-                            <label htmlFor={'phoneMiddleNumber'} className={'form-label align-self-center mt-1'}>전화번호</label>
-                        </div>
-                        <div className={'col-sm-3'}>
-                            <select className={'form-select'} id={'phoneFirstNumber'} value={phoneFirstNumber} onChange={handlePhoneFirst}>
-                                <option value={'010'}>010</option>
-                                <option value={'011'}>011</option>
-                                <option value={'012'}>012</option>
-                            </select>
             <div className={'container my-3'}>
                 <h1 className={'display-4 mb-3 text-center'}>회원가입</h1>
                 <div className={'row'}>
@@ -473,11 +406,9 @@ function JoinMember(props) {
                         </div>
                     </div>
                 </div>
-
             </div>
             <Footer />
         </Fragment>
-
     )
 }
 export default JoinMember;
