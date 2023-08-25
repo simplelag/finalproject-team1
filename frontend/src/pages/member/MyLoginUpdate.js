@@ -332,7 +332,7 @@ function MyLoginUpdate(props) {
                     </div>
                     <div className={'form-group d-flex mt-3'}>
                         <div className={'col-sm-2 d-flex justify-content-center'}>
-                            <label htmlFor={'name'} className={'form-label align-self-top mt-1'}>이름</label>
+                            <label htmlFor={'name'} className={'form-label align-self-top mt-1'}>닉네임</label>
                         </div>
                         <div className={'col-sm-5'}>
                             <input type={'name'} className={'form-control'} id={'name'} value={name} onBlur={handleNameCheck} onChange={handleName}/>

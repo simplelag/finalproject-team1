@@ -74,4 +74,9 @@ public class PurchaseServiceImpl implements PurchaseService{
     public void myPurchaseCancel(PurchaseEntity purchaseEntity) throws Exception {
         purchaseRepository.delete(purchaseEntity);
     }
+
+    @Override
+    public List<PurchaseEntity> findPurchasedBook(String bookId, String sellerId, int bookPrice, int state) throws Exception {
+        return purchaseRepository.findByPurchaseBookIdAndPurchaseSellerIdAndPurchasePaymentAndPurchaseState(bookId, sellerId, bookPrice, state);
+    }
 }

@@ -91,7 +91,6 @@ function PurchaseHistory(props) {
                                                 <button type={'button'} className={'btn btn-danger small py-1 px-2'} onClick={() => handlePurchaseCancel(index)}>구매 취소</button>
                                             }
                                         </div>
-
                                     </td>
                                 </tr>
                             );

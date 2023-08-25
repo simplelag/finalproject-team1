@@ -32,8 +32,11 @@ public interface PurchaseService {
     List<BookEntity> basketListSale(List<Integer> cheekListSalePk) throws Exception;
 
 //    마이페이지에서 판매 내역 가져오기
+
     List<PurchaseEntity> myPurchaseList(String userId, int state, Pageable pageable) throws Exception;
 
 //    마이페이지의 구매내역에서 구매 취소
     void myPurchaseCancel(PurchaseEntity purchaseEntity) throws Exception;
+
+    List<PurchaseEntity> findPurchasedBook(String bookId, String sellerId, int bookPrice, int state) throws Exception;
 }

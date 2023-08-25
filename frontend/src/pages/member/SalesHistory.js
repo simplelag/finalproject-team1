@@ -23,12 +23,6 @@ function SalesHistory(props) {
 
     // 판매자가 배송하기 버튼을 클릭 했을 때
     const handlePost = (index) => {
-        const reqData = {
-            bookList : mySaleList[index]
-            // bookId : mySaleList[index].saleBookId,
-            // sellerId : mySaleList[index].saleSellerId,
-            // saleBookPieces : mySaleList[index].saleBookPrice
-        }
         axios.put("http://localhost:8080/login/myLogin/mySalePost", mySaleList[index], null)
             .then(res => {
                 console.log("통신 성공", res)
