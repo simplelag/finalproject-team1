@@ -10,7 +10,7 @@ function EventModal(props) {
                 <textarea className={"form-control"} />
             </div>
             <button className={"btn"}>저장</button>
-            <button className={"btn"} onClick={() => {props.setModal(false)}}>닫기</button>
+            <button type={"button"} className={"btn"} onClick={() => {props.setModal(false)}}>닫기</button>
         </div>
     )
 }
