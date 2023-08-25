@@ -303,7 +303,6 @@ function MyLoginUpdate(props) {
         <Fragment>
             <Header />
             <div className={'container my-3'}>
-
                 <h1 className={'display-4 mb-3 text-center'}>회원정보 수정</h1>
                 <div className={'row'}>
                     <div className={'col-sm-8 mx-auto'}>
@@ -340,16 +339,6 @@ function MyLoginUpdate(props) {
                                 <input type={'name'} className={'form-control'} id={'name'} value={name} onBlur={handleNameCheck} onChange={handleName}/>
                             </div>
                         </div>
-
-                        <div className={'col-sm-5'}>
-                            <input type={'password'} className={'form-control'} id={'passwordRe'} value={passwordRe} onChange={handlePasswordRe}/>
-                            {password !== passwordRe ? <p className={'mt-1 text-danger'}>비밀번호가 같지 않습니다.</p> : null}
-                        </div>
-                    </div>
-                    <div className={'form-group d-flex mt-3'}>
-                        <div className={'col-sm-2 d-flex justify-content-center'}>
-                            <label htmlFor={'name'} className={'form-label align-self-top mt-1'}>닉네임</label>
-
                         <div className={'form-group d-flex mt-3'}>
                             <div className={'col-sm-2 d-flex justify-content-center'}>
                                 <label htmlFor={'emailFirst'} className={'form-label align-self-center mt-1'}>이메일</label>
@@ -367,7 +356,6 @@ function MyLoginUpdate(props) {
                                     <option value={'@bict.co.kr'}>bict.co.kr</option>
                                 </select>
                             </div>
-
                         </div>
                         <div className={'form-group d-flex mt-3'}>
                             <div className={'col-sm-2 d-flex justify-content-center'}>
@@ -417,7 +405,6 @@ function MyLoginUpdate(props) {
             </div>
             <Footer />
         </Fragment>
-
     )
 }
 
