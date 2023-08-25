@@ -31,7 +31,7 @@ function MainEventCarousel(props) {
 
     return (
         <div className={'my-3'}>
-            <swiper-container className="mySwiper" pagination="true" pagination-dynamic-bullets="true">
+            <swiper-container className="mySwiper" pagination="true" pagination-dynamic-bullets="true" loop="true" autoplay="true">
                 <swiper-slide style={swiperSlide.slide}><img src="/image/event1.jpg" style={swiperSlide.img}/></swiper-slide>
                 <swiper-slide style={swiperSlide.slide}><img src="/image/event2.jpg" style={swiperSlide.img}/></swiper-slide>
                 <swiper-slide style={swiperSlide.slide}><img src="/image/event3.jpg" style={swiperSlide.img}/></swiper-slide>

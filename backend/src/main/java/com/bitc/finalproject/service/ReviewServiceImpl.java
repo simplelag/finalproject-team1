@@ -29,8 +29,18 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public List<ReviewEntity> myReviewList(String userId, Pageable pageable) throws Exception {
-        return reviewRepository.findByBookReviewBuyerIdOrderByBookReviewPkDesc(userId, pageable);
+    public void updateReview(ReviewEntity reviewEntity, int bookReviewPk) throws Exception {
+        ReviewEntity existingReview = reviewRepository.findById(reviewEntity.getBookReviewPk())
+                .orElseThrow(() -> new RuntimeException("리뷰를 찾을 수 없음"));
+        existingReview.setBookReviewBuyerId(reviewEntity.getBookReviewBuyerId());
+        existingReview.setBookReviewBuyerName(reviewEntity.getBookReviewBuyerName());
+        existingReview.setBookReviewGrade(reviewEntity.getBookReviewGrade());
+        existingReview.setBookReviewTitle(reviewEntity.getBookReviewTitle());
+        existingReview.setBookReviewContent(reviewEntity.getBookReviewContent());
+        reviewRepository.save(existingReview);
     }
 
-}
+        public List<ReviewEntity> myReviewList (String userId, Pageable pageable) throws Exception {
+            return reviewRepository.findByBookReviewBuyerIdOrderByBookReviewPkDesc(userId, pageable);
+        }
+    }

@@ -48,6 +48,23 @@ function ReviewMain(props) {
                 console.error(err);
             });
     },[reviewBookIsbn]);
+            axios.get("http://localhost:8080/responseReview", {
+                params: {
+                        ISBN13 : reviewBookIsbn
+                }
+            })
+                .then(res => {
+                    console.log(res)
+                    setAllReviews(res.data)
+                    setreviewTitle(res.data.bookReviewTitle);
+                    setreviewContent(res.data.bookReviewContent);
+                    setReviewrName(res.data.bookReviewBuyerId);
+                    setReviewrId(res.data.bookReviewBuyerName);
+                })
+                .catch(err => {
+                    console.error(err);
+                });
+        },[reviewBookIsbn]);
 
     const toggleModal = () => {
         if(sessionStorage.getItem("id") === null){
@@ -105,7 +122,9 @@ function ReviewMain(props) {
             })
     }
 
-    const save= () =>{
+    const save= (index) =>{
+
+
         const requestData ={
             bookReviewBuyerId: buyerId,
             bookReviewBuyerName: buyerName,
@@ -115,34 +134,38 @@ function ReviewMain(props) {
             bookReviewIsbn13: reviewBookIsbn,
         }
         if (isEditMode) {
-            // 수정 모드일 경우 기존 리뷰 업데이트
-            axios.put(`http://localhost:8080/updateReview/${allReviews[selectedReviewIndex].bookReviewPk}`, requestData, {
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            })
-                .then(response => {
-                    // 성공 처리
-                    alert("리뷰 수정 성공!");
-                    // 수정한 데이터로 allReviews 배열 업데이트
-                    const updatedReviews = [...allReviews];
-                    updatedReviews[selectedReviewIndex] = {
-                        ...updatedReviews[selectedReviewIndex],
-                        ...requestData
-                    };
-                    setAllReviews(updatedReviews);
-                    setIsEditMode(false);
-                    setSelectedReviewIndex(null);
-                    setSelectedReviewData({
-                        reviewTitle: "",
-                        reviewContent: ""
-                    });
-                    toggleModal(); // 모달 닫기
+            const selectedReview = allReviews[selectedReviewIndex];
+            if(selectedReview){
+                requestData.bookReviewPk = selectedReview.bookReviewPk;
+                axios.put("http://localhost:8080/updateReview", requestData, {
+                    params:{
+                        bookReviewPk: requestData.bookReviewPk
+                    }
                 })
-                .catch(error => {
-                    // 에러 처리
-                    console.log(error);
-                });
+                    .then(response => {
+                        // 성공 처리
+                        alert("리뷰 수정 성공!");
+                        // 수정한 데이터로 allReviews 배열 업데이트
+                        const updatedReviews = [...allReviews];
+                        updatedReviews[selectedReviewIndex] = {
+                            ...updatedReviews[selectedReviewIndex],
+                            ...requestData
+                        };
+                        setAllReviews(updatedReviews);
+                        setIsEditMode(false);
+                        setSelectedReviewIndex(null);
+                        setSelectedReviewData({
+                            reviewTitle: "",
+                            reviewContent: ""
+                        });
+                        toggleModal(); // 모달 닫기
+                    })
+                    .catch(error => {
+                        // 에러 처리
+                        console.log(error);
+                    });
+            }
+            // 수정 모드일 경우 기존 리뷰 업데이트
         } else {
             // 수정 모드가 아닐 경우 새 리뷰 작성
             axios.post("http://localhost:8080/saveReview", requestData, {
@@ -216,9 +239,13 @@ function ReviewMain(props) {
                     isOpen={isModalOpen}
                     toggle={toggleModal}
                     selectedReviewData={selectReviewData}
+                    bookReviewPk={selectedReviewIndex !== null ? allReviews[selectedReviewIndex].bookReviewPk : null}
                     onChangeTitle={onChangeTitle}
                     onChangeContent={onChangeContent}
+                    starValue={starValue}
+                    onStarClick={handleStarClick}
                     onSaveEdit={save}
+
                 />
             ):(
                 <Modal isOpen={isModalOpen} toggle={toggleModal}>
