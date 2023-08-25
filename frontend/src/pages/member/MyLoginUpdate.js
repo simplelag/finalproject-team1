@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {Fragment, useEffect, useState} from 'react';
 import {Link, useNavigate} from "react-router-dom";
 import axios from "axios";
 import {useDaumPostcodePopup} from "react-daum-postcode";
@@ -156,7 +156,7 @@ function MyLoginUpdate(props) {
                 }
             })
             .catch(err => {
-                console.log("이름 중복 체크 실패");
+                console.log("닉네임 중복 체크 실패");
             })
     }
 
@@ -267,7 +267,7 @@ function MyLoginUpdate(props) {
         if(password === '' || passwordRe === ''){
             alert("비밀번호를 입력하세요");
         } else if(name === ''){
-            alert("이름을 입력하세요");
+            alert("닉네임을 입력하세요");
         } else if(emailFirst ==='' && emailLast === ''){
             alert("이메일을 입력하세요");
         }else if(phoneMiddleNumber === '' || phoneLastNumber === ''){
@@ -277,7 +277,7 @@ function MyLoginUpdate(props) {
         }else if(roadAddressDetail === ''){
             alert("상세주소를 입력하세요");
         }else if(nameCheck){
-            alert("이름이 중복입니다.");
+            alert("닉네임이 중복입니다.");
         } else if(!emailTest){
             alert("이메일의 형식이 올바르지 않습니다.")
         }
@@ -300,109 +300,113 @@ function MyLoginUpdate(props) {
     }
 
     return (
-        <div className={'container my-3'}>
+        <Fragment>
             <Header />
-            <h1 className={'display-4 mb-3 text-center'}>회원정보 수정</h1>
-            <div className={'row'}>
-                <div className={'col-sm-8 mx-auto'}>
-                    <div className={'form-group d-flex'}>
-                        <div className={'col-sm-2 d-flex justify-content-center'}>
-                            <label htmlFor={'id'} className={'form-label align-self-center mt-1'}>아이디</label>
+            <div className={'container my-3'}>
+
+                <h1 className={'display-4 mb-3 text-center'}>회원정보 수정</h1>
+                <div className={'row'}>
+                    <div className={'col-sm-8 mx-auto'}>
+                        <div className={'form-group d-flex'}>
+                            <div className={'col-sm-2 d-flex justify-content-center'}>
+                                <label htmlFor={'id'} className={'form-label align-self-center mt-1'}>아이디</label>
+                            </div>
+                            <div className={'col-sm-5'}>
+                                <input type={'text'} className={'form-control'} id={'id'} value={userId} disabled={true}/>
+                            </div>
                         </div>
-                        <div className={'col-sm-5'}>
-                            <input type={'text'} className={'form-control'} id={'id'} value={userId} disabled={true}/>
+                        <div className={'form-group d-flex mt-3'}>
+                            <div className={'col-sm-2 d-flex justify-content-center'}>
+                                <label htmlFor={'password'} className={'form-label align-self-center mt-1'}>비밀번호</label>
+                            </div>
+                            <div className={'col-sm-5'}>
+                                <input type={'password'} className={'form-control'} id={'password'} value={password} onChange={handlePassword}/>
+                            </div>
                         </div>
-                    </div>
-                    <div className={'form-group d-flex mt-3'}>
-                        <div className={'col-sm-2 d-flex justify-content-center'}>
-                            <label htmlFor={'password'} className={'form-label align-self-center mt-1'}>비밀번호</label>
+                        <div className={'form-group d-flex mt-3'}>
+                            <div className={'col-sm-2 d-flex justify-content-center'}>
+                                <label htmlFor={'passwordRe'} className={'form-label align-self-top mt-1'}>비밀번호 확인</label>
+                            </div>
+                            <div className={'col-sm-5'}>
+                                <input type={'password'} className={'form-control'} id={'passwordRe'} value={passwordRe} onChange={handlePasswordRe}/>
+                                {password !== passwordRe ? <p className={'mt-1 text-danger'}>비밀번호가 같지 않습니다.</p> : null}
+                            </div>
                         </div>
-                        <div className={'col-sm-5'}>
-                            <input type={'password'} className={'form-control'} id={'password'} value={password} onChange={handlePassword}/>
+                        <div className={'form-group d-flex mt-3'}>
+                            <div className={'col-sm-2 d-flex justify-content-center'}>
+                                <label htmlFor={'name'} className={'form-label align-self-top mt-1'}>닉네임</label>
+                            </div>
+                            <div className={'col-sm-5'}>
+                                <input type={'name'} className={'form-control'} id={'name'} value={name} onBlur={handleNameCheck} onChange={handleName}/>
+                            </div>
                         </div>
-                    </div>
-                    <div className={'form-group d-flex mt-3'}>
-                        <div className={'col-sm-2 d-flex justify-content-center'}>
-                            <label htmlFor={'passwordRe'} className={'form-label align-self-top mt-1'}>비밀번호 확인</label>
+                        <div className={'form-group d-flex mt-3'}>
+                            <div className={'col-sm-2 d-flex justify-content-center'}>
+                                <label htmlFor={'emailFirst'} className={'form-label align-self-center mt-1'}>이메일</label>
+                            </div>
+                            <div className={'col-sm-4'}>
+                                <input type={emailFlag === true ? 'email' : 'text'} className={'form-control'} id={'emailFirst'} name={'emailFirst'} value={emailFirst} onBlur={emailFirstVal} onChange={handleEmailFirst}/>
+                            </div>
+                            <div className={'align-self-center mt-1'}>@</div>
+                            <div className={'col-sm-4'}>
+                                <select className={'form-select'} id={'emailLast'} onBlur={emailLastVal} onChange={handleEmailLast} value={emailLast}>
+                                    <option value={''}>직접 입력</option>
+                                    <option value={'@naver.com'}>naver.com</option>
+                                    <option value={'@daum.net'}>daum.net</option>
+                                    <option value={'@nate.com'}>nate.com</option>
+                                    <option value={'@bict.co.kr'}>bict.co.kr</option>
+                                </select>
+                            </div>
                         </div>
-                        <div className={'col-sm-5'}>
-                            <input type={'password'} className={'form-control'} id={'passwordRe'} value={passwordRe} onChange={handlePasswordRe}/>
-                            {password !== passwordRe ? <p className={'mt-1 text-danger'}>비밀번호가 같지 않습니다.</p> : null}
+                        <div className={'form-group d-flex mt-3'}>
+                            <div className={'col-sm-2 d-flex justify-content-center'}>
+                                <label htmlFor={'phoneMiddleNumber'} className={'form-label align-self-center mt-1'}>전화번호</label>
+                            </div>
+                            <div className={'col-sm-3'}>
+                                <select className={'form-select'} id={'phoneFirstNumber'} value={phoneFirstNumber} onChange={handlePhoneFirst}>
+                                    <option value={'010'}>010</option>
+                                    <option value={'011'}>011</option>
+                                    <option value={'012'}>012</option>
+                                </select>
+                            </div>
+                            <div className={'form-label align-self-center mt-1'}>-</div>
+                            <div className={'col-sm-2'}>
+                                <input type={'text'} className={'form-control'} id={'phoneMiddleNumber'} value={phoneMiddleNumber} onChange={handlePhoneMiddle}/>
+                            </div>
+                            <div className={'form-label align-self-center mt-1'}>-</div>
+                            <div className={'col-sm-2'}>
+                                <input type={'text'} className={'form-control'} id={'phoneLastNumber'} value={phoneLastNumber}
+                                       onChange={handlePhoneLast}/>
+                            </div>
                         </div>
-                    </div>
-                    <div className={'form-group d-flex mt-3'}>
-                        <div className={'col-sm-2 d-flex justify-content-center'}>
-                            <label htmlFor={'name'} className={'form-label align-self-top mt-1'}>이름</label>
+                        <div className={'form-group d-flex mt-3'}>
+                            <div className={'col-sm-2 d-flex justify-content-center'}>
+                                <label htmlFor={'postal'} className={'form-label align-self-top mt-1'}>우편번호</label>
+                            </div>
+                            <div className={'col-sm-2'}>
+                                <input type={'text'} className={'form-control'} id={'postal'} value={zoneCode} readOnly={true}/>
+                            </div>
+                            <div className={'col-sm-2'}>
+                                <button type={'button'} className={'btn btn-primary ms-2'} onClick={handleBtnZoneCode}>우편번호 찾기</button>
+                            </div>
                         </div>
-                        <div className={'col-sm-5'}>
-                            <input type={'name'} className={'form-control'} id={'name'} value={name} onBlur={handleNameCheck} onChange={handleName}/>
+                        <div className={'d-flex me-3'}>
+                            <div className={'col-sm-2'}></div>
+                            <div className={'col-sm-7'}>
+                                <input type={'text'} className={'form-control'} id={'address'} value={roadAddress} placeholder={'주소'} readOnly={true}/>
+                                <input type={'text'} className={'form-control'} id={'addressDetail'} value={roadAddressDetail} onChange={handleRoadAddDetail} placeholder={'상세주소'}/>
+                            </div>
                         </div>
-                    </div>
-                    <div className={'form-group d-flex mt-3'}>
-                        <div className={'col-sm-2 d-flex justify-content-center'}>
-                            <label htmlFor={'emailFirst'} className={'form-label align-self-center mt-1'}>이메일</label>
+                        <div className={'col-sm-5 mt-5 mx-auto d-grid gap-3'}>
+                            <button type={'button'} className={'btn btn-primary'} onClick={btnUpdateMember}>내 정보 수정</button>
+                            <Link to={'/login/myLogin'} className={'btn btn-warning'}>취소</Link>
                         </div>
-                        <div className={'col-sm-4'}>
-                            <input type={emailFlag === true ? 'email' : 'text'} className={'form-control'} id={'emailFirst'} name={'emailFirst'} value={emailFirst} onBlur={emailFirstVal} onChange={handleEmailFirst}/>
-                        </div>
-                        <div className={'align-self-center mt-1'}>@</div>
-                        <div className={'col-sm-4'}>
-                            <select className={'form-select'} id={'emailLast'} onBlur={emailLastVal} onChange={handleEmailLast} value={emailLast}>
-                                <option value={''}>직접 입력</option>
-                                <option value={'@naver.com'}>naver.com</option>
-                                <option value={'@daum.net'}>daum.net</option>
-                                <option value={'@nate.com'}>nate.com</option>
-                                <option value={'@bict.co.kr'}>bict.co.kr</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div className={'form-group d-flex mt-3'}>
-                        <div className={'col-sm-2 d-flex justify-content-center'}>
-                            <label htmlFor={'phoneMiddleNumber'} className={'form-label align-self-center mt-1'}>전화번호</label>
-                        </div>
-                        <div className={'col-sm-3'}>
-                            <select className={'form-select'} id={'phoneFirstNumber'} value={phoneFirstNumber} onChange={handlePhoneFirst}>
-                                <option value={'010'}>010</option>
-                                <option value={'011'}>011</option>
-                                <option value={'012'}>012</option>
-                            </select>
-                        </div>
-                        <div className={'form-label align-self-center mt-1'}>-</div>
-                        <div className={'col-sm-2'}>
-                            <input type={'text'} className={'form-control'} id={'phoneMiddleNumber'} value={phoneMiddleNumber} onChange={handlePhoneMiddle}/>
-                        </div>
-                        <div className={'form-label align-self-center mt-1'}>-</div>
-                        <div className={'col-sm-2'}>
-                            <input type={'text'} className={'form-control'} id={'phoneLastNumber'} value={phoneLastNumber}
-                                   onChange={handlePhoneLast}/>
-                        </div>
-                    </div>
-                    <div className={'form-group d-flex mt-3'}>
-                        <div className={'col-sm-2 d-flex justify-content-center'}>
-                            <label htmlFor={'postal'} className={'form-label align-self-top mt-1'}>우편번호</label>
-                        </div>
-                        <div className={'col-sm-2'}>
-                            <input type={'text'} className={'form-control'} id={'postal'} value={zoneCode} readOnly={true}/>
-                        </div>
-                        <div className={'col-sm-2'}>
-                            <button type={'button'} className={'btn btn-primary ms-2'} onClick={handleBtnZoneCode}>우편번호 찾기</button>
-                        </div>
-                    </div>
-                    <div className={'d-flex me-3'}>
-                        <div className={'col-sm-2'}></div>
-                        <div className={'col-sm-7'}>
-                            <input type={'text'} className={'form-control'} id={'address'} value={roadAddress} placeholder={'주소'} readOnly={true}/>
-                            <input type={'text'} className={'form-control'} id={'addressDetail'} value={roadAddressDetail} onChange={handleRoadAddDetail} placeholder={'상세주소'}/>
-                        </div>
-                    </div>
-                    <div className={'col-sm-5 mt-5 mx-auto d-grid gap-3'}>
-                        <button type={'button'} className={'btn btn-primary'} onClick={btnUpdateMember}>내 정보 수정</button>
-                        <Link to={'/login/myLogin'} className={'btn btn-warning'}>취소</Link>
                     </div>
                 </div>
             </div>
             <Footer />
-        </div>
+        </Fragment>
+
     )
 }
 

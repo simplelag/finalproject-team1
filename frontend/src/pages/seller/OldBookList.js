@@ -115,10 +115,10 @@ function OldBookList() {
 
                             <div className={"col-sm-2 text-center d-flex flex-column"}>
                                 <div>
-                                    <a href="#"className={"btn btn-link bg-dark mb-2"} style={{fontSize:"10pt",color:"white",textDecoration:"none",width:"100pt"}} onClick={() => save(index)}>장바구니 담기</a>
+                                    <button type={"button"} className={"btn btn-link bg-dark mb-2"} style={{fontSize:"10pt",color:"white",textDecoration:"none",width:"100pt"}} onClick={() => save(index)}>장바구니 담기</button>
                                 </div>
                                 <div>
-                                    <a href="#" className={"btn btn-link bg-dark"} style={{fontSize:"10pt",color:"white",textDecoration:"none", width:"100pt"}} onClick={() => handleInPurchase(index)}>바로 구매</a>
+                                    <button type={"button"} className={"btn btn-link bg-dark"} style={{fontSize:"10pt",color:"white",textDecoration:"none", width:"100pt"}} onClick={() => handleInPurchase(index)}>바로 구매</button>
                                 </div>
                                 <div>
                                     {book.saleSellerId==sessionStorage.getItem("id")? null:
