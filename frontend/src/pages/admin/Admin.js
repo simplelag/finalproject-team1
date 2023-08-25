@@ -47,7 +47,7 @@ function Admin(props) {
 
                         <div className={"adminInfo"}>
                             <p>ID {id}</p>
-                            <p>이름 {name}</p>
+                            <p>닉네임 {name}</p>
                             <p>등급 {grade}</p>
                         </div>
 
