@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {Fragment, useEffect, useState} from "react";
 import ViewMainBook from "./ViewMainBook";
 import {useLocation, useNavigate} from "react-router-dom";
 import Header from "../mainPages/Header";
@@ -112,38 +112,41 @@ function ViewMainList(props) {
     },[nowPage])
 
     return (
-        <div className={'container'}>
+        <Fragment>
             <Header />
-            <div className={"mt-5"}>
-                <span>"{location.state.value}" 검색결과 총 {location.state.total}개</span>
-                <div className={'my-3'}>
-                    <button type={"button"} className={'btn'} value={"Accuracy"} onClick={onClickSort}>정확도순</button>
-                    <button type={"button"} className={'btn'} value={"PublishTime"} onClick={onClickSort}>출간일순</button>
-                    <button type={"button"} className={'btn'} value={"Title"} onClick={onClickSort}>상품명순</button>
-                    <select value={viewNum} defaultValue={viewNum} onChange={onChangeViewNum} className={'form-select form-select-sm my-2'}>
-                        <option value={"10"}>10개씩 보기</option>
-                        <option value={"20"}>20개씩 보기</option>
-                    </select>
+            <div className={'container'}>
+
+                <div className={"mt-5"}>
+                    <span>"{location.state.value}" 검색결과 총 {location.state.total}개</span>
+                    <div className={'my-3'}>
+                        <button type={"button"} className={'btn'} value={"Accuracy"} onClick={onClickSort}>정확도순</button>
+                        <button type={"button"} className={'btn'} value={"PublishTime"} onClick={onClickSort}>출간일순</button>
+                        <button type={"button"} className={'btn'} value={"Title"} onClick={onClickSort}>상품명순</button>
+                        <select value={viewNum} defaultValue={viewNum} onChange={onChangeViewNum} className={'form-select form-select-sm my-2'}>
+                            <option value={"10"}>10개씩 보기</option>
+                            <option value={"20"}>20개씩 보기</option>
+                        </select>
+                    </div>
                 </div>
-            </div>
-            {
-                 bookList.map(item => {
-                    return (
-                        <ViewMainBook data={item}/>
-                    )
-                })
-            }
-            <div className={"text-center"}>
                 {
-                    btnList.map(item => {
+                    bookList.map(item => {
                         return (
-                            <button key={item} onClick={() => {nowBtn(item)}} className={"btn"}>{item}</button>
+                            <ViewMainBook data={item}/>
                         )
                     })
                 }
+                <div className={"text-center"}>
+                    {
+                        btnList.map(item => {
+                            return (
+                                <button key={item} onClick={() => {nowBtn(item)}} className={"btn"}>{item}</button>
+                            )
+                        })
+                    }
+                </div>
             </div>
             <Footer />
-        </div>
+        </Fragment>
     )
 }
 
