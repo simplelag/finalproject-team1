@@ -84,3 +84,13 @@ swiper-slide .bookImg:hover{
 /*  border: 0.2px solid #5E35EB!important;*/
 /*  !*color: white!important;*!*/
 /*}*/
+
+.navbarMain {
+  background: #5E35EB;
+  box-shadow: 0.1rem 0.1rem 0.6rem 0.001rem #88a;
+
+}
+
+.navbarMain a {
+  color: white!important;
+}

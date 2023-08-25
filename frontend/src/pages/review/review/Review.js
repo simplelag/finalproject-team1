@@ -178,16 +178,17 @@ function ReviewMain(props) {
             <p className="h5 my-4 mt-0 w-100 sub-title">리뷰</p>
             <div id="reviewSpace" className="col-11 d-flex flex-wrap justify-content-start align-items-center mb-5">
                 {allReviews.length === 0? (
-                    <p >리뷰가 없네요! 첫번쨰 리뷰어가 되어보는건 어떨까요?</p>
+                    <p className={"mx-auto"}>리뷰가 없네요! 첫번쨰 리뷰어가 되어보는건 어떨까요?</p>
                 ): (
                     allReviews.map((Review,index) => {
 
                         return(
                                 <Card key={Review.id} className="mt-3 my-2 ms-3" style={{ width: "300px" }}>
                                     <CardBody>
-                                        <div className="d-flex justify-content-between align-items-center">
+                                        <div className="d-flex flex-column">
                                         <CardTitle tag="h5" className="mb-2">
                                             {Review.bookReviewTitle}
+
                                         </CardTitle>
                                             <div>
                                                 <span>{Review.bookReviewBuyerName}</span>
