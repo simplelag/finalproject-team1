@@ -5,6 +5,7 @@ import com.bitc.finalproject.entity.BookEntity;
 import com.bitc.finalproject.repository.BasketRepository;
 import com.bitc.finalproject.repository.BookInfoRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -47,8 +48,8 @@ public class BookInfoServiceImpl implements BookInfoService{
     }
 
     @Override
-    public List<BookEntity> mySaleList(String userId) throws Exception {
-        return bookInfoRepository.findBySaleSellerIdOrderBySalePkDesc(userId);
+    public List<BookEntity> mySaleList(String userId, Pageable pageable) throws Exception {
+        return bookInfoRepository.findBySaleSellerIdOrderBySalePkDesc(userId, pageable);
     }
 
     @Override
@@ -60,10 +61,20 @@ public class BookInfoServiceImpl implements BookInfoService{
     public List<BookEntity> searchHighPrice(String isbn13) {
         return  bookInfoRepository.findBySaleBookIdOrderBySaleBookPriceDesc(isbn13);
     }
+    
+//    구매 후 수량 줄이기
+    @Override
+    public BookEntity purchaseAfterMinusNumber(String bookId, String sellerId, int indivPrice) {
+        return bookInfoRepository.findBySaleBookIdAndSaleSellerIdAndSaleBookPrice(bookId, sellerId, indivPrice);
+    }
+
+    @Override
+    public BasketEntity purchaseBasketAfterMinusNumber(String userId, String bookId, int indivPrice) throws Exception {
+        return basketRepository.findByBasketMemberIdAndBasketBookIdAndBasketBookPrice(userId, bookId, indivPrice);
+    }
 
     @Override
     public void deleteSell(int salepk) throws Exception {
         bookInfoRepository.deleteById(salepk);
     }
-
 }

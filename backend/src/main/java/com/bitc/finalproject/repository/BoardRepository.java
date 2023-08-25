@@ -94,6 +94,10 @@ public interface BoardRepository extends JpaRepository<BoardEntity, Integer> {
     )
     int countByTitleAndContentUser(String boardTitle, String boardWriterId, String boardContent, String boardCategory);
 
-
     Optional<BoardEntity> findBoardLikeByBoardPk(int boardPk) throws Exception;
+    List<BoardEntity> findByBoardWriterIdOrderByBoardDatetimeDesc(String userId) throws Exception;
+
+    List<BoardEntity> findByBoardWriterIdAndAndBoardCategoryInOrderByBoardDatetimeDesc(String userId, String[] boardCategory, Pageable pageable) throws Exception;
+
+    int countByBoardWriterIdAndBoardCategoryIn(String userId, String[] boardCategory) throws Exception;
 }

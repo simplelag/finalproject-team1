@@ -1,18 +1,17 @@
 package com.bitc.finalproject.controller;
 
-import com.bitc.finalproject.entity.MemberEntity;
-import com.bitc.finalproject.entity.PurchaseEntity;
-import com.bitc.finalproject.repository.MailRepository;
-import com.bitc.finalproject.repository.MemberRepository;
-import com.bitc.finalproject.service.BookInfoService;
-import com.bitc.finalproject.service.MemberService;
-import com.bitc.finalproject.service.PurchaseService;
+import com.bitc.finalproject.entity.*;
+import com.bitc.finalproject.repository.BoardRepository;
+import com.bitc.finalproject.repository.BookInfoRepository;
+import com.bitc.finalproject.repository.ReviewRepository;
+import com.bitc.finalproject.service.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
-import java.lang.reflect.Member;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,8 +23,11 @@ public class MemberController {
     private final MemberService userService;
     private final BookInfoService bookInfoService;
     private final PurchaseService purchaseService;
-    private final MemberRepository memberRepository;
-    private final MailRepository mailRepository;
+    private final BoardService boardService;
+    private final ReviewService reviewService;
+    private final BookInfoRepository bookInfoRepository;
+    private final BoardRepository boardRepository;
+    private final ReviewRepository reviewRepository;
 
 //    로그인 시
     @RequestMapping(value = "/login", method = RequestMethod.POST)
@@ -69,16 +71,10 @@ public class MemberController {
             @RequestParam("name") String name,
             @RequestParam("email") String email,
             @RequestParam("phone") String phone,
-            @RequestParam("address") String address,
-            @RequestParam("authority") String authority
+            @RequestParam("address") String address
     ) throws Exception{
         MemberEntity memberEntity = null;
-        if(authority.equals("admin")){
-            memberEntity = new MemberEntity(userId, password, name, email, phone, address, "admin");
-        }
-        else{
-            memberEntity = new MemberEntity(userId, password, name, email, phone, address);
-        }
+        memberEntity = new MemberEntity(userId, password, name, email, phone, address);
         userService.saveMember(memberEntity);
     }
 
@@ -104,21 +100,82 @@ public class MemberController {
 
 //    마이페이지 - 구매 내역
     @RequestMapping(value = "/login/myLogin/myPurchaseList", method = RequestMethod.GET)
-    public Object showMyPurchaseList(@RequestParam("userId") String userId) throws Exception{
-        return purchaseService.myPurchaseList(userId);
+    public Object showMyPurchaseList(@RequestParam("userId") String userId, @RequestParam("state") int state, Pageable pageable) throws Exception{
+        return purchaseService.myPurchaseList(userId, state, pageable);
     }
 
 //    마이페이지 - 구매 취소
     @RequestMapping(value = "/login/myLogin/delete", method = RequestMethod.DELETE)
     public void showMyPurchaseCancel(@RequestBody PurchaseEntity purchaseEntity) throws Exception{
+//        구매 취소 후 원래있던 판매 수량으로 되돌리기
+        String bookId = purchaseEntity.getPurchaseBookId();
+        String userId = purchaseEntity.getPurchaseBuyerId();
+        String sellerId = purchaseEntity.getPurchaseSellerId();
+        int bookPrice = purchaseEntity.getPurchasePayment();
+        int BookNumber = purchaseEntity.getPurchaseNumber();
+//        sale 테이블
+        BookEntity book = bookInfoService.purchaseAfterMinusNumber(bookId, sellerId, bookPrice);
+        book.setSaleBookPieces(book.getSaleBookPieces() + BookNumber);
+        bookInfoService.bookInfoInsert(book);
+//        Basket 테이블
+        BasketEntity basketEntity = bookInfoService.purchaseBasketAfterMinusNumber(userId, bookId, bookPrice);
+        if(basketEntity != null){
+            basketEntity.setBasketBookPieces(basketEntity.getBasketBookPieces() + BookNumber);
+            bookInfoService.basketInsert(basketEntity);
+        }
         purchaseService.myPurchaseCancel(purchaseEntity);
     }
 
-    
 //    마이페이지 - 판매 내역
     @RequestMapping(value = "/login/myLogin/mySaleList", method = RequestMethod.GET)
-    public Object showMySaleList(@RequestParam("userId") String userId) throws Exception{
-        return bookInfoService.mySaleList(userId);
+    public Object showMySaleList(@RequestParam("userId") String userId, Pageable pageable) throws Exception{
+        return bookInfoService.mySaleList(userId, pageable);
+    }
+
+    //    마이페이지 - 판매 내역개수
+    @RequestMapping(value = "/login/myLogin/mySaleListCount", method = RequestMethod.GET)
+    public int showMySaleListCount(@RequestParam("userId") String userId) throws Exception{
+        return bookInfoRepository.countAllBySaleSellerId(userId);
+    }
+
+//    마이페이지 - 내가 쓴 리뷰
+    @RequestMapping(value = "/login/myLogin/myReviewList", method = RequestMethod.GET)
+    public Object showMyReviewList(@RequestParam("userId") String userId, Pageable pageable) throws Exception{
+        Map<Object, Object> result = new HashMap<>();
+        List<ReviewEntity> reviewEntityList =  reviewService.myReviewList(userId, pageable);
+//        isbn13값으로 책 제목 찾기
+        List<String> bookTitleList = new ArrayList<>();
+        for(int i = 0; i < reviewEntityList.size(); i++){
+            String isbn13 = reviewEntityList.get(i).getBookReviewIsbn13();
+            List<BookEntity> bookEntities = bookInfoService.getOldBooksByIsbn13(isbn13);
+            if(bookEntities.size() > 0){
+                bookTitleList.add(bookEntities.get(0).getSaleBookTitle());
+            }else{
+                bookTitleList.add("판매하는 책이 아니어서 리뷰를 쓸 수 없습니다.");
+            }
+        }
+        result.put("data1", reviewEntityList);
+        result.put("data2", bookTitleList);
+        return result;
+    }
+
+    //    마이페이지 - 내가 쓴 리뷰 개수
+    @RequestMapping(value = "/login/myLogin/myReviewListCount", method = RequestMethod.GET)
+    public int showMyReviewListCount(@RequestParam("userId") String userId) throws Exception {
+        return reviewRepository.countByBookReviewBuyerId(userId);
+    }
+
+//    마이페이지 - 내가 작성한 게시물 내역
+    @RequestMapping(value = "/login/myLogin/myBoardList", method = RequestMethod.GET)
+    public Object showMyBoardList(@RequestParam("userId") String userId, Pageable pageable) throws Exception{
+        return boardService.myBoardList(userId, pageable);
+    }
+
+    //    마이페이지 - 내가 작성한 게시물 개수
+    @RequestMapping(value = "/login/myLogin/myBoardListCount", method = RequestMethod.GET)
+    public int showMyBoardListCount(@RequestParam("userId") String userId, Pageable pageable) throws Exception{
+        String[] list = {"배열","독후감"};
+        return boardRepository.countByBoardWriterIdAndBoardCategoryIn(userId, list);
     }
 }
 

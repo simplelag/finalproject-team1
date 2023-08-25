@@ -1,7 +1,9 @@
 package com.bitc.finalproject.service;
 
 import com.bitc.finalproject.entity.BoardEntity;
+import com.bitc.finalproject.entity.BookEntity;
 import org.springframework.data.domain.Pageable;
+
 
 import java.util.List;
 import java.util.Optional;
@@ -25,4 +27,6 @@ public interface BoardService {
     void deleteBoard(int boardPk) throws Exception;
 
     Optional<BoardEntity> likeCnt(int boardPk) throws Exception;
+
+    List<BoardEntity> myBoardList(String userId, Pageable pageable) throws Exception;
 }

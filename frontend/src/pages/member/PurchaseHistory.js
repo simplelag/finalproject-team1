@@ -1,21 +1,23 @@
 import React, {useEffect, useState} from 'react';
 import axios from "axios";
+import Pagenation from "../common/Pagenation";
 
 function PurchaseHistory(props) {
 
     const [userId, setUserId] = useState(sessionStorage.getItem("id"))
     const [myPurchaseList, setMyPurchaseList] = useState([])
 
-    useEffect(() => {
-        axios.get('http://localhost:8080/login/myLogin/myPurchaseList', {
-            params: {
-                userId: userId
-            }
-        })
-            .then(res => {
-                setMyPurchaseList(res.data)
-            })
-    },[]);
+    // useEffect(() => {
+    //     axios.get('http://localhost:8080/login/myLogin/myPurchaseList', {
+    //         params: {
+    //             userId: userId,
+    //             state : 1
+    //         }
+    //     })
+    //         .then(res => {
+    //             setMyPurchaseList(res.data)
+    //         })
+    // },[]);
 
     const handlePurchaseCancel = (index) => {
         const requestData = {
@@ -25,7 +27,9 @@ function PurchaseHistory(props) {
             purchaseBuyerId : myPurchaseList[index].purchaseBuyerId,
             purchaseBuyerName : myPurchaseList[index].purchaseBuyerName,
             purchaseSellerId : myPurchaseList[index].purchaseSellerId,
-            purchaseSellerName : myPurchaseList[index].purchaseSellerName
+            purchaseSellerName : myPurchaseList[index].purchaseSellerName,
+            purchasePayment : myPurchaseList[index].purchasePayment,
+            purchaseNumber : myPurchaseList[index].purchaseNumber
         }
         axios.delete("http://localhost:8080/login/myLogin/delete",{
             data: requestData
@@ -43,27 +47,29 @@ function PurchaseHistory(props) {
 
     return (
         <div className={'container my-4'}>
-            <h1 className={'display-5 my-4 text-center'}>주문 내역 페이지</h1>
+            {/*<h1 className={'display-5 my-4 text-center'}>주문 내역 페이지</h1>*/}
             <div className={'border border-2'}>
                 <table className={'table table-hover table-striped'}>
                     <colgroup>
                         <col width={'10%'}/>
-                        <col width={'50%'}/>
+                        <col width={'60%'}/>
                         <col width={'10%'}/>
                         <col width={'10%'}/>
-                        <col width={'20%'}/>
+                        <col width={'10%'}/>
                     </colgroup>
                     <thead>
                     <tr>
                         <th className={'text-center'}>주문상태</th>
                         <th>상품명</th>
-                        <th className={'text-center'}>가격</th>
+                        <th className={'text-center'}>권당가격</th>
                         <th className={'text-center'}>수량</th>
                         <th className={'text-center'}></th>
                     </tr>
                     </thead>
                     <tbody>
                     {
+                        myPurchaseList.length==0?
+                            <tr><td colSpan={5} className={"text-center"}>구매 내역이 없습니다.</td></tr> :
                         myPurchaseList.map((item, index) => {
                             return (
                                 <tr key={item.purchasePk}>
@@ -82,9 +88,9 @@ function PurchaseHistory(props) {
                                     <td>
                                         <div>
                                             {item.purchaseParcel > 1 ? "" :
-                                            <div className={'d-grid'}>
-                                                <button type={'button'} className={'btn btn-danger'} onClick={() => handlePurchaseCancel(index)}>구매 취소</button>
-                                            </div>}
+
+                                                <button type={'button'} className={'btn btn-danger small py-1 px-2'} onClick={() => handlePurchaseCancel(index)}>구매 취소</button>
+                                            }
                                         </div>
 
                                     </td>
@@ -95,6 +101,17 @@ function PurchaseHistory(props) {
                     </tbody>
                 </table>
             </div>
+            <Pagenation
+                // key={qNum}
+                setList={setMyPurchaseList}
+                url={`/login/myLogin/myPurchaseList?userId=${userId}&state=1`}
+                numberUrl={`/login/myLogin/mySaleListCount?userId=${userId}`}
+                howManyContentsInAPage={5}
+                howManyPagesInABlock={5}
+                searchType={[]}
+                order={""}
+                isSearchable={false}
+            />
         </div>
     )
 }

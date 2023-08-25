@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
+import Pagenation from "../common/Pagenation";
 
 function SalesHistory(props) {
 
@@ -8,17 +9,20 @@ function SalesHistory(props) {
     const [ mySaleList, setMySaleList ] = useState([])
     const navi = useNavigate();
 
-    useEffect(() => {
-        axios.get('http://localhost:8080/login/myLogin/mySaleList', {
-            params:{
-                userId: userId
-            }
-        })
-            .then(res => {
-                console.log(res)
-                setMySaleList(res.data)
-            })
-    },[]);
+    // useEffect(() => {
+    //     axios.get('http://localhost:8080/login/myLogin/mySaleList', {
+    //         params:{
+    //             userId: userId
+    //         }
+    //     })
+    //         .then(res => {
+    //             console.log(res)
+    //             setMySaleList(res.data)
+    //         })
+    // },[]);
+
+    // 판매자가 배송하기 버튼을 클릭 했을 때
+
 
     //  판매자가 판매 취소하기
     const handleCancel = (index) => {
@@ -36,7 +40,7 @@ function SalesHistory(props) {
 
     return (
         <div className={'container my-4'}>
-            <h1 className={'display-5 my-4 text-center'}>판매 내역 페이지</h1>
+            {/*<h1 className={'display-5 my-4 text-center'}>판매 내역 페이지</h1>*/}
             <div className={'border border-2'}>
                 <table className={'table table-hover table-striped'}>
                     <colgroup>
@@ -50,18 +54,19 @@ function SalesHistory(props) {
                     <tr>
                         <th className={'text-center'}>판매상태</th>
                         <th>상품명</th>
-                        <th className={'text-center'}>가격</th>
+                        <th className={'text-center'}>권당가격</th>
                         <th className={'text-center'}>수량</th>
                         <th className={'text-center'}></th>
                     </tr>
                     </thead>
                     <tbody>
-                    {
+                    { mySaleList.length==0?
+                        <tr><td colSpan={5} className={"text-center"}>판매중인 상품이 없습니다.</td></tr> :
                         mySaleList.map((item,index) => {
                             return (
                                 <tr key={item.salePk}>
                                     <td className={'text-center align-middle'}>
-                                        {item.saleDisabled === null ? "판매중" : "판매 불가"}
+                                        {item.saleDisabled === null ? <span>{item.saleBookPieces === 0 ? "판매완료" : "판매중"}</span> : "판매 불가"}
                                     </td>
                                     <td className={'align-middle'}>{item.saleBookTitle}</td>
                                     <td className={'align-middle text-center'}>{item.saleBookPrice}</td>
@@ -82,6 +87,17 @@ function SalesHistory(props) {
                     </tbody>
                 </table>
             </div>
+            <Pagenation
+                // key={qNum}
+                setList={setMySaleList}
+                url={`/login/myLogin/mySaleList?userId=${userId}`}
+                numberUrl={`/login/myLogin/mySaleListCount?userId=${userId}`}
+                howManyContentsInAPage={5}
+                howManyPagesInABlock={5}
+                searchType={[]}
+                order={""}
+                isSearchable={false}
+            />
         </div>
     )
 }

@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import axios from "axios";
 import {useDaumPostcodePopup} from "react-daum-postcode";
-import {useNavigate} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 
 function PurchaseInfor(props) {
 
@@ -58,32 +58,21 @@ function PurchaseInfor(props) {
         handleOriginalInfo()
         scrollToTop()
 
-        const preventClose = (e) => {
-            e.preventDefault();
-            e.returnValue = "";
-        }
-        (() => {
-            window.addEventListener('beforeunload', preventClose);
-        })();
-
-        return(() => {
-            window.removeEventListener('beforeunload', preventClose);
-
-            axios.delete('http://localhost:8080/purchase/delete',{
-                params:{
-                    userId :userId,
-                    state: 0
-                },
-                data: props.purchaseList
-            })
-                .then(res=>{
-                    console.log(res)
-                })
-                .catch(err => {
-                    console.log(err)
-                })
-        })
     }, [])
+
+    // const preventClose = (e) => {
+    //     e.preventDefault();
+    //     e.returnValue = "";
+    // }
+    // (() => {
+    //     window.addEventListener('beforeunload', preventClose);
+    // })();
+
+    // const preventClose = (e) => {
+    //     e.preventDefault();
+    //     return e.returnValue = false;
+    //     // e.returnValue = "";
+    // }
 
     useEffect(() => {
         handleOrderAllFee()

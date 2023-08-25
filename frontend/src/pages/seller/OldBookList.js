@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import axios from "axios";
 import {useLocation, useNavigate} from "react-router-dom";
-import Pagenation from "../common/Pagenation";
 import MailOpenButton from "../common/MailOpenButton";
 
 
@@ -52,20 +51,32 @@ function OldBookList() {
 
     // 구매 버튼 눌렀을때 발생하는 이벤트(구매 페이지로 이동)
     const handleInPurchase = (index) => {
-        axios.get('http://localhost:8080/purchase/insert',{
-            params:{
-                ISBN13: oldBookInfo[index].saleBookId,
-                BookName: oldBookInfo[index].saleBookTitle,
-                BuyerId: sessionStorage.getItem("id"),
-                BuyerName: sessionStorage.getItem("name"),
-                SellerId: oldBookInfo[index].saleSellerId,
-                SellerName: oldBookInfo[index].saleSellerName,
-                SellerPrice: oldBookInfo[index].saleBookPrice
-            }
-        })
-            .then(res => {
-
+        if (oldBookInfo[index].saleSellerId !== sessionStorage.getItem("id")) {
+            axios.get('http://localhost:8080/purchase/insert', {
+                params: {
+                    ISBN13: oldBookInfo[index].saleBookId,
+                    BookName: oldBookInfo[index].saleBookTitle,
+                    BuyerId: sessionStorage.getItem("id"),
+                    BuyerName: sessionStorage.getItem("name"),
+                    SellerId: oldBookInfo[index].saleSellerId,
+                    SellerName: oldBookInfo[index].saleSellerName,
+                    SellerPrice: oldBookInfo[index].saleBookPrice,
+                }
             })
+                .then(res => {
+                    let a = new Array();
+                    a.push(res.data.purchaseNumber)
+                    if(oldBookInfo[index].saleBookPieces === 0){
+                        alert("재고가 없습니다.")
+                    }else if(res.data.purchaseState === 1){
+                        alert("이미 구입한 책입니다.")
+                    }else{
+                        navi("/purchase", {state: {value: res.data, number : [oldBookInfo[index].saleBookPieces], number1 : a}})
+                    }
+                })
+        }else{
+            alert('자기가 판매한 책은 구입할 수 없습니다.')
+        }
     }
 
     return (
@@ -101,12 +112,21 @@ function OldBookList() {
                             <div className={"col-sm-2"}>
                                 <span>판매자 : {book.saleSellerName}</span>
                             </div>
-                            <div className={"col-sm-2 text-center"}>
-                                <a href="#"className={"btn btn-link bg-dark mb-2"} style={{fontSize:"10pt",color:"white",textDecoration:"none",width:"100pt"}} onClick={() => save(index)}>장바구니 담기</a>
-                                <a href="/purchase" className={"btn btn-link bg-dark"} style={{fontSize:"10pt",color:"white",textDecoration:"none", width:"100pt"}} onClick={() => handleInPurchase(index)}>바로 구매</a>
-                                {book.saleSellerId==sessionStorage.getItem("id")? null:
-                                    <MailOpenButton room={book.salePk+"_"+sessionStorage.getItem("id")} name={"판매자문의"} />
-                                }
+
+                            <div className={"col-sm-2 text-center d-flex flex-column"}>
+                                <div>
+                                    <a href="#"className={"btn btn-link bg-dark mb-2"} style={{fontSize:"10pt",color:"white",textDecoration:"none",width:"100pt"}} onClick={() => save(index)}>장바구니 담기</a>
+                                </div>
+                                <div>
+                                    <a href="#" className={"btn btn-link bg-dark"} style={{fontSize:"10pt",color:"white",textDecoration:"none", width:"100pt"}} onClick={() => handleInPurchase(index)}>바로 구매</a>
+                                </div>
+                                <div>
+                                    {book.saleSellerId==sessionStorage.getItem("id")? null:
+                                        <MailOpenButton room={book.salePk+"_"+sessionStorage.getItem("id")} name={"판매자문의"} style={{width:"100pt", fontSize:"10pt"}}/>
+                                    }
+                                </div>
+
+
 
                             </div>
                         </div>
