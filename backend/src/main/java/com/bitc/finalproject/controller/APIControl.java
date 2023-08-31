@@ -19,7 +19,7 @@ public class APIControl {
     // 상품리스트 조회 api
     @RequestMapping(value = "/api", method = RequestMethod.GET)
     public Object BookListApi(@RequestParam("Type") String type, @RequestParam("MaxResults") String maxResults) throws Exception {
-        String url = "https://www.aladin.co.kr/ttb/api/ItemList.aspx?ttbkey=ttbjhyoon4250959001&QueryType="+ type +"&MaxResults=" + maxResults + "&start=1&SearchTarget=Book&output=js&Version=20131101&Cover=Big";
+        String url = "http://www.aladin.co.kr/ttb/api/ItemList.aspx?ttbkey=ttbjhyoon4250959001&QueryType="+ type +"&MaxResults=" + maxResults + "&start=1&SearchTarget=Book&output=js&Version=20131101&Cover=Big";
 
         ProductObject itemList = bookService.getItemList(url);
 
@@ -27,12 +27,13 @@ public class APIControl {
     }
 
     // 검색 api
+    @CrossOrigin("http://localhost:3000")
     @RequestMapping(value = "/search", method = RequestMethod.GET)
     public Object BookSearchApi(@RequestParam("SearchValue") String searchValue, @RequestParam("SearchType") String searchType,
                                 @RequestParam("SearchSort") String searchSort, @RequestParam("MaxResults") String MaxResults,
                                 @RequestParam("StartNum") String startNum) throws Exception {
         searchValue = URLEncoder.encode(searchValue, "UTF-8");
-        String url = "https://www.aladin.co.kr/ttb/api/ItemSearch.aspx?ttbkey=ttbjhyoon4250959001&Query="+ searchValue +"&QueryType="+ searchType +
+        String url = "http://www.aladin.co.kr/ttb/api/ItemSearch.aspx?ttbkey=ttbjhyoon4250959001&Query="+ searchValue +"&QueryType="+ searchType +
                 "&MaxResults=" + MaxResults + "&start=" + startNum + "&SearchTarget=Book&output=js&Version=20131101&Cover=Big&Sort=" + searchSort + "";
 
         ProductObject itemList = bookService.getItemList(url);
@@ -41,9 +42,10 @@ public class APIControl {
     }
 
     // 상품(1개)조회 api
+    @CrossOrigin("http://localhost:3000")
     @RequestMapping(value = "/searchIsbn", method = RequestMethod.GET)
     public Object BookApi(@RequestParam("ISBN13") String isbn) throws Exception {
-        String url = "https://www.aladin.co.kr/ttb/api/ItemLookUp.aspx?ttbkey=ttbjhyoon4250959001&itemIdType=ISBN13&ItemId="+ isbn +"&output=js&Version=20131101&Cover=Big";
+        String url = "http://www.aladin.co.kr/ttb/api/ItemLookUp.aspx?ttbkey=ttbjhyoon4250959001&itemIdType=ISBN13&ItemId="+ isbn +"&output=js&Version=20131101&Cover=Big";
 
         ProductObject itemList = bookService.getItemList(url);
 

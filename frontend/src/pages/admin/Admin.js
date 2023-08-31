@@ -6,6 +6,7 @@ import QuestionView from "./QuestionView";
 import ItemView from "./ItemView";
 import Footer from "../mainPages/Footer";
 import Header from "../mainPages/Header";
+import {Link} from "react-router-dom";
 
 
 function Admin(props) {
@@ -16,56 +17,67 @@ function Admin(props) {
         window.location.href = "/";
     }
 
+    const [view, setView] = useState(props.view || "questionView");
 
-    const [memberView, setMemberView] = useState(true);
-    const [questionView, setQuestionView] = useState(false);
-    const [itemView, setItemView] = useState(false);
+    const styleAdmin = {
+      info:{
+          padding:"1rem 2rem",
+          borderRadius:"1rem",
+          marginBottom:"1rem"
+      },
+      view:{
+          padding:"1rem 2rem",
+          borderRadius:"1rem",
+          marginBottom:"1rem"
+      }
+    };
 
 
     let div = <>
         <div>
             <Header/>
             <div className={"container"}>
-                <div className={"adminInfo border"}>
-                    <h3>관리자 정보</h3>
+                <div className={"adminInfo border"} style={styleAdmin.info}>
+                    <div className={"d-flex justify-content-between"}>
+                        <h3>관리자 정보</h3>
+                        <Link to={`/login/myLogin/myUserUpdate`} className={'btn btn-success mb-2'}>관리자정보 수정</Link>
+                    </div>
+
                     <div className={"d-flex justify-content-between"}>
 
                         <div className={"adminInfo"}>
                             <p>ID {id}</p>
-                            <p>이름 {name}</p>
+                            <p>닉네임 {name}</p>
                             <p>등급 {grade}</p>
                         </div>
 
                         <div className={"d-flex flex-column"}>
-                            <button type={"button"} className={"btn"}
+                            <button type={"button"}  className={`btn ${view=="questionView"? "active":""}`}
                                     onClick={() => {
-                                        setMemberView(true);
-                                        setQuestionView(false);
-                                        setItemView(false)
-                                    }}>회원관리
-                            </button>
-                            <button type={"button"} className={"btn"}
-                                    onClick={() => {
-                                        setMemberView(false);
-                                        setQuestionView(true);
-                                        setItemView(false)
+                                        setView("questionView");
                                     }}>문의관리
                             </button>
-                            <button type={"button"} className={"btn"}
+                            <button type={"button"} className={`btn ${view=="memberView"? "active":""}`}
                                     onClick={() => {
-                                        setMemberView(false);
-                                        setQuestionView(false);
-                                        setItemView(true)
+                                        setView("memberView");
+                                    }}>회원관리
+                            </button>
+                            <button type={"button"}  className={`btn ${view=="itemView"? "active":""}`}
+                                    onClick={() => {
+                                        setView("itemView");
                                     }}>상품관리
                             </button>
                         </div>
                     </div>
                 </div>
 
-                <div className={"listSection"}>
-                    {memberView && <MemberView/>}
-                    {questionView && <QuestionView/>}
-                    {itemView && <ItemView/>}
+                <div className={"listSection border"} style={styleAdmin.view}>
+                    {
+                        view=="itemView"?
+                            <ItemView /> : view=="memberView"?
+                                <MemberView /> :
+                                <QuestionView />
+                    }
                 </div>
 
             </div>

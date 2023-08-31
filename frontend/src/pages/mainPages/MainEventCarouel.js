@@ -2,8 +2,8 @@ import React, {useEffect, useState} from "react";
 
 const swiperSlide = {
     slide: {
-        width: '500px',
-        height: '600px'
+        width: '1000px',
+        height: '500px'
     },
     img: {
         display: 'block',
@@ -31,12 +31,12 @@ function MainEventCarousel(props) {
 
     return (
         <div className={'my-3'}>
-            <swiper-container className="mySwiper" pagination="true" pagination-dynamic-bullets="true">
-                <swiper-slide style={swiperSlide.slide}><img src="/image/1.png" style={swiperSlide.img}/></swiper-slide>
-                <swiper-slide style={swiperSlide.slide}><img src="/image/1.png" style={swiperSlide.img}/></swiper-slide>
-                <swiper-slide style={swiperSlide.slide}><img src="/image/1.png" style={swiperSlide.img}/></swiper-slide>
-                <swiper-slide style={swiperSlide.slide}><img src="/image/1.png" style={swiperSlide.img}/></swiper-slide>
-                <swiper-slide style={swiperSlide.slide}><img src="/image/1.png" style={swiperSlide.img}/></swiper-slide>
+            <swiper-container className="mySwiper" pagination="true" pagination-dynamic-bullets="true" loop="true" autoplay="true">
+                <swiper-slide style={swiperSlide.slide}><img src="/image/event1.jpg" style={swiperSlide.img}/></swiper-slide>
+                <swiper-slide style={swiperSlide.slide}><img src="/image/event2.jpg" style={swiperSlide.img}/></swiper-slide>
+                <swiper-slide style={swiperSlide.slide}><img src="/image/event3.jpg" style={swiperSlide.img}/></swiper-slide>
+                <swiper-slide style={swiperSlide.slide}><img src="/image/event4.jpg" style={swiperSlide.img}/></swiper-slide>
+                <swiper-slide style={swiperSlide.slide}><img src="/image/event5.jpg" style={swiperSlide.img}/></swiper-slide>
             </swiper-container>
         </div>
     );

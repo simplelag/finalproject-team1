@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import axios from "axios";
 import {useLocation, useNavigate} from "react-router-dom";
-import Pagenation from "../common/Pagenation";
+import MailOpenButton from "../common/MailOpenButton";
 
 
 function OldBookList() {
@@ -16,17 +16,11 @@ function OldBookList() {
             }
         })
             .then(res =>{
-                const data = res.data;
-                if(res.data.length == 0){
-                }
-                else {
-                    setOldBookInfo(res.data);
-                }
+                setOldBookInfo(res.data)
             })
     }, []);
+
     const save = (index) =>{
-        console.log("index:", index);
-        console.log("oldBookInfo:", oldBookInfo);
         if(sessionStorage.getItem("id") === null){
             alert("로그인 해주세요!")
             navi("/login");
@@ -48,52 +42,96 @@ function OldBookList() {
             })
                 .then(response => {
                     alert("등록 성공!")
-                    console.log("등록이 완료되었습니다.", response)
                 })
                 .catch(error => {
                     // 등록 중에 오류가 발생했을 때의 처리
-                    console.error("등록 중 오류 발생:", error);
                 });
+        }
     }
+
+    // 구매 버튼 눌렀을때 발생하는 이벤트(구매 페이지로 이동)
+    const handleInPurchase = (index) => {
+        if (oldBookInfo[index].saleSellerId !== sessionStorage.getItem("id")) {
+            axios.get('http://localhost:8080/purchase/insert', {
+                params: {
+                    ISBN13: oldBookInfo[index].saleBookId,
+                    BookName: oldBookInfo[index].saleBookTitle,
+                    BuyerId: sessionStorage.getItem("id"),
+                    BuyerName: sessionStorage.getItem("name"),
+                    SellerId: oldBookInfo[index].saleSellerId,
+                    SellerName: oldBookInfo[index].saleSellerName,
+                    SellerPrice: oldBookInfo[index].saleBookPrice,
+                }
+            })
+                .then(res => {
+                    let a = new Array();
+                    a.push(res.data.purchaseNumber)
+                    if(oldBookInfo[index].saleBookPieces === 0){
+                        alert("재고가 없습니다.")
+                    }else if(res.data.purchaseState === 1){
+                        alert("이미 구입한 책입니다.")
+                    }else{
+                        navi("/purchase", {state: {value: res.data, number : [oldBookInfo[index].saleBookPieces], number1 : a}})
+                    }
+                })
+        }else{
+            alert('자기가 판매한 책은 구입할 수 없습니다.')
+        }
     }
 
     return (
+        <div className={"container my-3"}>
+            {
+                oldBookInfo.length == 0 ? <p className={"text-center"}><strong>등록된 중고도서가 없습니다</strong></p>
+                    :
+                oldBookInfo.map((book,index) => {
+                    return (
+                        <div className={"row my-2"} key={book.salePk}>
+                            <div className={"col-sm-2"}>
+                                <a href="#">
+                                    <img src={book.saleImgSrc} alt="이미지 나오는 곳"/>
+                                </a>
+                            </div>
+                            <div className={"col-sm-3"}>
+                                <ul style={{listStyleType:"none"}}>
+                                    <li>
+                                        <p><strong>[중고]{book.saleBookTitle}</strong></p>
+                                    </li>
+                                    <li>
+                                        <p>남은 재고 : {book.saleBookPieces}개</p>
+                                        <p style={{fontSize:"9pt"}}>평균 출고일 5일 이내</p>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div className={"col-sm-1"}>
+                                <p>등급 : {book.bookGrade}</p>
+                            </div>
+                            <div className={"col-sm-2"}>
+                                <span>판매 중고가격 : {book.saleBookPrice}원</span>
+                            </div>
+                            <div className={"col-sm-2"}>
+                                <span>판매자 : {book.saleSellerName}</span>
+                            </div>
 
-        <div className={"container mt-5"}>
-            {oldBookInfo.map((book,index) => (
-                <div className={"row"} key={book.salePk}>
-                    <div className={"col-sm-3"}>
-                        <a href="#">
-                            <img src={book.saleImgSrc} alt="이미지 나오는 곳"/>
-                        </a>
-                    </div>
-                    <div className={"col-sm-3"}>
-                        <ul style={{listStyleType:"none"}}>
-                            <li>
-                                <p><strong>[중고]{book.saleBookTitle}</strong></p>
-                            </li>
-                            <li>
-                                <p>남은 재고 :{book.saleBookPieces} 개</p>
-                                <p style={{fontSize:"9pt"}}>평균 출고일 5일 이내</p>
-                            </li>
-                        </ul>
-                    </div>
-                    <div className={"col-sm-1"}>
-                        <p>등급 : {book.bookGrade}</p>
-                    </div>
-                    <div className={"col-sm-1"}>
-                        <span>판매가격 : {book.saleBookPrice}</span>
-                    </div>
-                    <div className={"col-sm-2"}>
-                        <span>판매자 이름 : {book.saleSellerName}</span>
-                    </div>
-                    <div className={"col-sm-2"}>
-                        <a href="#"className={"btn btn-link bg-dark"} style={{fontSize:"10pt",color:"white",textDecoration:"none",width:"100pt"}} onClick={() => save(index)}>장바구니 담기</a>
-                        <a href="#"className={"btn btn-link bg-dark"} style={{fontSize:"10pt",color:"white",textDecoration:"none", width:"100pt"}}>바로 구매</a>
-                    </div>
-                </div>
-            ))}
+                            <div className={"col-sm-2 text-center d-flex flex-column"}>
+                                <div>
+                                    <button type={"button"} className={"btn btn-link bg-dark mb-2"} style={{fontSize:"10pt",color:"white",textDecoration:"none",width:"100pt"}} onClick={() => save(index)}>장바구니 담기</button>
+                                </div>
+                                <div>
+                                    <button type={"button"} className={"btn btn-link bg-dark"} style={{fontSize:"10pt",color:"white",textDecoration:"none", width:"100pt"}} onClick={() => handleInPurchase(index)}>바로 구매</button>
+                                </div>
+                                <div>
+                                    {book.saleSellerId==sessionStorage.getItem("id")? null:
+                                        <MailOpenButton room={book.salePk+"_"+sessionStorage.getItem("id")} name={"판매자문의"} style={{width:"100pt", fontSize:"10pt"}}/>
+                                    }
+                                </div>
 
+
+
+                            </div>
+                        </div>
+                    )
+                })}
         </div>
     )
 }

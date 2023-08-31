@@ -1,10 +1,11 @@
 import React, {useEffect, useState} from "react";
 import axios from "axios";
-import {useNavigate, useParams} from "react-router-dom";
+import {useLocation, useNavigate, useParams} from "react-router-dom";
 
 function BoardComment(props) {
 
     const [commentList, setCommentList] = useState([]);
+    const location = useLocation();
 
     const [boardPk] = useState(props.boardPk);
     const [id, setId] =useState(sessionStorage.getItem("id"));
@@ -13,6 +14,7 @@ function BoardComment(props) {
     const [commentUpdateContent, setCommentUpdateContent] = useState('');
     const [test, setTest] = useState('');
 
+
     const [formVisible, setFormVisible] = useState(false);
     const [commentUpdateVisible, setCommentUpdateVisible] = useState(false);
 
@@ -20,17 +22,17 @@ function BoardComment(props) {
     useEffect(() => {
         axios.get(`http://localhost:8080/board/comment/${props.boardPk}`)
             .then(res => {
-                // console.log(res.data)
                 setCommentList(res.data)
+                props.setCommentCount(res.data.length)
 
                 if (sessionStorage.getItem("id") != null) {
                     setFormVisible(true);
                 }
             })
             .catch(err => {
-                alert("댓글 불러오기 실패")
+                alert(`댓글 불러오기 실패: ${err}`);
             })
-    },[])
+    },[props])
 
     // 댓글내용 작성
     const onChangeCommentContent = (e) => {
@@ -47,8 +49,8 @@ function BoardComment(props) {
                 commentWriterId: id,
             }
         })
-            .then(() => {
-
+            .then(res => {
+                props.setCommentCount(res.data.length)
             })
             .catch(() => {
                 alert("댓글 등록 실패")
@@ -89,7 +91,7 @@ function BoardComment(props) {
             }
         })
             .then(res => {
-                /*삭제 후 페이지 리로드 필요*/
+                props.setCommentCount(res.data.length)
             })
             .catch(err => {
                 alert("댓글삭제 실패")
@@ -109,7 +111,7 @@ function BoardComment(props) {
                         <form onSubmit={onSubmitComment}>
                             <textarea className={'form-control'} rows={3} onChange={onChangeCommentContent} value={commentContent}></textarea>
                             <div className={'d-flex justify-content-end'}>
-                                <button type={"submit"} className={'btn my-3 btn-outline-dark'}>댓글등록</button>
+                                <button type={"submit"} className={'btn my-3 btn-outline-purple'}>댓글등록</button>
                             </div>
                         </form>
                     }
@@ -119,18 +121,23 @@ function BoardComment(props) {
                             commentList.map(item => {
                             let visible = false;
 
-                                if (id == item.commentWriterId || sessionStorage.getItem("grade") == "admin") {
+                                if (id == item.commentWriterId) {
                                     visible = true;
 
                                     return (
                                         <div key={item.commentPk} className={'border-top p-3'}>
-                                            <p className={'d-flex justify-content-end'}>{item.commentDatetime}</p>
-                                            <p>{item.commentWriterName}</p>
+                                            <div className={"d-flex"}>
+                                                <p className={"me-auto"}>{item.commentWriterName}</p>
+                                                <p>{item.commentDatetime}</p>
+                                            </div>
                                             <p>{item.commentContent}</p>
                                             <div className={'d-flex justify-content-end my-2'}>
-                                                <button type={"button"} className={'btn'} onClick={() => {onClickUpdate(item.commentPk)}}>수정</button>
                                                 {
-                                                    visible && <button type={"button"} className={'btn'} onClick={() => {
+                                                    visible &&
+                                                    <button type={"button"} className={'btn btn-outline-purple'} onClick={() => {onClickUpdate(item.commentPk)}}>수정</button>
+                                                }
+                                                {
+                                                    visible && <button type={"button"} className={'btn btn-outline-purple ms-2'} onClick={() => {
                                                         onClickDelete(item.commentPk, item.commentWriterId)
                                                     }}>삭제</button>
                                                 }
@@ -141,7 +148,7 @@ function BoardComment(props) {
                                                 <form onSubmit={() => {commentUpdate(item.commentPk)}}>
                                                     <textarea className={"form-control"} rows={3} onChange={onChangeCommentUpdateContent} defaultValue={item.commentContent} />
                                                     <div className={"d-flex justify-content-end"}>
-                                                        <button type={"submit"} className={"btn my-2 btn-outline-dark"}>작성</button>
+                                                        <button type={"submit"} className={"btn my-2 btn-outline-purple"}>작성</button>
                                                     </div>
                                                 </form>
                                             }
@@ -149,14 +156,19 @@ function BoardComment(props) {
                                     )
                                 }
                                 else {
+                                    if (sessionStorage.getItem("grade") == "admin") {
+                                        visible = true;
+                                    }
                                     return (
                                         <div key={item.commentPk} className={'border-top p-3'}>
-                                            <p className={'d-flex justify-content-end'}>{item.commentDatetime}</p>
-                                            <p>{item.commentWriterName}</p>
+                                            <div className={"d-flex"}>
+                                                <p className={"me-auto"}>{item.commentWriterName}</p>
+                                                <p>{item.commentDatetime}</p>
+                                            </div>
                                             <p>{item.commentContent}</p>
                                             <div className={'d-flex justify-content-end my-2'}>
                                                 {
-                                                    visible && <button type={"button"} className={'btn'} onClick={() => {
+                                                    visible && <button type={"button"} className={'btn btn-outline-purple'} onClick={() => {
                                                         onClickDelete(item.commentPk, item.commentWriterId)
                                                     }}>삭제</button>
                                                 }

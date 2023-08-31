@@ -57,4 +57,10 @@ public class BookController {
         bookInfoService.deleteBasket(basketpk);
         return "redirect:/ShoppingBasket";
     }
+
+    @RequestMapping(value = "/deleteSell",method = RequestMethod.DELETE)
+    public Object SellBookDelete(@RequestParam("salePk")int salepk) throws Exception{
+        bookInfoService.deleteSell(salepk);
+        return "redirect:/myLogin";
+    }
 }

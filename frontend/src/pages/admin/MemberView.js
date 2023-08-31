@@ -28,18 +28,6 @@ function MemberView(props) {
         const id = value[0];
         const auth = value[1];
 
-
-        // 새로운 userList 배열 생성
-        const updatedUserList = userList.map(item => {
-            if (item.memberId === id) {
-                return { ...item, memberAuthority: auth };
-            }
-            return item;
-        });
-
-        // 새로운 배열로 상태 업데이트
-        setUserList(updatedUserList);
-
         axios.put(
             "/api/admin/editAuth",
             null,
@@ -50,6 +38,16 @@ function MemberView(props) {
                 }
             })
             .then(res => {
+                // 새로운 userList 배열 생성
+                const updatedUserList = userList.map(item => {
+                    if (item.memberId === id) {
+                        return { ...item, memberAuthority: auth };
+                    }
+                    return item;
+                });
+
+                // 새로운 배열로 상태 업데이트
+                setUserList(updatedUserList);
             })
             .catch()
     }
@@ -58,7 +56,7 @@ function MemberView(props) {
     }
 
     return (
-        <div className={"border"}>
+        <div className={""}>
             <div className={"d-flex justify-content-between align-items-center"}>
                 <h3>회원 관리</h3>
 
@@ -77,7 +75,7 @@ function MemberView(props) {
                     </button>
                 </div>
 
-                <select name="contentsCount" value={qNum} onChange={handleQNum}>
+                <select name="contentsCount" value={qNum} onChange={handleQNum} className={"form-select w-25"}>
                     <option value="10">10개씩 보기</option>
                     <option value="30">30개씩 보기</option>
                     <option value="50">50개씩 보기</option>
@@ -99,7 +97,7 @@ function MemberView(props) {
                     <th>가입일</th>
                     <th>등급</th>
                     <th>아이디</th>
-                    <th>별명</th>
+                    <th>닉네임</th>
                     <th>이메일</th>
                     <th></th>
                 </tr>
@@ -124,9 +122,7 @@ function MemberView(props) {
                                     </td>
                                     <td>{item.memberEmail}</td>
                                     <td>
-                                        <div>
-                                            <button value={item.memberId} type={"button"} onClick={handleTr}>상세</button>
-                                        </div>
+                                        <button className={"btn btn-outline-purple py-0"} value={item.memberId} type={"button"} onClick={handleTr}>상세</button>
                                     </td>
                                 </tr>
 
