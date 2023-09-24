@@ -107,7 +107,6 @@ function ReviewMain(props) {
 
     const save= (index) =>{
 
-
         const requestData ={
             bookReviewBuyerId: buyerId,
             bookReviewBuyerName: buyerName,
